@@ -73,6 +73,10 @@ export function GuideFrame({
           ]
         }
 
+        if (elems.length === 0) {
+          return
+        }
+
         return <>{elems}</>
       }
       // #endregion
