@@ -21,6 +21,10 @@ export const ConfZod = z.object({
     }),
   ),
   opacity: z.number().max(0.94).min(0).default(0.94),
+  shortcuts: z.object({
+    goToNextGuideStep: z.string().default('CommandOrControl+Shift+D'),
+    goToPreviousGuideStep: z.string().default('CommandOrControl+Shift+F'),
+  }),
 })
 
 export type Conf = z.infer<typeof ConfZod>

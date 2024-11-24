@@ -11,8 +11,9 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { z } from 'zod'
+import { register, unregister } from '@tauri-apps/plugin-global-shortcut'
 
 const ParamsZod = z.object({
   id: z.coerce.number(),
@@ -57,6 +58,9 @@ function GuideIdPage() {
   const navigate = Route.useNavigate()
   const scrollableRef = useRef<HTMLDivElement>(null)
   const stepMax = guide.steps.length - 1
+
+  // Create a ref to hold the current index
+  const currentIndexRef = useRef(index);
 
   useScrollToTop(scrollableRef, [step])
 
@@ -121,6 +125,41 @@ function GuideIdPage() {
 
     return true
   }
+
+  // Register and unregister shortcuts on mount and unmount
+  useEffect(() => {
+    const registerShortcuts = async () => {
+      try {
+        // Register new shortcuts
+        await register(conf.data.shortcuts.goToNextGuideStep, (event) => {
+          if (event.state === 'Pressed' && currentIndexRef.current < stepMax) {
+            changeStep(currentIndexRef.current + 1); // Move to the next step
+          }
+        });
+
+        await register(conf.data.shortcuts.goToPreviousGuideStep, (event) => {
+          if (event.state === 'Pressed' && currentIndexRef.current > 0) {
+            changeStep(currentIndexRef.current - 1); // Move to the previous step
+          }
+        });
+      } catch (error) {
+        console.error('Failed to register shortcuts:', error);
+      }
+    };
+
+    registerShortcuts();
+
+    // Cleanup function to unregister shortcuts on component unmount
+    return () => {
+      unregister(conf.data.shortcuts.goToNextGuideStep);
+      unregister(conf.data.shortcuts.goToPreviousGuideStep);
+    };
+  }, []); // Empty dependency array to run only on mount and unmount
+
+  // Update the current index ref whenever the index changes
+  useEffect(() => {
+    currentIndexRef.current = index;
+  }, [index]);
 
   return (
     <Page key="guide" title={guide.name} to="/guides" pageTitleTextClassName="leading-5 line-clamp-1">

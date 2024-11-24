@@ -17,6 +17,8 @@
     "core:window:allow-start-dragging",
     "shell:allow-open",
     "window-state:default",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister",
     {
       "identifier": "http:default",
       "allow": [
