@@ -17,6 +17,8 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
+import { register, unregister } from '@tauri-apps/plugin-global-shortcut'
+import { useWebviewEvent } from '@/hooks/use_webview_event'
 
 export const Route = createFileRoute('/_app/settings')({
   component: Settings,
@@ -41,6 +43,12 @@ function Settings() {
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
 
+  // State to manage shortcut input
+  const [nextShortcut, setNextShortcut] = useState(conf.data.shortcuts.goToNextGuideStep)
+  const nextShortcutDebounced = useDebounce(nextShortcut, 300)
+  const [previousShortcut, setPreviousShortcut] = useState(conf.data.shortcuts.goToPreviousGuideStep)
+  const previousShortcutDebounced = useDebounce(previousShortcut, 300)
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: no need more deps
   useEffect(() => {
     setConf.mutate({
@@ -50,8 +58,43 @@ function Settings() {
   }, [opacityDebounced])
 
   useEffect(() => {
+    setConf.mutate({
+      ...conf.data,
+      shortcuts: {
+        goToNextGuideStep: nextShortcutDebounced,
+        goToPreviousGuideStep: previousShortcutDebounced,
+      },
+    })
+  }, [nextShortcutDebounced, previousShortcutDebounced])
+
+  useEffect(() => {
     window.document.documentElement.style.setProperty('--opacity', `${opacity.toFixed(2)}`)
   }, [opacity])
+
+  const handleShortcutKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: 'next' | 'previous') => {
+    e.preventDefault()
+    
+    const keys: string[] = []
+    
+    if (e.metaKey || e.ctrlKey) keys.push('CommandOrControl')
+    if (e.shiftKey) keys.push('Shift')
+    if (e.altKey) keys.push('Alt')
+    
+    // Get the main key (excluding modifier keys)
+    const key = e.key
+    if (!['Meta', 'Control', 'Shift', 'Alt'].includes(key)) {
+      keys.push(key.toUpperCase())
+    }
+    
+    if (keys.length > 0) {
+      const shortcut = keys.join('+')
+      if (field === 'next') {
+        setNextShortcut(shortcut)
+      } else {
+        setPreviousShortcut(shortcut)
+      }
+    }
+  }
 
   return (
     <Page key="settings-page" title={t`Paramètres`}>
@@ -216,6 +259,43 @@ function Settings() {
                 <Trans>Créer</Trans>
               </Button>
             </form>
+          </section>
+          <section className="space-y-2">
+            <Label className="text-xs">
+              <Trans>Raccourcis clavier</Trans>
+            </Label>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="next-shortcut" className="text-xs">
+                  <Trans>Étape suivante</Trans>
+                </Label>
+                <Input
+                  id="next-shortcut"
+                  value={nextShortcut}
+                  onChange={(e) => setNextShortcut(e.target.value)}
+                  onKeyDown={(e) => handleShortcutKeyDown(e, 'next')}
+                  placeholder={t`Appuyez sur les touches`}
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="previous-shortcut" className="text-xs">
+                  <Trans>Étape précédente</Trans>
+                </Label>
+                <Input
+                  id="previous-shortcut"
+                  value={previousShortcut}
+                  onChange={(e) => setPreviousShortcut(e.target.value)}
+                  onKeyDown={(e) => handleShortcutKeyDown(e, 'previous')}
+                  placeholder={t`Appuyez sur les touches`}
+                />
+              </div>
+              
+              <div className="text-xs text-muted-foreground">
+                <p><Trans>Appuyez sur la combinaison de touches souhaitée</Trans></p>
+                <p><Trans>Exemple: Control+Shift+E ou Command+Shift+E</Trans></p>
+              </div>
+            </div>
           </section>
         </div>
       </PageScrollableContent>

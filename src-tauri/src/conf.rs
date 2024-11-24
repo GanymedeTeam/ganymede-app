@@ -84,6 +84,13 @@ pub struct Note {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct Shortcuts {
+    pub go_to_next_guide_step: String,
+    pub go_to_previous_guide_step: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Conf {
     pub auto_travel_copy: bool,
     pub show_done_guides: bool,
@@ -96,6 +103,8 @@ pub struct Conf {
     pub auto_pilots: Vec<AutoPilot>,
     pub notes: Vec<Note>,
     pub opacity: f32,
+    #[serde(default)]
+    pub shortcuts: Shortcuts,
 }
 
 impl Progress {
@@ -221,6 +230,7 @@ impl Default for Conf {
             auto_pilots: vec![],
             notes: vec![],
             opacity: 0.93,
+            shortcuts: Shortcuts::default(),
         }
     }
 }
@@ -231,6 +241,15 @@ impl Default for Profile {
             id: uuid::Uuid::new_v4().to_string(),
             name: "Player".to_string(),
             progresses: vec![],
+        }
+    }
+}
+
+impl Default for Shortcuts {
+    fn default() -> Self {
+        Shortcuts {
+            go_to_next_guide_step: "CommandOrControl+Shift+D".to_string(),
+            go_to_previous_guide_step: "CommandOrControl+Shift+F".to_string(),
         }
     }
 }
