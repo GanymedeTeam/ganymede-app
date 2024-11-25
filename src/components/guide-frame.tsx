@@ -45,8 +45,6 @@ export function GuideFrame({
       if (domNode.type === 'text') {
         const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([\w\s]*)/g
 
-        console.log(Array.from(domNode.data.matchAll(posReg)))
-
         let elems: ReactNode[] = []
 
         for (const groups of domNode.data.matchAll(posReg)) {
@@ -108,7 +106,8 @@ export function GuideFrame({
         // #region guide step go to
         if (domNode.attribs['data-type'] === 'guide-step') {
           let stepNumber = Number.parseInt(domNode.attribs['stepnumber'] ?? 0)
-          const domGuideId = Number.parseInt(domNode.attribs['guideid'] ?? 0)
+          const domGuideId =
+            domNode.attribs['guideid'] !== undefined ? Number.parseInt(domNode.attribs['guideid']) : undefined
           const hasGoToGuideIcon = domNode.children.some(
             (child) =>
               child.type === 'tag' &&
@@ -117,8 +116,9 @@ export function GuideFrame({
           )
 
           if (!Number.isNaN(domGuideId) || !Number.isNaN(stepNumber)) {
-            stepNumber = clamp(stepNumber, 1, guides.data.guides[domGuideId]?.steps.length ?? 1)
-            const guide = guideId !== domGuideId ? getGuideById(guides.data.guides, domGuideId) : undefined
+            const guideInSystem = getGuideById(guides.data.guides, domGuideId ?? guideId)
+            stepNumber = clamp(stepNumber, 1, guideInSystem?.steps.length ?? stepNumber)
+            const nextGuide = guideId !== domGuideId ? guideInSystem : undefined
 
             return (
               <div className="contents hover:saturate-200 focus:saturate-[25%]">
@@ -150,7 +150,7 @@ export function GuideFrame({
                     )}
                     disabled={downloadGuide.isPending}
                     onClick={async () => {
-                      if (!guide) {
+                      if (!nextGuide) {
                         await downloadGuide.mutateAsync({ id: domGuideId })
                       }
 

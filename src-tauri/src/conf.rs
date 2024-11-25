@@ -184,7 +184,7 @@ impl Conf {
     }
 
     pub fn normalize(&mut self) {
-        self.opacity = self.opacity.clamp(0.0, 0.94);
+        self.opacity = self.opacity.clamp(0.0, 0.98);
     }
 }
 
@@ -220,7 +220,7 @@ impl Default for Conf {
             profile_in_use: default_profile_id,
             auto_pilots: vec![],
             notes: vec![],
-            opacity: 0.93,
+            opacity: 0.98,
         }
     }
 }

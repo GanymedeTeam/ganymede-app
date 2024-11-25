@@ -65,7 +65,7 @@ function Settings() {
               id="opacity"
               defaultValue={[conf.data.opacity * 100]}
               step={1}
-              max={93}
+              max={98}
               onValueChange={(v) => {
                 setOpacity(v[0] / 100)
               }}
