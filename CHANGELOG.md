@@ -1,11 +1,5 @@
 # ganymede-app
 
-## 1.3.3
-
-### Patch Changes
-
-- f1a92b8: Test
-
 ## 1.3.2
 
 ### Patch Changes
