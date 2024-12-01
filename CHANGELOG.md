@@ -1,5 +1,16 @@
 # ganymede-app
 
+## 1.5.0
+
+### Minor Changes
+
+- 1ae14e2: Un guide tutoriel a été créé. Celui-ci expliquera comment utiliser l'application et ces différentes fonctionalités. Il sera téléchargé automatiquement au premier lancement de l'application. Ce changement n'est pas rétroactif, même si utilisez déjà Ganymède, la prochaine fois que vous lancerez l'application, ce guide sera téléchargé.
+
+### Patch Changes
+
+- cb1b5bd: Certaines redirections vers un autre guide pouvaient rediriger vers la première étape, faisant perdre la progression potentielle. Ceci est désormais corrigé.
+- 79fa816: La liste des liens autorisés dans un guide a été mise à jour. Tout lien détecté comme non valide sera transformé en "lien masqué".
+
 ## 1.4.0
 
 ### Minor Changes
