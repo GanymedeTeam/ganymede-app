@@ -1,8 +1,10 @@
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
+import { useProfile } from '@/hooks/use_profile.ts'
 import { useProgressStep } from '@/hooks/use_progress_step'
 import { clamp } from '@/lib/clamp'
 import { copyPosition } from '@/lib/copy-position'
 import { getGuideById } from '@/lib/guide'
+import { getProgress } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation'
 import { useOpenGuideLink } from '@/mutations/open-guide-link.mutation'
@@ -30,6 +32,7 @@ export function GuideFrame({
   stepIndex: number
 }) {
   const conf = useSuspenseQuery(confQuery)
+  const profile = useProfile()
   const toggleGuideCheckbox = useToggleGuideCheckbox()
   const step = useProgressStep(guideId, stepIndex)
   const openGuideLink = useOpenGuideLink()
@@ -105,6 +108,7 @@ export function GuideFrame({
 
         // #region guide step go to
         if (domNode.attribs['data-type'] === 'guide-step') {
+          const stepId = Number.parseInt(domNode.attribs['stepid'] ?? null)
           let stepNumber = Number.parseInt(domNode.attribs['stepnumber'] ?? 0)
           const domGuideId =
             domNode.attribs['guideid'] !== undefined ? Number.parseInt(domNode.attribs['guideid']) : undefined
@@ -117,8 +121,19 @@ export function GuideFrame({
 
           if (!Number.isNaN(domGuideId) || !Number.isNaN(stepNumber)) {
             const guideInSystem = getGuideById(guides.data.guides, domGuideId ?? guideId)
+
             stepNumber = clamp(stepNumber, 1, guideInSystem?.steps.length ?? stepNumber)
             const nextGuide = guideId !== domGuideId ? guideInSystem : undefined
+
+            // go to the user progress step if the guide has been downloaded and the stepId is 0.
+            // stepId === 0 means that the user has to go to currentStep of the progress
+            if (guideInSystem && !Number.isNaN(stepId) && stepId === 0) {
+              const userProgress = getProgress(profile, guideInSystem.id)
+
+              if (userProgress) {
+                stepNumber = clamp(userProgress.currentStep + 1, 1, guideInSystem.steps.length)
+              }
+            }
 
             return (
               <div className="contents hover:saturate-200 focus:saturate-[25%]">
