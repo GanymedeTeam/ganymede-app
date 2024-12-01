@@ -8,9 +8,6 @@ use serde::Serialize;
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
 #[cfg(not(debug_assertions))]
 pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
-#[cfg(debug_assertions)]
-pub const GANYMEDE_API_V2: &str = "https://dev.ganymede-dofus.com/api/v2";
-#[cfg(not(debug_assertions))]
 pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
 
 const GITHUB_API: &str = "https://api.github.com/repos/GanymedeTeam/ganymede-app";

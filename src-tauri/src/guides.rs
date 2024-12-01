@@ -3,10 +3,11 @@ use crate::tauri_api_ext::GuidesPathExt;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::{fmt, fs};
-use tauri::path::PathResolver;
-use tauri::{Manager, Runtime, Window, Wry};
+use tauri::{AppHandle, Manager, Window, Wry};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_shell::ShellExt;
+
+pub const DEFAULT_GUIDE_ID: u32 = 1074;
 
 #[derive(Debug)]
 pub enum Error {
@@ -205,14 +206,14 @@ impl Guides {
         Ok(Guides { guides })
     }
 
-    pub fn from_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<Guides, Error> {
-        let guides_dir = &resolver.app_guides_dir();
+    pub fn from_handle(app: &AppHandle) -> Result<Guides, Error> {
+        let guides_dir = &app.path().app_guides_dir();
 
         Guides::from_path(guides_dir)
     }
 
-    pub fn save<R: Runtime>(&self, resolver: &PathResolver<R>) -> Result<(), Error> {
-        let guides_dir = &resolver.app_guides_dir();
+    pub fn save(&self, app: &AppHandle) -> Result<(), Error> {
+        let guides_dir = &app.path().app_guides_dir();
 
         for guide in &self.guides {
             let json = serde_json::to_string_pretty(guide).map_err(Error::SerializeGuide)?;
@@ -233,8 +234,8 @@ impl Guides {
     }
 }
 
-pub fn ensure_with_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<(), Error> {
-    let guides_dir = &resolver.app_guides_dir();
+pub fn ensure(app: &AppHandle) -> Result<(), Error> {
+    let guides_dir = &app.path().app_guides_dir();
 
     if !guides_dir.exists() {
         fs::create_dir_all(guides_dir).map_err(Error::CreateGuidesDir)?;
@@ -243,9 +244,13 @@ pub fn ensure_with_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<()
     Ok(())
 }
 
+pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
+    download_guide_by_id(app, DEFAULT_GUIDE_ID).await
+}
+
 #[tauri::command]
-pub fn get_guides(window: Window<Wry>) -> Result<Guides, Error> {
-    Guides::from_resolver(window.path())
+pub fn get_guides(app: AppHandle) -> Result<Guides, Error> {
+    Guides::from_handle(&app)
 }
 
 #[tauri::command]
@@ -274,27 +279,10 @@ pub async fn get_guides_from_server(status: Status) -> Result<Vec<Guide>, Error>
 }
 
 #[tauri::command]
-pub async fn download_guide_from_server(
-    guide_id: u32,
-    window: Window<Wry>,
-) -> Result<Guides, Error> {
+pub async fn download_guide_from_server(guide_id: u32, app: AppHandle) -> Result<Guides, Error> {
     println!("[Guides] download_guide_from_server");
 
-    let guide = get_guide_from_server(guide_id).await?;
-
-    let resolver = window.path();
-    let guide_ref = &guide;
-    let mut guides = Guides::from_resolver(resolver)?;
-
-    // Update the guide file if it exists
-    match guides.guides.iter().position(|g| g.id == guide_ref.id) {
-        Some(index) => guides.guides[index] = guide,
-        None => guides.guides.push(guide),
-    }
-
-    guides.save(resolver)?;
-
-    Ok(guides)
+    Ok(download_guide_by_id(&app, guide_id).await?)
 }
 
 #[tauri::command]
@@ -306,4 +294,20 @@ pub fn open_guides_folder(window: Window<Wry>) -> Result<(), tauri_plugin_shell:
         .app_handle()
         .shell()
         .open(guides_dir.to_str().unwrap().to_string(), None)
+}
+
+async fn download_guide_by_id(app: &AppHandle, guide_id: u32) -> Result<Guides, Error> {
+    let guide = get_guide_from_server(guide_id).await?;
+    let guide_ref = &guide;
+    let mut guides = Guides::from_handle(app)?;
+
+    // Update the guide file if it exists
+    match guides.guides.iter().position(|g| g.id == guide_ref.id) {
+        Some(index) => guides.guides[index] = guide,
+        None => guides.guides.push(guide),
+    }
+
+    guides.save(app)?;
+
+    Ok(guides)
 }

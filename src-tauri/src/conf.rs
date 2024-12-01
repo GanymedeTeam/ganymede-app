@@ -3,8 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
 use std::fs;
-use tauri::path::PathResolver;
-use tauri::{Manager, Runtime, Window, Wry};
+use tauri::{AppHandle, Manager, Window, Wry};
 
 #[derive(Debug)]
 pub enum Error {
@@ -162,8 +161,8 @@ impl Step {
 
 impl Conf {
     /// Get the conf file content, if it does not exist, return default conf
-    pub fn get_with_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<Conf, Error> {
-        let conf_path = resolver.app_conf_file();
+    pub fn get(app: &AppHandle) -> Result<Conf, Error> {
+        let conf_path = app.path().app_conf_file();
 
         let file = fs::read_to_string(conf_path);
 
@@ -178,8 +177,8 @@ impl Conf {
     }
 
     /// Save the conf into the conf file. Normalize the conf before saving it
-    pub fn save<R: Runtime>(&mut self, resolver: &PathResolver<R>) -> Result<(), Error> {
-        let conf_path = resolver.app_conf_file();
+    pub fn save(&mut self, app: &AppHandle) -> Result<(), Error> {
+        let conf_path = app.path().app_conf_file();
 
         self.normalize();
 
@@ -248,7 +247,8 @@ impl Default for Profile {
 }
 
 /// Ensure that the conf file exists, if not, create it with default values
-pub fn ensure_with_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<(), Error> {
+pub fn ensure(app: &AppHandle) -> Result<(), Error> {
+    let resolver = app.path();
     let conf_dir = resolver.app_config_dir().map_err(Error::ConfDir)?;
 
     if !conf_dir.exists() {
@@ -264,33 +264,30 @@ pub fn ensure_with_resolver<R: Runtime>(resolver: &PathResolver<R>) -> Result<()
 
         let default_conf = &mut Conf::default();
 
-        default_conf.save(resolver)?;
+        default_conf.save(app)?;
     }
 
     Ok(())
 }
 
 #[tauri::command]
-pub fn get_conf(window: Window<Wry>) -> Result<Conf, Error> {
-    Conf::get_with_resolver(window.path())
+pub fn get_conf(app: AppHandle) -> Result<Conf, Error> {
+    Conf::get(&app)
 }
 
 #[tauri::command]
-pub fn set_conf(conf: Conf, window: Window<Wry>) -> Result<(), Error> {
-    let resolver = window.path();
-
-    conf.clone().borrow_mut().save(resolver)
+pub fn set_conf(conf: Conf, app: AppHandle) -> Result<(), Error> {
+    conf.clone().borrow_mut().save(&app)
 }
 
 #[tauri::command]
 pub fn toggle_guide_checkbox(
-    window: Window<Wry>,
+    app: AppHandle,
     guide_id: u32,
     step_index: usize,
     checkbox_index: usize,
 ) -> Result<usize, Error> {
-    let resolver = window.path();
-    let conf = &mut Conf::get_with_resolver(resolver)?;
+    let conf = &mut Conf::get(&app)?;
     let profile = conf.get_profile_in_use_mut()?;
     let progress = profile.get_progress_mut(guide_id);
 
@@ -310,15 +307,15 @@ pub fn toggle_guide_checkbox(
 
     progress.add_or_update_step(step, step_index);
 
-    conf.save(resolver)?;
+    conf.save(&app)?;
 
     Ok(checkbox_index)
 }
 
 #[tauri::command]
-pub fn reset_conf(window: Window<Wry>) -> Result<(), Error> {
+pub fn reset_conf(app: AppHandle, window: Window<Wry>) -> Result<(), Error> {
     Conf::default()
-        .save(window.path())
+        .save(&app)
         .map_err(|e| Error::ResetConf(Box::new(e)))?;
 
     let mut webview = window

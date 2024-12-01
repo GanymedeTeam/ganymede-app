@@ -1,15 +1,16 @@
 use crate::almanax::get_almanax;
 use crate::api::is_app_version_old;
 use crate::conf::{get_conf, reset_conf, set_conf, toggle_guide_checkbox};
+use crate::first_start::FirstStartExt;
 use crate::guides::{
-    download_guide_from_server, get_guide_from_server, get_guides, get_guides_from_server,
-    open_guides_folder,
+    download_default_guide, download_guide_from_server, get_guide_from_server, get_guides,
+    get_guides_from_server, open_guides_folder,
 };
 use crate::id::new_id;
 use crate::image::fetch_image;
 use crate::shortcut::handle_shortcuts;
 use crate::update::start_update;
-use tauri::{Manager, Wry};
+use tauri::Wry;
 #[cfg(not(debug_assertions))]
 use tauri_plugin_sentry::{minidump, sentry};
 use tauri_plugin_shell::ShellExt;
@@ -18,6 +19,7 @@ mod almanax;
 mod api;
 mod conf;
 mod event;
+mod first_start;
 mod guides;
 mod id;
 mod image;
@@ -63,14 +65,38 @@ pub fn run() {
     let app = app.plugin(tauri_plugin_sentry::init_with_no_injection(&sentry_client));
 
     app.setup(|app| {
-        let path = app.path();
-
-        if let Err(err) = crate::conf::ensure_with_resolver(path) {
+        if let Err(err) = crate::conf::ensure(app.handle()) {
             eprintln!("[Lib] failed to ensure conf: {:?}", err);
         }
 
-        if let Err(err) = crate::guides::ensure_with_resolver(path) {
+        if let Err(err) = crate::guides::ensure(app.handle()) {
             eprintln!("[Lib] failed to ensure guides: {:?}", err);
+        }
+
+        let handle = app.handle().clone();
+
+        match handle.is_first_start() {
+            Err(err) => {
+                eprintln!("[Lib] failed to ensure first start: {:?}", err);
+            }
+            Ok(first_start) => {
+                if first_start {
+                    println!("[Lib] first start");
+
+                    tauri::async_runtime::spawn(async move {
+                        let res = download_default_guide(&handle).await;
+
+                        match res {
+                            Err(err) => {
+                                eprintln!("[Lib] cannot download default guide {:?}", err);
+                            }
+                            Ok(_) => {
+                                println!("[Lib] default guide downloaded");
+                            }
+                        }
+                    });
+                }
+            }
         }
 
         #[cfg(not(debug_assertions))]

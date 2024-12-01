@@ -3,7 +3,7 @@ use crate::item::Item;
 use crate::quest::get_quest_data;
 use chrono::Datelike;
 use serde::{Deserialize, Serialize};
-use tauri::{Manager, Window, Wry};
+use tauri::AppHandle;
 use tauri_plugin_http::reqwest;
 
 use crate::conf::{Conf, Lang};
@@ -194,7 +194,7 @@ pub async fn get_item_data(item_id: u32) -> Result<Item, Error> {
 }
 
 #[tauri::command]
-pub async fn get_almanax(window: Window<Wry>) -> Result<AlmanaxReward, Error> {
+pub async fn get_almanax(app: AppHandle) -> Result<AlmanaxReward, Error> {
     let almanax = get_almanax_data().await?;
     let quest = get_quest_data(almanax.id).await.map_err(Error::Quest)?;
     let item_id = quest.data[0].steps[0].objectives[0].need.generated.items[0];
@@ -203,8 +203,7 @@ pub async fn get_almanax(window: Window<Wry>) -> Result<AlmanaxReward, Error> {
         .generated
         .quantities[0];
     let item = get_item_data(item_id).await?;
-    let resolver = window.path();
-    let conf = Conf::get_with_resolver(resolver).map_err(Error::Conf)?;
+    let conf = Conf::get(&app).map_err(Error::Conf)?;
 
     let name = match conf.lang {
         crate::conf::Lang::En => item.name.en,
