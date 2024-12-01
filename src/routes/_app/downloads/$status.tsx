@@ -3,6 +3,14 @@ import { FlagPerLang } from '@/components/flag-per-lang'
 import { GenericLoader } from '@/components/generic-loader.tsx'
 import { GuideDownloadButton } from '@/components/guide-card.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from '@/components/ui/alert-dialog.tsx'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear-input'
@@ -126,6 +134,25 @@ function DownloadGuidePage() {
 
   return (
     <Page key={`download-${status}`} to="/downloads" title={title}>
+      <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
+        <AlertDialogContent className="data-[state=open]:fade-in-100 data-[state=open]:zoom-in-100 data-[state=open]:slide-in-from-top-1/2">
+          <AlertDialogHeader>
+            <Trans>Attention</Trans>
+          </AlertDialogHeader>
+          <AlertDialogDescription>
+            <Trans>
+              Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <br /> Bien que les
+              liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides{' '}
+              <strong className="font-semibold">sur notre site</strong> avant de les télécharger.
+            </Trans>
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Trans>J'ai compris</Trans>
+            </AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <PageScrollableContent hasBottomBar={hasPagination} className="p-2" ref={scrollableRef}>
         <div className="flex grow flex-col text-xs sm:text-sm">
           {guides.data.length === 0 ? (
