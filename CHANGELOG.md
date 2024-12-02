@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.6.0
+
+### Minor Changes
+
+- d54f2a9: Ajout d'un système de fichier de log permettant un meilleur support.
+
 ## 1.5.0
 
 ### Minor Changes
