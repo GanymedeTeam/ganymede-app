@@ -1,24 +1,44 @@
+import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useWebviewEvent } from '@/hooks/use_webview_event'
 import { clamp } from '@/lib/clamp'
 import { cn } from '@/lib/utils'
 import { useStartUpdate } from '@/mutations/start-update.mutation'
+import { confQuery } from '@/queries/conf.query.ts'
 import { Trans } from '@lingui/macro'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { ExternalLinkIcon } from 'lucide-react'
 import { useState } from 'react'
+import { z } from 'zod'
+
+const SearchZod = z.object({
+  fromVersion: z.string(),
+  toVersion: z.string(),
+})
 
 export const Route = createFileRoute('/app-old-version')({
+  validateSearch: SearchZod.parse,
   component: AppOldVersionPage,
 })
 
 type UpdateState = 'idle' | 'downloading' | 'finished'
 
+const discordChannels: Record<string, string> = {
+  fr: 'https://discord.com/channels/1243967153590501437/1269278260269682850',
+  en: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
+  pt: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
+  es: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
+}
+
 function AppOldVersionPage() {
+  const { fromVersion, toVersion } = Route.useSearch()
   const [downloaded, setDownloaded] = useState<number | null>(null)
   const [total, setTotal] = useState<number | null>(null)
   const [updateState, setUpdateState] = useState<UpdateState>('idle')
   const startUpdate = useStartUpdate()
+  const conf = useSuspenseQuery(confQuery)
 
   const progress = clamp(downloaded && total ? (downloaded / total) * 100 : 0, 4, 100)
 
@@ -38,13 +58,38 @@ function AppOldVersionPage() {
   })
 
   return (
-    <div className="flex grow flex-col justify-center gap-5 p-4">
+    <PageScrollableContent className="flex grow flex-col justify-center gap-4 p-4 text-sm">
       <p className={cn('text-balance', updateState === 'finished' && 'text-slate-600')}>
         <Trans>
           Vous ne disposez pas de la dernière version de{' '}
           <span className={cn('text-yellow-200', updateState === 'finished' && 'text-current')}>Ganymède</span>.
         </Trans>
       </p>
+      {updateState === 'idle' && (
+        <p className="text-balance">
+          <Trans>
+            Vous utilisez actuellement la version <span className="text-yellow-200">{fromVersion}</span>.
+          </Trans>
+        </p>
+      )}
+
+      {updateState === 'idle' && (
+        <a
+          href={discordChannels[conf.data?.lang.toLowerCase() ?? ('fr' as const)]}
+          draggable={false}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="group text-slate-300 leading-5"
+        >
+          <Trans>
+            <span>
+              Vous trouverez les notes de version sur notre Discord{' '}
+              <span className="text-yellow-100 group-hover:underline">#changelog</span>
+            </span>
+          </Trans>
+          <ExternalLinkIcon className="ml-1 inline-block size-4 text-yellow-100 group-hover:underline" />.
+        </a>
+      )}
 
       {updateState === 'downloading' ? (
         <>
@@ -66,10 +111,10 @@ function AppOldVersionPage() {
           }}
           disabled={startUpdate.isPending || startUpdate.isSuccess}
         >
-          <Trans>Lancer le téléchargement</Trans>
+          <Trans>Télécharger la version {toVersion}</Trans>
           {startUpdate.isError && <Trans>Il semblerait que la mise à jour ait eu un problème.</Trans>}
         </Button>
       )}
-    </div>
+    </PageScrollableContent>
   )
 }

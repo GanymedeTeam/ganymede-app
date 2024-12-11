@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/routes/app-old-version.tsx:84
+msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
+msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog</1></0>"
+
 #: src/components/title-bar.tsx:43
 msgid "Accueil"
 msgstr "Início"
@@ -76,40 +80,40 @@ msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
-#: src/components/guide-frame.tsx:248
+#: src/components/guide-frame.tsx:250
 msgid "Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:249
+#: src/components/guide-frame.tsx:251
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:256
+#: src/components/guide-frame.tsx:258
 msgid "Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome da missão. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:257
+#: src/components/guide-frame.tsx:259
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:244
+#: src/components/guide-frame.tsx:246
 msgid "Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:245
+#: src/components/guide-frame.tsx:247
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:252
+#: src/components/guide-frame.tsx:254
 msgid "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:253
+#: src/components/guide-frame.tsx:255
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:291
-#: src/components/guide-frame.tsx:325
+#: src/components/guide-frame.tsx:293
+#: src/components/guide-frame.tsx:327
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
@@ -189,8 +193,8 @@ msgstr "Grande"
 
 #: src/components/title-bar.tsx:49
 #: src/routes/_app/downloads/$status.tsx:94
-#: src/routes/_app/guides/index.tsx:37
-#: src/routes/_app/guides/index.tsx:134
+#: src/routes/_app/guides/index.tsx:38
+#: src/routes/_app/guides/index.tsx:135
 msgid "Guides"
 msgstr "Guias"
 
@@ -219,11 +223,11 @@ msgid "Guides publics"
 msgstr "Guias públicos"
 
 #: src/routes/_app/downloads/$status.tsx:188
-#: src/routes/_app/guides/index.tsx:195
+#: src/routes/_app/guides/index.tsx:201
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
-#: src/routes/app-old-version.tsx:70
+#: src/routes/app-old-version.tsx:115
 msgid "Il semblerait que la mise à jour ait eu un problème."
 msgstr "Parece que houve um problema com a atualização."
 
@@ -237,8 +241,8 @@ msgid "J'ai compris"
 msgstr "Entendi"
 
 #: src/routes/app-old-version.tsx:69
-msgid "Lancer le téléchargement"
-msgstr "Iniciar a transferência"
+#~ msgid "Lancer le téléchargement"
+#~ msgstr "Iniciar a transferência"
 
 #: src/components/select-lang.tsx:10
 msgid "Langue"
@@ -248,19 +252,19 @@ msgstr "Idioma"
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ganimedes. <0/> Embora os links para os sites sejam seguros, verifique cuidadosamente os guias <1>em nosso site</1> antes de baixá-los."
 
-#: src/components/guide-frame.tsx:52
+#: src/components/guide-frame.tsx:54
 msgid "lien masqué"
 msgstr "link oculto"
 
-#: src/components/guide-card.tsx:47
+#: src/components/guide-card.tsx:45
 msgid "Mettre à jour le guide"
 msgstr "Atualizar o guia"
 
-#: src/routes/app-old-version.tsx:52
+#: src/routes/app-old-version.tsx:97
 msgid "Mise à jour en cours."
 msgstr "Atualização em curso."
 
-#: src/routes/app-old-version.tsx:58
+#: src/routes/app-old-version.tsx:103
 msgid "Mise à jour terminée. L'application va redémarrer."
 msgstr "Atualização concluída. A aplicação vai reiniciar."
 
@@ -295,7 +299,7 @@ msgstr "Opacidade"
 msgid "Ou le bouton suivant"
 msgstr "Ou o próximo botão"
 
-#: src/routes/_app/guides/index.tsx:154
+#: src/routes/_app/guides/index.tsx:155
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
@@ -321,12 +325,12 @@ msgstr "Apresentação"
 msgid "Profils"
 msgstr "Perfis"
 
-#: src/routes/_app/guides/index.tsx:145
+#: src/routes/_app/guides/index.tsx:146
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Atualizar a pasta dos guias baixados"
 
 #: src/routes/_app/downloads/$status.tsx:171
-#: src/routes/_app/guides/index.tsx:170
+#: src/routes/_app/guides/index.tsx:171
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
@@ -363,7 +367,11 @@ msgstr "Tamanho do texto dos guias"
 msgid "Téléchargements"
 msgstr "Downloads"
 
-#: src/components/guide-card.tsx:47
+#: src/routes/app-old-version.tsx:114
+msgid "Télécharger la version {toVersion}"
+msgstr "Baixar a versão {toVersion}"
+
+#: src/components/guide-card.tsx:45
 msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
@@ -391,10 +399,14 @@ msgstr "Ocorreu um erro ao recuperar a configuração."
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 
-#: src/routes/app-old-version.tsx:43
+#: src/routes/app-old-version.tsx:63
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."
 msgstr "Não tem a versão mais recente do <0>Ganymède</0>."
 
 #: src/routes/_app/index.tsx:44
 msgid "Vous pouvez créer, utiliser et partager des guides vous permettant d'optimiser votre aventure."
 msgstr "Você pode criar, usar e compartilhar guias que ajudam a otimizar sua aventura."
+
+#: src/routes/app-old-version.tsx:70
+msgid "Vous utilisez actuellement la version <0>{fromVersion}</0>."
+msgstr "Você está usando a versão <0>{fromVersion}</0>."

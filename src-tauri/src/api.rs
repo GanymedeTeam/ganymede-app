@@ -1,5 +1,5 @@
 use log::debug;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Runtime};
 use tauri_plugin_http::reqwest;
 
@@ -112,8 +112,16 @@ impl Into<tauri::ipc::InvokeError> for AppVersionError {
     }
 }
 
+#[derive(Serialize)]
+pub struct IsOld {
+    from: String,
+    to: String,
+    #[serde(rename = "isOld")]
+    is_old: bool,
+}
+
 #[tauri::command]
-pub async fn is_app_version_old<R: Runtime>(app: AppHandle<R>) -> Result<bool, AppVersionError> {
+pub async fn is_app_version_old<R: Runtime>(app: AppHandle<R>) -> Result<IsOld, AppVersionError> {
     let version = app.package_info().version.to_string();
 
     let client = tauri_plugin_http::reqwest::ClientBuilder::new()
@@ -140,5 +148,9 @@ pub async fn is_app_version_old<R: Runtime>(app: AppHandle<R>) -> Result<bool, A
         version, release_version
     );
 
-    Ok(release_version.matches(&version))
+    Ok(IsOld {
+        from: version.to_string(),
+        to: res.tag_name,
+        is_old: release_version.matches(&version),
+    })
 }

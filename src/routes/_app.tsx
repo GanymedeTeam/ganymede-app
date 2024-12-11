@@ -6,11 +6,18 @@ export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     const isOldVersion = await queryClient.ensureQueryData(isAppOldVersionQuery)
 
-    if (isOldVersion) {
+    console.log(isOldVersion)
+
+    if (isOldVersion !== false && typeof isOldVersion === 'object' && isOldVersion.isOld) {
       await info('App is old version')
+      await info(JSON.stringify(isOldVersion, undefined, 2))
 
       throw redirect({
         to: '/app-old-version',
+        search: {
+          fromVersion: isOldVersion.from,
+          toVersion: isOldVersion.to,
+        },
       })
     }
   },
