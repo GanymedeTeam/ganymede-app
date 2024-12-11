@@ -1,4 +1,5 @@
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
+import { useGuide } from '@/hooks/use_guide.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useProgressStep } from '@/hooks/use_progress_step'
 import { clamp } from '@/lib/clamp'
@@ -38,6 +39,7 @@ export function GuideFrame({
   const step = useProgressStep(guideId, stepIndex)
   const openGuideLink = useOpenGuideLink()
   const guides = useSuspenseQuery(guidesQuery())
+  const currentGuide = useGuide(guideId)
   const navigate = useNavigate()
   const downloadGuide = useDownloadGuideFromServer()
   const whiteList = useSuspenseQuery(whiteListQuery)
@@ -231,7 +233,7 @@ export function GuideFrame({
                   // open in browser if ctrl/cmd is pressed
                   if (isMacOs ? evt.metaKey : evt.ctrlKey) {
                     openGuideLink.mutate(
-                      `https://dofusdb.fr/fr/database/${domNode.attribs.type === 'item' ? 'object' : domNode.attribs.type}/${domNode.attribs.dofusdbid}`,
+                      `https://dofusdb.fr/${currentGuide.lang}/database/${domNode.attribs.type === 'item' ? 'object' : domNode.attribs.type}/${domNode.attribs.dofusdbid}`,
                     )
                   } else {
                     await writeText(name)

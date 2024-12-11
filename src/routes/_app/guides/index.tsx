@@ -175,7 +175,12 @@ function GuidesPage() {
             if (guide.type === 'folder') {
               return (
                 <Card key={guide.name} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" asChild>
-                  <Link to="/guides" search={{ path: `${path}/${guide.name}` }} draggable={false}>
+                  <Link
+                    className="items-center"
+                    to="/guides"
+                    search={{ path: `${path}/${guide.name}` }}
+                    draggable={false}
+                  >
                     <span className="grow">{guide.name}</span>
                     <FolderIcon className="size-6 focus-visible:bg-white" />
                   </Link>
