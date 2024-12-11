@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear-input'
 import { useProfile } from '@/hooks/use_profile'
+import { clamp } from '@/lib/clamp.ts'
 import { rankList } from '@/lib/rank'
 import { useOpenGuidesFolder } from '@/mutations/open-guides-folder.mutation'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -182,8 +183,8 @@ function GuidesPage() {
               )
             }
 
-            const step = (guide.currentStep ?? 0) + 1
             const totalSteps = guide.steps.length
+            const step = clamp((guide.currentStep ?? 0) + 1, 1, totalSteps)
             const percentage = totalSteps === 1 ? 100 : (((step - 1) / (totalSteps - 1)) * 100).toFixed(1)
             const hasOpenButton = guide.steps.length > 0
 
@@ -208,12 +209,7 @@ function GuidesPage() {
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
-                    <Link
-                      to="/guides/$id"
-                      params={{ id: guide.id }}
-                      search={{ step: guide.currentStep ?? 0 }}
-                      draggable={false}
-                    >
+                    <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }} draggable={false}>
                       <ChevronRightIcon />
                     </Link>
                   </Button>

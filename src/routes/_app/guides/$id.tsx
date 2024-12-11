@@ -5,12 +5,14 @@ import { PageScrollableContent } from '@/components/page-scrollable-content'
 import { Position } from '@/components/position.tsx'
 import { useGuide } from '@/hooks/use_guide'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top'
+import { getGuideById } from '@/lib/guide.ts'
 import { cn } from '@/lib/utils'
 import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
+import { guidesQuery } from '@/queries/guides.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useRef } from 'react'
 import { z } from 'zod'
 
@@ -30,6 +32,36 @@ export const Route = createFileRoute('/_app/guides/$id')({
     stringify: (params) => ({ id: params.id.toString() }),
   },
   pendingComponent: Pending,
+  beforeLoad: async ({ context: { queryClient }, params, search: { step } }) => {
+    const guides = await queryClient.ensureQueryData(guidesQuery())
+
+    const guideById = getGuideById(guides, params.id)
+
+    if (!guideById) {
+      throw redirect({
+        to: '/guides',
+        search: {
+          path: '',
+        },
+      })
+    }
+
+    const currentStep = step + 1
+    const totalSteps = guideById.steps.length
+
+    if (currentStep > totalSteps) {
+      throw redirect({
+        to: '/guides/$id',
+        params: {
+          id: guideById.id,
+        },
+        search: {
+          step: totalSteps - 1,
+        },
+        replace: true,
+      })
+    }
+  },
 })
 
 function Pending() {
