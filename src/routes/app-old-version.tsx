@@ -28,8 +28,8 @@ type UpdateState = 'idle' | 'downloading' | 'finished'
 const discordChannels: Record<string, string> = {
   fr: 'https://discord.com/channels/1243967153590501437/1269278260269682850',
   en: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
-  pt: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
-  es: 'https://discord.com/channels/1243967153590501437/1303090961789751336',
+  pt: 'https://discord.com/channels/1243967153590501437/1303090961789751336', // currently using the english channel
+  es: 'https://discord.com/channels/1243967153590501437/1303090961789751336', // currently using the english channel
 }
 
 function AppOldVersionPage() {
