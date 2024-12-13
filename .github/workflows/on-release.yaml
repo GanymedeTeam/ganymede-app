@@ -102,7 +102,8 @@ jobs:
           draft: true
           files: |
             src-tauri/target/release/bundle/nsis/Ganymede_x64-setup.exe
-      - name: Upload debug informations to Sentry
+      - name: Upload debug informations to Sentry (windows)
+        if: matrix.platform == 'windows-latest'
         run: |
           pnpm sentry-cli debug-files bundle-sources src-tauri/target/release/ganymede.pdb
           pnpm sentry-cli debug-files upload --auth-token=${{ secrets.SENTRY_AUTH_TOKEN }} src-tauri/target/release/ganymede.pdb src-tauri/target/release/ganymede.src.zip
