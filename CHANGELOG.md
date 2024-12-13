@@ -1,5 +1,26 @@
 # ganymede-app
 
+## 1.7.0
+
+### Minor Changes
+
+- f8a1041: Ajout du nombre de j'aime dans la liste des guides téléchargeables.
+- 2f9c007: Ajout du nombre de téléchargements d'un guide dans la liste des guides téléchargeables.
+- 8016a9a: Le système de dossiers refait surface.
+
+  Organisez vos guides via des dossiers que vous retrouverez dans l'application. Actuellement, la gestion des dossiers se fait uniquement via l'Explorer Windows/Finder macOS.
+
+- 50b715e: Ajout de plus d'informations lorsqu'une mise à jour est disponible. Cela s'affichera uniquement lors de la prochaine mise à jour.
+
+### Patch Changes
+
+- 63494c6: Quand vous aviez terminé un guide et que celui-ci recevait une mise à jour réduisant son nombre d'étapes, vous ne pouviez plus le consulter. Ceci est corrigé.
+- 986195f: Les liens vers DofusDB (carte et chasses) utilisent la langue de l'application au lieu du français.
+- 6526987: Avec la suppression de l'italien sur DofusDB (du fait que Dofus 3 ne gère plus l'italien), l'Almanax ne chargeait plus. Ceci est corrigé.
+- 8495fb7: Certains liens étaient marqués masqués par erreur. Ceci est désormais corrigé.
+- 986195f: Les liens vers les monstres, quêtes, donjons, objets utilisent la langue du guide au lieu du français.
+- 8016a9a: Plus de logs devraient permettre un meilleur support.
+
 ## 1.6.0
 
 ### Minor Changes
