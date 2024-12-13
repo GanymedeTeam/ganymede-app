@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.7.1
+
+### Patch Changes
+
+- baebac2: Avec la version 1.7.0, les utilisateurs de macOS ne pouvaient plus mettre à jour l'application. Ceci est corrigé.
+
 ## 1.7.0
 
 ### Minor Changes
