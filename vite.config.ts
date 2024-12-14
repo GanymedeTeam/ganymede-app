@@ -1,8 +1,9 @@
 import * as path from 'node:path'
 import * as url from 'node:url'
+import { lingui } from '@lingui/vite-plugin'
+import tailwindcss from '@tailwindcss/vite'
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
-import { lingui } from '@lingui/vite-plugin'
 import { defineConfig } from 'vite'
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -19,6 +20,7 @@ export default defineConfig(async () => ({
       },
     }),
     lingui(),
+    tailwindcss(),
   ],
 
   resolve: {

@@ -63,6 +63,7 @@
     "@lingui/vite-plugin": "^4.14.0",
     "@sentry/cli": "^2.39.1",
     "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "4.0.0-beta.7",
     "@tanstack/router-plugin": "^1.57.8",
     "@tauri-apps/cli": "2.0.4",
     "@types/country-flag-icons": "^1.2.2",
@@ -70,12 +71,10 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.20",
     "babel-plugin-macros": "^3.1.0",
-    "postcss": "^8.4.45",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "3.4.16",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   },
-  "packageManager": "pnpm@9.14.4"
+  "packageManager": "pnpm@9.15.0"
 }

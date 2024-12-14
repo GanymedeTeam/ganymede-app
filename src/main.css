@@ -1,8 +1,9 @@
+@import "tailwindcss";
 @import "./assets/fonts/fonts.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/*@tailwind base;*/
+/*@tailwind components;*/
+/*@tailwind utilities;*/
 
 @layer base {
   :root {
