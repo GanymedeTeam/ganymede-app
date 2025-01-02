@@ -4,7 +4,7 @@ export async function copyPosition(posX: number, posY: number, autoTravelCopy: b
   let copy = `[${posX},${posY}]`
 
   if (autoTravelCopy) {
-    copy = `/travel ${posX},${posY}`
+    copy = `/travel ${posX} ${posY}`
   }
 
   await writeText(copy)
