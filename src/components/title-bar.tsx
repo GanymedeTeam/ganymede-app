@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import {
@@ -25,6 +25,7 @@ import {
 const appWindow = getCurrentWindow()
 
 export function TitleBar() {
+  const { t } = useLingui()
   const location = useLocation()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')

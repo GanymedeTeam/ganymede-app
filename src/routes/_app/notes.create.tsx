@@ -4,12 +4,13 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useSetConf } from '@/mutations/set-conf.mutation'
 import { confQuery } from '@/queries/conf.query'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SaveIcon } from 'lucide-react'
 import { z } from 'zod'
 import { Page } from '@/routes/-page'
+import { BackButtonLink } from './downloads/-back-button-link'
 
 const SearchZod = z.object({
   name: z.string().optional(),
@@ -23,6 +24,7 @@ export const Route = createFileRoute('/_app/notes/create')({
 const linesBreak = '\n\n'
 
 function CreateNotePage() {
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const navigate = useNavigate()
@@ -31,7 +33,11 @@ function CreateNotePage() {
   const note = noteName ? conf.data.notes.find((note) => note.name === noteName) : undefined
 
   return (
-    <Page key="create-or-edit-notes-page" title={noteName ? t`Éditer une note` : t`Créer une note`} to="/notes">
+    <Page
+      key="create-or-edit-notes-page"
+      title={noteName ? t`Éditer une note` : t`Créer une note`}
+      backButton={<BackButtonLink to="/notes" />}
+    >
       <PageScrollableContent className="p-2">
         <form
           className="flex grow flex-col gap-2"

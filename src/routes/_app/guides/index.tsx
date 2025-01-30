@@ -13,12 +13,13 @@ import { useOpenGuidesFolder } from '@/mutations/open-guides-folder.mutation'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
 import { Page } from '@/routes/-page.tsx'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { ChevronRightIcon, FolderIcon, FolderOpenIcon, FolderSyncIcon } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
+import { BackButtonLink } from '../downloads/-back-button-link'
 
 const Search = z.object({
   path: z.string().default(''),
@@ -31,16 +32,14 @@ export const Route = createFileRoute('/_app/guides/')({
 })
 
 function Pending() {
+  const { t } = useLingui()
   const { path } = Route.useSearch()
 
   return (
     <Page
       title={t`Guides`}
       key="guide-page"
-      to="/guides"
-      search={{ path }}
-      disabled
-      removeBackButton={path === ''}
+      backButton={path !== '' && <BackButtonLink to="/guides" search={{ path }} disabled />}
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
           <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
@@ -65,6 +64,7 @@ function GuidesPage() {
   const path = Route.useSearch({
     select: (search) => (search.path.startsWith('/') ? search.path.slice(1) : search.path),
   })
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
   const guides = useSuspenseQuery(guidesInFolderQuery(path))
@@ -133,9 +133,7 @@ function GuidesPage() {
     <Page
       key="guide-page"
       title={t`Guides`}
-      to="/guides"
-      search={{ path: pathsWithoutLast.join('/') }}
-      removeBackButton={path === ''}
+      backButton={path !== '' && <BackButtonLink to="/guides" search={{ path: pathsWithoutLast.join('/') }} />}
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
           {guides.isFetched && guides.isFetching && <GenericLoader className="size-4" />}

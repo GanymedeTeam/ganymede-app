@@ -25,13 +25,15 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides-from-server.query.ts'
 import { guidesQuery } from '@/queries/guides.query'
 import { Page } from '@/routes/-page.tsx'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { t } from '@lingui/core/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { z } from 'zod'
+import { BackButtonLink } from './-back-button-link'
 
 const SearchZod = z.object({
   page: z.coerce.number(),
@@ -68,7 +70,7 @@ function Pending() {
   const status = Route.useParams({ select: (p) => p.status })
 
   return (
-    <Page key={`download-${status}`} to="/downloads" title={titleByStatus(status)}>
+    <Page key={`download-${status}`} title={titleByStatus(status)} backButton={<BackButtonLink to="/downloads" />}>
       <PageScrollableContent className="flex items-center justify-center">
         <div className="flex grow items-center justify-center">
           <GenericLoader />
@@ -96,6 +98,7 @@ function titleByStatus(status: string) {
 }
 
 function DownloadGuidePage() {
+  const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
   const [searchTerm, setSearchTerm] = useState(baseSearch ?? '')
   const page = Route.useSearch({ select: (s) => s.page })
@@ -135,9 +138,9 @@ function DownloadGuidePage() {
   const intl = new Intl.NumberFormat(getLang(conf.data.lang).toLowerCase(), {})
 
   return (
-    <Page key={`download-${status}`} to="/downloads" title={title}>
+    <Page key={`download-${status}`} title={title} backButton={<BackButtonLink to="/downloads" />}>
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
-        <AlertDialogContent className="data-[state=open]:fade-in-100 data-[state=open]:zoom-in-100 data-[state=open]:slide-in-from-top-1/2">
+        <AlertDialogContent className="data-[state=open]:fade-in-100">
           <AlertDialogHeader>
             <AlertDialogTitle>
               <Trans>Attention</Trans>

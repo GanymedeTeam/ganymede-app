@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { ButtonProps, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { Link, LinkProps, RegisteredRouter, useLinkProps } from '@tanstack/react-router'
+import { Link, LinkProps, useLinkProps } from '@tanstack/react-router'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
@@ -13,26 +13,21 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     {...props}
   />
 )
-Pagination.displayName = 'Pagination'
 
-const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
-  ({ className, ...props }, ref) => (
-    <ul ref={ref} className={cn('flex flex-row items-center gap-1', className)} {...props} />
-  ),
-)
-PaginationContent.displayName = 'PaginationContent'
+function PaginationContent({ className, ref, ...props }: React.ComponentPropsWithRef<'ul'>) {
+  return <ul ref={ref} className={cn('flex flex-row items-center gap-1', className)} {...props} />
+}
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn('', className)} {...props} />
-))
-PaginationItem.displayName = 'PaginationItem'
+function PaginationItem({ className, ref, ...props }: React.ComponentPropsWithRef<'li'>) {
+  return <li ref={ref} className={cn('', className)} {...props} />
+}
 
 type PaginationLinkProps = Pick<ButtonProps, 'size'> &
-  LinkProps<RegisteredRouter, string, '.'> & {
+  LinkProps & {
     className?: string
   }
 
-const PaginationLink = ({ className, from, to, search, size = 'icon', children, ...props }: PaginationLinkProps) => {
+function PaginationLink({ className, from, to, search, size = 'icon', children, ...props }: PaginationLinkProps) {
   const { 'aria-current': ariaCurrent } = useLinkProps({ from, to, search, ...props })
 
   return (
@@ -45,7 +40,6 @@ const PaginationLink = ({ className, from, to, search, size = 'icon', children, 
         className,
       )}
       aria-current={ariaCurrent}
-      from={from}
       to={to}
       search={search}
       draggable={false}
@@ -55,31 +49,38 @@ const PaginationLink = ({ className, from, to, search, size = 'icon', children, 
     </Link>
   )
 }
-PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to previous page" size="default" className={cn('gap-1 pl-2.5', className)} {...props}>
-    <ChevronLeftIcon />
-    <span>Previous</span>
-  </PaginationLink>
-)
-PaginationPrevious.displayName = 'PaginationPrevious'
+function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink
+      aria-label="Go to previous page"
+      size="default"
+      className={cn('gap-1 pl-2.5', className)}
+      {...props}
+    >
+      <ChevronLeftIcon />
+      <span>Previous</span>
+    </PaginationLink>
+  )
+}
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink aria-label="Go to next page" size="default" className={cn('gap-1 pr-2.5', className)} {...props}>
-    <span>Next</span>
-    <ChevronRightIcon />
-  </PaginationLink>
-)
-PaginationNext.displayName = 'PaginationNext'
+function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
+  return (
+    <PaginationLink aria-label="Go to next page" size="default" className={cn('gap-1 pr-2.5', className)} {...props}>
+      <span>Next</span>
+      <ChevronRightIcon />
+    </PaginationLink>
+  )
+}
 
-const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
-  <span aria-hidden className={cn('flex h-9 w-9 items-center justify-center', className)} {...props}>
-    <EllipsisIcon />
-    <span className="sr-only">More pages</span>
-  </span>
-)
-PaginationEllipsis.displayName = 'PaginationEllipsis'
+function PaginationEllipsis({ className, ref, ...props }: React.ComponentPropsWithRef<'span'>) {
+  return (
+    <span aria-hidden className={cn('flex h-9 w-9 items-center justify-center', className)} ref={ref} {...props}>
+      <EllipsisIcon />
+      <span className="sr-only">More pages</span>
+    </span>
+  )
+}
 
 export {
   Pagination,

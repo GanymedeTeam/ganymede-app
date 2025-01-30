@@ -1,13 +1,17 @@
 import { cn } from '@/lib/utils'
-import { ComponentProps, forwardRef } from 'react'
+import { ComponentPropsWithRef } from 'react'
 
-export const PageScrollableContent = forwardRef<
-  HTMLDivElement,
-  ComponentProps<'div'> & {
-    hasTitleBar?: boolean
-    hasBottomBar?: boolean
-  }
->(({ children, hasTitleBar = false, hasBottomBar = false, className, ...props }, ref) => {
+export function PageScrollableContent({
+  children,
+  hasTitleBar = false,
+  hasBottomBar = false,
+  className,
+  ref,
+  ...props
+}: ComponentPropsWithRef<'div'> & {
+  hasTitleBar?: boolean
+  hasBottomBar?: boolean
+}) {
   return (
     <div
       ref={ref}
@@ -28,4 +32,4 @@ export const PageScrollableContent = forwardRef<
       {children}
     </div>
   )
-})
+}

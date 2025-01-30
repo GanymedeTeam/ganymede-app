@@ -1,6 +1,6 @@
 import { dynamicActiveLocale } from '@/i18n'
 import { cn } from '@/lib/utils'
-import { Trans } from '@lingui/macro'
+import { Trans } from '@lingui/react/macro'
 import { Label, type LabelProps } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectProps, SelectTrigger, SelectValue } from './ui/select'
 

@@ -1,7 +1,5 @@
-@import 'tailwindcss';
-@import './assets/fonts/fonts.css';
-
-@config '../tailwind.config.ts';
+@import "tailwindcss";
+@import "./assets/fonts/fonts.css";
 
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animate";
@@ -36,17 +34,9 @@
 @theme {
   --color-primary-800: hsl(236 27% 25%);
   --color-primary-foreground-800: hsl(222.2 47.4% 1.2%);
-  --font-liberation: 'Liberation', var(--default-font-family);
+  --font-liberation: "Liberation", var(--default-font-family);
   --text-xxs: 0.625rem;
   --text-xxs--line-height: calc(0.75 / 0.625);
-  --radius-xs: 0.125rem;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-  --radius-4xl: 2rem;
   --breakpoint-xs: 320px;
   --spacing-app-without-header: calc(100vh - 30px);
 }
@@ -99,13 +89,11 @@
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
     --default-font-family: var(--font-sans);
-    --radius: 0.5rem;
     --opacity: 0.93;
   }
 
   * {
     user-select: none;
-    border-color: var(--color-border);
   }
 
   body {

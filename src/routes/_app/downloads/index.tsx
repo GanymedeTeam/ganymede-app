@@ -1,61 +1,95 @@
 import { PageScrollableContent } from '@/components/page-scrollable-content'
 import { Card } from '@/components/ui/card'
 import { Page } from '@/routes/-page.tsx'
-import { Trans, t } from '@lingui/macro'
-import { Slot } from '@radix-ui/react-slot'
-import { Link, LinkProps, type RegisteredRouter, createFileRoute } from '@tanstack/react-router'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { AnyRouter, Link, LinkComponentProps, type RegisteredRouter, createFileRoute } from '@tanstack/react-router'
 import { BookOpenCheckIcon, BookOpenTextIcon, NotebookPenIcon, TrophyIcon } from 'lucide-react'
-import { type JSX, type PropsWithChildren } from 'react'
+import { type PropsWithChildren } from 'react'
+import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/_app/downloads/')({
   component: DownloadIndex,
 })
 
-function GuideLink({
-  params,
-  icon,
-  children,
-}: PropsWithChildren<{
-  params: LinkProps<RegisteredRouter, string, '/downloads/$status'>['params']
-  icon: JSX.Element
-}>) {
+function GuideLinkCard({ children }: PropsWithChildren) {
   return (
     <Card asChild className="flex flex-col rounded-lg">
-      <li>
-        <Link
-          to="/downloads/$status"
-          params={params}
-          search={{ page: 1 }}
-          className="flex w-full items-center gap-x-2 p-2 text-sm xs:text-base"
-          draggable={false}
-        >
-          <span>
-            <Slot>{icon}</Slot>
-          </span>
-          <span>{children}</span>
-        </Link>
-      </li>
+      <li>{children}</li>
     </Card>
   )
 }
 
+function GuideLink<
+  TRouter extends AnyRouter = RegisteredRouter,
+  const TFrom extends string = string,
+  const TMaskFrom extends string = TFrom,
+  const TMaskTo extends string = '',
+>({
+  className,
+  children,
+  ...props
+}: Omit<LinkComponentProps<'a', TRouter, TFrom, '/downloads/$status', TMaskFrom, TMaskTo>, 'to' | 'search'>) {
+  return (
+    // @ts-expect-error - does not want to know
+    <Link
+      className={cn('flex w-full items-center gap-x-2 p-2 text-sm xs:text-base', className)}
+      draggable={false}
+      to="/downloads/$status"
+      search={{ page: 1 }}
+      {...props}
+    >
+      {children}
+    </Link>
+  )
+}
+
 function DownloadIndex() {
+  const { t } = useLingui()
+
   return (
     <Page title={t`Catégories`}>
       <PageScrollableContent className="p-2">
         <ul className="flex flex-col gap-2">
-          <GuideLink params={{ status: 'gp' }} icon={<BookOpenTextIcon className="size-5" />}>
-            <Trans>Guides principaux</Trans>
-          </GuideLink>
-          <GuideLink params={{ status: 'certified' }} icon={<TrophyIcon className="size-5" />}>
-            <Trans>Guides certifiés</Trans>
-          </GuideLink>
-          <GuideLink params={{ status: 'public' }} icon={<BookOpenCheckIcon className="size-5" />}>
-            <Trans>Guides publics</Trans>
-          </GuideLink>
-          <GuideLink params={{ status: 'draft' }} icon={<NotebookPenIcon className="size-5" />}>
-            <Trans>Guides draft</Trans>
-          </GuideLink>
+          <GuideLinkCard>
+            <GuideLink params={{ status: 'gp' }}>
+              <span>
+                <BookOpenTextIcon className="size-5" />
+              </span>
+              <span>
+                <Trans>Guides principaux</Trans>
+              </span>
+            </GuideLink>
+          </GuideLinkCard>
+          <GuideLinkCard>
+            <GuideLink params={{ status: 'certified' }}>
+              <span>
+                <TrophyIcon className="size-5" />
+              </span>
+              <span>
+                <Trans>Guides certifiés</Trans>
+              </span>
+            </GuideLink>
+          </GuideLinkCard>
+          <GuideLinkCard>
+            <GuideLink params={{ status: 'public' }}>
+              <span>
+                <BookOpenCheckIcon className="size-5" />
+              </span>
+              <span>
+                <Trans>Guides publics</Trans>
+              </span>
+            </GuideLink>
+          </GuideLinkCard>
+          <GuideLinkCard>
+            <GuideLink params={{ status: 'draft' }}>
+              <span>
+                <NotebookPenIcon className="size-5" />
+              </span>
+              <span>
+                <Trans>Guides draft</Trans>
+              </span>
+            </GuideLink>
+          </GuideLinkCard>
         </ul>
       </PageScrollableContent>
     </Page>

@@ -4,7 +4,7 @@ import { getGuideById, isGuideNew } from '@/lib/guide.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation.ts'
 import { guidesFromServerQuery } from '@/queries/guides-from-server.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
-import { t } from '@lingui/macro'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleAlertIcon, CircleCheckIcon, ImportIcon, LoaderIcon } from 'lucide-react'
 import { fromPromise } from 'neverthrow'
@@ -19,6 +19,7 @@ export function GuideDownloadButton({
       status: guide.status,
     }),
   )
+  const { t } = useLingui()
   const downloads = useSuspenseQuery(guidesQuery())
   const downloadGuideFromServer = useDownloadGuideFromServer()
 

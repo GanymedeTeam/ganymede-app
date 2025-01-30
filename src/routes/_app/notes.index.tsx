@@ -3,7 +3,7 @@ import { PageScrollableContent } from '@/components/page-scrollable-content'
 import { Button } from '@/components/ui/button'
 import { useSetConf } from '@/mutations/set-conf.mutation'
 import { confQuery } from '@/queries/conf.query'
-import { t } from '@lingui/macro'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
@@ -16,6 +16,8 @@ export const Route = createFileRoute('/_app/notes/')({
     await context.queryClient.ensureQueryData(confQuery)
   },
   pendingComponent: () => {
+    const { t } = useLingui()
+
     return (
       <Page
         key="notes-page"
@@ -38,6 +40,7 @@ export const Route = createFileRoute('/_app/notes/')({
 })
 
 function NotesPage() {
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
 

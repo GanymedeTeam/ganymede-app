@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { copyPosition } from '@/lib/copy-position'
 import { useSetConf } from '@/mutations/set-conf.mutation'
 import { confQuery } from '@/queries/conf.query'
-import { t } from '@lingui/macro'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-react'
@@ -18,6 +18,8 @@ export const Route = createFileRoute('/_app/auto-pilot')({
     await context.queryClient.ensureQueryData(confQuery)
   },
   pendingComponent: () => {
+    const { t } = useLingui()
+
     return (
       <Page key="auto-pilot-page" title={t`Autopilotage`}>
         <PageScrollableContent hasBottomBar className="flex items-center justify-center">
@@ -40,6 +42,7 @@ export const Route = createFileRoute('/_app/auto-pilot')({
 function AutoPilotPage() {
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
+  const { t } = useLingui()
 
   return (
     <Page key="auto-pilot-page" title={t`Autopilotage`}>

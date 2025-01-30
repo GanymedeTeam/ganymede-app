@@ -13,7 +13,7 @@ import { useToggleGuideCheckbox } from '@/mutations/toggle-guide-checkbox.mutati
 import { confQuery } from '@/queries/conf.query'
 import { guidesQuery } from '@/queries/guides.query'
 import { whiteListQuery } from '@/queries/white_list.query.ts'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
@@ -33,6 +33,7 @@ export function GuideFrame({
   guideId: number
   stepIndex: number
 }) {
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
   const toggleGuideCheckbox = useToggleGuideCheckbox()

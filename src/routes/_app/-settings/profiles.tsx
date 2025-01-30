@@ -13,13 +13,14 @@ import { getProfileById } from '@/lib/profile.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
 
 export function Profiles() {
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const profiles = conf.data.profiles
@@ -32,7 +33,7 @@ export function Profiles() {
         <button
           role="combobox"
           aria-expanded={open}
-          className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-transparent px-3 py-2 text-xs shadow-xs ring-offset-white placeholder:text-neutral-500 focus:outline-hidden focus:ring-1 focus:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:ring-offset-neutral-950 dark:focus:ring-neutral-300 dark:placeholder:text-neutral-400 [&>span]:line-clamp-1"
+          className="flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-transparent px-3 py-2 text-xs shadow-xs ring-offset-white placeholder:text-neutral-500 focus:outline-hidden focus:ring-1 focus:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:ring-offset-neutral-950 dark:focus:ring-neutral-300 dark:placeholder:text-neutral-400 [&>span]:line-clamp-1"
         >
           {currentProfile?.name ?? 'Select profile'}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -64,7 +65,7 @@ export function Profiles() {
                   const index = profiles.findIndex((p) => p.id === profile.id)
                   const nextProfileToUse =
                     conf.data.profileInUse === profile.id
-                      ? profiles.at(index - 1)?.id ?? conf.data.profileInUse
+                      ? (profiles.at(index - 1)?.id ?? conf.data.profileInUse)
                       : conf.data.profileInUse
 
                   setConf.mutate({

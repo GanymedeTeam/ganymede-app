@@ -4,28 +4,38 @@ import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
 import { Input } from './input'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface ClearInputProps extends React.ComponentPropsWithRef<'input'> {
   onValueChange?: (value: string) => void
 }
 
-const ClearInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, onValueChange, value, type, ...props }, ref) => {
-    return (
-      <div className="relative z-0 flex w-full">
-        <Input className={cn('peer bg-primary/80', className)} type={type} {...props} value={value} ref={ref} />
-        <button
-          type="button"
-          className="center-y-absolute right-2 opacity-0 transition-opacity peer-has-value:opacity-100"
-          onClick={() => {
+function ClearInput({ className, onValueChange, value, type, ref, ...props }: ClearInputProps) {
+  return (
+    <div className="relative z-0 flex w-full">
+      <Input
+        className={cn('peer bg-primary/80', className)}
+        type={type}
+        {...props}
+        value={value}
+        onKeyDown={(evt) => {
+          if (evt.key === 'Escape') {
+            evt.preventDefault()
+            evt.stopPropagation()
             onValueChange?.('')
-          }}
-        >
-          <XIcon className="size-4" />
-        </button>
-      </div>
-    )
-  },
-)
-ClearInput.displayName = 'Input'
+          }
+        }}
+        ref={ref}
+      />
+      <button
+        type="button"
+        className="center-y-absolute right-2 opacity-0 transition-opacity peer-has-value:opacity-100"
+        onClick={() => {
+          onValueChange?.('')
+        }}
+      >
+        <XIcon className="size-4" />
+      </button>
+    </div>
+  )
+}
 
 export { ClearInput }

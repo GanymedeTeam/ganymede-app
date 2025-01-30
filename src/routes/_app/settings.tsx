@@ -13,12 +13,13 @@ import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
+import { BackButtonLink } from './downloads/-back-button-link'
 
 const SearchZod = z.object({
   from: z.string().optional(),
@@ -34,6 +35,8 @@ export const Route = createFileRoute('/_app/settings')({
     await context.queryClient.ensureQueryData(confQuery)
   },
   pendingComponent: () => {
+    const { t } = useLingui()
+
     return (
       <Page key="settings-page" title={t`Paramètres`}>
         <PageScrollableContent className="flex items-center justify-center">
@@ -46,6 +49,7 @@ export const Route = createFileRoute('/_app/settings')({
 })
 
 function Settings() {
+  const { t } = useLingui()
   const { from, hash, state, search } = Route.useSearch()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
@@ -68,11 +72,7 @@ function Settings() {
     <Page
       key="settings-page"
       title={t`Paramètres`}
-      from={Route.fullPath}
-      to={from}
-      state={state}
-      hash={hash}
-      search={search}
+      backButton={<BackButtonLink from={Route.fullPath} to={from} state={state} hash={hash} search={search} />}
     >
       <PageScrollableContent className="py-2">
         <div className="container flex flex-col gap-4 text-sm">

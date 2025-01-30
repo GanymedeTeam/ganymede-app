@@ -15,6 +15,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useRef } from 'react'
 import { z } from 'zod'
+import { BackButtonLink } from '../downloads/-back-button-link'
 
 const ParamsZod = z.object({
   id: z.coerce.number(),
@@ -66,7 +67,7 @@ export const Route = createFileRoute('/_app/guides/$id')({
 
 function Pending() {
   return (
-    <Page title="" key="guide" to="/guides" search={{ path: '' }}>
+    <Page title="" key="guide" backButton={<BackButtonLink to="/guides" search={{ path: '' }} />}>
       <PageScrollableContent hasTitleBar className="flex items-center justify-center">
         <header className="fixed inset-x-0 top-[66px] z-10 bg-primary">
           <div className="relative flex h-10 items-center justify-between gap-2 p-1"></div>
@@ -158,9 +159,8 @@ function GuideIdPage() {
     <Page
       key="guide"
       title={guide.name}
-      to="/guides"
-      search={{ path: '' }}
       pageTitleTextClassName="leading-5 line-clamp-1"
+      backButton={<BackButtonLink to="/guides" search={{ path: '' }} />}
     >
       <PageScrollableContent hasTitleBar ref={scrollableRef}>
         <header className="fixed inset-x-0 top-[60px] z-10 bg-primary-800 sm:top-[66px]">

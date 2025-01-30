@@ -1,6 +1,6 @@
 import { copyPosition } from '@/lib/copy-position'
 import { confQuery } from '@/queries/conf.query.ts'
-import { t } from '@lingui/macro'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export function Position({
@@ -10,6 +10,7 @@ export function Position({
   pos_x: number
   pos_y: number
 }) {
+  const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
 
   const onClick = async () => {

@@ -4,7 +4,7 @@ import { TwitterIcon } from '@/components/icons/twitter-icon.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content'
 import { PageTitleExtra } from '@/components/page-title.tsx'
 import { versionQuery } from '@/queries/version.query'
-import { Trans, t } from '@lingui/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { GlobeIcon } from 'lucide-react'
@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_app/')({
 
 function Index() {
   const version = useQuery(versionQuery)
+  const { t } = useLingui()
 
   return (
     <Page
