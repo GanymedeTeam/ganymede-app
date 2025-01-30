@@ -32,7 +32,7 @@ export function Profiles() {
         <button
           role="combobox"
           aria-expanded={open}
-          className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-transparent px-3 py-2 text-xs shadow-sm ring-offset-white placeholder:text-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:ring-offset-neutral-950 dark:focus:ring-neutral-300 dark:placeholder:text-neutral-400 [&>span]:line-clamp-1"
+          className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-transparent px-3 py-2 text-xs shadow-xs ring-offset-white placeholder:text-neutral-500 focus:outline-hidden focus:ring-1 focus:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:ring-offset-neutral-950 dark:focus:ring-neutral-300 dark:placeholder:text-neutral-400 [&>span]:line-clamp-1"
         >
           {currentProfile?.name ?? 'Select profile'}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />

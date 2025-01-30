@@ -33,7 +33,7 @@ export function TitleBar() {
     <div className="sticky top-0 z-10 flex h-[30px] items-center bg-primary text-primary-foreground">
       {!linksAreDisabled && (
         <DropdownMenu>
-          <DropdownMenuTrigger className="h-full px-2 outline-none">
+          <DropdownMenuTrigger className="h-full px-2 outline-hidden">
             <MenuIcon className="size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" alignOffset={6} sideOffset={0}>

@@ -8,7 +8,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     const Comp = asChild ? Slot : 'div'
 
     return (
-      <Comp ref={ref} className={cn('rounded-xl border bg-card text-card-foreground shadow', className)} {...props} />
+      <Comp ref={ref} className={cn('rounded-xl border bg-card text-card-foreground shadow-sm', className)} {...props} />
     )
   },
 )

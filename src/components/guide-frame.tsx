@@ -172,8 +172,8 @@ export function GuideFrame({
                   <button
                     {...domNode.attribs}
                     className={cn(
-                      '!contents group select-none data-[type=guide-step]:no-underline',
-                      downloadGuide.isError && '!text-destructive',
+                      'contents! group select-none data-[type=guide-step]:no-underline',
+                      downloadGuide.isError && 'text-destructive!',
                       domNode.attribs.class,
                     )}
                     disabled={downloadGuide.isPending}
@@ -230,7 +230,7 @@ export function GuideFrame({
           const isMacOs = navigator.userAgent.toLowerCase().includes('mac os x')
 
           return (
-            <div {...restAttribs} className={cn('!contents', nodeClassName)}>
+            <div {...restAttribs} className={cn('contents!', nodeClassName)}>
               <button
                 type="button"
                 className="group contents"
@@ -300,7 +300,7 @@ export function GuideFrame({
               className={cn(
                 'inline-flex select-none',
                 isIcon && '-translate-y-0.5 text-[0.8em]',
-                !isIcon && '!cursor-pointer pb-2',
+                !isIcon && 'cursor-pointer! pb-2',
                 domNode.attribs.class,
               )}
             />

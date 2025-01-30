@@ -24,7 +24,7 @@ export function ErrorComponent({ error, reset, info }: ErrorComponentProps) {
   }
 
   return (
-    <PageScrollableContent className="container mx-auto flex h-app-without-header flex-col gap-4 px-4 py-2">
+    <PageScrollableContent className="container flex h-app-without-header flex-col gap-4 px-4 py-2">
       {(conf.isError && conf.error instanceof GetConfError) || location.pathname.includes('/settings') ? (
         <section>
           <SelectLangLabel htmlFor="select-lang" />

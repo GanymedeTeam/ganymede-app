@@ -113,7 +113,7 @@ export function ChangeStep({
 
               setInnerValue(value)
             }}
-            className="w-8 bg-transparent text-center text-xs outline-none"
+            className="w-8 bg-transparent text-center text-xs outline-hidden"
             onBlur={async () => {
               setHadLostFocus(true)
 

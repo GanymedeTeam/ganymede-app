@@ -10,6 +10,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
 } from '@/components/ui/alert-dialog.tsx'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card.tsx'
@@ -138,7 +139,9 @@ function DownloadGuidePage() {
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
         <AlertDialogContent className="data-[state=open]:fade-in-100 data-[state=open]:zoom-in-100 data-[state=open]:slide-in-from-top-1/2">
           <AlertDialogHeader>
-            <Trans>Attention</Trans>
+            <AlertDialogTitle>
+              <Trans>Attention</Trans>
+            </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogDescription>
             <Trans>
