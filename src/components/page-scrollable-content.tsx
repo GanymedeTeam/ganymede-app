@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 import { ComponentPropsWithRef } from 'react'
 
 export function PageScrollableContent({

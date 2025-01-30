@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 import { Slot } from '@radix-ui/react-slot'
 import { ComponentProps } from 'react'
 

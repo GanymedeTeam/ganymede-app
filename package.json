@@ -43,7 +43,6 @@
     "cmdk": "^1.0.4",
     "country-flag-icons": "^1.5.14",
     "html-react-parser": "^5.2.2",
-    "ky": "^1.7.4",
     "lucide-react": "^0.474.0",
     "neverthrow": "^8.1.1",
     "react": "^19.0.0",

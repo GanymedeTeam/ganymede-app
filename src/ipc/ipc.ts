@@ -1,6 +1,6 @@
 import { GuideWithSteps, createTauRPCProxy } from '@/ipc/bindings.ts'
 
-export const taurpc = await createTauRPCProxy()
+export const taurpc = createTauRPCProxy()
 
 // specta-rs doesn't seem to resolve fields with "skip_deserializing" attribute,
 // so we need to manually define the folder field here.

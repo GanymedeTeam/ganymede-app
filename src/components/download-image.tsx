@@ -1,5 +1,5 @@
 import { taurpc } from '@/ipc/ipc.ts'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 import { useQuery } from '@tanstack/react-query'
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise } from 'neverthrow'

@@ -1,4 +1,4 @@
-import { copyPosition } from '@/lib/copy-position'
+import { copyPosition } from '@/lib/copy-position.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'

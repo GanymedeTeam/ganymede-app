@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon, EllipsisIcon } from 'lucide-react'
 import * as React from 'react'
 
 import { ButtonProps, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 import { Link, LinkProps, useLinkProps } from '@tanstack/react-router'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (

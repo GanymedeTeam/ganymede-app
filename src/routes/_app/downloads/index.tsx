@@ -5,7 +5,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { AnyRouter, Link, LinkComponentProps, type RegisteredRouter, createFileRoute } from '@tanstack/react-router'
 import { BookOpenCheckIcon, BookOpenTextIcon, NotebookPenIcon, TrophyIcon } from 'lucide-react'
 import { type PropsWithChildren } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 
 export const Route = createFileRoute('/_app/downloads/')({
   component: DownloadIndex,
