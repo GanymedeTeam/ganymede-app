@@ -60,12 +60,14 @@ export function GuideFrame({
           return <Trans>lien masqué</Trans>
         }
 
-        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*]([\w\s]*)/g
+        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L})\s]*)/gu
 
         let elems: ReactNode[] = []
 
         for (const groups of domNode.data.matchAll(posReg)) {
           const [, prefix, posX, posY, suffix] = groups
+
+          console.log({ suffix })
 
           elems = [
             ...elems,
