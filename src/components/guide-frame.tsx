@@ -67,8 +67,6 @@ export function GuideFrame({
         for (const groups of domNode.data.matchAll(posReg)) {
           const [, prefix, posX, posY, suffix] = groups
 
-          console.log({ suffix })
-
           elems = [
             ...elems,
             <Fragment key={`${prefix ?? ''}-${posX ?? ''}-${posY ?? ''}`}>
