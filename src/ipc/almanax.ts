@@ -7,6 +7,6 @@ export class GetAlmanaxError extends Error {
   }
 }
 
-export function getAlmanax() {
-  return fromPromise(taurpc.almanax.get(), GetAlmanaxError.from)
+export function getAlmanax(level: number, date: string) {
+  return fromPromise(taurpc.almanax.get(level, date), GetAlmanaxError.from)
 }

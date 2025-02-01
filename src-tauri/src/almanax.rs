@@ -1,7 +1,8 @@
 use crate::api::DOFUSDB_API;
 use crate::item::Item;
 use crate::quest::get_quest_data;
-use chrono::Datelike;
+use chrono::prelude::*;
+use chrono_tz::Europe::Paris;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 use tauri_plugin_http::reqwest;
@@ -10,7 +11,6 @@ use crate::conf::{Conf, ConfLang};
 
 const REWARD_REDUCED_SCALE: f32 = 0.7;
 const REWARD_SCALE_CAP: f32 = 1.5;
-const PLAYER_LEVEL: u32 = 200;
 
 #[derive(Debug, Serialize, thiserror::Error)]
 pub enum Error {
@@ -31,34 +31,6 @@ pub enum Error {
     #[error("failed to get quest")]
     Quest(#[from] crate::quest::Error),
 }
-
-// impl Into<tauri::ipc::InvokeError> for Error {
-//     fn into(self) -> tauri::ipc::InvokeError {
-//         match self {
-//             Error::DofusDbAlmanaxMalformed(err) => tauri::ipc::InvokeError::from(format!(
-//                 "DofusDbAlmanaxMalformed({})",
-//                 err.to_string()
-//             )),
-//             Error::DofusDbItemMalformed(err) => {
-//                 tauri::ipc::InvokeError::from(format!("DofusDbItemMalformed({})", err.to_string()))
-//             }
-//             Error::RequestAlmanax(err) => {
-//                 tauri::ipc::InvokeError::from(format!("RequestAlmanax({})", err.to_string()))
-//             }
-//             Error::RequestAlmanaxContent(err) => {
-//                 tauri::ipc::InvokeError::from(format!("RequestAlmanaxContent({})", err.to_string()))
-//             }
-//             Error::RequestItem(err) => {
-//                 tauri::ipc::InvokeError::from(format!("RequestItem({})", err.to_string()))
-//             }
-//             Error::RequestItemContent(err) => {
-//                 tauri::ipc::InvokeError::from(format!("RequestItemContent({})", err.to_string()))
-//             }
-//             Error::Conf(err) => err.into(),
-//             Error::Quest(err) => err.into(),
-//         }
-//     }
-// }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AlmanaxName {
@@ -160,8 +132,10 @@ pub fn get_experience_reward(
     }
 }
 
-pub async fn get_almanax_data() -> Result<Almanax, Error> {
-    let date = chrono::offset::Local::now();
+pub async fn get_almanax_data(date: String) -> Result<Almanax, Error> {
+    let date = DateTime::parse_from_rfc3339(date.as_str())
+        .unwrap()
+        .with_timezone(&Paris);
     let day = date.day();
     let month = date.month();
     let year = date.year();
@@ -200,7 +174,7 @@ pub async fn get_item_data(item_id: u32) -> Result<Item, Error> {
 
 #[taurpc::procedures(path = "almanax", export_to = "../src/ipc/bindings.ts")]
 pub trait AlmanaxApi {
-    async fn get(app_handle: AppHandle) -> Result<AlmanaxReward, Error>;
+    async fn get(app_handle: AppHandle, level: u32, date: String) -> Result<AlmanaxReward, Error>;
 }
 
 #[derive(Clone)]
@@ -208,8 +182,8 @@ pub struct AlmanaxApiImpl;
 
 #[taurpc::resolvers]
 impl AlmanaxApi for AlmanaxApiImpl {
-    async fn get(self, app: AppHandle) -> Result<AlmanaxReward, Error> {
-        let almanax = get_almanax_data().await?;
+    async fn get(self, app: AppHandle, level: u32, date: String) -> Result<AlmanaxReward, Error> {
+        let almanax = get_almanax_data(date).await?;
         let quest = get_quest_data(almanax.id).await.map_err(Error::Quest)?;
         let item_id = quest.data[0].steps[0].objectives[0].need.generated.items[0];
         let quantity = quest.data[0].steps[0].objectives[0]
@@ -227,14 +201,14 @@ impl AlmanaxApi for AlmanaxApiImpl {
         };
 
         let experience = get_experience_reward(
-            PLAYER_LEVEL,
+            level,
             quest.optimal_level(),
             quest.experience_ratio(),
             quest.duration(),
         );
 
         let kamas = get_kamas_reward(
-            PLAYER_LEVEL,
+            level,
             quest.level_max(),
             quest.optimal_level(),
             quest.kamas_ratio(),

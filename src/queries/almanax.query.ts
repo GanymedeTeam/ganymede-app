@@ -1,12 +1,14 @@
 import { getAlmanax } from '@/ipc/almanax.ts'
 import { ConfLang } from '@/ipc/bindings.ts'
 import { queryOptions } from '@tanstack/react-query'
+import dayjs, { type Dayjs } from 'dayjs'
+import { newDateFromParis } from '../lib/date'
 
-export const almanaxQuery = (lang: ConfLang) => {
+export const almanaxQuery = (lang: ConfLang, level: number, date: Dayjs) => {
   return queryOptions({
-    queryKey: ['almanax', lang],
+    queryKey: ['almanax', lang, level, date.format('YYYY-MM-DD HH:mm:ss')],
     queryFn: async () => {
-      const res = await getAlmanax()
+      const res = await getAlmanax(level, date.toISOString())
 
       if (res.isErr()) {
         throw res.error
@@ -14,7 +16,7 @@ export const almanaxQuery = (lang: ConfLang) => {
 
       return res.value
     },
-    // staleTime today until midnight in ms, if it's 8 pm, it will gc in 4 hours, etc
-    staleTime: new Date().setHours(24, 0, 0, 0) - Date.now(),
+    // staleTime is set until the next almanax
+    staleTime: newDateFromParis().add(1, 'day').diff(dayjs.tz(undefined, 'Europe/Paris'), 'millisecond'),
   })
 }

@@ -11,8 +11,14 @@ import { getLang } from '@/lib/conf.ts'
 import { sentry, setupSentry } from '@/lib/sentry.ts'
 import { whiteListQuery } from '@/queries/white_list.query.ts'
 import { attachConsole, error } from '@tauri-apps/plugin-log'
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import { confQuery } from './queries/conf.query.ts'
 import { routeTree } from './routeTree.gen.ts'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 await attachConsole()
 

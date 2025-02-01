@@ -30,13 +30,13 @@ export type IsOld = { from: string; to: string; isOld: boolean }
 
 export type Note = { name: string; text: string }
 
-export type Profile = { id: string; name: string; progresses: Progress[] }
+export type Profile = { id: string; name: string; level?: number; progresses: Progress[] }
 
 export type Progress = { id: number; currentStep: number; steps: { [key in number]: ConfStep } }
 
 export type Status = "draft" | "public" | "private" | "certified" | "gp"
 
-export type TauRpcAlmanaxApiInputTypes = { proc_name: "get"; input_type: null }
+export type TauRpcAlmanaxApiInputTypes = { proc_name: "get"; input_type: [number, string] }
 
 export type TauRpcAlmanaxApiOutputTypes = { proc_name: "get"; output_type: AlmanaxReward }
 
@@ -70,7 +70,7 @@ export type TauRpcUpdateApiOutputTypes = { proc_name: "startUpdate"; output_type
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number }
 
-const ARGS_MAP = {'':'{"isAppVersionOld":[]}', 'image':'{"fetchImage":["url"]}', 'guides':'{"openGuidesFolder":[],"downloadGuideFromServer":["guide_id","folder"],"getGuides":["folder"],"getGuideFromServer":["guide_id"],"getFlatGuides":["folder"],"getGuidesFromServer":["status"]}', 'conf':'{"reset":[],"get":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'update':'{"startUpdate":[]}', 'security':'{"getWhiteList":[]}', 'almanax':'{"get":[]}', 'base':'{"openUrl":["url"],"newId":[]}'}
+const ARGS_MAP = {'almanax':'{"get":["level","date"]}', 'guides':'{"getFlatGuides":["folder"],"openGuidesFolder":[],"getGuides":["folder"],"getGuidesFromServer":["status"],"getGuideFromServer":["guide_id"],"downloadGuideFromServer":["guide_id","folder"]}', '':'{"isAppVersionOld":[]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'image':'{"fetchImage":["url"]}', 'base':'{"newId":[],"openUrl":["url"]}', 'conf':'{"reset":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"set":["conf"],"get":[]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)

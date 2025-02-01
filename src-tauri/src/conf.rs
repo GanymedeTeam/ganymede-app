@@ -6,6 +6,12 @@ use std::collections::HashMap;
 use std::fs;
 use tauri::{AppHandle, Manager, Window, Wry};
 
+const DEFAULT_LEVEL: u32 = 200;
+
+const fn default_level() -> u32 {
+    DEFAULT_LEVEL
+}
+
 #[derive(Debug, Serialize, thiserror::Error)]
 pub enum Error {
     #[error("failed to get conf, file is malformed")]
@@ -26,29 +32,12 @@ pub enum Error {
     ResetConf(Box<Error>),
 }
 
-// impl Into<InvokeError> for Error {
-//     fn into(self) -> InvokeError {
-//         use Error::*;
-
-//         let message = match self {
-//             Malformed(err) => format!("Malformed({})", err.to_string()),
-//             CreateConfDir(err) => format!("CreateConfDir({})", err.to_string()),
-//             ConfDir(err) => format!("ConfDir({})", err.to_string()),
-//             SerializeConf(err) => format!("SerializeConf({})", err.to_string()),
-//             UnhandledIo(err) => format!("UnhandledIo({})", err.to_string()),
-//             SaveConf(err) => format!("SaveConf({})", err.to_string()),
-//             GetProfileInUse => "GetProfileInUse".to_string(),
-//             ResetConf(err) => return (*err).into(),
-//         };
-
-//         InvokeError::from(message)
-//     }
-// }
-
 #[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
 pub struct Profile {
     pub id: String,
     pub name: String,
+    #[serde(default = "default_level")]
+    pub level: u32,
     pub progresses: Vec<Progress>,
 }
 
@@ -243,6 +232,7 @@ impl Default for Profile {
         Profile {
             id: uuid::Uuid::new_v4().to_string(),
             name: "Player".to_string(),
+            level: 200,
             progresses: vec![],
         }
     }

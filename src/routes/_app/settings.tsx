@@ -211,7 +211,7 @@ function Settings() {
                 }
               }}
             >
-              <Input id="create-profile" name="newProfile" />
+              <Input id="create-profile" name="newProfile" className="h-9" />
               <Button type="submit">
                 <Trans>Créer</Trans>
               </Button>

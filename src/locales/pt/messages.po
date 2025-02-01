@@ -49,6 +49,10 @@ msgstr "Nenhum guia encontrado com {term}"
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
+#: src/components/almanax-frame.tsx:59
+msgid "Aujourd'hui"
+msgstr "Hoje"
+
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
 #: src/components/title-bar.tsx:63
