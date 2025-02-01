@@ -1,5 +1,13 @@
 # ganymede-app
 
+## 1.8.1
+
+### Patch Changes
+
+- e334294: Petite amélioration au niveau des fuseaux horaires pour l'Almanax.
+- 1c9443d: Le curseur de souris change bien au passage de la souris sur les positions.
+- 1c9443d: La couleur de toutes les positions ont été figées sur du jaune.
+
 ## 1.8.0
 
 ### Minor Changes
