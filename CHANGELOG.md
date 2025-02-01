@@ -1,5 +1,19 @@
 # ganymede-app
 
+## 1.8.0
+
+### Minor Changes
+
+- e571d7c: L'Almanax prend désormais en charge les différents fuseaux horaires de votre système. Les serveurs étant tous basés sur le fuseau horaire Europe/Paris, l'application prend donc également cette direction.
+- 526f1b2: Vous pouvez désormais visualiser l'Almanax sur plusieurs jours. L'affichage de l'Almanax a légèrement changé.
+- 526f1b2: Vous pouvez désormais choisir votre niveau lors du calcul des récompenses de l'Almanax.
+- 85b47bd: Vous pouvez désormais annuler votre recherche de guide via la touche Échap.
+- 85b47bd: Mise à jour de notre système d'affichage graphique de l'application, si vous observez des problèmes, n'hésitez pas à nous les retourner.
+
+### Patch Changes
+
+- 33b2a78: Un problème persistait concernant les positions, entraînant la disparition de certains caractères spéciaux dans le contenu des guides. Ce problème est corrigé.
+
 ## 1.7.1
 
 ### Patch Changes
