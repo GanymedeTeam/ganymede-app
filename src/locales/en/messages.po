@@ -49,7 +49,7 @@ msgstr "No guides found with {term}"
 msgid "Aucun profil trouvé."
 msgstr "No profile found."
 
-#: src/components/almanax-frame.tsx:59
+#: src/components/almanax-frame.tsx:58
 msgid "Aujourd'hui"
 msgstr "Today"
 
@@ -84,40 +84,40 @@ msgstr "This tool is designed to assist you throughout your adventure on <0>Dofu
 msgid "Chasse au trésor"
 msgstr "Hunt"
 
-#: src/components/guide-frame.tsx:256
+#: src/components/guide-frame.tsx:258
 msgid "Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the item's name. Cmd+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:257
+#: src/components/guide-frame.tsx:259
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the item's name. Ctrl+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:264
+#: src/components/guide-frame.tsx:266
 msgid "Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the quest's name. Cmd+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:265
+#: src/components/guide-frame.tsx:267
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the quest's name. Ctrl+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:252
+#: src/components/guide-frame.tsx:254
 msgid "Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the dungeon's name. Cmd+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:253
+#: src/components/guide-frame.tsx:255
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the dungeon's name. Ctrl+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:260
+#: src/components/guide-frame.tsx:262
 msgid "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the monster's name. Cmd+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:261
+#: src/components/guide-frame.tsx:263
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Click to copy the monster's name. Ctrl+click to open on dofusdb"
 
-#: src/components/guide-frame.tsx:299
-#: src/components/guide-frame.tsx:333
+#: src/components/guide-frame.tsx:328
+#: src/components/guide-frame.tsx:362
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Click to open in browser"
 
@@ -259,7 +259,7 @@ msgstr "Language"
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Guides in this section have not been manually verified by the Ganymede team. <0/> Although the links to the sites are secure, please carefully check the guides <1>on our site</1> before downloading them."
 
-#: src/components/guide-frame.tsx:60
+#: src/components/guide-frame.tsx:61
 msgid "lien masqué"
 msgstr "hidden link"
 

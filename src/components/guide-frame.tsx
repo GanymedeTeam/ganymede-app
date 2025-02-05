@@ -21,6 +21,7 @@ import parse, { DOMNode, domToReact, type HTMLReactParserOptions } from 'html-re
 import { AlertCircleIcon } from 'lucide-react'
 import { Fragment, ReactNode } from 'react'
 import { DownloadImage } from './download-image'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 
 export function GuideFrame({
   className,
@@ -274,6 +275,33 @@ export function GuideFrame({
                 </span>
               </button>
             </div>
+          )
+        }
+        // #endregion
+
+        // #region quest-block
+        if (domNode.attribs['data-type'] === 'quest-block') {
+          const questName: string = domNode.attribs['questname']
+          const status = domNode.attribs['status'] as 'in_progress' | 'start' | 'end'
+
+          return (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div
+                    className={cn('rounded-md p-2 transition-colors', domNode.attribs.class)}
+                    data-status={status}
+                    data-quest={questName}
+                  >
+                    {domToReact(domNode.children as DOMNode[], options)}
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="flex items-center gap-1">
+                  <img src="https://dev.ganymede-dofus.com/images/icon_quest.png" className="size-6" />
+                  <span className="text-base">{questName}</span>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           )
         }
         // #endregion

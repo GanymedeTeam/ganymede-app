@@ -299,4 +299,23 @@ body:has(.app-bg) {
     width: 100%;
     margin: auto;
   }
+
+  .quest-block {
+    --opacity-percentage: calc(var(--opacity) * 100%);
+    --final-opacity-80: calc(var(--opacity) * 0.8);
+
+    background-color: color-mix(
+      in oklab,
+      var(--color-primary-800) clamp(40%, var(--opacity-percentage), 93%),
+      transparent
+    );
+
+    &:hover {
+      background-color: color-mix(
+        in oklab,
+        var(--color-primary-800) clamp(20%, calc(var(--final-opacity-80) * 100%), var(--opacity-percentage)),
+        transparent
+      );
+    }
+  }
 }
