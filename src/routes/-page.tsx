@@ -8,23 +8,19 @@ export function Page({
   children,
   className,
   actions,
-  pageTitleTextClassName,
   backButton,
 }: PropsWithChildren<{
   title: string
   actions?: ReactNode
   className?: string
-  pageTitleTextClassName?: string
   backButton?: ReactNode
 }>) {
   return (
     <PageContent className={cn(className)}>
       <PageTitle>
-        <div className="flex w-full items-center gap-2">
+        <div className="flex w-full items-center gap-2" data-slot="page-title-content">
           {backButton}
-          <PageTitleText className={pageTitleTextClassName} title={title}>
-            {title}
-          </PageTitleText>
+          <PageTitleText title={title}>{title}</PageTitleText>
           {actions}
         </div>
       </PageTitle>

@@ -159,7 +159,7 @@ function GuideIdPage() {
     <Page
       key="guide"
       title={guide.name}
-      pageTitleTextClassName="leading-5 line-clamp-1"
+      className="slot-[page-title-text]:line-clamp-1 slot-[page-title-text]:leading-5"
       backButton={<BackButtonLink to="/guides" search={{ path: '' }} />}
     >
       <PageScrollableContent hasTitleBar ref={scrollableRef}>

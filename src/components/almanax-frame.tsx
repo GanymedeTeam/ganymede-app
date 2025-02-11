@@ -11,9 +11,10 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { type Dayjs } from 'dayjs'
 import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from 'lucide-react'
 import { useState } from 'react'
-import { newDateFromParis } from '../lib/date.ts'
-import { DownloadImage } from './download-image.tsx'
-import { InvisibleInput } from './invisible-input.tsx'
+import { newDateFromParis } from '@/lib/date.ts'
+import { DownloadImage } from '@/components/download-image.tsx'
+import { InvisibleInput } from '@/components/invisible-input.tsx'
+import { CopyOnClick } from '@/components/copy-on-click.tsx'
 
 function dateToDayMonthYear(date: Dayjs) {
   if (date.hour() === 0) {
@@ -110,21 +111,20 @@ export function AlmanaxFrame() {
                 {almanax.data.img && (
                   <DownloadImage
                     src={almanax.data.img}
-                    className="mr-0 size-10"
-                    loaderClassName="p-2 text-yellow-300"
+                    className="mr-0 size-10 self-slot-[loader]:p-2 self-slot-[loader]:text-yellow-300"
                   />
                 )}
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-1 text-center text-xxs xs:text-xs">
-                    {almanax.data.quantity.toLocaleString()}x{' '}
-                    <span className="line-clamp-1 font-semibold text-yellow-300" title={almanax.data.name}>
-                      {almanax.data.name}
-                    </span>
-                  </div>
+                  <CopyOnClick title={almanax.data.name}>
+                    <div className="flex items-center gap-1 text-center text-xxs xs:text-xs">
+                      {almanax.data.quantity.toLocaleString()}x{' '}
+                      <span className="line-clamp-1 font-semibold text-yellow-300">{almanax.data.name}</span>
+                    </div>
+                  </CopyOnClick>
                   <div className="flex gap-4">
                     <div className="flex items-center justify-center gap-2 text-xs">
                       <img src={xpIcon} className="h-3 select-none" draggable={false} />
-                      <span>{almanax.data.experience.toLocaleString()} </span>
+                      <span>{almanax.data.experience.toLocaleString()}</span>
                     </div>
                     <div className="flex items-center justify-center gap-2 text-xs">
                       <img src={kamasIcon} className="h-3 select-none" draggable={false} />

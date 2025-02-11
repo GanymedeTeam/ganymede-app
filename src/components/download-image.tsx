@@ -4,17 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise } from 'neverthrow'
 import { ComponentProps } from 'react'
-import { GenericLoader } from './generic-loader'
+import { GenericLoader } from '@/components/generic-loader.tsx'
 
 class FetchImageError extends Error {}
 
-export function DownloadImage({
-  src,
-  loaderClassName,
-  ...props
-}: Omit<ComponentProps<'img'>, 'srcset'> & {
-  loaderClassName?: string
-}) {
+export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'srcset'> & {}) {
   const enabled = !!src && src.startsWith('http') && (src.includes('dofusdb.fr') || src.includes('ganymede-dofus.com'))
   const image = useQuery({
     queryKey: ['image', src],
@@ -43,7 +37,7 @@ export function DownloadImage({
   if (image.isLoading) {
     return (
       <span className="mr-[0.17em] inline-block">
-        <GenericLoader className={cn('inline-block size-[1.05rem]', props.className, loaderClassName)} />
+        <GenericLoader data-slot="loader" className={cn('inline-block size-[1.05rem]', props.className)} />
       </span>
     )
   }
