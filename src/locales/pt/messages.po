@@ -76,7 +76,7 @@ msgstr "Categorias"
 msgid "Causée par :"
 msgstr "Causada por:"
 
-#: src/routes/_app/guides/index.tsx:225
+#: src/routes/_app/guides/index.tsx:226
 msgid "Ce guide est déjà ouvert"
 msgstr "Este guia já está aberto"
 
@@ -89,7 +89,7 @@ msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
 #: src/routes/_app/guides/index.tsx:45
-#: src/routes/_app/guides/index.tsx:143
+#: src/routes/_app/guides/index.tsx:144
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
@@ -210,7 +210,7 @@ msgid "Grande"
 msgstr "Grande"
 
 #: src/routes/_app/guides/index.tsx:45
-#: src/routes/_app/guides/index.tsx:143
+#: src/routes/_app/guides/index.tsx:144
 #: src/routes/_app/downloads/$status.tsx:96
 #: src/components/title-bar.tsx:50
 msgid "Guides"
@@ -241,7 +241,7 @@ msgid "Guides publics"
 msgstr "Guias públicos"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/guides/index.tsx:230
+#: src/routes/_app/guides/index.tsx:231
 #: src/routes/_app/downloads/$status.tsx:195
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
@@ -319,7 +319,7 @@ msgstr "Opacidade"
 msgid "Ou le bouton suivant"
 msgstr "Ou o próximo botão"
 
-#: src/routes/_app/guides/index.tsx:178
+#: src/routes/_app/guides/index.tsx:179
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
@@ -346,11 +346,11 @@ msgstr "Apresentação"
 msgid "Profils"
 msgstr "Perfis"
 
-#: src/routes/_app/guides/index.tsx:169
+#: src/routes/_app/guides/index.tsx:170
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Atualizar a pasta dos guias baixados"
 
-#: src/routes/_app/guides/index.tsx:194
+#: src/routes/_app/guides/index.tsx:195
 #: src/routes/_app/downloads/$status.tsx:178
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
