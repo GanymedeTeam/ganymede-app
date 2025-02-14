@@ -1,21 +1,26 @@
 import { ChangeStep } from '@/components/change-step.tsx'
-import { GenericLoader } from '@/components/generic-loader.tsx'
 import { GuideFrame } from '@/components/guide-frame'
+import { PageContent } from '@/components/page-content.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content'
+import { PageTitle, PageTitleText } from '@/components/page-title.tsx'
 import { Position } from '@/components/position.tsx'
+import { Button } from '@/components/ui/button.tsx'
 import { useGuide } from '@/hooks/use_guide'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top'
 import { getGuideById } from '@/lib/guide.ts'
+import { OpenedGuideZod } from '@/lib/tabs.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
-import { Page } from '@/routes/-page.tsx'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { Link, createFileRoute, redirect } from '@tanstack/react-router'
+import { PlusIcon } from 'lucide-react'
 import { useRef } from 'react'
 import { z } from 'zod'
-import { BackButtonLink } from '../downloads/-back-button-link'
+import { BackButtonLink } from '../downloads/-back-button-link.tsx'
+import { GuidePageTitle } from './-guide-page-title.tsx'
 
 const ParamsZod = z.object({
   id: z.coerce.number(),
@@ -23,6 +28,7 @@ const ParamsZod = z.object({
 
 const SearchZod = z.object({
   step: z.coerce.number(),
+  guides: z.array(OpenedGuideZod),
 })
 
 export const Route = createFileRoute('/_app/guides/$id')({
@@ -33,7 +39,9 @@ export const Route = createFileRoute('/_app/guides/$id')({
     stringify: (params) => ({ id: params.id.toString() }),
   },
   pendingComponent: Pending,
-  beforeLoad: async ({ context: { queryClient }, params, search: { step } }) => {
+  beforeLoad: async ({ context: { queryClient }, params, search: { step, guides: guidesInUrl } }) => {
+    // limit to 4 guides
+    const guidesUrl = guidesInUrl.slice(0, 4)
     const guides = await queryClient.ensureQueryData(guidesQuery())
 
     const guideById = getGuideById(guides, params.id)
@@ -43,6 +51,19 @@ export const Route = createFileRoute('/_app/guides/$id')({
         to: '/guides',
         search: {
           path: '',
+          guides: guidesUrl,
+        },
+      })
+    }
+
+    // has twice the same id in the list
+    if (guidesUrl.length !== new Set(guidesUrl.map((g) => g.id)).size) {
+      throw redirect({
+        to: '/guides/$id',
+        params,
+        search: {
+          step: 0,
+          guides: guidesUrl.filter((g, i, self) => self.findIndex((gg) => gg.id === g.id) === i),
         },
       })
     }
@@ -58,6 +79,7 @@ export const Route = createFileRoute('/_app/guides/$id')({
         },
         search: {
           step: totalSteps - 1,
+          guides: guidesUrl,
         },
         replace: true,
       })
@@ -67,21 +89,20 @@ export const Route = createFileRoute('/_app/guides/$id')({
 
 function Pending() {
   return (
-    <Page title="" key="guide" backButton={<BackButtonLink to="/guides" search={{ path: '' }} />}>
-      <PageScrollableContent hasTitleBar className="flex items-center justify-center">
-        <header className="fixed inset-x-0 top-[66px] z-10 bg-primary">
-          <div className="relative flex h-10 items-center justify-between gap-2 p-1"></div>
-        </header>
-        <div className="flex grow items-center justify-center">
-          <GenericLoader />
+    <PageContent key="guide">
+      <PageTitle>
+        <div className="flex w-full items-center gap-2" data-slot="page-title-content">
+          <BackButtonLink to="/guides" search={{ path: '', guides: [] }} />
+          <PageTitleText></PageTitleText>
         </div>
-      </PageScrollableContent>
-    </Page>
+      </PageTitle>
+    </PageContent>
   )
 }
 
 function GuideIdPage() {
   const params = Route.useParams()
+  const openedGuides = Route.useSearch({ select: (s) => s.guides })
   const index = Route.useSearch({ select: (s) => s.step })
   const conf = useSuspenseQuery(confQuery)
   const guide = useGuide(params.id)
@@ -90,6 +111,7 @@ function GuideIdPage() {
   const navigate = Route.useNavigate()
   const scrollableRef = useRef<HTMLDivElement>(null)
   const stepMax = guide.steps.length - 1
+  const { t } = useLingui()
 
   useScrollToTop(scrollableRef, [step])
 
@@ -131,6 +153,13 @@ function GuideIdPage() {
     await navigate({
       search: {
         step: nextStep,
+        guides: openedGuides.map((g) => {
+          if (g.id === guide.id) {
+            return { id: g.id, step: nextStep }
+          }
+
+          return g
+        }),
       },
     })
   }
@@ -156,12 +185,37 @@ function GuideIdPage() {
   }
 
   return (
-    <Page
-      key="guide"
-      title={guide.name}
-      className="slot-[page-title-text]:line-clamp-1 slot-[page-title-text]:leading-5"
-      backButton={<BackButtonLink to="/guides" search={{ path: '' }} />}
-    >
+    <PageContent key="guide" className="slot-[page-title-text]:line-clamp-1 slot-[page-title-text]:leading-5">
+      <div className="flex items-center gap-1 bg-primary-800 px-1">
+        {openedGuides.map((guide) => {
+          return (
+            <GuidePageTitle
+              key={guide.id}
+              currentGuideId={params.id}
+              guideId={guide.id}
+              step={guide.step}
+              openedGuides={openedGuides}
+            />
+          )
+        })}
+        <Button
+          size="icon"
+          className="min-h-6 min-w-6 sm:size-6"
+          variant="secondary"
+          disabled={openedGuides.length >= 4}
+          asChild
+        >
+          <Link
+            to="/guides"
+            search={{ path: '', guides: openedGuides, from: { id: guide.id, step: index } }}
+            draggable={false}
+            disabled={openedGuides.length >= 4}
+            title={openedGuides.length >= 4 ? t`Vous avez atteint la limite` : undefined}
+          >
+            <PlusIcon />
+          </Link>
+        </Button>
+      </div>
       <PageScrollableContent hasTitleBar ref={scrollableRef}>
         <header className="fixed inset-x-0 top-[60px] z-10 bg-primary-800 sm:top-[66px]">
           <div className="relative flex h-9 items-center justify-between gap-2 p-1">
@@ -171,6 +225,7 @@ function GuideIdPage() {
                   <Position pos_x={step.pos_x} pos_y={step.pos_y} />
                 )}
                 <ChangeStep
+                  key={`${guide.id}-${index}`}
                   currentIndex={index}
                   maxIndex={stepMax}
                   onPrevious={onClickPrevious}
@@ -194,10 +249,11 @@ function GuideIdPage() {
             )}
             guideId={guide.id}
             html={step.web_text}
+            openedGuides={openedGuides}
             stepIndex={index}
           />
         )}
       </PageScrollableContent>
-    </Page>
+    </PageContent>
   )
 }

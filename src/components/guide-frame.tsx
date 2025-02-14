@@ -6,6 +6,7 @@ import { clamp } from '@/lib/clamp'
 import { copyPosition } from '@/lib/copy-position.ts'
 import { getGuideById } from '@/lib/guide'
 import { getProgress } from '@/lib/progress.ts'
+import type { OpenedGuide } from '@/lib/tabs.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation'
 import { useOpenGuideLink } from '@/mutations/open-guide-link.mutation'
@@ -27,11 +28,13 @@ export function GuideFrame({
   className,
   html,
   guideId,
+  openedGuides,
   stepIndex,
 }: {
   className?: string
   html: string
   guideId: number
+  openedGuides: OpenedGuide[]
   stepIndex: number
 }) {
   const { t } = useLingui()
@@ -158,7 +161,7 @@ export function GuideFrame({
                     {...domNode.attribs}
                     to="/guides/$id"
                     params={{ id: domGuideId === 0 ? guideId : domGuideId }}
-                    search={{ step: stepNumber - 1 }}
+                    search={{ step: stepNumber - 1, guides: openedGuides }}
                     draggable={false}
                     className={cn('contents select-none data-[type=guide-step]:no-underline', domNode.attribs.class)}
                   >
@@ -192,7 +195,10 @@ export function GuideFrame({
                       await navigate({
                         to: '/guides/$id',
                         params: { id: domGuideId },
-                        search: { step: stepNumber - 1 },
+                        search: {
+                          step: stepNumber - 1,
+                          guides: [...openedGuides, { id: domGuideId, step: stepNumber - 1 }],
+                        },
                       })
                     }}
                   >

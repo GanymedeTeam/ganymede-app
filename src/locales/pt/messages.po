@@ -76,6 +76,10 @@ msgstr "Categorias"
 msgid "Causée par :"
 msgstr "Causada por:"
 
+#: src/routes/_app/guides/index.tsx:225
+msgid "Ce guide est déjà ouvert"
+msgstr "Este guia já está aberto"
+
 #: src/routes/_app/index.tsx:39
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em <0>Dofus</0>!"
@@ -84,40 +88,45 @@ msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
-#: src/components/guide-frame.tsx:257
+#: src/routes/_app/guides/index.tsx:45
+#: src/routes/_app/guides/index.tsx:143
+msgid "Choisissez un guide"
+msgstr "Escolha um guia"
+
+#: src/components/guide-frame.tsx:263
 msgid "Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:258
+#: src/components/guide-frame.tsx:264
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:265
+#: src/components/guide-frame.tsx:271
 msgid "Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome da missão. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:266
+#: src/components/guide-frame.tsx:272
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:253
+#: src/components/guide-frame.tsx:259
 msgid "Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:254
+#: src/components/guide-frame.tsx:260
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:261
+#: src/components/guide-frame.tsx:267
 msgid "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Cmd+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:262
+#: src/components/guide-frame.tsx:268
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide-frame.tsx:327
-#: src/components/guide-frame.tsx:361
+#: src/components/guide-frame.tsx:333
+#: src/components/guide-frame.tsx:367
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
@@ -200,8 +209,8 @@ msgstr "Ganimedes - Não afiliado à Ankama Games"
 msgid "Grande"
 msgstr "Grande"
 
-#: src/routes/_app/guides/index.tsx:40
-#: src/routes/_app/guides/index.tsx:135
+#: src/routes/_app/guides/index.tsx:45
+#: src/routes/_app/guides/index.tsx:143
 #: src/routes/_app/downloads/$status.tsx:96
 #: src/components/title-bar.tsx:50
 msgid "Guides"
@@ -232,7 +241,7 @@ msgid "Guides publics"
 msgstr "Guias públicos"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/guides/index.tsx:199
+#: src/routes/_app/guides/index.tsx:230
 #: src/routes/_app/downloads/$status.tsx:195
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
@@ -263,7 +272,7 @@ msgstr "Idioma"
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ganimedes. <0/> Embora os links para os sites sejam seguros, verifique cuidadosamente os guias <1>em nosso site</1> antes de baixá-los."
 
-#: src/components/guide-frame.tsx:61
+#: src/components/guide-frame.tsx:64
 msgid "lien masqué"
 msgstr "link oculto"
 
@@ -310,7 +319,7 @@ msgstr "Opacidade"
 msgid "Ou le bouton suivant"
 msgstr "Ou o próximo botão"
 
-#: src/routes/_app/guides/index.tsx:153
+#: src/routes/_app/guides/index.tsx:178
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
@@ -337,11 +346,11 @@ msgstr "Apresentação"
 msgid "Profils"
 msgstr "Perfis"
 
-#: src/routes/_app/guides/index.tsx:144
+#: src/routes/_app/guides/index.tsx:169
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Atualizar a pasta dos guias baixados"
 
-#: src/routes/_app/guides/index.tsx:169
+#: src/routes/_app/guides/index.tsx:194
 #: src/routes/_app/downloads/$status.tsx:178
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
@@ -410,6 +419,10 @@ msgstr "Ocorreu um erro ao recuperar a configuração."
 #: src/components/error-component.tsx:66
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
+
+#: src/routes/_app/guides/$id.tsx:213
+msgid "Vous avez atteint la limite"
+msgstr "Atingiu o limite"
 
 #: src/routes/app-old-version.tsx:65
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."

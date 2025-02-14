@@ -25,8 +25,8 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides-from-server.query.ts'
 import { guidesQuery } from '@/queries/guides.query'
 import { Page } from '@/routes/-page.tsx'
-import { Trans, useLingui } from '@lingui/react/macro'
 import { t } from '@lingui/core/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
@@ -224,7 +224,12 @@ function DownloadGuidePage() {
                     </div>
                     <div className="flex flex-col items-center justify-end gap-1">
                       <Button variant="secondary" size="icon" disabled={!isGuideDownloaded} asChild>
-                        <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: 0 }} draggable={false}>
+                        <Link
+                          to="/guides/$id"
+                          params={{ id: guide.id }}
+                          search={{ step: 0, guides: [] }}
+                          draggable={false}
+                        >
                           <ChevronRightIcon />
                         </Link>
                       </Button>
