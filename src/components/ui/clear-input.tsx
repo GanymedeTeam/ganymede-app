@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils.ts'
 import { XIcon } from 'lucide-react'
-import { Input } from './input'
+import { Input } from './input.tsx'
 
 export interface ClearInputProps extends React.ComponentPropsWithRef<'input'> {
   onValueChange?: (value: string) => void

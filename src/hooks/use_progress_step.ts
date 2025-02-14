@@ -1,5 +1,5 @@
-import { getStep } from '@/lib/progress'
-import { progressQuery } from '@/queries/progress.query'
+import { getStep } from '@/lib/progress.ts'
+import { progressQuery } from '@/queries/progress.query.ts'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export function useProgressStep(guideId: number, stepIndex: number) {

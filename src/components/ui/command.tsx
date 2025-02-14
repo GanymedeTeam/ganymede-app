@@ -3,7 +3,7 @@ import { Command as CommandPrimitive } from 'cmdk'
 import { Search } from 'lucide-react'
 import * as React from 'react'
 
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog.tsx'
 import { cn } from '@/lib/utils.ts'
 
 function Command({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive>) {

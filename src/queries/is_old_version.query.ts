@@ -1,4 +1,4 @@
-import { isAppOldVersion } from '@/ipc/is_app_old_version'
+import { isAppOldVersion } from '@/ipc/is_app_old_version.ts'
 import { queryOptions } from '@tanstack/react-query'
 
 export const isAppOldVersionQuery = queryOptions({

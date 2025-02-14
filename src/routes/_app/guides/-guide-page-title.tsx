@@ -1,4 +1,4 @@
-import { PageTitle, PageTitleText } from '@/components/page-title'
+import { PageTitle, PageTitleText } from '@/components/page-title.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { OpenedGuide } from '@/lib/tabs.ts'

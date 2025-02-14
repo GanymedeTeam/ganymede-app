@@ -1,16 +1,16 @@
 import { ConfLang } from '@/ipc/bindings.ts'
-import { GetConfError } from '@/ipc/conf'
-import { useResetConf } from '@/mutations/reset-conf.mutation'
-import { confQuery } from '@/queries/conf.query'
+import { GetConfError } from '@/ipc/conf.ts'
+import { useResetConf } from '@/mutations/reset-conf.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { ErrorComponentProps, useLocation } from '@tanstack/react-router'
 import { TriangleAlertIcon } from 'lucide-react'
 import { useState } from 'react'
-import { PageScrollableContent } from './page-scrollable-content'
-import { SelectLangLabel, SelectLangSelect } from './select-lang'
-import { Alert, AlertDescription, AlertTitle } from './ui/alert'
-import { Button } from './ui/button'
+import { PageScrollableContent } from './page-scrollable-content.tsx'
+import { SelectLangLabel, SelectLangSelect } from './select-lang.tsx'
+import { Alert, AlertDescription, AlertTitle } from './ui/alert.tsx'
+import { Button } from './ui/button.tsx'
 
 export function ErrorComponent({ error, reset, info }: ErrorComponentProps) {
   const location = useLocation()

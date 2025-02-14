@@ -1,4 +1,4 @@
-import { TitleBar } from '@/components/title-bar'
+import { TitleBar } from '@/components/title-bar.tsx'
 import { QueryClient } from '@tanstack/react-query'
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 

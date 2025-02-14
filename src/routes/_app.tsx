@@ -1,4 +1,4 @@
-import { isAppOldVersionQuery } from '@/queries/is_old_version.query'
+import { isAppOldVersionQuery } from '@/queries/is_old_version.query.ts'
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 

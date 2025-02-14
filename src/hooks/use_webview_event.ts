@@ -1,4 +1,4 @@
-import { AvailableEvent, PayloadByEvent, webviewEvent } from '@/lib/webview_event'
+import { AvailableEvent, PayloadByEvent, webviewEvent } from '@/lib/webview_event.ts'
 import { Event } from '@tauri-apps/api/event'
 import { useEffect } from 'react'
 

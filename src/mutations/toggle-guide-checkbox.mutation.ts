@@ -1,7 +1,7 @@
 import { toggleGuideCheckbox } from '@/ipc/conf.ts'
-import { getProfile } from '@/lib/profile'
-import { getProgress, getStep, newProgress } from '@/lib/progress'
-import { confQuery } from '@/queries/conf.query'
+import { getProfile } from '@/lib/profile.ts'
+import { getProgress, getStep, newProgress } from '@/lib/progress.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export function useToggleGuideCheckbox() {

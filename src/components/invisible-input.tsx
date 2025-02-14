@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils.ts'
 import { useEffect, useRef, useState } from 'react'
 
 export function InvisibleInput({

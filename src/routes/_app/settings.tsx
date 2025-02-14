@@ -1,11 +1,11 @@
 import { GenericLoader } from '@/components/generic-loader.tsx'
-import { PageScrollableContent } from '@/components/page-scrollable-content'
-import { SelectLangLabel, SelectLangSelect } from '@/components/select-lang'
+import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
+import { SelectLangLabel, SelectLangSelect } from '@/components/select-lang.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
-import { Slider } from '@/components/ui/slider'
+import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { ConfLang, FontSize } from '@/ipc/bindings.ts'
 import { newId } from '@/ipc/id.ts'
@@ -19,7 +19,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
-import { BackButtonLink } from './downloads/-back-button-link'
+import { BackButtonLink } from './downloads/-back-button-link.tsx'
 
 const SearchZod = z.object({
   from: z.string().optional(),

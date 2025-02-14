@@ -1,14 +1,14 @@
-import { AlmanaxFrame } from '@/components/almanax-frame'
+import { AlmanaxFrame } from '@/components/almanax-frame.tsx'
 import { DiscordIcon } from '@/components/icons/discord-icon.tsx'
 import { TwitterIcon } from '@/components/icons/twitter-icon.tsx'
-import { PageScrollableContent } from '@/components/page-scrollable-content'
+import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
 import { PageTitleExtra } from '@/components/page-title.tsx'
-import { versionQuery } from '@/queries/version.query'
+import { versionQuery } from '@/queries/version.query.ts'
+import { Page } from '@/routes/-page.tsx'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { GlobeIcon } from 'lucide-react'
-import { Page } from '@/routes/-page'
 
 export const Route = createFileRoute('/_app/')({
   component: Index,
