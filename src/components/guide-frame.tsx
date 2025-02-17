@@ -1,12 +1,10 @@
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
-import { useProgressStep } from '@/hooks/use_progress_step.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { copyPosition } from '@/lib/copy-position.ts'
 import { getGuideById } from '@/lib/guide.ts'
-import { getProgress } from '@/lib/progress.ts'
-import type { OpenedGuide } from '@/lib/tabs.ts'
+import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation.ts'
 import { useOpenGuideLink } from '@/mutations/open-guide-link.mutation.ts'
@@ -28,20 +26,18 @@ export function GuideFrame({
   className,
   html,
   guideId,
-  openedGuides,
   stepIndex,
 }: {
   className?: string
   html: string
   guideId: number
-  openedGuides: OpenedGuide[]
   stepIndex: number
 }) {
   const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
   const toggleGuideCheckbox = useToggleGuideCheckbox()
-  const step = useProgressStep(guideId, stepIndex)
+  const step = getProgressConfStep(profile, guideId, stepIndex)
   const openGuideLink = useOpenGuideLink()
   const guides = useSuspenseQuery(guidesQuery())
   const currentGuide = useGuide(guideId)
@@ -77,6 +73,7 @@ export function GuideFrame({
               {prefix}
               {posX !== undefined && posY !== undefined && (
                 <button
+                  id={`copy-position-${posX}-${posY}`}
                   type="button"
                   className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
                   onClick={async () => {
@@ -101,6 +98,10 @@ export function GuideFrame({
       // #endregion
 
       if (domNode.type === 'tag') {
+        const {
+          attribs: { className: domClassName, ...attribs },
+        } = domNode
+
         // #region empty p tags
         if (domNode.name === 'p' && domNode.children.length === 0) {
           const countEmptyP = (node: DOMNode | null): number => {
@@ -154,14 +155,14 @@ export function GuideFrame({
             }
 
             return (
-              <div className="contents hover:saturate-200 focus:saturate-[25%]">
+              <div id="to-guide" className="contents hover:saturate-200 focus:saturate-[25%]">
                 {/* same guide */}
                 {guideId === domGuideId || domGuideId === 0 ? (
                   <Link
-                    {...domNode.attribs}
+                    {...attribs}
                     to="/guides/$id"
                     params={{ id: domGuideId === 0 ? guideId : domGuideId }}
-                    search={{ step: stepNumber - 1, guides: openedGuides }}
+                    search={{ step: stepNumber - 1 }}
                     draggable={false}
                     className={cn('contents select-none data-[type=guide-step]:no-underline', domNode.attribs.class)}
                   >
@@ -175,9 +176,10 @@ export function GuideFrame({
                 ) : (
                   // different guide
                   <button
-                    {...domNode.attribs}
+                    {...attribs}
+                    id={`different-guide-${domGuideId}-step-${stepNumber}`}
                     className={cn(
-                      'contents! group select-none data-[type=guide-step]:no-underline',
+                      'contents! group cursor-pointer select-none data-[type=guide-step]:no-underline',
                       downloadGuide.isError && 'text-destructive!',
                       domNode.attribs.class,
                     )}
@@ -197,7 +199,6 @@ export function GuideFrame({
                         params: { id: domGuideId },
                         search: {
                           step: stepNumber - 1,
-                          guides: [...openedGuides, { id: domGuideId, step: stepNumber - 1 }],
                         },
                       })
                     }}
@@ -314,16 +315,20 @@ export function GuideFrame({
 
         // #region img
         if (domNode.name === 'img') {
-          const imgSrc = domNode.attribs.src ?? ''
+          const {
+            attribs: { className: domClassName, ...attribs },
+          } = domNode
+
+          const imgSrc = attribs.src ?? ''
           const isIcon =
-            !domNode.attribs.class?.includes('img-large') &&
-            !domNode.attribs.class?.includes('img-medium') &&
-            !domNode.attribs.class?.includes('img-small')
+            !domClassName?.includes('img-large') &&
+            !domClassName?.includes('img-medium') &&
+            !domClassName?.includes('img-small')
           const clickable = !isIcon && imgSrc !== '' && imgSrc.startsWith('http')
 
           return (
             <DownloadImage
-              {...domNode.attribs}
+              {...attribs}
               onClick={() => {
                 if (clickable) {
                   openGuideLink.mutate(imgSrc)
@@ -336,7 +341,7 @@ export function GuideFrame({
                 'inline-flex select-none',
                 isIcon && '-translate-y-0.5 text-[0.8em]',
                 !isIcon && 'cursor-pointer! pb-2',
-                domNode.attribs.class,
+                domClassName,
               )}
             />
           )
@@ -357,8 +362,9 @@ export function GuideFrame({
           return (
             <button
               data-href={href}
+              id={`open-link-${href.slice(0, 10)}`}
               type="button"
-              className="inline-flex text-yellow-300 underline [&_a]:underline"
+              className="inline-flex cursor-pointer text-yellow-300 underline [&_a]:underline"
               onClick={() => {
                 if (isHrefHttp) {
                   openGuideLink.mutate(href)
@@ -387,11 +393,14 @@ export function GuideFrame({
 
         // #region checkbox
         if (domNode.name === 'input' && domNode.attribs.type === 'checkbox') {
+          const {
+            attribs: { className: domClassName, ...attribs },
+          } = domNode
           const index = checkboxesCount++
 
           return (
             <input
-              {...domNode.attribs}
+              {...attribs}
               onChange={() => {
                 toggleGuideCheckbox.mutate({
                   guideId,
@@ -400,6 +409,7 @@ export function GuideFrame({
                 })
               }}
               checked={step.checkboxes.includes(index)}
+              className={domClassName}
             />
           )
         }

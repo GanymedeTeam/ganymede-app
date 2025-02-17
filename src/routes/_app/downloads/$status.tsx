@@ -16,9 +16,11 @@ import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear-input.tsx'
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination.tsx'
+import { useProfile } from '@/hooks/use_profile.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
 import { getLang } from '@/lib/conf.ts'
 import { getGuideById } from '@/lib/guide.ts'
+import { getProgress } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
 import { paginate } from '@/lib/search.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -107,6 +109,7 @@ function DownloadGuidePage() {
   const guides = useSuspenseQuery(guidesFromServerQuery({ status }))
   const downloads = useSuspenseQuery(guidesQuery())
   const conf = useSuspenseQuery(confQuery)
+  const profile = useProfile()
 
   const scrollableRef = useRef<HTMLDivElement>(null)
 
@@ -227,7 +230,7 @@ function DownloadGuidePage() {
                         <Link
                           to="/guides/$id"
                           params={{ id: guide.id }}
-                          search={{ step: 0, guides: [] }}
+                          search={{ step: getProgress(profile, guide.id)?.currentStep ?? 0 }}
                           draggable={false}
                         >
                           <ChevronRightIcon />

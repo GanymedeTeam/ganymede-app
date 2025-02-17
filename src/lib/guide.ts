@@ -1,5 +1,6 @@
 import { Guide, GuideWithSteps } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
+import { clamp } from './clamp.ts'
 
 /**
  * Check if a guide is new compared to another guide.
@@ -24,4 +25,14 @@ export function getGuideById<T extends Guide | GuideWithSteps | GuideWithStepsWi
   id: number,
 ): T | undefined {
   return guides.find((guide) => guide.id === id)
+}
+
+export function getStepClamped(guides: GuideWithSteps[], guideId: number, step: number): number {
+  const guide = getGuideById(guides, guideId)
+
+  if (!guide) {
+    return 0
+  }
+
+  return clamp(step, 0, guide.steps.length - 1)
 }

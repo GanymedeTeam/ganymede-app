@@ -15,3 +15,15 @@ export function getProgress(profile: Profile, guideId: number): Progress | undef
 export function getStep(progress: Progress, stepIndex: number): ConfStep | undefined {
   return progress.steps[stepIndex]
 }
+
+export function getStepOr(profile: Profile, guideId: number, or: number): number {
+  return getProgress(profile, guideId)?.currentStep ?? or
+}
+
+export function getProgressConfStep(profile: Profile, guideId: number, stepIndex: number): ConfStep {
+  const progress = getProgress(profile, guideId)
+
+  if (!progress) return { checkboxes: [] }
+
+  return getStep(progress, stepIndex) ?? { checkboxes: [] }
+}

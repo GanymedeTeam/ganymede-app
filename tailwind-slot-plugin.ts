@@ -5,7 +5,7 @@ export default createPlugin(({ matchVariant }) => {
   matchVariant('slot', (slot) => {
     return `[data-slot="${slot}"]`
   })
-  // slot-[slot] -> &[data-slot=$slot]
+  // self-slot-[slot] -> &[data-slot=$slot]
   matchVariant('self-slot', (slot) => {
     return `&[data-slot="${slot}"]`
   })

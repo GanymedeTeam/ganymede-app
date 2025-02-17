@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button.tsx'
-import { useWebviewEvent } from '@/hooks/use_webview_event.ts'
+import { useWebviewEvent } from '@/hooks/use_webview_event'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { useState } from 'react'
 import { InvisibleInput } from './invisible-input.tsx'

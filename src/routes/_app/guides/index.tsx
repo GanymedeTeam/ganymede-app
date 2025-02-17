@@ -8,6 +8,7 @@ import { ClearInput } from '@/components/ui/clear-input.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GuidesOrFolder } from '@/ipc/bindings.ts'
 import { clamp } from '@/lib/clamp.ts'
+import { getStepOr } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
 import { OpenedGuideZod } from '@/lib/tabs.ts'
 import { useOpenGuidesFolder } from '@/mutations/open-guides-folder.mutation.ts'
@@ -24,7 +25,6 @@ import { BackButtonLink } from '../downloads/-back-button-link.tsx'
 
 const Search = z.object({
   path: z.string().default(''),
-  guides: z.array(OpenedGuideZod).default([]),
   from: OpenedGuideZod.optional(),
 })
 
@@ -36,16 +36,16 @@ export const Route = createFileRoute('/_app/guides/')({
 
 function Pending() {
   const { t } = useLingui()
-  const { path, guides, from } = Route.useSearch()
+  const { path, from } = Route.useSearch()
 
-  const comesFromGuide = guides.length > 0 && from
+  const comesFromGuide = !!from
 
   return (
     <Page
       title={comesFromGuide ? t`Choisissez un guide` : t`Guides`}
       key="guide-page"
       className="slot-[page-title-text]:whitespace-nowrap"
-      backButton={path !== '' && <BackButtonLink to="/guides" search={{ path, guides: [] }} disabled />}
+      backButton={path !== '' && <BackButtonLink to="/guides" search={{ path }} disabled />}
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
           <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
@@ -70,7 +70,9 @@ function GuidesPage() {
   const path = Route.useSearch({
     select: (search) => (search.path.startsWith('/') ? search.path.slice(1) : search.path),
   })
-  const { guides: openedGuides, from } = Route.useSearch({ select: (s) => ({ guides: s.guides, from: s.from }) })
+  const comesFrom = Route.useSearch({
+    select: (s) => s.from,
+  })
   const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
@@ -135,7 +137,7 @@ function GuidesPage() {
 
   const paths = path.split('/')
   const pathsWithoutLast = paths.slice(0, -1)
-  const comesFromGuide = openedGuides.length > 0 && from
+  const comesFromGuide = comesFrom !== undefined
 
   return (
     <Page
@@ -144,18 +146,16 @@ function GuidesPage() {
       title={comesFromGuide ? t`Choisissez un guide` : t`Guides`}
       backButton={
         path !== '' ? (
-          <BackButtonLink to="/guides" search={{ path: pathsWithoutLast.join('/'), guides: openedGuides, from }} />
+          <BackButtonLink
+            to="/guides"
+            search={{ path: pathsWithoutLast.join('/'), ...(comesFromGuide ? { from: comesFrom } : {}) }}
+          />
         ) : (
           comesFromGuide && (
             <BackButtonLink
               to="/guides/$id"
-              params={{
-                id: from.id,
-              }}
-              search={{
-                step: from.step,
-                guides: openedGuides,
-              }}
+              params={{ id: comesFrom }}
+              search={{ step: getStepOr(profile, comesFrom, 0) }}
             />
           )
         )
@@ -202,7 +202,7 @@ function GuidesPage() {
                   <Link
                     className="items-center"
                     to="/guides"
-                    search={{ path: `${path}/${guide.name}`, guides: openedGuides, from }}
+                    search={{ path: `${path}/${guide.name}`, ...(comesFromGuide ? { from: comesFrom } : {}) }}
                     draggable={false}
                   >
                     <span className="grow">{guide.name}</span>
@@ -216,15 +216,9 @@ function GuidesPage() {
             const step = clamp((guide.currentStep ?? 0) + 1, 1, totalSteps)
             const percentage = totalSteps === 1 ? 100 : (((step - 1) / (totalSteps - 1)) * 100).toFixed(1)
             const hasOpenButton = guide.steps.length > 0
-            const isOpened = openedGuides.some((g) => g.id === guide.id)
 
             return (
-              <Card
-                key={guide.id}
-                className="group flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base"
-                data-opened={isOpened}
-                title={isOpened ? t`Ce guide est déjà ouvert` : undefined}
-              >
+              <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
                 <div className="flex min-w-9 flex-col items-center gap-0.5">
                   <FlagPerLang lang={guide.lang} />
                   <span className="whitespace-nowrap text-xxs">
@@ -243,13 +237,8 @@ function GuidesPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton || isOpened}>
-                    <Link
-                      to="/guides/$id"
-                      params={{ id: guide.id }}
-                      search={{ step: step - 1, guides: [...openedGuides, { id: guide.id, step: step - 1 }] }}
-                      draggable={false}
-                    >
+                  <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
+                    <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }}>
                       <ChevronRightIcon />
                     </Link>
                   </Button>

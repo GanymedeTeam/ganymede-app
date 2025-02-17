@@ -45,7 +45,7 @@ export function TitleBar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/guides" search={{ path: '', guides: [] }} draggable={false}>
+              <Link to="/guides" search={{ path: '' }} draggable={false}>
                 <NotebookTextIcon />
                 <Trans>Guides</Trans>
               </Link>
