@@ -1,5 +1,13 @@
 # ganymede-app
 
+## 1.9.0
+
+### Minor Changes
+
+- f407a28: Ajout d'une nouvelle fonctionnalité pour l'écriture de guides, vous pouvez désormais ajouter des blocs de texte faisant référence à des quêtes pour aider les joueurs.
+- f407a28: Vous pouvez désormais copier le nom de la ressource d'Almanax.
+- 6112b6c: Vous pouvez désormais ouvrir plusieurs guides simultanément sous forme d'onglets.
+
 ## 1.8.1
 
 ### Patch Changes
