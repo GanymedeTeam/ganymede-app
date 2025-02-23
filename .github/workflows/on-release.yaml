@@ -111,6 +111,11 @@ jobs:
             Write-Host $file
             Write-Host $setup
             Write-Host (Get-ChildItem src-tauri/target/release/bundle/ -Recurse).fullname
+      - name: copy AppImage (linux)
+        if: runner.os == 'Linux'
+        run: |
+            cd src-tauri/target/release/bundle/appimage
+            cp "$(ls Ganymede_*_amd64.AppImage)" "$(ls Ganymede_*_amd64.AppImage | sed -E 's/Ganymede_.*_amd64\.AppImage/Ganymede_amd64.AppImage/')"
       - uses: softprops/action-gh-release@v2
         name: upload artifacts
         env:
@@ -120,7 +125,7 @@ jobs:
           draft: true
           files: |
             src-tauri/target/release/bundle/nsis/Ganymede_x64-setup.exe
-            src-tauri/target/release/bundle/appimage/*.AppImage
+            src-tauri/target/release/bundle/appimage/Ganymede_amd64.AppImage
       - name: Upload debug informations to Sentry (windows)
         if: matrix.platform == 'windows-latest'
         run: |
