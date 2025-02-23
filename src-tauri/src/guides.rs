@@ -281,7 +281,7 @@ impl Guides {
                 .unwrap_or(guides_dir)
                 .join(format!("{}.json", guide.id));
 
-            println!("Writing guide to {:?}", file);
+            debug!("Writing guide to {:?}", file);
 
             fs::write(file.as_path(), json)
                 .map_err(|err| Error::WriteGuideFile(err.to_string()))?;

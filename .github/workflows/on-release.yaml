@@ -115,7 +115,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
             cd src-tauri/target/release/bundle/appimage
-            cp "$(ls Ganymede_*_amd64.AppImage)" "$(ls Ganymede_*_amd64.AppImage | sed -E 's/Ganymede_.*_amd64\.AppImage/Ganymede_amd64.AppImage/')"
+            cp "$(ls Ganymede_*_amd64.AppImage | sed -E 's/\*//')" "$(ls Ganymede_*_amd64.AppImage | sed -E 's/Ganymede_.*_amd64\.AppImage/Ganymede_amd64.AppImage/' | sed -E 's/\*//')"
       - uses: softprops/action-gh-release@v2
         name: upload artifacts
         env:
