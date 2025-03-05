@@ -4,7 +4,7 @@ use crate::quest::get_quest_data;
 use chrono::prelude::*;
 use chrono_tz::Europe::Paris;
 use serde::{Deserialize, Serialize};
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager};
 use tauri_plugin_http::reqwest;
 
 use crate::conf::{Conf, ConfLang};
@@ -132,19 +132,24 @@ pub fn get_experience_reward(
     }
 }
 
-pub async fn get_almanax_data(date: String) -> Result<Almanax, Error> {
+pub async fn get_almanax_data(
+    date: String,
+    http_client: &reqwest::Client,
+) -> Result<Almanax, Error> {
     let date = DateTime::parse_from_rfc3339(date.as_str())
         .unwrap()
         .with_timezone(&Paris);
     let day = date.day();
     let month = date.month();
     let year = date.year();
-    let res = reqwest::get(format!(
-        "{}/almanax?date={}/{}/{}",
-        DOFUSDB_API, month, day, year
-    ))
-    .await
-    .map_err(|err| Error::RequestAlmanax(err.to_string()))?;
+    let res = http_client
+        .get(format!(
+            "{}/almanax?date={}/{}/{}",
+            DOFUSDB_API, month, day, year
+        ))
+        .send()
+        .await
+        .map_err(|err| Error::RequestAlmanax(err.to_string()))?;
 
     let text = res
         .text()
@@ -157,8 +162,10 @@ pub async fn get_almanax_data(date: String) -> Result<Almanax, Error> {
     Ok(almanax)
 }
 
-pub async fn get_item_data(item_id: u32) -> Result<Item, Error> {
-    let res = reqwest::get(format!("{}/items/{}", DOFUSDB_API, item_id))
+pub async fn get_item_data(item_id: u32, http_client: &reqwest::Client) -> Result<Item, Error> {
+    let res = http_client
+        .get(format!("{}/items/{}", DOFUSDB_API, item_id))
+        .send()
         .await
         .map_err(|err| Error::RequestItem(err.to_string()))?;
 
@@ -183,14 +190,17 @@ pub struct AlmanaxApiImpl;
 #[taurpc::resolvers]
 impl AlmanaxApi for AlmanaxApiImpl {
     async fn get(self, app: AppHandle, level: u32, date: String) -> Result<AlmanaxReward, Error> {
-        let almanax = get_almanax_data(date).await?;
-        let quest = get_quest_data(almanax.id).await.map_err(Error::Quest)?;
+        let http_client = app.state::<reqwest::Client>();
+        let almanax = get_almanax_data(date, &http_client).await?;
+        let quest = get_quest_data(almanax.id, &http_client)
+            .await
+            .map_err(Error::Quest)?;
         let item_id = quest.data[0].steps[0].objectives[0].need.generated.items[0];
         let quantity = quest.data[0].steps[0].objectives[0]
             .need
             .generated
             .quantities[0];
-        let item = get_item_data(item_id).await?;
+        let item = get_item_data(item_id, &http_client).await?;
         let conf = Conf::get(&app).map_err(Error::Conf)?;
 
         let name = match conf.lang {

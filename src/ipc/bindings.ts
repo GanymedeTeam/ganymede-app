@@ -34,6 +34,8 @@ export type Profile = { id: string; name: string; level?: number; progresses: Pr
 
 export type Progress = { id: number; currentStep: number; steps: { [key in number]: ConfStep } }
 
+export type ReportPayload = { username: string; content: string; step: number; guide_id: number }
+
 export type Status = "draft" | "public" | "private" | "certified" | "gp"
 
 export type TauRpcAlmanaxApiInputTypes = { proc_name: "get"; input_type: [number, string] }
@@ -60,6 +62,10 @@ export type TauRpcImageApiInputTypes = { proc_name: "fetchImage"; input_type: { 
 
 export type TauRpcImageApiOutputTypes = { proc_name: "fetchImage"; output_type: number[] }
 
+export type TauRpcReportApiInputTypes = { proc_name: "send_report"; input_type: { __taurpc_type: ReportPayload } }
+
+export type TauRpcReportApiOutputTypes = { proc_name: "send_report"; output_type: null }
+
 export type TauRpcSecurityApiInputTypes = { proc_name: "getWhiteList"; input_type: null }
 
 export type TauRpcSecurityApiOutputTypes = { proc_name: "getWhiteList"; output_type: string[] }
@@ -70,7 +76,7 @@ export type TauRpcUpdateApiOutputTypes = { proc_name: "startUpdate"; output_type
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number }
 
-const ARGS_MAP = {'conf':'{"get":[],"set":["conf"],"reset":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', '':'{"isAppVersionOld":[]}', 'security':'{"getWhiteList":[]}', 'base':'{"openUrl":["url"],"newId":[]}', 'update':'{"startUpdate":[]}', 'guides':'{"getGuidesFromServer":["status"],"getGuides":["folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"downloadGuideFromServer":["guide_id","folder"],"openGuidesFolder":[]}', 'almanax':'{"get":["level","date"]}', 'image':'{"fetchImage":["url"]}'}
+const ARGS_MAP = {'conf':'{"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"reset":[],"get":[],"set":["conf"]}', 'base':'{"openUrl":["url"],"newId":[]}', 'report':'{"send_report":["payload"]}', 'almanax':'{"get":["level","date"]}', '':'{"isAppVersionOld":[]}', 'image':'{"fetchImage":["url"]}', 'guides':'{"openGuidesFolder":[],"downloadGuideFromServer":["guide_id","folder"],"getGuideFromServer":["guide_id"],"getGuides":["folder"],"getFlatGuides":["folder"],"getGuidesFromServer":["status"]}', 'update':'{"startUpdate":[]}', 'security':'{"getWhiteList":[]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)
@@ -84,4 +90,5 @@ type Router = {
 	'image': [TauRpcImageApiInputTypes, TauRpcImageApiOutputTypes],
 	'update': [TauRpcUpdateApiInputTypes, TauRpcUpdateApiOutputTypes],
 	'conf': [TauRpcConfApiInputTypes, TauRpcConfApiOutputTypes],
+	'report': [TauRpcReportApiInputTypes, TauRpcReportApiOutputTypes],
 }

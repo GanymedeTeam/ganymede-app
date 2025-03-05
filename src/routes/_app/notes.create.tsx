@@ -86,9 +86,8 @@ function CreateNotePage() {
             autoComplete="off"
             autoCapitalize="off"
             rows={10}
-          >
-            {note?.text}
-          </Textarea>
+            defaultValue={note?.text}
+          />
           <Button type="submit">
             <SaveIcon />
             <Trans>Enregistrer la note</Trans>

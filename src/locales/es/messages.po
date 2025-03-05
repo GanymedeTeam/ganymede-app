@@ -80,6 +80,11 @@ msgstr "Causa no encontrada."
 msgid "Causée par :"
 msgstr "Causada por:"
 
+#. placeholder {0}: sendReport.error.status
+#: src/routes/_app/guides/-report-button.tsx:106
+msgid "Causée par: {0}"
+msgstr "Causado por: {0}"
+
 #: src/routes/_app/index.tsx:39
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "¡Esta herramienta tiene como objetivo asistirte durante toda tu aventura en <0>Dofus</0>!"
@@ -181,6 +186,10 @@ msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
+#: src/routes/_app/guides/-report-button.tsx:86
+msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
+msgstr "Describe el problema encontrado. El paso y la guía se incluirán automáticamente."
+
 #: src/components/error-component.tsx:75
 msgid "Détails"
 msgstr "Detalles"
@@ -193,9 +202,17 @@ msgstr "Discord de Ganymede"
 msgid "Éditer une note"
 msgstr "Editar una nota"
 
-#: src/routes/_app/notes.create.tsx:94
+#: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
 msgstr "Guardar la nota"
+
+#: src/routes/_app/guides/-report-button.tsx:122
+msgid "Envoyer"
+msgstr "Enviar"
+
+#: src/routes/_app/guides/-report-button.tsx:59
+msgid "Envoyer un rapport"
+msgstr "Enviar un informe"
 
 #: src/components/title-bar.tsx:125
 msgid "Fermer"
@@ -338,6 +355,10 @@ msgstr "Para restablecer la configuración, ejecute el atajo de teclado: <0>{0}<
 msgid "Présentation"
 msgstr "Presentación"
 
+#: src/routes/_app/guides/-report-button.tsx:81
+msgid "Problème rencontré"
+msgstr "Problema encontrado"
+
 #: src/routes/_app/settings.tsx:172
 msgid "Profils"
 msgstr "Perfiles"
@@ -412,9 +433,18 @@ msgstr "Ha ocurrido un error"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Ha ocurrido un error al recuperar la configuración."
 
+#: src/routes/_app/guides/-report-button.tsx:115
+msgid "Votre message nous a été transmi. Bon jeu !"
+msgstr "Tu mensaje nos ha sido enviado. ¡Que disfrutes del juego!"
+
 #: src/components/error-component.tsx:66
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Tu progreso en las guías será restablecido. Las guías descargadas seguirán disponibles."
+
+#: src/routes/_app/guides/-report-button.tsx:66
+#: src/routes/_app/guides/-report-button.tsx:71
+msgid "Votre pseudo"
+msgstr "Tu nombre de usuario"
 
 #: src/routes/_app/guides/$id.tsx:213
 #~ msgid "Vous avez atteint la limite"

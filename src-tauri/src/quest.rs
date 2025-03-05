@@ -98,13 +98,15 @@ impl QuestData {
     }
 }
 
-pub async fn get_quest_data(id: u32) -> Result<QuestData, Error> {
-    let res = reqwest::get(format!(
-        "{}/quests?startCriterion[$regex]=Ad={}",
-        DOFUSDB_API, id
-    ))
-    .await
-    .map_err(|err| Error::RequestQuest(err.to_string()))?;
+pub async fn get_quest_data(id: u32, http_client: &reqwest::Client) -> Result<QuestData, Error> {
+    let res = http_client
+        .get(format!(
+            "{}/quests?startCriterion[$regex]=Ad={}",
+            DOFUSDB_API, id
+        ))
+        .send()
+        .await
+        .map_err(|err| Error::RequestQuest(err.to_string()))?;
 
     let text = res
         .text()

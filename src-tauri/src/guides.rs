@@ -318,9 +318,15 @@ pub trait GuidesApi {
         folder: Option<String>,
     ) -> Result<Vec<GuidesOrFolder>, Error>;
     #[taurpc(alias = "getGuideFromServer")]
-    async fn get_guide_from_server(guide_id: u32) -> Result<GuideWithSteps, Error>;
+    async fn get_guide_from_server(
+        app_handle: AppHandle,
+        guide_id: u32,
+    ) -> Result<GuideWithSteps, Error>;
     #[taurpc(alias = "getGuidesFromServer")]
-    async fn get_guides_from_server(status: Status) -> Result<Vec<Guide>, Error>;
+    async fn get_guides_from_server(
+        app_handle: AppHandle,
+        status: Status,
+    ) -> Result<Vec<Guide>, Error>;
     #[taurpc(alias = "downloadGuideFromServer")]
     async fn download_guide_from_server(
         app_handle: AppHandle,
@@ -354,11 +360,19 @@ impl GuidesApi for GuidesApiImpl {
         GuidesOrFolder::from_handle(&app, folder)
     }
 
-    async fn get_guide_from_server(self, guide_id: u32) -> Result<GuideWithSteps, Error> {
-        get_guide_from_server(guide_id).await
+    async fn get_guide_from_server(
+        self,
+        app_handle: AppHandle,
+        guide_id: u32,
+    ) -> Result<GuideWithSteps, Error> {
+        get_guide_from_server(guide_id, &app_handle.state::<reqwest::Client>()).await
     }
 
-    async fn get_guides_from_server(self, status: Status) -> Result<Vec<Guide>, Error> {
+    async fn get_guides_from_server(
+        self,
+        app_handle: AppHandle,
+        status: Status,
+    ) -> Result<Vec<Guide>, Error> {
         info!("[Guides] get_guides_from_server");
 
         sentry::add_breadcrumb(sentry::Breadcrumb {
@@ -374,7 +388,11 @@ impl GuidesApi for GuidesApiImpl {
             ..Default::default()
         });
 
-        let res = reqwest::get(format!("{}/guides?status={}", GANYMEDE_API_V2, status))
+        let http_client = app_handle.state::<reqwest::Client>();
+
+        let res = http_client
+            .get(format!("{}/guides?status={}", GANYMEDE_API_V2, status))
+            .send()
             .await
             .map_err(|err| Error::RequestGuides(err.to_string()))?;
 
@@ -435,10 +453,15 @@ pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
     download_guide_by_id(app, DEFAULT_GUIDE_ID, "".into()).await
 }
 
-pub async fn get_guide_from_server(guide_id: u32) -> Result<GuideWithSteps, Error> {
+pub async fn get_guide_from_server(
+    guide_id: u32,
+    http_client: &reqwest::Client,
+) -> Result<GuideWithSteps, Error> {
     info!("[Guides] get_guide_from_server: {}", guide_id);
 
-    let res = reqwest::get(format!("{}/guides/{}", GANYMEDE_API_V2, guide_id))
+    let res = http_client
+        .get(format!("{}/guides/{}", GANYMEDE_API_V2, guide_id))
+        .send()
         .await
         .map_err(|err| Error::RequestGuide(err.to_string()))?;
     let text = res
@@ -459,7 +482,8 @@ async fn download_guide_by_id(
     guide_id: u32,
     folder: String,
 ) -> Result<Guides, Error> {
-    let mut guide = get_guide_from_server(guide_id).await?;
+    let http_client = app.state::<reqwest::Client>();
+    let mut guide = get_guide_from_server(guide_id, &http_client).await?;
 
     guide.folder = Some(app.path().app_guides_dir().join(folder.clone()));
 

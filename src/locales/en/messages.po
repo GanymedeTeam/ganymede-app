@@ -80,6 +80,11 @@ msgstr "Cause not found."
 msgid "Causée par :"
 msgstr "Caused by:"
 
+#. placeholder {0}: sendReport.error.status
+#: src/routes/_app/guides/-report-button.tsx:106
+msgid "Causée par: {0}"
+msgstr "Caused by: {0}"
+
 #: src/routes/_app/index.tsx:39
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "This tool is designed to assist you throughout your adventure on <0>Dofus</0>!"
@@ -181,6 +186,10 @@ msgstr "Create your guides on the official website and download those made by ot
 msgid "de <0>{0}</0>"
 msgstr "from <0>{0}</0>"
 
+#: src/routes/_app/guides/-report-button.tsx:86
+msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
+msgstr "Describe the issue encountered. The step and guide will be automatically included."
+
 #: src/components/error-component.tsx:75
 msgid "Détails"
 msgstr "Details"
@@ -193,9 +202,17 @@ msgstr "Ganymède's Discord"
 msgid "Éditer une note"
 msgstr "Edit a note"
 
-#: src/routes/_app/notes.create.tsx:94
+#: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
 msgstr "Save the note"
+
+#: src/routes/_app/guides/-report-button.tsx:122
+msgid "Envoyer"
+msgstr "Send"
+
+#: src/routes/_app/guides/-report-button.tsx:59
+msgid "Envoyer un rapport"
+msgstr "Send a report"
 
 #: src/components/title-bar.tsx:125
 msgid "Fermer"
@@ -338,6 +355,10 @@ msgstr "To reset the config, use: <0>{0}</0>."
 msgid "Présentation"
 msgstr "Presentation"
 
+#: src/routes/_app/guides/-report-button.tsx:81
+msgid "Problème rencontré"
+msgstr "Issue encountered"
+
 #: src/routes/_app/settings.tsx:172
 msgid "Profils"
 msgstr "Profiles"
@@ -412,9 +433,18 @@ msgstr "An error occurred"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "An error occurred while retrieving the configuration."
 
+#: src/routes/_app/guides/-report-button.tsx:115
+msgid "Votre message nous a été transmi. Bon jeu !"
+msgstr "Your message has been sent to us. Have a great game!"
+
 #: src/components/error-component.tsx:66
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Your progress in guides will be reset. The downloaded guides will still be available."
+
+#: src/routes/_app/guides/-report-button.tsx:66
+#: src/routes/_app/guides/-report-button.tsx:71
+msgid "Votre pseudo"
+msgstr "Your username"
 
 #: src/routes/_app/guides/$id.tsx:213
 #~ msgid "Vous avez atteint la limite"

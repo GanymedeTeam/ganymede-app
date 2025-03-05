@@ -2,13 +2,16 @@ use log::debug;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
-#[cfg(not(dev))]
+// #[cfg(not(dev))]
 use log::info;
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
-#[cfg(not(dev))]
+// #[cfg(not(dev))]
 pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
 pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
+
+pub const API_KEY_HEADER: &str = "X-API-KEY";
+pub const API_KEY: &str = env!("GANYMEDE_API_KEY");
 
 const GITHUB_API: &str = "https://api.github.com/repos/GanymedeTeam/ganymede-app";
 
@@ -25,7 +28,7 @@ pub enum Error {
     DownloadedCount(String, String),
 }
 
-#[cfg(not(dev))]
+// #[cfg(not(dev))]
 #[derive(Serialize)]
 struct DownloadedBody {
     #[serde(rename = "uniqueID")]
@@ -34,7 +37,7 @@ struct DownloadedBody {
     os: String,
 }
 
-#[cfg(not(dev))]
+// #[cfg(not(dev))]
 fn os_to_string(os: String) -> Option<String> {
     match os.as_str() {
         "windows" => Some("Windows".into()),
@@ -44,9 +47,10 @@ fn os_to_string(os: String) -> Option<String> {
     }
 }
 
-#[cfg(not(dev))]
+// #[cfg(not(dev))]
 pub async fn increment_app_download_count(
     version: String,
+    http_client: &tauri_plugin_http::reqwest::Client,
 ) -> Result<tauri_plugin_http::reqwest::Response, Error> {
     let id = machine_uid::get().unwrap();
     let os = std::env::consts::OS.to_string();
@@ -65,13 +69,10 @@ pub async fn increment_app_download_count(
 
     let body = serde_json::to_string(&body).unwrap();
 
-    let res = tauri_plugin_http::reqwest::ClientBuilder::new()
-        .user_agent("GANYMEDE_TAURI_APP")
-        .build()
-        .map_err(|err| Error::BuildClientBuilder(err.to_string()))?
+    let res = http_client
         .post(format!("{}/downloaded", GANYMEDE_API))
-        .header("Content-Type", "application/json")
-        .body(body)
+        .header(API_KEY_HEADER, API_KEY)
+        .json(&body)
         .send()
         .await
         .map_err(|err| Error::RequestDownloaded(err.to_string()))?;
