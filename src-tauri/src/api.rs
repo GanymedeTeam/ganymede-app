@@ -2,11 +2,11 @@ use log::debug;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
-// #[cfg(not(dev))]
+#[cfg(not(dev))]
 use log::info;
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
-// #[cfg(not(dev))]
+#[cfg(not(dev))]
 pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
 pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
 
@@ -28,7 +28,7 @@ pub enum Error {
     DownloadedCount(String, String),
 }
 
-// #[cfg(not(dev))]
+#[cfg(not(dev))]
 #[derive(Serialize)]
 struct DownloadedBody {
     #[serde(rename = "uniqueID")]
@@ -37,7 +37,7 @@ struct DownloadedBody {
     os: String,
 }
 
-// #[cfg(not(dev))]
+#[cfg(not(dev))]
 fn os_to_string(os: String) -> Option<String> {
     match os.as_str() {
         "windows" => Some("Windows".into()),
@@ -47,7 +47,7 @@ fn os_to_string(os: String) -> Option<String> {
     }
 }
 
-// #[cfg(not(dev))]
+#[cfg(not(dev))]
 pub async fn increment_app_download_count(
     version: String,
     http_client: &tauri_plugin_http::reqwest::Client,
@@ -57,17 +57,17 @@ pub async fn increment_app_download_count(
     let os = os_to_string(os).ok_or(Error::OsNotFound)?;
 
     info!(
-        "[Api] Incrementing app download count, id: {} - version: {} - os: {:?}",
+        "[Api] id = \"{}\", version = {}, os = {:?}",
         id, version, os
     );
+
+    debug!("[Api] Incrementing app download count");
 
     let body = DownloadedBody {
         unique_id: id,
         version,
         os,
     };
-
-    let body = serde_json::to_string(&body).unwrap();
 
     let res = http_client
         .post(format!("{}/downloaded", GANYMEDE_API))

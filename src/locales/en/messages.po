@@ -289,7 +289,7 @@ msgstr "Guides in this section have not been manually verified by the Ganymede t
 msgid "lien masqué"
 msgstr "hidden link"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Mettre à jour le guide"
 msgstr "Update the guide"
 
@@ -409,7 +409,7 @@ msgstr "Downloads"
 msgid "Télécharger la version {toVersion}"
 msgstr "Download version {toVersion}"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Télécharger le guide"
 msgstr "Download the guide"
 

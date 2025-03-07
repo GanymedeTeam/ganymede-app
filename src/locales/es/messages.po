@@ -289,7 +289,7 @@ msgstr "Las guías de esta sección no han sido verificadas manualmente por el e
 msgid "lien masqué"
 msgstr "enlace oculto"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Mettre à jour le guide"
 msgstr "Actualizar la guía"
 
@@ -409,7 +409,7 @@ msgstr "Descargas"
 msgid "Télécharger la version {toVersion}"
 msgstr "Descargar la versión {toVersion}"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Télécharger le guide"
 msgstr "Descargar la guía"
 

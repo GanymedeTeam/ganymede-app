@@ -14,10 +14,34 @@ pub enum Error {
 
 #[taurpc::ipc_type]
 pub struct ReportPayload {
+    pub username: Option<String>,
+    pub content: String,
+    pub step: u32,
+    pub guide_id: u32,
+}
+
+#[derive(Serialize)]
+pub struct ReportApiPayload {
     pub username: String,
     pub content: String,
     pub step: u32,
     pub guide_id: u32,
+}
+
+impl From<ReportPayload> for ReportApiPayload {
+    fn from(value: ReportPayload) -> Self {
+        ReportApiPayload {
+            username: value
+                .username
+                .unwrap_or_else(|| "Anonyme".to_string())
+                .chars()
+                .take(255)
+                .collect(),
+            content: value.content,
+            step: value.step,
+            guide_id: value.guide_id,
+        }
+    }
 }
 
 #[taurpc::procedures(path = "report", export_to = "../src/ipc/bindings.ts")]
@@ -44,7 +68,7 @@ impl ReportApi for ReportApiImpl {
                 GANYMEDE_API_V2, payload.guide_id
             ))
             .header(API_KEY_HEADER, API_KEY)
-            .json(&payload)
+            .json(&Into::<ReportApiPayload>::into(payload))
             .send()
             .await
             .map_err(|err| Error::Server(err.to_string()))?;

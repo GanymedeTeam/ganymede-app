@@ -184,26 +184,26 @@ pub fn run() {
             }
         }
 
-        // #[cfg(not(dev))]
-        // {
-        let version = app.package_info().version.to_string();
+        #[cfg(not(dev))]
+        {
+            let version = app.package_info().version.to_string();
 
-        let http_client = http_client.clone();
+            let http_client = http_client.clone();
 
-        tauri::async_runtime::spawn(async move {
-            let res = crate::api::increment_app_download_count(version, &http_client).await;
+            tauri::async_runtime::spawn(async move {
+                let res = crate::api::increment_app_download_count(version, &http_client).await;
 
-            match &res {
-                Err(err) => {
-                    error!("[Lib] {:?}", err);
-                    sentry::capture_error(&err);
+                match &res {
+                    Err(err) => {
+                        error!("[Lib] {:?}", err);
+                        sentry::capture_error(&err);
+                    }
+                    _ => {
+                        info!("[Lib] app download count incremented");
+                    }
                 }
-                _ => {
-                    info!("[Lib] app download count incremented");
-                }
-            }
-        });
-        // }
+            });
+        }
 
         #[cfg(desktop)]
         {

@@ -34,7 +34,7 @@ export type Profile = { id: string; name: string; level?: number; progresses: Pr
 
 export type Progress = { id: number; currentStep: number; steps: { [key in number]: ConfStep } }
 
-export type ReportPayload = { username: string; content: string; step: number; guide_id: number }
+export type ReportPayload = { username: string | null; content: string; step: number; guide_id: number }
 
 export type Status = "draft" | "public" | "private" | "certified" | "gp"
 
@@ -76,7 +76,7 @@ export type TauRpcUpdateApiOutputTypes = { proc_name: "startUpdate"; output_type
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number }
 
-const ARGS_MAP = {'conf':'{"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"reset":[],"get":[],"set":["conf"]}', 'base':'{"openUrl":["url"],"newId":[]}', 'report':'{"send_report":["payload"]}', 'almanax':'{"get":["level","date"]}', '':'{"isAppVersionOld":[]}', 'image':'{"fetchImage":["url"]}', 'guides':'{"openGuidesFolder":[],"downloadGuideFromServer":["guide_id","folder"],"getGuideFromServer":["guide_id"],"getGuides":["folder"],"getFlatGuides":["folder"],"getGuidesFromServer":["status"]}', 'update':'{"startUpdate":[]}', 'security':'{"getWhiteList":[]}'}
+const ARGS_MAP = {'almanax':'{"get":["level","date"]}', 'image':'{"fetchImage":["url"]}', 'conf':'{"set":["conf"],"get":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"reset":[]}', 'report':'{"send_report":["payload"]}', '':'{"isAppVersionOld":[]}', 'update':'{"startUpdate":[]}', 'base':'{"newId":[],"openUrl":["url"]}', 'guides':'{"getFlatGuides":["folder"],"getGuides":["folder"],"downloadGuideFromServer":["guide_id","folder"],"openGuidesFolder":[],"getGuideFromServer":["guide_id"],"getGuidesFromServer":["status"]}', 'security':'{"getWhiteList":[]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)

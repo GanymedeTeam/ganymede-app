@@ -25,14 +25,14 @@ export function ReportButton({
 
     const form = evt.target as HTMLFormElement
     const formData = new FormData(form)
-    const username = (formData.get('username') as string).trim()
-    const content = (formData.get('content') as string).trim()
+    const username = (formData.get('username') as string)?.trim() ?? ''
+    const content = (formData.get('content') as string)?.trim() ?? ''
 
     await sendReport.mutateAsync({
       guide_id: guideId,
       step: stepIndex + 1,
       content,
-      username,
+      username: username === '' ? null : username,
     })
   }
 

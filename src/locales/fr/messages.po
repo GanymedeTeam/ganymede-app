@@ -289,7 +289,7 @@ msgstr "Les guides de cette section n'ont pas été vérifiés manuellement par 
 msgid "lien masqué"
 msgstr "lien masqué"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Mettre à jour le guide"
 msgstr "Mettre à jour le guide"
 
@@ -409,7 +409,7 @@ msgstr "Téléchargements"
 msgid "Télécharger la version {toVersion}"
 msgstr "Télécharger la version {toVersion}"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Télécharger le guide"
 msgstr "Télécharger le guide"
 
