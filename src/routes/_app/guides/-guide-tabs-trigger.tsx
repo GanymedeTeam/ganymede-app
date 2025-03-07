@@ -56,14 +56,16 @@ export function GuideTabsTrigger({
             const positionInList = tabs.findIndex((tab) => tab === id)
 
             if (currentId === id && positionInList !== -1) {
+              const nextGuide = tabs[clamp(positionInList - 1, 0, tabs.length - 1)]
+
               // go to previous tab if it exists
               await navigate({
                 to: '/guides/$id',
                 params: {
-                  id: tabs[clamp(positionInList - 1, 0, tabs.length - 1)],
+                  id: nextGuide,
                 },
                 search: {
-                  step: getStepOr(profile, id, 0),
+                  step: getStepOr(profile, nextGuide, 0),
                 },
               })
             }
