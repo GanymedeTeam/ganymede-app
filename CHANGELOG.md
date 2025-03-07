@@ -1,5 +1,19 @@
 # ganymede-app
 
+## 1.10.0
+
+### Minor Changes
+
+- 553ad4b: Ajout du support de Linux via AppImage
+- f1a4c65: Vous pouvez désormais faire un rapport de bug dans un guide. Utilisez-le pour nous retourner des problèmes au niveau des guides : par exemple, pour un mauvais PNJ, une mauvaise position.
+
+### Patch Changes
+
+- e2ca425: Si vous supprimiez un guide que vous aviez ouvert dans un onglet, vous pouviez avoir l'erreur "Guide with id xx not found". Ceci est corrigé. Merci @Wedge, et @LeVin's
+- e1d7b92: Correction du problème de perte de progression à la fermeture d'un onglet de guide.
+- 250f6a6: Certains blocs de quête étaient partiellement masqués en raison de la longueur excessive de certains noms de quêtes.
+- d408393: Lorsqu'une erreur survient, l'application devrait donner plus d'infos sur la cause de l'erreur au lieu de ne rien afficher.
+
 ## 1.9.0
 
 ### Minor Changes
