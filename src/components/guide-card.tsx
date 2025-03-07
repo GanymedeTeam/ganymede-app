@@ -29,6 +29,10 @@ export function GuideDownloadButton({
   const isGuideNeedUpdate = isGuideNew(guideInServer, guideInDownloads)
 
   // show a button to download the guide, checkmark if already downloaded, and alert icon if the guide has an update
+  const showCheck =
+    (downloadGuideFromServer.isSuccess || guideInDownloads !== undefined) &&
+    !downloadGuideFromServer.isError &&
+    !downloadGuideFromServer.isPending
 
   return (
     <>
@@ -45,8 +49,7 @@ export function GuideDownloadButton({
         variant={downloadGuideFromServer.isError ? 'destructive' : 'secondary'}
         title={isGuideNeedUpdate ? t`Mettre à jour le guide` : t`Télécharger le guide`}
       >
-        {!downloadGuideFromServer.isPending &&
-          (downloadGuideFromServer.isSuccess || guideInDownloads !== undefined) && <CircleCheckIcon />}
+        {showCheck && <CircleCheckIcon />}
         {downloadGuideFromServer.isPending && <LoaderIcon className="animate-[spin_2s_linear_infinite]" />}
         {downloadGuideFromServer.isIdle && guideInDownloads === undefined && <ImportIcon />}
         {downloadGuideFromServer.isError && <CircleAlertIcon className="size-5" />}

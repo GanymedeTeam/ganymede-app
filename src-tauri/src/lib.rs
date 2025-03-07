@@ -8,7 +8,9 @@ use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::handle_shortcuts;
 use crate::update::{UpdateApi, UpdateApiImpl};
 use log::{error, info, LevelFilter};
-use tauri::AppHandle;
+use report::{ReportApi, ReportApiImpl};
+use tauri::{AppHandle, Manager};
+use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_opener::OpenerExt;
 #[cfg(not(dev))]
@@ -26,6 +28,7 @@ mod image;
 mod item;
 mod json;
 mod quest;
+mod report;
 mod security;
 mod shortcut;
 mod tauri_api_ext;
@@ -119,7 +122,8 @@ pub fn run() {
         .merge(SecurityApiImpl.into_handler())
         .merge(ImageApiImpl.into_handler())
         .merge(UpdateApiImpl.into_handler())
-        .merge(ConfApiImpl.into_handler());
+        .merge(ConfApiImpl.into_handler())
+        .merge(ReportApiImpl.into_handler());
 
     sentry::add_breadcrumb(sentry::Breadcrumb {
         category: Some("sentry.transaction".into()),
@@ -128,6 +132,14 @@ pub fn run() {
     });
 
     app.setup(|app| {
+        let http_client = reqwest::Client::builder()
+            .user_agent("GANYMEDE_TAURI_APP")
+            .build()
+            .map_err(|err| crate::api::Error::BuildClientBuilder(err.to_string()))
+            .unwrap();
+
+        app.manage(http_client.clone());
+
         sentry::add_breadcrumb(sentry::Breadcrumb {
             category: Some("sentry.transaction".into()),
             message: Some("app setup".into()),
@@ -176,8 +188,10 @@ pub fn run() {
         {
             let version = app.package_info().version.to_string();
 
-            tauri::async_runtime::spawn(async {
-                let res = api::increment_app_download_count(version).await;
+            let http_client = http_client.clone();
+
+            tauri::async_runtime::spawn(async move {
+                let res = crate::api::increment_app_download_count(version, &http_client).await;
 
                 match &res {
                     Err(err) => {

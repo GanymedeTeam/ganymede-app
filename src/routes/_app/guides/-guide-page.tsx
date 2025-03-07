@@ -10,6 +10,7 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useRef } from 'react'
+import { ReportButton } from './-report-button.tsx'
 
 export function GuidePage({
   id,
@@ -113,6 +114,9 @@ export function GuidePage({
                   return changeStep(currentIndex)
                 }}
               />
+              <div className="ml-auto flex">
+                <ReportButton guideId={guide.id} stepIndex={index} />
+              </div>
             </>
           )}
         </div>

@@ -80,6 +80,11 @@ msgstr "Causa não encontrada."
 msgid "Causée par :"
 msgstr "Causada por:"
 
+#. placeholder {0}: sendReport.error.status
+#: src/routes/_app/guides/-report-button.tsx:106
+msgid "Causée par: {0}"
+msgstr "Causado por: {0}"
+
 #: src/routes/_app/index.tsx:39
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em <0>Dofus</0>!"
@@ -181,6 +186,10 @@ msgstr "Crie seus guias no site oficial e baixe os de outros usuários!"
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
+#: src/routes/_app/guides/-report-button.tsx:86
+msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
+msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
+
 #: src/components/error-component.tsx:75
 msgid "Détails"
 msgstr "Detalhes"
@@ -193,9 +202,17 @@ msgstr "Discord do Ganimedes"
 msgid "Éditer une note"
 msgstr "Editar uma nota"
 
-#: src/routes/_app/notes.create.tsx:94
+#: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
 msgstr "Salvar a nota"
+
+#: src/routes/_app/guides/-report-button.tsx:122
+msgid "Envoyer"
+msgstr "Enviar"
+
+#: src/routes/_app/guides/-report-button.tsx:59
+msgid "Envoyer un rapport"
+msgstr "Enviar um relatório"
 
 #: src/components/title-bar.tsx:125
 msgid "Fermer"
@@ -272,7 +289,7 @@ msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ga
 msgid "lien masqué"
 msgstr "link oculto"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Mettre à jour le guide"
 msgstr "Atualizar o guia"
 
@@ -338,6 +355,10 @@ msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}<
 msgid "Présentation"
 msgstr "Apresentação"
 
+#: src/routes/_app/guides/-report-button.tsx:81
+msgid "Problème rencontré"
+msgstr "Problema encontrado"
+
 #: src/routes/_app/settings.tsx:172
 msgid "Profils"
 msgstr "Perfis"
@@ -388,7 +409,7 @@ msgstr "Downloads"
 msgid "Télécharger la version {toVersion}"
 msgstr "Baixar a versão {toVersion}"
 
-#: src/components/guide-card.tsx:46
+#: src/components/guide-card.tsx:50
 msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
@@ -412,9 +433,18 @@ msgstr "Ocorreu um erro"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Ocorreu um erro ao recuperar a configuração."
 
+#: src/routes/_app/guides/-report-button.tsx:115
+msgid "Votre message nous a été transmi. Bon jeu !"
+msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
+
 #: src/components/error-component.tsx:66
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
+
+#: src/routes/_app/guides/-report-button.tsx:66
+#: src/routes/_app/guides/-report-button.tsx:71
+msgid "Votre pseudo"
+msgstr "O seu nome de utilizador"
 
 #: src/routes/app-old-version.tsx:65
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."

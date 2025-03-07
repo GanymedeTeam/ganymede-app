@@ -10,6 +10,9 @@ pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
 pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
 pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
 
+pub const API_KEY_HEADER: &str = "X-API-KEY";
+pub const API_KEY: &str = env!("GANYMEDE_API_KEY");
+
 const GITHUB_API: &str = "https://api.github.com/repos/GanymedeTeam/ganymede-app";
 
 #[allow(dead_code)]
@@ -47,15 +50,18 @@ fn os_to_string(os: String) -> Option<String> {
 #[cfg(not(dev))]
 pub async fn increment_app_download_count(
     version: String,
+    http_client: &tauri_plugin_http::reqwest::Client,
 ) -> Result<tauri_plugin_http::reqwest::Response, Error> {
     let id = machine_uid::get().unwrap();
     let os = std::env::consts::OS.to_string();
     let os = os_to_string(os).ok_or(Error::OsNotFound)?;
 
     info!(
-        "[Api] Incrementing app download count, id: {} - version: {} - os: {:?}",
+        "[Api] id = \"{}\", version = {}, os = {:?}",
         id, version, os
     );
+
+    debug!("[Api] Incrementing app download count");
 
     let body = DownloadedBody {
         unique_id: id,
@@ -63,15 +69,10 @@ pub async fn increment_app_download_count(
         os,
     };
 
-    let body = serde_json::to_string(&body).unwrap();
-
-    let res = tauri_plugin_http::reqwest::ClientBuilder::new()
-        .user_agent("GANYMEDE_TAURI_APP")
-        .build()
-        .map_err(|err| Error::BuildClientBuilder(err.to_string()))?
+    let res = http_client
         .post(format!("{}/downloaded", GANYMEDE_API))
-        .header("Content-Type", "application/json")
-        .body(body)
+        .header(API_KEY_HEADER, API_KEY)
+        .json(&body)
         .send()
         .await
         .map_err(|err| Error::RequestDownloaded(err.to_string()))?;
