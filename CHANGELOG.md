@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 553ad4b: Ajout du support de Linux via AppImage
+- 553ad4b: Ajout du support de Linux via AppImage (merci à la communauté !)
 - f1a4c65: Vous pouvez désormais faire un rapport de bug dans un guide. Utilisez-le pour nous retourner des problèmes au niveau des guides : par exemple, pour un mauvais PNJ, une mauvaise position.
 
 ### Patch Changes
