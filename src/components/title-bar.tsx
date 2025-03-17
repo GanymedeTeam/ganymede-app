@@ -102,6 +102,7 @@ export function TitleBar() {
             className="inline-flex size-7 items-center justify-center hover:bg-primary-800 aria-disabled:pointer-events-none"
             draggable={false}
             title={t`Paramètres`}
+            disabled={location.pathname === '/settings'}
           >
             <SettingsIcon className="size-4" />
           </Link>
