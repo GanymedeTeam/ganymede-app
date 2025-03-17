@@ -17,15 +17,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
-import {
-  AlertCircleIcon,
-  BookCheckIcon,
-  BookDownIcon,
-  BookPlusIcon,
-  BookUp2Icon,
-  PickaxeIcon,
-  PlayIcon,
-} from 'lucide-react'
+import { AlertCircleIcon, BookCheckIcon, BookPlusIcon } from 'lucide-react'
 import { Fragment, ReactNode } from 'react'
 import { DownloadImage } from './download-image.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip.tsx'
