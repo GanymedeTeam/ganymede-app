@@ -17,7 +17,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
-import { AlertCircleIcon } from 'lucide-react'
+import { AlertCircleIcon, BookCheckIcon, BookPlusIcon } from 'lucide-react'
 import { Fragment, ReactNode } from 'react'
 import { DownloadImage } from './download-image.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip.tsx'
@@ -304,6 +304,8 @@ export function GuideFrame({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className="flex max-w-[calc(100vw-3rem)] items-center gap-1">
+                  {status === 'start' && <BookPlusIcon className="size-4" />}
+                  {status === 'end' && <BookCheckIcon className="size-4" />}
                   <img src="https://dev.ganymede-dofus.com/images/icon_quest.png" className="size-6" />
                   <span className="text-base">{questName}</span>
                 </TooltipContent>
