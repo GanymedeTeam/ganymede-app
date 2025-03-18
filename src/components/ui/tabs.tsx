@@ -9,7 +9,7 @@ function TabsList({ className, ref, ...props }: React.ComponentPropsWithRef<type
   return (
     <TabsPrimitive.List
       ref={ref}
-      className={cn('flex h-7.5 w-full gap-1 bg-primary-800 text-muted-foreground sm:h-9 sm:px-1', className)}
+      className={cn('flex h-7.5 w-full bg-primary-800 text-muted-foreground sm:h-9 sm:px-1', className)}
       {...props}
     />
   )
@@ -25,7 +25,7 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       ref={ref}
       className={cn(
-        'line-clamp-1 block w-full grow text-ellipsis whitespace-nowrap rounded-b-md px-2 py-1 font-medium text-xs xs:text-sm leading-5 ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground',
+        'line-clamp-1 block w-full grow text-ellipsis whitespace-nowrap px-2 py-1 font-medium text-xs xs:text-sm leading-5 ring-offset-background transition-all first-tab:rounded-bl-md last-tab:rounded-br-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 group-last/tab:hidden data-[state=inactive]:bg-background data-[state=inactive]:text-foreground',
         className,
       )}
       {...props}
