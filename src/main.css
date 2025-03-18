@@ -82,6 +82,9 @@
 @variant has-value (:not(&[value=""]), &:not([value]));
 @variant peer-has-value (.peer:not([value=""]) ~ &, .peer:not([value]) ~ &);
 
+@variant first-tab (&:where(.group\/tab:has([data-state="active"]) + .group\/tab:has([data-state="inactive"]) *));
+@variant last-tab (&:where(.group\/tab:has([data-state="inactive"]):has(+ .group\/tab > [data-state="active"]) *), &:where(.group\/tab:has([data-state="inactive"]):last-of-type *));
+
 @layer base {
   :root {
     --background: 236 21% 11%;
@@ -107,6 +110,7 @@
   }
 
   :not(input):not(textarea):not(select):not(a):not(button):not(button *):not(a *):not(.select-text):not(code) {
+    -webkit-user-select: none;
     user-select: none;
     cursor: default;
   }
