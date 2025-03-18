@@ -11,6 +11,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useRef } from 'react'
 import { ReportButton } from './-report-button.tsx'
+import { SummaryDialog } from './-summary-dialog.tsx'
 
 export function GuidePage({
   id,
@@ -115,6 +116,7 @@ export function GuidePage({
                 }}
               />
               <div className="ml-auto flex">
+                <SummaryDialog />
                 <ReportButton guideId={guide.id} stepIndex={index} />
               </div>
             </>

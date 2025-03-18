@@ -2,6 +2,7 @@ use crate::api::GANYMEDE_API_V2;
 use crate::tauri_api_ext::GuidesPathExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::{fmt, fs, vec};
 use tauri::{AppHandle, Manager};
@@ -41,6 +42,10 @@ pub enum Error {
     GuidesMalformed(crate::json::Error),
     #[error("cannot read the guides directory: {0}")]
     ReadGuidesDir(String),
+    #[error("cannot get guide in system: {0}")]
+    GetGuideInSystem(u32),
+    #[error("cannot parse the guide html content: {0}")]
+    DomParse(String),
 }
 
 #[taurpc::ipc_type]
@@ -137,6 +142,9 @@ pub enum GuidesOrFolder {
     Guide(GuideWithSteps),
     Folder(Folder),
 }
+
+#[taurpc::ipc_type]
+pub struct Summary;
 
 impl GuidesOrFolder {
     pub fn from_handle(
@@ -335,6 +343,7 @@ pub trait GuidesApi {
     ) -> Result<Guides, Error>;
     #[taurpc(alias = "openGuidesFolder")]
     async fn open_guides_folder(app_handle: AppHandle) -> Result<(), tauri_plugin_opener::Error>;
+    async fn get_guide_summary(app_handle: AppHandle, guide_id: u32) -> Result<Summary, Error>;
 }
 
 #[derive(Clone)]
@@ -434,6 +443,44 @@ impl GuidesApi for GuidesApiImpl {
 
         app.opener()
             .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
+    }
+
+    async fn get_guide_summary(
+        self,
+        app_handle: AppHandle,
+        guide_id: u32,
+    ) -> Result<Summary, Error> {
+        info!("[Guides] get_guide_summary: {}", guide_id);
+
+        sentry::add_breadcrumb(sentry::Breadcrumb {
+            ty: "sentry.transaction".into(),
+            message: Some("Get guide summary".into()),
+            data: {
+                let mut map = sentry::protocol::Map::new();
+
+                map.insert("guide_id".into(), guide_id.into());
+
+                map
+            },
+            ..Default::default()
+        });
+
+        let guides = self.get_flat_guides(app_handle, "".into()).await?;
+        let guide = guides.iter().find(|g| g.id == guide_id);
+
+        match guide {
+            Some(guide) => {
+                // parse the guide html content and extract all quests
+                let mut quests = HashMap::<String, Vec<u32>>::new();
+
+                for step in &guide.steps {}
+
+                Ok(Summary {})
+            }
+            None => {
+                return Err(Error::GetGuideInSystem(guide_id));
+            }
+        }
     }
 }
 
