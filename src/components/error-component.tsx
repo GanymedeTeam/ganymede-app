@@ -12,7 +12,7 @@ import { SelectLangLabel, SelectLangSelect } from './select-lang.tsx'
 import { Alert, AlertDescription, AlertTitle } from './ui/alert.tsx'
 import { Button } from './ui/button.tsx'
 
-export function ErrorComponent({ error, reset, info }: ErrorComponentProps) {
+export function ErrorComponent({ error, info }: ErrorComponentProps) {
   const location = useLocation()
   const isMacOs = navigator.userAgent.toLowerCase().includes('mac os x')
   const conf = useQuery(confQuery)
@@ -116,6 +116,9 @@ export function ErrorComponent({ error, reset, info }: ErrorComponentProps) {
                       typeof error.cause.message === 'string' &&
                       error.cause.message}
                     {typeof error.cause === 'string' && error.cause}
+                    {((typeof error.cause === 'object' && !('message' in error.cause)) ||
+                      (typeof error.cause !== 'string' && typeof error.cause !== 'object')) &&
+                      JSON.stringify(error.cause, undefined, 2)}
                   </pre>
                 </span>
               )}
@@ -126,9 +129,6 @@ export function ErrorComponent({ error, reset, info }: ErrorComponentProps) {
               )}
             </AlertDescription>
           </Alert>
-          <Button onClick={reset} size="lg">
-            <Trans>Réessayer</Trans>
-          </Button>
         </>
       )}
     </PageScrollableContent>

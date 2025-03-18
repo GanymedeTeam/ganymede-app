@@ -41,6 +41,8 @@ pub enum Error {
     GuidesMalformed(crate::json::Error),
     #[error("cannot read the guides directory: {0}")]
     ReadGuidesDir(String),
+    #[error("cannot get guide in system: {0}")]
+    GetGuideInSystem(u32),
 }
 
 #[taurpc::ipc_type]
@@ -136,6 +138,29 @@ pub struct Folder {
 pub enum GuidesOrFolder {
     Guide(GuideWithSteps),
     Folder(Folder),
+}
+
+#[derive(Debug)]
+#[taurpc::ipc_type]
+#[serde(rename_all = "camelCase")]
+pub struct Summary {
+    pub quests: Vec<QuestSummary>,
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub enum SummaryQuestStatus {
+    Started(u32),
+    InProgress(u32),
+    Completed(u32),
+}
+
+#[derive(Debug)]
+#[taurpc::ipc_type]
+#[serde(rename_all = "camelCase")]
+pub struct QuestSummary {
+    pub name: String,
+    pub statuses: Vec<SummaryQuestStatus>,
 }
 
 impl GuidesOrFolder {
@@ -335,6 +360,8 @@ pub trait GuidesApi {
     ) -> Result<Guides, Error>;
     #[taurpc(alias = "openGuidesFolder")]
     async fn open_guides_folder(app_handle: AppHandle) -> Result<(), tauri_plugin_opener::Error>;
+    #[taurpc(alias = "getGuideSummary")]
+    async fn get_guide_summary(app_handle: AppHandle, guide_id: u32) -> Result<Summary, Error>;
 }
 
 #[derive(Clone)]
@@ -434,6 +461,109 @@ impl GuidesApi for GuidesApiImpl {
 
         app.opener()
             .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
+    }
+
+    async fn get_guide_summary(
+        self,
+        app_handle: AppHandle,
+        guide_id: u32,
+    ) -> Result<Summary, Error> {
+        let start = std::time::Instant::now();
+        info!("[Guides] get_guide_summary: {}", guide_id);
+
+        sentry::add_breadcrumb(sentry::Breadcrumb {
+            ty: "sentry.transaction".into(),
+            message: Some("Get guide summary".into()),
+            data: {
+                let mut map = sentry::protocol::Map::new();
+
+                map.insert("guide_id".into(), guide_id.into());
+
+                map
+            },
+            ..Default::default()
+        });
+
+        let guides = self.get_flat_guides(app_handle, "".into()).await?;
+        let guide = guides.iter().find(|g| g.id == guide_id);
+
+        match guide {
+            Some(guide) => {
+                // parse the guide html content and extract all quests
+                let mut quests: Vec<QuestSummary> = vec![];
+
+                for (step_index, step) in guide.steps.iter().enumerate() {
+                    let document = scraper::Html::parse_document(&step.web_text);
+
+                    let quest_selector =
+                        scraper::Selector::parse("[data-type='quest-block']").unwrap();
+
+                    for element in document.select(&quest_selector) {
+                        let quest_name = element.value().attr("questname");
+                        let status = element.value().attr("status");
+                        if let (Some(name), Some(status)) = (quest_name, status) {
+                            let summary_quest_status = match status {
+                                "start" => SummaryQuestStatus::Started(step_index as u32 + 1),
+                                "in_progress" => {
+                                    SummaryQuestStatus::InProgress(step_index as u32 + 1)
+                                }
+                                "end" => SummaryQuestStatus::Completed(step_index as u32 + 1),
+                                _ => continue,
+                            };
+
+                            if let Some(quest) = quests.iter_mut().find(|q| q.name == name) {
+                                let status = quest.statuses.iter().find(|s| {
+                                    let s_value = match s {
+                                        SummaryQuestStatus::Started(v)
+                                        | SummaryQuestStatus::InProgress(v)
+                                        | SummaryQuestStatus::Completed(v) => v,
+                                    };
+
+                                    *s_value == step_index as u32 + 1
+                                });
+                                if status.is_none() {
+                                    quest.statuses.push(summary_quest_status);
+                                }
+                            } else {
+                                let mut statuses = vec![];
+                                statuses.push(summary_quest_status);
+                                quests.push(QuestSummary {
+                                    name: name.to_string(),
+                                    statuses,
+                                });
+                            }
+                        }
+                    }
+                }
+
+                let duration = start.elapsed();
+
+                for quest in &mut quests {
+                    quest.statuses.sort_by(|a, b| {
+                        let a_value = match a {
+                            SummaryQuestStatus::Started(v)
+                            | SummaryQuestStatus::InProgress(v)
+                            | SummaryQuestStatus::Completed(v) => v,
+                        };
+                        let b_value = match b {
+                            SummaryQuestStatus::Started(v)
+                            | SummaryQuestStatus::InProgress(v)
+                            | SummaryQuestStatus::Completed(v) => v,
+                        };
+                        a_value.cmp(&b_value)
+                    });
+
+                    debug!("[Guides] quest: {:?}", quest);
+                }
+
+                let summary = Summary { quests };
+
+                info!("[Guides] get_guide_summary: {} in {:?}", guide_id, duration);
+
+                Ok(summary)
+            }
+            None => Err(Error::GetGuideInSystem(guide_id)),
+        }
     }
 }
 

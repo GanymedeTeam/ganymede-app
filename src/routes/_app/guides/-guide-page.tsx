@@ -11,6 +11,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useRef } from 'react'
 import { ReportButton } from './-report-button.tsx'
+import { SummaryDialog } from './-summary-dialog.tsx'
 
 export function GuidePage({
   id,
@@ -95,6 +96,16 @@ export function GuidePage({
     return true
   }
 
+  const onChangeStep = async (stepIndex: number): Promise<boolean> => {
+    if (index === stepIndex) {
+      return false
+    }
+
+    await changeStep(stepIndex)
+
+    return true
+  }
+
   return (
     <PageScrollableContent hasTitleBar ref={scrollableRef}>
       <header className="fixed inset-x-0 top-[60px] z-10 bg-primary-800 sm:top-[66px]">
@@ -115,6 +126,7 @@ export function GuidePage({
                 }}
               />
               <div className="ml-auto flex">
+                <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />
                 <ReportButton guideId={guide.id} stepIndex={index} />
               </div>
             </>

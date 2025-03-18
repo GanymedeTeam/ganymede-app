@@ -35,7 +35,7 @@
 @theme {
   --color-primary-800: hsl(236 27% 25%);
   --color-primary-900: hsl(236 27% 20%);
-  --color-primary-foreground-800: hsl(222.2 47.4% 1.2%);
+  --color-primary-foreground-800: hsl(0 0% 95%);
   --font-liberation: "Liberation", var(--default-font-family);
   --text-xxs: 0.625rem;
   --text-xxs--line-height: calc(0.75 / 0.625);

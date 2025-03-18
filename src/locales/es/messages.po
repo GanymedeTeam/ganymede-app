@@ -13,6 +13,11 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. placeholder {0}: quest.statuses.length
+#: src/routes/_app/guides/-summary-dialog.tsx:161
+msgid "{0, plural, one {Étape} other {Étapes}}"
+msgstr "{0, plural, one {Paso} other {Pasos}}"
+
 #: src/routes/app-old-version.tsx:86
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Encontrarás las notas de versión en nuestro Discord <1>#changelog</1></0>"
@@ -28,6 +33,10 @@ msgstr "Mostrar las guías terminadas"
 #: src/routes/_app/auto-pilot.tsx:132
 msgid "Ajouter"
 msgstr "Añadir"
+
+#: src/routes/_app/guides/-summary-dialog.tsx:187
+msgid "Aller à l'étape"
+msgstr "Ir al paso"
 
 #: src/routes/_app/downloads/$status.tsx:149
 msgid "Attention"
@@ -49,6 +58,10 @@ msgstr "No se encontraron guías con {term}"
 msgid "Aucun profil trouvé."
 msgstr "No se encontraron perfiles."
 
+#: src/routes/_app/guides/-summary-dialog.tsx:133
+msgid "Aucune quête dans ce guide."
+msgstr "No hay misiones en esta guía."
+
 #: src/components/almanax-frame.tsx:59
 msgid "Aujourd'hui"
 msgstr "Hoy"
@@ -59,7 +72,7 @@ msgstr "Hoy"
 msgid "Autopilotage"
 msgstr "Piloto automático"
 
-#: src/routes/_app/index.tsx:34
+#: src/routes/_app/index.tsx:37
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "¡Bienvenido a <0>GÁNYMEDE</0>!"
 
@@ -85,7 +98,7 @@ msgstr "Causada por:"
 msgid "Causée par: {0}"
 msgstr "Causado por: {0}"
 
-#: src/routes/_app/index.tsx:39
+#: src/routes/_app/index.tsx:42
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "¡Esta herramienta tiene como objetivo asistirte durante toda tu aventura en <0>Dofus</0>!"
 
@@ -177,7 +190,7 @@ msgstr "Crear una nota"
 msgid "Créer une nouvelle note"
 msgstr "Crear una nueva nota"
 
-#: src/routes/_app/index.tsx:50
+#: src/routes/_app/index.tsx:53
 msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 
@@ -194,7 +207,7 @@ msgstr "Describe el problema encontrado. El paso y la guía se incluirán autom�
 msgid "Détails"
 msgstr "Detalles"
 
-#: src/routes/_app/index.tsx:61
+#: src/routes/_app/index.tsx:64
 msgid "Discord de Ganymède"
 msgstr "Discord de Ganymede"
 
@@ -218,7 +231,7 @@ msgstr "Enviar un informe"
 msgid "Fermer"
 msgstr "Cerrar"
 
-#: src/routes/_app/index.tsx:85
+#: src/routes/_app/index.tsx:88
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymede - No afiliado a Ankama Games"
 
@@ -266,6 +279,10 @@ msgstr "id <0>{0}</0>"
 #: src/routes/app-old-version.tsx:117
 msgid "Il semblerait que la mise à jour ait eu un problème."
 msgstr "Parece que la actualización ha tenido un problema."
+
+#: src/routes/_app/guides/-summary-dialog.tsx:121
+msgid "Impossible de récupérer le sommaire du guide."
+msgstr "No se pudo recuperar el resumen de la guía."
 
 #. placeholder {0}: info.componentStack
 #: src/components/error-component.tsx:95
@@ -351,7 +368,7 @@ msgstr "Pequeña"
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>."
 msgstr "Para restablecer la configuración, ejecute el atajo de teclado: <0>{0}</0>."
 
-#: src/routes/_app/index.tsx:23
+#: src/routes/_app/index.tsx:25
 msgid "Présentation"
 msgstr "Presentación"
 
@@ -388,9 +405,13 @@ msgstr "Reintentar"
 msgid "Réinitialiser"
 msgstr "Restablecer"
 
-#: src/routes/_app/index.tsx:79
+#: src/routes/_app/index.tsx:82
 msgid "Site officiel"
 msgstr "Sitio oficial"
+
+#: src/routes/_app/guides/-summary-dialog.tsx:101
+msgid "Sommaire"
+msgstr "Resumen"
 
 #: src/routes/_app/notes.index.tsx:97
 #: src/routes/_app/auto-pilot.tsx:79
@@ -401,10 +422,6 @@ msgstr "Eliminar de la lista"
 msgid "Taille de texte des guides"
 msgstr "Tamaño del texto de las guías"
 
-#: src/components/title-bar.tsx:56
-msgid "Téléchargements"
-msgstr "Descargas"
-
 #: src/routes/app-old-version.tsx:116
 msgid "Télécharger la version {toVersion}"
 msgstr "Descargar la versión {toVersion}"
@@ -412,6 +429,10 @@ msgstr "Descargar la versión {toVersion}"
 #: src/components/guide-card.tsx:50
 msgid "Télécharger le guide"
 msgstr "Descargar la guía"
+
+#: src/components/title-bar.tsx:56
+msgid "Télécharger un guide"
+msgstr "Descargar una guía"
 
 #: src/routes/_app/settings.tsx:123
 msgid "Très grande"
@@ -421,7 +442,7 @@ msgstr "Extra grande"
 msgid "Très petite"
 msgstr "Extra pequeña"
 
-#: src/routes/_app/index.tsx:70
+#: src/routes/_app/index.tsx:73
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymede"
 
@@ -446,15 +467,11 @@ msgstr "Tu progreso en las guías será restablecido. Las guías descargadas seg
 msgid "Votre pseudo"
 msgstr "Tu nombre de usuario"
 
-#: src/routes/_app/guides/$id.tsx:213
-#~ msgid "Vous avez atteint la limite"
-#~ msgstr "Ha alcanzado el límite"
-
 #: src/routes/app-old-version.tsx:65
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."
 msgstr "No tienes la última versión de <0>Ganymède</0>."
 
-#: src/routes/_app/index.tsx:45
+#: src/routes/_app/index.tsx:48
 msgid "Vous pouvez créer, utiliser et partager des guides vous permettant d'optimiser votre aventure."
 msgstr "Puedes crear, usar y compartir guías que te permitirán optimizar tu aventura."
 
