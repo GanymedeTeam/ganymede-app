@@ -1,5 +1,16 @@
 # ganymede-app
 
+## 1.11.0
+
+### Minor Changes
+
+- 33e343d: Les blocs de quête indiquent désormais si une quête commence, se poursuit ou se termine.
+
+### Patch Changes
+
+- 651a8b1: Certains textes pouvaient disparaître après certaines positions dans le texte d'un guide
+- a17e5d6: L'historique infini avec le lien vers les paramètres est corrigé.
+
 ## 1.10.0
 
 ### Minor Changes
