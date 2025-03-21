@@ -130,8 +130,8 @@ msgstr "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:338
-#: src/components/guide-frame.tsx:373
+#: src/components/guide-frame.tsx:340
+#: src/components/guide-frame.tsx:375
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
@@ -214,7 +214,7 @@ msgstr "Envoyer"
 msgid "Envoyer un rapport"
 msgstr "Envoyer un rapport"
 
-#: src/components/title-bar.tsx:125
+#: src/components/title-bar.tsx:126
 msgid "Fermer"
 msgstr "Fermer"
 
@@ -376,7 +376,7 @@ msgstr "Rechercher un guide"
 msgid "Rechercher un profil..."
 msgstr "Rechercher un profil..."
 
-#: src/components/title-bar.tsx:115
+#: src/components/title-bar.tsx:116
 msgid "Réduire"
 msgstr "Réduire"
 
