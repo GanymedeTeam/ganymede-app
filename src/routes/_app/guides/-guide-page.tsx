@@ -116,7 +116,7 @@ export function GuidePage({
                 }}
               />
               <div className="ml-auto flex">
-                <SummaryDialog />
+                <SummaryDialog guideId={guide.id} />
                 <ReportButton guideId={guide.id} stepIndex={index} />
               </div>
             </>

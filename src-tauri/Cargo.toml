@@ -44,6 +44,7 @@ log = "0.4.26"
 taurpc = { path = "./taurpc", version = "0.3.2" }
 tauri-plugin-opener = "2.2.6"
 chrono-tz = "0.10.1"
+scraper = "0.23.1"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-window-state = "2.2.1"

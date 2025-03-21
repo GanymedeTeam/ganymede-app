@@ -2,7 +2,7 @@ use crate::api::GANYMEDE_API_V2;
 use crate::tauri_api_ext::GuidesPathExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 use std::{fmt, fs, vec};
 use tauri::{AppHandle, Manager};
@@ -143,8 +143,19 @@ pub enum GuidesOrFolder {
     Folder(Folder),
 }
 
+#[derive(Debug)]
 #[taurpc::ipc_type]
-pub struct Summary;
+pub struct Summary {
+    pub quests: HashMap<String, Vec<SummaryQuestStatus>>,
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub enum SummaryQuestStatus {
+    Started(u32),
+    InProgress(u32),
+    Completed(u32),
+}
 
 impl GuidesOrFolder {
     pub fn from_handle(
@@ -343,6 +354,7 @@ pub trait GuidesApi {
     ) -> Result<Guides, Error>;
     #[taurpc(alias = "openGuidesFolder")]
     async fn open_guides_folder(app_handle: AppHandle) -> Result<(), tauri_plugin_opener::Error>;
+    #[taurpc(alias = "getGuideSummary")]
     async fn get_guide_summary(app_handle: AppHandle, guide_id: u32) -> Result<Summary, Error>;
 }
 
@@ -450,6 +462,7 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle,
         guide_id: u32,
     ) -> Result<Summary, Error> {
+        let start = std::time::Instant::now();
         info!("[Guides] get_guide_summary: {}", guide_id);
 
         sentry::add_breadcrumb(sentry::Breadcrumb {
@@ -471,11 +484,75 @@ impl GuidesApi for GuidesApiImpl {
         match guide {
             Some(guide) => {
                 // parse the guide html content and extract all quests
-                let mut quests = HashMap::<String, Vec<u32>>::new();
+                let mut quests = HashMap::<String, HashSet<SummaryQuestStatus>>::new();
 
-                for step in &guide.steps {}
+                for (step_index, step) in guide.steps.iter().enumerate() {
+                    let document = scraper::Html::parse_document(&step.web_text);
 
-                Ok(Summary {})
+                    let quest_selector =
+                        scraper::Selector::parse("[data-type='quest-block']").unwrap();
+
+                    for element in document.select(&quest_selector) {
+                        let quest_name = element.value().attr("questname");
+                        let status = element.value().attr("status");
+                        if let (Some(name), Some(status)) = (quest_name, status) {
+                            if !quests.contains_key(name) {
+                                quests.insert(name.to_string(), HashSet::new());
+                            }
+
+                            let quest_in_hashmap = quests.get_mut(name).unwrap();
+
+                            let summary_quest_status = match status {
+                                "start" => SummaryQuestStatus::Started(step_index as u32),
+                                "in_progress" => SummaryQuestStatus::InProgress(step_index as u32),
+                                "end" => SummaryQuestStatus::Completed(step_index as u32),
+                                _ => continue,
+                            };
+
+                            if !quest_in_hashmap.contains(&summary_quest_status) {
+                                quest_in_hashmap.insert(summary_quest_status);
+                            }
+                        }
+                    }
+                }
+
+                let duration = start.elapsed();
+
+                let summary = Summary {
+                    quests: quests
+                        .into_iter()
+                        .map(|(quest_name, steps_with_this_quest)| {
+                            (quest_name, {
+                                let mut steps_vec = steps_with_this_quest
+                                    .into_iter()
+                                    .collect::<Vec<SummaryQuestStatus>>();
+
+                                // Trier en fonction de la valeur de u32
+                                steps_vec.sort_by(|a, b| {
+                                    let a_value = match a {
+                                        SummaryQuestStatus::Started(v)
+                                        | SummaryQuestStatus::InProgress(v)
+                                        | SummaryQuestStatus::Completed(v) => v,
+                                    };
+                                    let b_value = match b {
+                                        SummaryQuestStatus::Started(v)
+                                        | SummaryQuestStatus::InProgress(v)
+                                        | SummaryQuestStatus::Completed(v) => v,
+                                    };
+                                    a_value.cmp(&b_value)
+                                });
+
+                                steps_vec
+                            })
+                        })
+                        .collect(),
+                };
+
+                info!("[Guides] summary: {:?}", summary);
+
+                info!("[Guides] get_guide_summary: {} in {:?}", guide_id, duration);
+
+                Ok(summary)
             }
             None => {
                 return Err(Error::GetGuideInSystem(guide_id));
