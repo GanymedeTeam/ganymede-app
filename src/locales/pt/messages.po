@@ -22,7 +22,7 @@ msgstr "{0, plural, one {Passo} other {Passos}}"
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog</1></0>"
 
-#: src/components/title-bar.tsx:44
+#: src/components/title-bar.tsx:45
 msgid "Accueil"
 msgstr "Início"
 
@@ -68,7 +68,7 @@ msgstr "Hoje"
 
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
-#: src/components/title-bar.tsx:63
+#: src/components/title-bar.tsx:64
 msgid "Autopilotage"
 msgstr "Piloto automático"
 
@@ -76,7 +76,7 @@ msgstr "Piloto automático"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bem-vindo ao <0>GANYMÈDE</0>!"
 
-#: src/components/title-bar.tsx:76
+#: src/components/title-bar.tsx:77
 msgid "Carte"
 msgstr "Mapa"
 
@@ -102,7 +102,7 @@ msgstr "Causado por: {0}"
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em <0>Dofus</0>!"
 
-#: src/components/title-bar.tsx:82
+#: src/components/title-bar.tsx:83
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
@@ -227,7 +227,7 @@ msgstr "Enviar"
 msgid "Envoyer un rapport"
 msgstr "Enviar um relatório"
 
-#: src/components/title-bar.tsx:126
+#: src/components/title-bar.tsx:134
 msgid "Fermer"
 msgstr "Fechar"
 
@@ -242,7 +242,7 @@ msgstr "Grande"
 #: src/routes/_app/guides/index.tsx:45
 #: src/routes/_app/guides/index.tsx:146
 #: src/routes/_app/downloads/$status.tsx:98
-#: src/components/title-bar.tsx:50
+#: src/components/title-bar.tsx:51
 msgid "Guides"
 msgstr "Guias"
 
@@ -337,7 +337,7 @@ msgstr "Normal"
 
 #: src/routes/_app/notes.index.tsx:24
 #: src/routes/_app/notes.index.tsx:50
-#: src/components/title-bar.tsx:69
+#: src/components/title-bar.tsx:70
 msgid "Notes"
 msgstr "Notas"
 
@@ -355,7 +355,7 @@ msgstr "Abrir a pasta dos guias baixados"
 
 #: src/routes/_app/settings.tsx:41
 #: src/routes/_app/settings.tsx:74
-#: src/components/title-bar.tsx:104
+#: src/components/title-bar.tsx:112
 msgid "Paramètres"
 msgstr "Configurações"
 
@@ -393,7 +393,7 @@ msgstr "Pesquisar um guia"
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
-#: src/components/title-bar.tsx:116
+#: src/components/title-bar.tsx:124
 msgid "Réduire"
 msgstr "Minimizar"
 
@@ -408,6 +408,10 @@ msgstr "Site oficial"
 #: src/routes/_app/guides/-summary-dialog.tsx:101
 msgid "Sommaire"
 msgstr "Resumo"
+
+#: src/components/title-bar.tsx:90
+msgid "Supporter Ganymède"
+msgstr "Apoiar Ganymède"
 
 #: src/routes/_app/notes.index.tsx:97
 #: src/routes/_app/auto-pilot.tsx:79
@@ -426,7 +430,7 @@ msgstr "Baixar a versão {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
-#: src/components/title-bar.tsx:56
+#: src/components/title-bar.tsx:57
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
 

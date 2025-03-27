@@ -33,12 +33,6 @@ export class OpenGuidesFolderError extends Error {
   }
 }
 
-export class OpenGuidesLinkError extends Error {
-  static from(error: unknown) {
-    return new OpenGuidesLinkError('Failed to open guide link', { cause: error })
-  }
-}
-
 export function getGuides(folder?: string) {
   return fromPromise(taurpc.guides.getGuides(folder ?? null), GetGuidesError.from)
 }
@@ -56,8 +50,4 @@ export async function downloadGuideFromServer(guideId: number, folder: string) {
 
 export async function openGuidesFolder() {
   return fromPromise(taurpc.guides.openGuidesFolder(), OpenGuidesFolderError.from)
-}
-
-export async function openGuideLink(href: string) {
-  return fromPromise(taurpc.base.openUrl(href), OpenGuidesLinkError.from)
 }
