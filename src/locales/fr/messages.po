@@ -22,7 +22,7 @@ msgstr "{0, plural, one {Étape} other {Étapes}}"
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 
-#: src/components/title-bar.tsx:45
+#: src/components/title-bar.tsx:47
 msgid "Accueil"
 msgstr "Accueil"
 
@@ -68,7 +68,7 @@ msgstr "Aujourd'hui"
 
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
-#: src/components/title-bar.tsx:64
+#: src/components/title-bar.tsx:66
 msgid "Autopilotage"
 msgstr "Autopilotage"
 
@@ -76,7 +76,7 @@ msgstr "Autopilotage"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bienvenue sur <0>GANYMÈDE</0> !"
 
-#: src/components/title-bar.tsx:77
+#: src/components/title-bar.tsx:79
 msgid "Carte"
 msgstr "Carte"
 
@@ -102,7 +102,7 @@ msgstr "Causée par: {0}"
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 
-#: src/components/title-bar.tsx:83
+#: src/components/title-bar.tsx:85
 msgid "Chasse au trésor"
 msgstr "Chasse au trésor"
 
@@ -242,7 +242,7 @@ msgstr "Grande"
 #: src/routes/_app/guides/index.tsx:45
 #: src/routes/_app/guides/index.tsx:146
 #: src/routes/_app/downloads/$status.tsx:98
-#: src/components/title-bar.tsx:51
+#: src/components/title-bar.tsx:53
 msgid "Guides"
 msgstr "Guides"
 
@@ -337,7 +337,7 @@ msgstr "Normal"
 
 #: src/routes/_app/notes.index.tsx:24
 #: src/routes/_app/notes.index.tsx:50
-#: src/components/title-bar.tsx:70
+#: src/components/title-bar.tsx:72
 msgid "Notes"
 msgstr "Notes"
 
@@ -409,7 +409,7 @@ msgstr "Site officiel"
 msgid "Sommaire"
 msgstr "Sommaire"
 
-#: src/components/title-bar.tsx:90
+#: src/components/title-bar.tsx:91
 msgid "Supporter Ganymède"
 msgstr "Supporter Ganymède"
 
@@ -430,7 +430,8 @@ msgstr "Télécharger la version {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Télécharger le guide"
 
-#: src/components/title-bar.tsx:57
+#: src/routes/_app/guides/index.tsx:258
+#: src/components/title-bar.tsx:59
 msgid "Télécharger un guide"
 msgstr "Télécharger un guide"
 

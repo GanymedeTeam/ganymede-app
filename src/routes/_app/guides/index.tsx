@@ -18,7 +18,7 @@ import { Page } from '@/routes/-page.tsx'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { ChevronRightIcon, FolderIcon, FolderOpenIcon, FolderSyncIcon } from 'lucide-react'
+import { ChevronRightIcon, DownloadCloudIcon, FolderIcon, FolderOpenIcon, FolderSyncIcon } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
 import { BackButtonLink } from '../downloads/-back-button-link.tsx'
@@ -247,6 +247,16 @@ function GuidesPage() {
               </Card>
             )
           })}
+
+          <Link
+            to="/downloads/$status"
+            params={{ status: 'gp' }}
+            search={{ page: 1 }}
+            className="flex flex-col items-center justify-center gap-2 rounded-xl border border-muted-foreground border-dashed px-2 py-3 text-muted-foreground"
+          >
+            <DownloadCloudIcon />
+            <Trans>Télécharger un guide</Trans>
+          </Link>
         </div>
       </PageScrollableContent>
     </Page>
