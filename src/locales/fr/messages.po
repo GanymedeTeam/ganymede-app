@@ -286,7 +286,7 @@ msgstr "Impossible de récupérer le sommaire du guide."
 
 #. placeholder {0}: info.componentStack
 #: src/components/error-component.tsx:95
-#: src/components/error-component.tsx:124
+#: src/components/error-component.tsx:127
 msgid "Informations supplémentaires : {0}"
 msgstr "Informations supplémentaires : {0}"
 
@@ -396,10 +396,6 @@ msgstr "Rechercher un profil..."
 #: src/components/title-bar.tsx:116
 msgid "Réduire"
 msgstr "Réduire"
-
-#: src/components/error-component.tsx:130
-msgid "Réessayer"
-msgstr "Réessayer"
 
 #: src/components/error-component.tsx:57
 msgid "Réinitialiser"

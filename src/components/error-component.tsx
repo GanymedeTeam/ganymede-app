@@ -118,7 +118,7 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
                     {typeof error.cause === 'string' && error.cause}
                     {((typeof error.cause === 'object' && !('message' in error.cause)) ||
                       (typeof error.cause !== 'string' && typeof error.cause !== 'object')) &&
-                      JSON.stringify(error.cause, undefined, 2)}
+                      JSON.stringify(error.cause, Object.getOwnPropertyNames(error.cause), 2)}
                   </pre>
                 </span>
               )}

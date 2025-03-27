@@ -286,7 +286,7 @@ msgstr "Não foi possível obter o resumo do guia."
 
 #. placeholder {0}: info.componentStack
 #: src/components/error-component.tsx:95
-#: src/components/error-component.tsx:124
+#: src/components/error-component.tsx:127
 msgid "Informations supplémentaires : {0}"
 msgstr "Informações adicionais: {0}"
 
@@ -396,10 +396,6 @@ msgstr "Procurar um perfil..."
 #: src/components/title-bar.tsx:116
 msgid "Réduire"
 msgstr "Minimizar"
-
-#: src/components/error-component.tsx:130
-msgid "Réessayer"
-msgstr "Tentar novamente"
 
 #: src/components/error-component.tsx:57
 msgid "Réinitialiser"

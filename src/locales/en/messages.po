@@ -286,7 +286,7 @@ msgstr "Unable to retrieve the guide summary."
 
 #. placeholder {0}: info.componentStack
 #: src/components/error-component.tsx:95
-#: src/components/error-component.tsx:124
+#: src/components/error-component.tsx:127
 msgid "Informations supplémentaires : {0}"
 msgstr "More info: {0}"
 
@@ -396,10 +396,6 @@ msgstr "Search a profile..."
 #: src/components/title-bar.tsx:116
 msgid "Réduire"
 msgstr "Minimize"
-
-#: src/components/error-component.tsx:130
-msgid "Réessayer"
-msgstr "Retry"
 
 #: src/components/error-component.tsx:57
 msgid "Réinitialiser"

@@ -6,14 +6,11 @@ use tauri::AppHandle;
 use log::info;
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
-#[cfg(not(dev))]
 pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
 pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
 
 pub const API_KEY_HEADER: &str = "X-API-KEY";
 pub const API_KEY: &str = env!("GANYMEDE_API_KEY");
-
-const GITHUB_API: &str = "https://api.github.com/repos/GanymedeTeam/ganymede-app";
 
 #[allow(dead_code)]
 #[derive(Debug, Serialize, thiserror::Error)]
@@ -130,7 +127,7 @@ impl Api for ApiImpl {
             .unwrap();
 
         let res = client
-            .get(format!("{}/releases/latest", GITHUB_API))
+            .get(format!("{}/github/latest-release", GANYMEDE_API))
             .send()
             .await
             .map_err(|err| AppVersionError::GitHub(err.to_string()))?
