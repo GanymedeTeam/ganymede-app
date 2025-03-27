@@ -332,7 +332,7 @@ impl ConfApi for ConfApiImpl {
             .save(&app)
             .map_err(|e| Error::ResetConf(Box::new(e)))?;
 
-        let mut webview = window
+        let webview = window
             .get_webview_window("main")
             .expect("[Conf] main webview should exist");
 

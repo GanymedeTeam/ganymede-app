@@ -53,7 +53,7 @@ export function TitleBar() {
             <DropdownMenuItem className="gap-2" asChild>
               <Link to="/downloads" draggable={false}>
                 <CloudDownloadIcon />
-                <Trans>Téléchargements</Trans>
+                <Trans>Télécharger un guide</Trans>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />

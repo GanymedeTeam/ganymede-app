@@ -3,10 +3,11 @@ import { DiscordIcon } from '@/components/icons/discord-icon.tsx'
 import { TwitterIcon } from '@/components/icons/twitter-icon.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
 import { PageTitleExtra } from '@/components/page-title.tsx'
+import { isProductionQuery } from '@/queries/is_production.query.ts'
 import { versionQuery } from '@/queries/version.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { GlobeIcon } from 'lucide-react'
 
@@ -17,6 +18,7 @@ export const Route = createFileRoute('/_app/')({
 function Index() {
   const version = useQuery(versionQuery)
   const { t } = useLingui()
+  const isProduction = useSuspenseQuery(isProductionQuery)
 
   return (
     <Page
@@ -24,6 +26,7 @@ function Index() {
       actions={
         <PageTitleExtra className="grow text-right" hidden={!version.isSuccess}>
           v{version.data}
+          {!isProduction.data && '-dev'}
         </PageTitleExtra>
       }
     >

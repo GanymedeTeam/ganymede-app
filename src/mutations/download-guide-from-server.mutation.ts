@@ -1,6 +1,7 @@
 import { Guide } from '@/ipc/bindings.ts'
 import { downloadGuideFromServer } from '@/ipc/guides.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
+import { summaryQuery } from '@/queries/summary.query.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export function useDownloadGuideFromServer() {
@@ -19,9 +20,11 @@ export function useDownloadGuideFromServer() {
       if (result.isErr()) {
         throw result.error
       }
-    },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries(guidesQuery())
+
+      await Promise.allSettled([
+        queryClient.invalidateQueries(guidesQuery()),
+        queryClient.invalidateQueries(summaryQuery(guide.id)),
+      ])
     },
   })
 }

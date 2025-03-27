@@ -56,7 +56,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                     .expect("[Shortcut] failed to reset conf");
                                 info!("[Shortcut] conf reset triggered");
 
-                                let mut webview = app
+                                let webview = app
                                     .get_webview_window("main")
                                     .expect("[Shortcut] failed to get webview window");
 

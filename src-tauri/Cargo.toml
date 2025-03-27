@@ -22,30 +22,31 @@ members = [
 ]
 
 [dependencies]
-uuid = { version = "1.11.0", features = ["v6", "fast-rng"] }
-tauri = { version = "2.1.1", features = ["macos-private-api"] }
+uuid = { version = "1.16.0", features = ["v6", "fast-rng"] }
+tauri = { version = "2.3.1", features = ["macos-private-api"] }
 specta = { version = "=2.0.0-rc.20", features = ["derive"] }
 specta-util = { version = "0.0.7", features = ["export"] }
 tokio = { version = "1.42.0", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-tauri-plugin-http = "2.2.0"
-serde_path_to_error = "0.1"
-tauri-plugin-clipboard-manager = "2.2.0"
+tauri-plugin-http = "2.4.2"
+serde_path_to_error = "0.1.17"
+tauri-plugin-clipboard-manager = "2.2.2"
 tauri-plugin-global-shortcut = "2.2.0"
-glob = "0.3.1"
-chrono = "0.4.39"
-semver = "1.0.24"
-tauri-plugin-os = "2.2.0"
+glob = "0.3.2"
+chrono = "0.4.40"
+semver = "1.0.26"
+tauri-plugin-os = "2.2.1"
 tauri-plugin-sentry = "0.2"
-thiserror = "2.0.6"
-tauri-plugin-log = "2.2.0"
-log = "^0.4"
+thiserror = "2.0.12"
+tauri-plugin-log = "2.3.1"
+log = "0.4.26"
 taurpc = { path = "./taurpc", version = "0.3.2" }
-tauri-plugin-opener = "2.2.1"
+tauri-plugin-opener = "2.2.6"
 chrono-tz = "0.10.1"
+scraper = "0.23.1"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-window-state = "2.2.0"
+tauri-plugin-window-state = "2.2.1"
 machine-uid = "0.5.3"
-tauri-plugin-updater = "2.3.0"
+tauri-plugin-updater = "2.6.1"

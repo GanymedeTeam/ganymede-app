@@ -304,10 +304,10 @@ export function GuideFrame({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className="flex max-w-[calc(100vw-3rem)] items-center gap-1">
-                  {status === 'start' && <BookPlusIcon className="size-4" />}
-                  {status === 'end' && <BookCheckIcon className="size-4" />}
-                  <img src="https://dev.ganymede-dofus.com/images/icon_quest.png" className="size-6" />
-                  <span className="text-base">{questName}</span>
+                  {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4" />}
+                  {status === 'end' && <BookCheckIcon className="size-4 min-h-4 min-w-4 text-green-400" />}
+                  <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
+                  <span className="text-balance text-base">{questName}</span>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

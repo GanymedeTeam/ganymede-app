@@ -52,6 +52,7 @@ trait BaseApi {
     async fn new_id() -> String;
     #[taurpc(alias = "openUrl")]
     async fn open_url(app_handle: AppHandle, url: String) -> Result<(), String>;
+    async fn is_production() -> bool;
 }
 
 #[derive(Clone)]
@@ -67,6 +68,14 @@ impl BaseApi for BaseApiImpl {
         app.opener()
             .open_url(url, None::<String>)
             .map_err(|err| err.to_string())
+    }
+
+    async fn is_production(self) -> bool {
+        #[cfg(dev)]
+        return false;
+
+        #[cfg(not(dev))]
+        return true;
     }
 }
 
