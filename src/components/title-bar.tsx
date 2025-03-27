@@ -5,6 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx'
+import { useOpenUrlInBrowser } from '@/mutations/open-url-in-browser.ts'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { Link, useLocation } from '@tanstack/react-router'
 import { getCurrentWindow } from '@tauri-apps/api/window'
@@ -21,12 +22,14 @@ import {
   SettingsIcon,
   XIcon,
 } from 'lucide-react'
+import { KoFiIcon } from './icons/ko-fi-icon.tsx'
 
 const appWindow = getCurrentWindow()
 
 export function TitleBar() {
   const { t } = useLingui()
   const location = useLocation()
+  const openInBrowser = useOpenUrlInBrowser()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
 
@@ -81,6 +84,11 @@ export function TitleBar() {
                 <CrosshairIcon />
                 <Trans>Chasse au trésor</Trans>
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="gap-2" onClick={() => openInBrowser.mutate('https://ko-fi.com/ganymededofus')}>
+              <KoFiIcon />
+              <Trans>Supporter Ganymède</Trans>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

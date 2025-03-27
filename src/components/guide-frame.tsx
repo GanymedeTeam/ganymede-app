@@ -7,7 +7,7 @@ import { getGuideById } from '@/lib/guide.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation.ts'
-import { useOpenGuideLink } from '@/mutations/open-guide-link.mutation.ts'
+import { useOpenUrlInBrowser } from '@/mutations/open-url-in-browser.ts'
 import { useToggleGuideCheckbox } from '@/mutations/toggle-guide-checkbox.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
@@ -38,7 +38,7 @@ export function GuideFrame({
   const profile = useProfile()
   const toggleGuideCheckbox = useToggleGuideCheckbox()
   const step = getProgressConfStep(profile, guideId, stepIndex)
-  const openGuideLink = useOpenGuideLink()
+  const openUrlInBrowser = useOpenUrlInBrowser()
   const guides = useSuspenseQuery(guidesQuery())
   const currentGuide = useGuide(guideId)
   const navigate = useNavigate()
@@ -246,7 +246,7 @@ export function GuideFrame({
                 onClick={async (evt) => {
                   // open in browser if ctrl/cmd is pressed
                   if (isMacOs ? evt.metaKey : evt.ctrlKey) {
-                    openGuideLink.mutate(
+                    openUrlInBrowser.mutate(
                       `https://dofusdb.fr/${currentGuide.lang}/database/${domNode.attribs.type === 'item' ? 'object' : domNode.attribs.type}/${domNode.attribs.dofusdbid}`,
                     )
                   } else {
@@ -333,7 +333,7 @@ export function GuideFrame({
               {...attribs}
               onClick={() => {
                 if (clickable) {
-                  openGuideLink.mutate(imgSrc)
+                  openUrlInBrowser.mutate(imgSrc)
                 }
               }}
               draggable={false}
@@ -369,7 +369,7 @@ export function GuideFrame({
               className="inline-flex cursor-pointer text-yellow-300 underline [&_a]:underline"
               onClick={() => {
                 if (isHrefHttp) {
-                  openGuideLink.mutate(href)
+                  openUrlInBrowser.mutate(href)
                 }
               }}
               title={isHrefHttp ? t`Cliquez pour ouvrir dans le navigateur` : undefined}
