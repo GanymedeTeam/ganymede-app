@@ -98,7 +98,7 @@ msgstr "Caused by:"
 msgid "Causée par: {0}"
 msgstr "Caused by: {0}"
 
-#: src/routes/_app/guides/index.tsx:214
+#: src/routes/_app/guides/index.tsx:213
 #: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:60
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Some guides have not been updated"
@@ -111,8 +111,8 @@ msgstr "This tool is designed to assist you throughout your adventure on <0>Dofu
 msgid "Chasse au trésor"
 msgstr "Hunt"
 
-#: src/routes/_app/guides/index.tsx:59
-#: src/routes/_app/guides/index.tsx:189
+#: src/routes/_app/guides/index.tsx:58
+#: src/routes/_app/guides/index.tsx:188
 msgid "Choisissez un guide"
 msgstr "Choose a guide"
 
@@ -245,8 +245,8 @@ msgstr "Ganymède - Not affiliated with Ankama Games"
 msgid "Grande"
 msgstr "Large"
 
-#: src/routes/_app/guides/index.tsx:59
-#: src/routes/_app/guides/index.tsx:189
+#: src/routes/_app/guides/index.tsx:58
+#: src/routes/_app/guides/index.tsx:188
 #: src/routes/_app/downloads/$status.tsx:98
 #: src/components/title-bar.tsx:53
 msgid "Guides"
@@ -277,7 +277,7 @@ msgid "Guides publics"
 msgstr "Publics guides"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/guides/index.tsx:306
+#: src/routes/_app/guides/index.tsx:305
 #: src/routes/_app/downloads/$status.tsx:198
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
@@ -316,12 +316,12 @@ msgstr "hidden link"
 msgid "Mettre à jour le guide"
 msgstr "Update the guide"
 
-#: src/routes/_app/guides/index.tsx:226
+#: src/routes/_app/guides/index.tsx:225
 msgid "Mettre à jour tous les guides"
 msgstr "Update all guides"
 
 #. placeholder {0}: interval.seconds
-#: src/routes/_app/guides/index.tsx:264
+#: src/routes/_app/guides/index.tsx:263
 msgid "Mise à jour de vos guides {0}s"
 msgstr "Updating your guides {0}s"
 
@@ -368,7 +368,7 @@ msgstr "Opacity"
 msgid "Ou le bouton suivant"
 msgstr "Or the next button"
 
-#: src/routes/_app/guides/index.tsx:249
+#: src/routes/_app/guides/index.tsx:248
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Open downloaded guides folder"
 
@@ -399,11 +399,11 @@ msgstr "Issue encountered"
 msgid "Profils"
 msgstr "Profiles"
 
-#: src/routes/_app/guides/index.tsx:239
+#: src/routes/_app/guides/index.tsx:238
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Refresh downloaded guides folder"
 
-#: src/routes/_app/guides/index.tsx:276
+#: src/routes/_app/guides/index.tsx:275
 #: src/routes/_app/downloads/$status.tsx:181
 msgid "Rechercher un guide"
 msgstr "Search a guide"
@@ -449,7 +449,7 @@ msgstr "Download version {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Download the guide"
 
-#: src/routes/_app/guides/index.tsx:339
+#: src/routes/_app/guides/index.tsx:338
 #: src/components/title-bar.tsx:59
 msgid "Télécharger un guide"
 msgstr "Download a guide"

@@ -9,7 +9,6 @@ import { useInterval } from '@/hooks/use_interval.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GuidesOrFolder } from '@/ipc/bindings.ts'
 import { clamp } from '@/lib/clamp.ts'
-import { isGuideNew } from '@/lib/guide.ts'
 import { getStepOr } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
 import { OpenedGuideZod } from '@/lib/tabs.ts'
@@ -258,7 +257,7 @@ function GuidesPage() {
         <div className="flex flex-col gap-2">
           {updateAllAtOnce.isPending && (
             <div className="fixed inset-0 top-15 z-10 flex items-center justify-center bg-accent/75">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 p-2">
                 <GenericLoader className="translate-y-px" />
                 <span>
                   <Trans>Mise à jour de vos guides {interval.seconds}s</Trans>
@@ -287,7 +286,7 @@ function GuidesPage() {
                     draggable={false}
                   >
                     <span className="grow">{guide.name}</span>
-                    <FolderIcon className="size-6 focus-visible:bg-white" />
+                    <FolderIcon className="size-4 xs:size-6 focus-visible:bg-white" />
                   </Link>
                 </Card>
               )
