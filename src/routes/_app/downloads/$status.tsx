@@ -1,7 +1,7 @@
 import { BottomBar } from '@/components/bottom-bar.tsx'
 import { FlagPerLang } from '@/components/flag-per-lang.tsx'
 import { GenericLoader } from '@/components/generic-loader.tsx'
-import { GuideDownloadButton } from '@/components/guide-card.tsx'
+import { GuideDownloadButton } from '@/components/guide-download-button.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
 import {
   AlertDialog,

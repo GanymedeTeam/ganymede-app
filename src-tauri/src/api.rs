@@ -107,7 +107,7 @@ pub struct IsOld {
     is_old: bool,
 }
 
-#[taurpc::procedures(export_to = "../src/ipc/bindings.ts")]
+#[taurpc::procedures(path = "api", export_to = "../src/ipc/bindings.ts")]
 pub trait Api {
     #[taurpc(alias = "isAppVersionOld")]
     async fn is_app_version_old(app_handle: AppHandle) -> Result<IsOld, AppVersionError>;

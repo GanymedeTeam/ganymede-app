@@ -1,5 +1,5 @@
 import { Status } from '@/ipc/bindings.ts'
-import { getGuidesFromServer } from '@/ipc/guides_from_server.ts'
+import { getGuidesFromServer } from '@/ipc/guides.ts'
 import { queryOptions } from '@tanstack/react-query'
 
 export const itemsPerPage = 20

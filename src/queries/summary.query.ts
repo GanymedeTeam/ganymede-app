@@ -1,9 +1,9 @@
-import { getGuideSummary } from '@/ipc/summary.ts'
+import { getGuideSummary } from '@/ipc/guides.ts'
 import { queryOptions } from '@tanstack/react-query'
 
 export function summaryQuery(guideId: number) {
   return queryOptions({
-    queryKey: ['summary', guideId],
+    queryKey: ['guides', 'summary', guideId],
     queryFn: async () => {
       const summary = await getGuideSummary(guideId)
 

@@ -2,6 +2,7 @@ use crate::api::GANYMEDE_API_V2;
 use crate::tauri_api_ext::GuidesPathExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::{fmt, fs, vec};
 use tauri::{AppHandle, Manager};
@@ -19,9 +20,9 @@ pub enum Error {
     ReadGuidesDirGlob(String),
     #[error("cannot read a guide file: {0}")]
     ReadGuideFile(String),
-    #[error("malformed guide")]
+    #[error("malformed guide: {0}")]
     GuideMalformed(#[from] crate::json::Error),
-    #[error("cannot serialize guide")]
+    #[error("cannot serialize guide: {0}")]
     SerializeGuide(crate::json::Error),
     #[error("cannot create the guides directory: {0}")]
     CreateGuidesDir(String),
@@ -35,9 +36,9 @@ pub enum Error {
     RequestGuides(String),
     #[error("cannot get the content of a guides request: {0}")]
     RequestGuidesContent(String),
-    #[error("malformed guide with steps")]
+    #[error("malformed guide with steps: {0}")]
     GuideWithStepsMalformed(crate::json::Error),
-    #[error("malformed guides")]
+    #[error("malformed guides: {0}")]
     GuidesMalformed(crate::json::Error),
     #[error("cannot read the guides directory: {0}")]
     ReadGuidesDir(String),
@@ -62,7 +63,7 @@ pub enum GuideLang {
     Pt,
 }
 
-#[derive(Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub enum Status {
     Draft,
@@ -161,6 +162,13 @@ pub enum SummaryQuestStatus {
 pub struct QuestSummary {
     pub name: String,
     pub statuses: Vec<SummaryQuestStatus>,
+}
+
+#[derive(Serialize, Clone, taurpc::specta::Type)]
+#[serde(untagged, rename_all = "camelCase")]
+pub enum UpdateAllAtOnceResult {
+    Success,
+    Failure(String),
 }
 
 impl GuidesOrFolder {
@@ -315,7 +323,7 @@ impl Guides {
         Ok(())
     }
 
-    fn add_or_replace(&mut self, app: &AppHandle, guide: GuideWithSteps) -> Result<(), Error> {
+    fn add_or_replace(&mut self, guide: GuideWithSteps) -> Result<(), Error> {
         let guide_ref = &guide;
 
         // Update the guide file if it exists
@@ -323,8 +331,6 @@ impl Guides {
             Some(index) => self.guides[index] = guide,
             None => self.guides.push(guide),
         }
-
-        self.write(app)?;
 
         Ok(())
     }
@@ -350,7 +356,7 @@ pub trait GuidesApi {
     #[taurpc(alias = "getGuidesFromServer")]
     async fn get_guides_from_server(
         app_handle: AppHandle,
-        status: Status,
+        status: Option<Status>,
     ) -> Result<Vec<Guide>, Error>;
     #[taurpc(alias = "downloadGuideFromServer")]
     async fn download_guide_from_server(
@@ -362,6 +368,12 @@ pub trait GuidesApi {
     async fn open_guides_folder(app_handle: AppHandle) -> Result<(), tauri_plugin_opener::Error>;
     #[taurpc(alias = "getGuideSummary")]
     async fn get_guide_summary(app_handle: AppHandle, guide_id: u32) -> Result<Summary, Error>;
+    #[taurpc(alias = "updateAllAtOnce")]
+    async fn update_all_at_once(
+        app_handle: AppHandle,
+    ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error>;
+    #[taurpc(alias = "hasGuidesNotUpdated")]
+    async fn has_guides_not_updated(app_handle: AppHandle) -> Result<bool, Error>;
 }
 
 #[derive(Clone)]
@@ -398,9 +410,9 @@ impl GuidesApi for GuidesApiImpl {
     async fn get_guides_from_server(
         self,
         app_handle: AppHandle,
-        status: Status,
+        status: Option<Status>,
     ) -> Result<Vec<Guide>, Error> {
-        info!("[Guides] get_guides_from_server");
+        info!("[Guides] get_guides_from_server, status: {:?}", status);
 
         sentry::add_breadcrumb(sentry::Breadcrumb {
             ty: "sentry.transaction".into(),
@@ -408,7 +420,11 @@ impl GuidesApi for GuidesApiImpl {
             data: {
                 let mut map = sentry::protocol::Map::new();
 
-                map.insert("status".into(), status.to_string().into());
+                if let Some(status) = status.clone() {
+                    map.insert("status".into(), status.to_string().into());
+                } else {
+                    map.insert("status".into(), "all".into());
+                }
 
                 map
             },
@@ -417,8 +433,14 @@ impl GuidesApi for GuidesApiImpl {
 
         let http_client = app_handle.state::<reqwest::Client>();
 
+        let url = if let Some(status) = status {
+            format!("{}/guides?status={}", GANYMEDE_API_V2, status.to_str())
+        } else {
+            format!("{}/guides", GANYMEDE_API_V2)
+        };
+
         let res = http_client
-            .get(format!("{}/guides?status={}", GANYMEDE_API_V2, status))
+            .get(url)
             .send()
             .await
             .map_err(|err| Error::RequestGuides(err.to_string()))?;
@@ -452,7 +474,13 @@ impl GuidesApi for GuidesApiImpl {
             ..Default::default()
         });
 
-        Ok(download_guide_by_id(&app, guide_id, folder).await?)
+        let mut guides = Guides::from_handle(&app, folder.clone())?;
+
+        download_guide_by_id(&app, &mut guides, guide_id, folder).await?;
+
+        guides.write(&app)?;
+
+        Ok(guides)
     }
 
     async fn open_guides_folder(self, app: AppHandle) -> Result<(), tauri_plugin_opener::Error> {
@@ -565,6 +593,62 @@ impl GuidesApi for GuidesApiImpl {
             None => Err(Error::GetGuideInSystem(guide_id)),
         }
     }
+
+    async fn update_all_at_once(
+        self,
+        app_handle: AppHandle,
+    ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
+        info!("[Guides] update_all_at_once");
+
+        let mut guides = Guides::from_handle(&app_handle, "".to_string())?;
+        let mut results = HashMap::new();
+
+        for guide in guides.guides.clone() {
+            if let Some(folder) = &guide.folder {
+                let result = download_guide_by_id(
+                    &app_handle,
+                    &mut guides,
+                    guide.id,
+                    folder.to_str().unwrap().to_string(),
+                )
+                .await;
+
+                match result {
+                    Ok(_) => {
+                        results.insert(guide.id, UpdateAllAtOnceResult::Success);
+                    }
+                    Err(err) => {
+                        results.insert(guide.id, UpdateAllAtOnceResult::Failure(err.to_string()));
+                    }
+                }
+            }
+        }
+
+        guides.write(&app_handle)?;
+
+        Ok(results)
+    }
+
+    async fn has_guides_not_updated(self, app_handle: AppHandle) -> Result<bool, Error> {
+        info!("[Guides] has_guides_not_updated");
+
+        let guides_in_server = self
+            .get_guides_from_server(app_handle.clone(), None)
+            .await?;
+
+        let guides_in_system = Guides::from_handle(&app_handle, "".to_string())?;
+
+        for guide in guides_in_server {
+            if let Some(guide_in_system) = guides_in_system.guides.iter().find(|g| g.id == guide.id)
+            {
+                if guide.updated_at != guide_in_system.updated_at {
+                    return Ok(true);
+                }
+            }
+        }
+
+        Ok(false)
+    }
 }
 
 pub fn ensure(app: &AppHandle) -> Result<(), Error> {
@@ -580,7 +664,13 @@ pub fn ensure(app: &AppHandle) -> Result<(), Error> {
 }
 
 pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
-    download_guide_by_id(app, DEFAULT_GUIDE_ID, "".into()).await
+    let mut guides = Guides::from_handle(app, "".into())?;
+
+    download_guide_by_id(app, &mut guides, DEFAULT_GUIDE_ID, "".into()).await?;
+
+    guides.write(app)?;
+
+    Ok(guides)
 }
 
 pub async fn get_guide_from_server(
@@ -609,9 +699,10 @@ pub async fn get_guide_from_server(
 
 async fn download_guide_by_id(
     app: &AppHandle,
+    guides: &mut Guides,
     guide_id: u32,
     folder: String,
-) -> Result<Guides, Error> {
+) -> Result<(), Error> {
     let http_client = app.state::<reqwest::Client>();
     let mut guide = get_guide_from_server(guide_id, &http_client).await?;
 
@@ -622,12 +713,9 @@ async fn download_guide_by_id(
         guide_id, guide.folder, folder
     );
 
-    let mut guides = Guides::from_handle(app, folder)?;
-    let guides_ref = &mut guides;
+    guides.add_or_replace(guide)?;
 
-    guides_ref.add_or_replace(app, guide)?;
-
-    Ok(guides)
+    Ok(())
 }
 
 // implement a command to know if a guide is downloaded, with glob pattern, so in front we can display the button and know where it is

@@ -26,7 +26,7 @@ msgstr "<0>You can find the release notes on our Discord <1>#changelog</1></0>"
 msgid "Accueil"
 msgstr "Home"
 
-#: src/routes/_app/settings.tsx:145
+#: src/routes/_app/settings.tsx:147
 msgid "Afficher les guides terminés"
 msgstr "Display completed guides"
 
@@ -98,6 +98,11 @@ msgstr "Caused by:"
 msgid "Causée par: {0}"
 msgstr "Caused by: {0}"
 
+#: src/routes/_app/guides/index.tsx:214
+#: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:60
+msgid "Certains guides n'ont pas été mis à jour"
+msgstr "Some guides have not been updated"
+
 #: src/routes/_app/index.tsx:42
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "This tool is designed to assist you throughout your adventure on <0>Dofus</0>!"
@@ -106,8 +111,8 @@ msgstr "This tool is designed to assist you throughout your adventure on <0>Dofu
 msgid "Chasse au trésor"
 msgstr "Hunt"
 
-#: src/routes/_app/guides/index.tsx:45
-#: src/routes/_app/guides/index.tsx:146
+#: src/routes/_app/guides/index.tsx:59
+#: src/routes/_app/guides/index.tsx:189
 msgid "Choisissez un guide"
 msgstr "Choose a guide"
 
@@ -152,7 +157,7 @@ msgstr "Click to open in browser"
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Note content.{linesBreak}From the previous menu, once created, I can edit it by clicking on it or copy its content."
 
-#: src/routes/_app/settings.tsx:130
+#: src/routes/_app/settings.tsx:132
 msgid "Copie d'autopilote"
 msgstr "Autopilot copy"
 
@@ -178,7 +183,7 @@ msgstr "Copy position"
 msgid "Créer"
 msgstr "Create"
 
-#: src/routes/_app/settings.tsx:180
+#: src/routes/_app/settings.tsx:182
 msgid "Créer un profil"
 msgstr "Create profile"
 
@@ -227,6 +232,7 @@ msgstr "Send"
 msgid "Envoyer un rapport"
 msgstr "Send a report"
 
+#: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:81
 #: src/components/title-bar.tsx:134
 msgid "Fermer"
 msgstr "Close"
@@ -235,12 +241,12 @@ msgstr "Close"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Not affiliated with Ankama Games"
 
-#: src/routes/_app/settings.tsx:120
+#: src/routes/_app/settings.tsx:122
 msgid "Grande"
 msgstr "Large"
 
-#: src/routes/_app/guides/index.tsx:45
-#: src/routes/_app/guides/index.tsx:146
+#: src/routes/_app/guides/index.tsx:59
+#: src/routes/_app/guides/index.tsx:189
 #: src/routes/_app/downloads/$status.tsx:98
 #: src/components/title-bar.tsx:53
 msgid "Guides"
@@ -271,7 +277,7 @@ msgid "Guides publics"
 msgstr "Publics guides"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/guides/index.tsx:225
+#: src/routes/_app/guides/index.tsx:306
 #: src/routes/_app/downloads/$status.tsx:198
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
@@ -306,9 +312,22 @@ msgstr "Guides in this section have not been manually verified by the Ganymede t
 msgid "lien masqué"
 msgstr "hidden link"
 
-#: src/components/guide-card.tsx:50
+#: src/components/guide-download-button.tsx:50
 msgid "Mettre à jour le guide"
 msgstr "Update the guide"
+
+#: src/routes/_app/guides/index.tsx:226
+msgid "Mettre à jour tous les guides"
+msgstr "Update all guides"
+
+#. placeholder {0}: interval.seconds
+#: src/routes/_app/guides/index.tsx:264
+msgid "Mise à jour de vos guides {0}s"
+msgstr "Updating your guides {0}s"
+
+#: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:57
+msgid "Mise à jour des guides"
+msgstr "Guide update"
 
 #: src/routes/app-old-version.tsx:99
 msgid "Mise à jour en cours."
@@ -331,7 +350,7 @@ msgstr "Name"
 msgid "Nom de la note"
 msgstr "Note's name"
 
-#: src/routes/_app/settings.tsx:117
+#: src/routes/_app/settings.tsx:119
 msgid "Normal"
 msgstr "Normal"
 
@@ -341,7 +360,7 @@ msgstr "Normal"
 msgid "Notes"
 msgstr "Notes"
 
-#: src/routes/_app/settings.tsx:81
+#: src/routes/_app/settings.tsx:83
 msgid "Opacité"
 msgstr "Opacity"
 
@@ -349,17 +368,17 @@ msgstr "Opacity"
 msgid "Ou le bouton suivant"
 msgstr "Or the next button"
 
-#: src/routes/_app/guides/index.tsx:179
+#: src/routes/_app/guides/index.tsx:249
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Open downloaded guides folder"
 
-#: src/routes/_app/settings.tsx:41
-#: src/routes/_app/settings.tsx:74
+#: src/routes/_app/settings.tsx:42
+#: src/routes/_app/settings.tsx:76
 #: src/components/title-bar.tsx:112
 msgid "Paramètres"
 msgstr "Settings"
 
-#: src/routes/_app/settings.tsx:114
+#: src/routes/_app/settings.tsx:116
 msgid "Petite"
 msgstr "Small"
 
@@ -376,15 +395,15 @@ msgstr "Presentation"
 msgid "Problème rencontré"
 msgstr "Issue encountered"
 
-#: src/routes/_app/settings.tsx:172
+#: src/routes/_app/settings.tsx:174
 msgid "Profils"
 msgstr "Profiles"
 
-#: src/routes/_app/guides/index.tsx:170
+#: src/routes/_app/guides/index.tsx:239
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Refresh downloaded guides folder"
 
-#: src/routes/_app/guides/index.tsx:195
+#: src/routes/_app/guides/index.tsx:276
 #: src/routes/_app/downloads/$status.tsx:181
 msgid "Rechercher un guide"
 msgstr "Search a guide"
@@ -418,7 +437,7 @@ msgstr "Support Ganymede"
 msgid "Supprimer de la liste"
 msgstr "Remove from list"
 
-#: src/routes/_app/settings.tsx:95
+#: src/routes/_app/settings.tsx:97
 msgid "Taille de texte des guides"
 msgstr "Guides's font size"
 
@@ -426,20 +445,20 @@ msgstr "Guides's font size"
 msgid "Télécharger la version {toVersion}"
 msgstr "Download version {toVersion}"
 
-#: src/components/guide-card.tsx:50
+#: src/components/guide-download-button.tsx:50
 msgid "Télécharger le guide"
 msgstr "Download the guide"
 
-#: src/routes/_app/guides/index.tsx:258
+#: src/routes/_app/guides/index.tsx:339
 #: src/components/title-bar.tsx:59
 msgid "Télécharger un guide"
 msgstr "Download a guide"
 
-#: src/routes/_app/settings.tsx:123
+#: src/routes/_app/settings.tsx:125
 msgid "Très grande"
 msgstr "Extra large"
 
-#: src/routes/_app/settings.tsx:111
+#: src/routes/_app/settings.tsx:113
 msgid "Très petite"
 msgstr "Extra small"
 

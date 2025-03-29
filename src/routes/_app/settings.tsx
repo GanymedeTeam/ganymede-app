@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { ConfLang, FontSize } from '@/ipc/bindings.ts'
-import { newId } from '@/ipc/id.ts'
+import { useNewId } from '@/mutations/new_id.mutation.ts'
 import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
@@ -17,6 +17,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
+import { TriangleAlertIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { BackButtonLink } from './downloads/-back-button-link.tsx'
@@ -51,6 +52,7 @@ export const Route = createFileRoute('/_app/settings')({
 function Settings() {
   const { t } = useLingui()
   const { from, hash, state, search } = Route.useSearch()
+  const newId = useNewId()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const [opacity, setOpacity] = useState(conf.data.opacity)
@@ -189,31 +191,31 @@ function Settings() {
 
                 // Check if the profile name is not empty and if it doesn't already exist
                 if (profileName.trim() !== '' && !conf.data.profiles.find((p) => p.name === profileName.trim())) {
-                  const id = await newId()
+                  const id = await newId.mutateAsync()
 
-                  id.map((id) => {
-                    setConf.mutate({
-                      ...conf.data,
-                      profiles: [
-                        ...conf.data.profiles,
-                        {
-                          id,
-                          name: profileName.trim(),
-                          progresses: [],
-                        },
-                      ],
-                      profileInUse: id,
-                    })
-
-                    form.newProfile.value = ''
+                  setConf.mutate({
+                    ...conf.data,
+                    profiles: [
+                      ...conf.data.profiles,
+                      {
+                        id,
+                        name: profileName.trim(),
+                        progresses: [],
+                      },
+                    ],
+                    profileInUse: id,
                   })
-                  // TODO: handle error, but should not happen
+
+                  form.newProfile.value = ''
                 }
               }}
             >
               <Input id="create-profile" name="newProfile" className="h-9" />
               <Button type="submit">
-                <Trans>Créer</Trans>
+                <span>
+                  <Trans>Créer</Trans>
+                </span>
+                {newId.isError && <TriangleAlertIcon className="text-red-500" />}
               </Button>
             </form>
           </section>

@@ -8,10 +8,18 @@ export class GetConfError extends Error {
   }
 }
 
+export function getConf() {
+  return fromPromise(taurpc.conf.get(), GetConfError.from)
+}
+
 export class SetConfError extends Error {
   static from(error: unknown) {
     return new SetConfError('Failed to set conf', { cause: error })
   }
+}
+
+export async function setConf(conf: Conf) {
+  return fromPromise(taurpc.conf.set(conf), SetConfError.from)
 }
 
 export class ResetConfError extends Error {
@@ -20,22 +28,14 @@ export class ResetConfError extends Error {
   }
 }
 
+export async function resetConf() {
+  return fromPromise(taurpc.conf.reset(), ResetConfError.from)
+}
+
 export class ToggleGuideCheckboxError extends Error {
   static from(error: unknown) {
     return new ToggleGuideCheckboxError('Failed to toggle checkbox guide', { cause: error })
   }
-}
-
-export function getConf() {
-  return fromPromise(taurpc.conf.get(), GetConfError.from)
-}
-
-export async function setConf(conf: Conf) {
-  return fromPromise(taurpc.conf.set(conf), SetConfError.from)
-}
-
-export async function resetConf() {
-  return fromPromise(taurpc.conf.reset(), ResetConfError.from)
 }
 
 export function toggleGuideCheckbox(guideId: number, checkboxIndex: number, stepIndex: number) {

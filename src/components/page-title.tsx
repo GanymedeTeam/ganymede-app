@@ -14,7 +14,7 @@ export function PageTitle({
     <Comp
       data-slot="page-title"
       className={cn(
-        'sticky top-[30px] z-10 flex h-[30px] w-full items-center justify-between bg-primary-800 p-1 font-semibold text-primary-foreground sm:h-[36px] sm:px-2',
+        'sticky top-7.5 z-10 flex h-7.5 w-full items-center justify-between bg-primary-800 p-1 font-semibold text-primary-foreground sm:h-[36px] sm:px-2',
         className,
       )}
       {...props}

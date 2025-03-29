@@ -52,6 +52,7 @@ trait BaseApi {
     async fn new_id() -> String;
     #[taurpc(alias = "openUrl")]
     async fn open_url(app_handle: AppHandle, url: String) -> Result<(), String>;
+    #[taurpc(alias = "isProduction")]
     async fn is_production() -> bool;
 }
 

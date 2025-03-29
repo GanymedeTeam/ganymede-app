@@ -75,7 +75,7 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
               <Trans>Détails</Trans>
             </AlertTitle>
             <AlertDescription>
-              <pre>{error.message}</pre>
+              <pre className="whitespace-break-spaces">{error.message}</pre>
               {error.cause != null && (
                 <span>
                   <Trans>Causée par :</Trans>
@@ -106,7 +106,7 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
               <Trans>Une erreur est survenue</Trans>
             </AlertTitle>
             <AlertDescription className="flex flex-col gap-2">
-              <pre>{error.message}</pre>
+              <pre className="whitespace-break-spaces">{error.message}</pre>
               {error.cause != null && (
                 <span>
                   <Trans>Causée par :</Trans>
