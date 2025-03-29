@@ -1,5 +1,21 @@
 # ganymede-app
 
+## 1.11.0
+
+### Minor Changes
+
+- 33e343d: Les blocs de quête indiquent désormais si une quête commence, se poursuit ou se termine.
+- efe17d7: Ajout d'un bouton en haut de la liste de vos guides pour tous les mettre à jour d'un seul coup.
+- fa3222f: L’onglet actif a désormais un style différent, plus conforme à ce qu’il aurait dû être dès le départ.
+- a552347: Un bouton pour nous soutenir a été ajouté.
+- f62a471: Un nouveau bouton fait son apparition en bas de la liste de vos guides pour vous aider à trouver d'autres guides.
+- fa3222f: Ajout d'un sommaire dans les guides, indiquant l'emplacement des quêtes et vous permettant de reprendre ou de commencer un guide, même si certaines quêtes ont déjà été entamées.
+
+### Patch Changes
+
+- 651a8b1: Certains textes pouvaient disparaître après certaines positions dans le texte d'un guide
+- a17e5d6: L'historique infini avec le lien vers les paramètres est corrigé.
+
 ## 1.10.0
 
 ### Minor Changes
