@@ -1,4 +1,4 @@
-import { isAppOldVersion } from '@/ipc/is_app_old_version.ts'
+import { isAppOldVersion } from '@/ipc/api.ts'
 import { queryOptions } from '@tanstack/react-query'
 import { debug, warn } from '@tauri-apps/plugin-log'
 

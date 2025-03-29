@@ -1,4 +1,4 @@
-import { isProduction } from '@/ipc/is_production.ts'
+import { isProduction } from '@/ipc/base.ts'
 import { queryOptions } from '@tanstack/react-query'
 
 export const isProductionQuery = queryOptions({

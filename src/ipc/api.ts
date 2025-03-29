@@ -3,10 +3,10 @@ import { fromPromise } from 'neverthrow'
 
 class GetIsAppOldVersionError extends Error {
   static from(err: unknown) {
-    return new GetIsAppOldVersionError('Cannot get is old version', { cause: err })
+    return new GetIsAppOldVersionError('Cannot get if app is up to date', { cause: err })
   }
 }
 
 export function isAppOldVersion() {
-  return fromPromise(taurpc.isAppVersionOld(), GetIsAppOldVersionError.from)
+  return fromPromise(taurpc.api.isAppVersionOld(), GetIsAppOldVersionError.from)
 }

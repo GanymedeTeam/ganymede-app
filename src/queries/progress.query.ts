@@ -1,16 +1,13 @@
-import { getProfile } from '@/lib/profile.ts'
+import { useProfile } from '@/hooks/use_profile.ts'
 import { getProgress, newProgress } from '@/lib/progress.ts'
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import { confQuery } from './conf.query.ts'
+import { queryOptions } from '@tanstack/react-query'
 
 export function progressQuery(guideId: number) {
-  const conf = useSuspenseQuery(confQuery)
+  const profile = useProfile()
 
   return queryOptions({
-    queryKey: ['conf', 'progress', guideId],
+    queryKey: ['conf', 'profile', profile.id, 'progress', guideId],
     queryFn: async () => {
-      const profile = getProfile(conf.data)
-
       return getProgress(profile, guideId) ?? newProgress(guideId)
     },
   })
