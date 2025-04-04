@@ -38,6 +38,11 @@ msgstr "Adicionar"
 msgid "Aller à l'étape"
 msgstr "Ir para o passo"
 
+#: src/routes/_app/guides/index.tsx:465
+#: src/routes/_app/guides/index.tsx:484
+msgid "Annuler"
+msgstr "Cancelar"
+
 #: src/routes/_app/downloads/$status.tsx:149
 msgid "Attention"
 msgstr "Atenção"
@@ -98,7 +103,7 @@ msgstr "Causada por:"
 msgid "Causée par: {0}"
 msgstr "Causado por: {0}"
 
-#: src/routes/_app/guides/index.tsx:213
+#: src/routes/_app/guides/index.tsx:335
 #: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:60
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Alguns guias não foram atualizados"
@@ -111,8 +116,8 @@ msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
-#: src/routes/_app/guides/index.tsx:58
-#: src/routes/_app/guides/index.tsx:188
+#: src/routes/_app/guides/index.tsx:106
+#: src/routes/_app/guides/index.tsx:310
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
@@ -216,6 +221,10 @@ msgstr "Detalhes"
 msgid "Discord de Ganymède"
 msgstr "Discord do Ganimedes"
 
+#: src/routes/_app/guides/index.tsx:221
+msgid "Dossier des guides téléchargés rafraichi"
+msgstr "Pasta dos guias transferidos atualizada"
+
 #: src/routes/_app/notes.create.tsx:38
 msgid "Éditer une note"
 msgstr "Editar uma nota"
@@ -232,6 +241,14 @@ msgstr "Enviar"
 msgid "Envoyer un rapport"
 msgstr "Enviar um relatório"
 
+#: src/routes/_app/guides/index.tsx:268
+msgid "Erreur lors de la suppression des guides"
+msgstr "Erro ao eliminar guias"
+
+#: src/routes/_app/guides/index.tsx:222
+msgid "Erreur lors du rafraichissement des guides téléchargés"
+msgstr "Erro ao atualizar os guias transferidos"
+
 #: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:81
 #: src/components/title-bar.tsx:134
 msgid "Fermer"
@@ -245,12 +262,16 @@ msgstr "Ganimedes - Não afiliado à Ankama Games"
 msgid "Grande"
 msgstr "Grande"
 
-#: src/routes/_app/guides/index.tsx:58
-#: src/routes/_app/guides/index.tsx:188
 #: src/routes/_app/downloads/$status.tsx:98
 #: src/components/title-bar.tsx:53
 msgid "Guides"
 msgstr "Guias"
+
+#. placeholder {0}: createPagePath(path)
+#: src/routes/_app/guides/index.tsx:106
+#: src/routes/_app/guides/index.tsx:310
+msgid "Guides {0}"
+msgstr "Guias {0}"
 
 #: src/routes/_app/downloads/index.tsx:69
 #: src/routes/_app/downloads/$status.tsx:96
@@ -276,8 +297,13 @@ msgstr "Guias privados"
 msgid "Guides publics"
 msgstr "Guias públicos"
 
+#: src/routes/_app/guides/index.tsx:267
+msgid "Guides supprimés"
+msgstr "Guias eliminados"
+
 #. placeholder {0}: guide.id
-#: src/routes/_app/guides/index.tsx:305
+#: src/routes/_app/guides/index.tsx:442
+#: src/routes/_app/guides/index.tsx:588
 #: src/routes/_app/downloads/$status.tsx:198
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
@@ -316,12 +342,12 @@ msgstr "link oculto"
 msgid "Mettre à jour le guide"
 msgstr "Atualizar o guia"
 
-#: src/routes/_app/guides/index.tsx:225
+#: src/routes/_app/guides/index.tsx:347
 msgid "Mettre à jour tous les guides"
 msgstr "Atualizar todos os guias"
 
 #. placeholder {0}: interval.seconds
-#: src/routes/_app/guides/index.tsx:263
+#: src/routes/_app/guides/index.tsx:393
 msgid "Mise à jour de vos guides {0}s"
 msgstr "A atualizar os seus guias {0}s"
 
@@ -368,7 +394,7 @@ msgstr "Opacidade"
 msgid "Ou le bouton suivant"
 msgstr "Ou o próximo botão"
 
-#: src/routes/_app/guides/index.tsx:248
+#: src/routes/_app/guides/index.tsx:375
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
@@ -381,6 +407,10 @@ msgstr "Configurações"
 #: src/routes/_app/settings.tsx:116
 msgid "Petite"
 msgstr "Pequena"
+
+#: src/routes/_app/guides/index.tsx:362
+msgid "Plus d'options"
+msgstr "Mais opções"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
 #: src/components/error-component.tsx:47
@@ -399,11 +429,15 @@ msgstr "Problema encontrado"
 msgid "Profils"
 msgstr "Perfis"
 
-#: src/routes/_app/guides/index.tsx:238
+#: src/routes/_app/guides/index.tsx:379
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Atualizar a pasta dos guias baixados"
 
-#: src/routes/_app/guides/index.tsx:275
+#: src/routes/_app/guides/index.tsx:223
+msgid "Rafraichissement des guides téléchargés"
+msgstr "A atualizar os guias transferidos"
+
+#: src/routes/_app/guides/index.tsx:494
 #: src/routes/_app/downloads/$status.tsx:181
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
@@ -420,6 +454,10 @@ msgstr "Minimizar"
 msgid "Réinitialiser"
 msgstr "Restabelecer"
 
+#: src/routes/_app/guides/index.tsx:371
+msgid "Sélectionner"
+msgstr "Selecionar"
+
 #: src/routes/_app/index.tsx:82
 msgid "Site officiel"
 msgstr "Site oficial"
@@ -431,6 +469,19 @@ msgstr "Resumo"
 #: src/components/title-bar.tsx:91
 msgid "Supporter Ganymède"
 msgstr "Apoiar Ganymède"
+
+#: src/routes/_app/guides/index.tsx:410
+msgid "Suppression de guides"
+msgstr "A eliminar guias"
+
+#: src/routes/_app/guides/index.tsx:266
+msgid "Suppression des guides"
+msgstr "Eliminação de guias"
+
+#: src/routes/_app/guides/index.tsx:404
+#: src/routes/_app/guides/index.tsx:472
+msgid "Supprimer"
+msgstr "Eliminar"
 
 #: src/routes/_app/notes.index.tsx:97
 #: src/routes/_app/auto-pilot.tsx:79
@@ -449,7 +500,7 @@ msgstr "Baixar a versão {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
-#: src/routes/_app/guides/index.tsx:338
+#: src/routes/_app/guides/index.tsx:626
 #: src/components/title-bar.tsx:59
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
@@ -498,3 +549,7 @@ msgstr "Você pode criar, usar e compartilhar guias que ajudam a otimizar sua av
 #: src/routes/app-old-version.tsx:72
 msgid "Vous utilisez actuellement la version <0>{fromVersion}</0>."
 msgstr "Você está usando a versão <0>{fromVersion}</0>."
+
+#: src/routes/_app/guides/index.tsx:413
+msgid "Vous vous apprêtez à supprimer des guides de votre système."
+msgstr "Está prestes a eliminar guias do seu sistema."

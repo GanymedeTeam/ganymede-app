@@ -44,6 +44,10 @@ pub enum Error {
     ReadGuidesDir(String),
     #[error("cannot get guide in system: {0}")]
     GetGuideInSystem(u32),
+    #[error("cannot delete guide file in system: {0}")]
+    DeleteGuideFileInSystem(String),
+    #[error("cannot delete guide folder in system: {0}")]
+    DeleteGuideFolderInSystem(String),
 }
 
 #[taurpc::ipc_type]
@@ -170,6 +174,13 @@ pub struct QuestSummary {
 pub enum UpdateAllAtOnceResult {
     Success,
     Failure(String),
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(tag = "type", rename_all = "camelCase")]
+pub enum GuideOrFolderToDelete {
+    Guide { id: u32, folder: Option<String> },
+    Folder { folder: String },
 }
 
 impl GuidesOrFolder {
@@ -375,6 +386,11 @@ pub trait GuidesApi {
     ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error>;
     #[taurpc(alias = "hasGuidesNotUpdated")]
     async fn has_guides_not_updated(app_handle: AppHandle) -> Result<bool, Error>;
+    #[taurpc(alias = "deleteGuidesFromSystem")]
+    async fn delete_guides_from_system(
+        app_handle: AppHandle,
+        guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
+    ) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -655,6 +671,50 @@ impl GuidesApi for GuidesApiImpl {
         }
 
         Ok(false)
+    }
+
+    async fn delete_guides_from_system(
+        self,
+        app_handle: AppHandle,
+        guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
+    ) -> Result<(), Error> {
+        info!(
+            "[Guides] delete_guides_from_system: {:?}",
+            guides_or_folders_to_delete
+        );
+
+        let guides_dir = app_handle.path().app_guides_dir();
+
+        for guide_or_folder_to_delete in guides_or_folders_to_delete {
+            let mut path = guides_dir.clone();
+
+            match guide_or_folder_to_delete {
+                GuideOrFolderToDelete::Guide { id, folder } => {
+                    if let Some(folder) = folder {
+                        path = path.join(folder);
+                    }
+
+                    path = path.join(format!("{}.json", id));
+                }
+                GuideOrFolderToDelete::Folder { folder } => {
+                    path = path.join(folder);
+                }
+            }
+
+            info!("[Guides] deleting the following path: {:?}", path);
+
+            if path.exists() {
+                if path.is_dir() {
+                    fs::remove_dir_all(path)
+                        .map_err(|err| Error::DeleteGuideFolderInSystem(err.to_string()))?;
+                } else {
+                    fs::remove_file(path)
+                        .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
+                }
+            }
+        }
+
+        Ok(())
     }
 }
 
