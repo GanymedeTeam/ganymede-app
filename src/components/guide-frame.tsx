@@ -60,7 +60,7 @@ export function GuideFrame({
           return <Trans>lien masqué</Trans>
         }
 
-        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|\.|,|:|;)\s]*)/gu
+        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|\.|,|:|;|'|")\s]*)/gu
 
         let elems: ReactNode[] = []
 

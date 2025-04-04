@@ -543,6 +543,7 @@ impl GuidesApi for GuidesApiImpl {
 
                             if let Some(quest) = quests.iter_mut().find(|q| q.name == name) {
                                 // In the future, we will want to add if the combination of (status, u32), not just u32
+                                // @see #92
                                 let status = quest.statuses.iter().find(|s| {
                                     let s_value = match s {
                                         SummaryQuestStatus::Setup(v)
