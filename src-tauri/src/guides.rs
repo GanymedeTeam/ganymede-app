@@ -151,6 +151,7 @@ pub struct Summary {
 #[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Clone, taurpc::specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub enum SummaryQuestStatus {
+    Setup(u32),
     Started(u32),
     InProgress(u32),
     Completed(u32),
@@ -531,6 +532,7 @@ impl GuidesApi for GuidesApiImpl {
                         let status = element.value().attr("status");
                         if let (Some(name), Some(status)) = (quest_name, status) {
                             let summary_quest_status = match status {
+                                "setup" => SummaryQuestStatus::Setup(step_index as u32 + 1),
                                 "start" => SummaryQuestStatus::Started(step_index as u32 + 1),
                                 "in_progress" => {
                                     SummaryQuestStatus::InProgress(step_index as u32 + 1)
@@ -540,9 +542,11 @@ impl GuidesApi for GuidesApiImpl {
                             };
 
                             if let Some(quest) = quests.iter_mut().find(|q| q.name == name) {
+                                // In the future, we will want to add if the combination of (status, u32), not just u32
                                 let status = quest.statuses.iter().find(|s| {
                                     let s_value = match s {
-                                        SummaryQuestStatus::Started(v)
+                                        SummaryQuestStatus::Setup(v)
+                                        | SummaryQuestStatus::Started(v)
                                         | SummaryQuestStatus::InProgress(v)
                                         | SummaryQuestStatus::Completed(v) => v,
                                     };
@@ -569,12 +573,14 @@ impl GuidesApi for GuidesApiImpl {
                 for quest in &mut quests {
                     quest.statuses.sort_by(|a, b| {
                         let a_value = match a {
-                            SummaryQuestStatus::Started(v)
+                            SummaryQuestStatus::Setup(v)
+                            | SummaryQuestStatus::Started(v)
                             | SummaryQuestStatus::InProgress(v)
                             | SummaryQuestStatus::Completed(v) => v,
                         };
                         let b_value = match b {
-                            SummaryQuestStatus::Started(v)
+                            SummaryQuestStatus::Setup(v)
+                            | SummaryQuestStatus::Started(v)
                             | SummaryQuestStatus::InProgress(v)
                             | SummaryQuestStatus::Completed(v) => v,
                         };
