@@ -326,3 +326,11 @@
     }
   }
 }
+
+.toaster[data-sonner-toaster][data-sonner-theme="dark"] {
+  --normal-bg: var(--color-primary-900);
+  --normal-text: var(--color-primary-foreground);
+  --normal-border: var(--color-border);
+
+  @apply shadow-lg;
+}

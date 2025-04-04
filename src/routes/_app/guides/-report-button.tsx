@@ -112,7 +112,7 @@ export function ReportButton({
 
             {sendReport.isSuccess && (
               <div className="rounded-lg bg-green-600 px-4 py-2 text-primary-foreground">
-                <Trans>Votre message nous a été transmi. Bon jeu !</Trans>
+                <Trans>Votre message nous a été transmis. Bon jeu !</Trans>
               </div>
             )}
 

@@ -140,7 +140,9 @@ export function SummaryDialog({
                     ? firstStatus.started
                     : 'inProgress' in firstStatus
                       ? firstStatus.inProgress
-                      : firstStatus.completed
+                      : 'completed' in firstStatus
+                        ? firstStatus.completed
+                        : firstStatus.setup
 
                 return (
                   <TooltipProvider delayDuration={1000} key={quest.name}>
@@ -162,13 +164,25 @@ export function SummaryDialog({
                             {quest.statuses
                               .map((status) => {
                                 if ('started' in status) {
-                                  return <span key={`started-${status.started}`}>{status.started}</span>
+                                  return (
+                                    <span key={`started-${status.started}`} className="text-red-500">
+                                      {status.started}
+                                    </span>
+                                  )
                                 }
 
                                 if ('completed' in status) {
                                   return (
                                     <span key={`completed-${status.completed}`} className="text-green-500">
                                       {status.completed}
+                                    </span>
+                                  )
+                                }
+
+                                if ('setup' in status) {
+                                  return (
+                                    <span key={`setup-${status.setup}`} className="text-orange-400">
+                                      {status.setup}
                                     </span>
                                   )
                                 }
