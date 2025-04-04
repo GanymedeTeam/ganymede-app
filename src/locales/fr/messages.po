@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: quest.statuses.length
-#: src/routes/_app/guides/-summary-dialog.tsx:161
+#: src/routes/_app/guides/-summary-dialog.tsx:163
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Étape} other {Étapes}}"
 
@@ -34,7 +34,7 @@ msgstr "Afficher les guides terminés"
 msgid "Ajouter"
 msgstr "Ajouter"
 
-#: src/routes/_app/guides/-summary-dialog.tsx:187
+#: src/routes/_app/guides/-summary-dialog.tsx:201
 msgid "Aller à l'étape"
 msgstr "Aller à l'étape"
 
@@ -148,8 +148,8 @@ msgstr "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:340
-#: src/components/guide-frame.tsx:375
+#: src/components/guide-frame.tsx:341
+#: src/components/guide-frame.tsx:376
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
@@ -475,8 +475,8 @@ msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Une erreur est survenue lors de la récupération de la configuration."
 
 #: src/routes/_app/guides/-report-button.tsx:115
-msgid "Votre message nous a été transmi. Bon jeu !"
-msgstr "Votre message nous a été transmi. Bon jeu !"
+msgid "Votre message nous a été transmis. Bon jeu !"
+msgstr "Votre message nous a été transmis. Bon jeu !"
 
 #: src/components/error-component.tsx:66
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
