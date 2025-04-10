@@ -86,7 +86,7 @@ export type UpdateAllAtOnceResult = null | string
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number }
 
-const ARGS_MAP = {'api':'{"isAppVersionOld":[]}', 'base':'{"newId":[],"openUrl":["url"],"isProduction":[]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'almanax':'{"get":["level","date"]}', 'report':'{"send_report":["payload"]}', 'image':'{"fetchImage":["url"]}', 'guides':'{"getFlatGuides":["folder"],"getGuides":["folder"],"getGuidesFromServer":["status"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"getGuideSummary":["guide_id"],"getGuideFromServer":["guide_id"],"updateAllAtOnce":[]}', 'conf':'{"set":["conf"],"reset":[],"get":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}'}
+const ARGS_MAP = {'almanax':'{"get":["level","date"]}', 'update':'{"startUpdate":[]}', 'base':'{"newId":[],"isProduction":[],"openUrl":["url"]}', 'api':'{"isAppVersionOld":[]}', 'security':'{"getWhiteList":[]}', 'guides':'{"getFlatGuides":["folder"],"getGuides":["folder"],"downloadGuideFromServer":["guide_id","folder"],"getGuidesFromServer":["status"],"openGuidesFolder":[],"getGuideFromServer":["guide_id"],"updateAllAtOnce":[],"hasGuidesNotUpdated":[],"getGuideSummary":["guide_id"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"]}', 'image':'{"fetchImage":["url"]}', 'conf':'{"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"reset":[],"get":[]}', 'report':'{"send_report":["payload"]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)

@@ -86,7 +86,10 @@ export function TitleBar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2" onClick={() => openInBrowser.mutate('https://ko-fi.com/ganymededofus')}>
+            <DropdownMenuItem
+              className="gap-2 bg-red-700 font-semibold focus-visible:bg-red-600"
+              onClick={() => openInBrowser.mutate('https://ko-fi.com/ganymededofus')}
+            >
               <KoFiIcon />
               <Trans>Supporter Ganymède</Trans>
             </DropdownMenuItem>
