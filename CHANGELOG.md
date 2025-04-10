@@ -1,5 +1,12 @@
 # ganymede-app
 
+## 1.11.2
+
+### Patch Changes
+
+- 9098298: Ajout d'un récap de votre report et une mention pour bien mettre à jour votre guide avant de report.
+- 9098298: L'ordre des guides est corrigé.
+
 ## 1.11.1
 
 ### Patch Changes
