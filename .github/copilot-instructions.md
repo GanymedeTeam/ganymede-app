@@ -58,6 +58,7 @@ Nous utilisons Biome pour formater et linter notre code, sa configuration se tro
 
 Pour démarrer l'application `pnpm tauri dev` en mode dev. Pour compiler l'application `pnpm tauri build`, s'il faut les infos de debug `pnpm tauri build --debug`.
 
+Les builds de l'app se trouvent dans `/src-tauri/target/release/bundle/nsis`.
 # Git
 
 Nous utilisons le format de la team angular. `feat(subject)` par exemple. Le sujet doit être inclu. Si nécessaire au contexte, un fichier changeset pourrait être nécessaire pour expliquer le changelog, celui-ci est en français.
