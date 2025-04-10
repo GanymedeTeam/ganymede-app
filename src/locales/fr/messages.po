@@ -342,6 +342,11 @@ msgstr "J'ai compris"
 msgid "Langue"
 msgstr "Langue"
 
+#. placeholder {0}: index + 1
+#: src/routes/_app/guides/-guide-page.tsx:125
+msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
+msgstr "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
+
 #: src/routes/_app/downloads/$status.tsx:153
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."

@@ -41,8 +41,7 @@ export function rankList<T extends Record<any, unknown>>({ list, keys, sortKeys,
 
       return rankComparison
     })
-    .map(([item, rank]) => {
-      console.log(rank)
+    .map(([item]) => {
       return item
     })
 }

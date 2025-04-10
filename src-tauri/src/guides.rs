@@ -348,7 +348,7 @@ impl Guides {
     }
 }
 
-#[taurpc::procedures(path = "guides", export_to = "../src/ipc/bindings.ts")]
+#[taurpc::procedures(path = "guides", event_trigger = GuidesEventTrigger, export_to = "../src/ipc/bindings.ts")]
 pub trait GuidesApi {
     #[taurpc(alias = "getFlatGuides")]
     async fn get_flat_guides(
@@ -391,6 +391,8 @@ pub trait GuidesApi {
         app_handle: AppHandle,
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error>;
+    #[taurpc(event, alias = "copyCurrentGuideStep")]
+    async fn copy_current_guide_step();
 }
 
 #[derive(Clone)]

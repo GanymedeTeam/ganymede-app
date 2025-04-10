@@ -51,9 +51,12 @@ Tous les fichiers sont au format snake_case.
 Tous les composants React exportent des functions et non pas des arrow functions nommés en PascalCase.
 
 # Important
+
 Nous utilisons React 19.
 
-Nous utilisons Biome pour formater et linter notre code, sa configuration se trouve dans le fichier `/biome.jsonc`
+Nous utilisons Biome pour formater et linter notre code, sa configuration se trouve dans le fichier `/biome.jsonc`.
+
+Pour démarrer l'application `pnpm tauri dev` en mode dev. Pour compiler l'application `pnpm tauri build`, s'il faut les infos de debug `pnpm tauri build --debug`.
 
 # Git
 
@@ -63,15 +66,17 @@ Le commit en lui-même est écrit en anglais.
 
 `git add --all` doit être utilisé pour indexer les fichiers.
 
-Avant de commit, vérifier la branche courante et ne pas commit sur `main`. Les branches sont nommées de la façon suivante : `fix`, `feat`, `docs` etc, suivi du numéro de l'issue GitHub s'il en existe, suivi d'un mini sommaire. Par exemple `feat/50/new-summary-feature`. Ici l'issue est `50`. Dans ces cas là, ajouter la mention `Close #50` dans le message.
+- Avant de commit, vérifier la branche courante et ne pas commit sur `main`. Les branches sont nommées de la façon suivante : `fix`, `feat`, `docs` etc, suivi du numéro de l'issue GitHub s'il en existe, suivi d'un mini sommaire. Par exemple `feat/50/new-summary-feature`. Ici l'issue est `50`. Dans ces cas là, ajouter la mention `Close #50` dans le message.
 
-La première ligne d'un message de commit doit éviter d'être très long.
+- La première ligne d'un message de commit doit éviter d'être très long.
 
-Il ne faut pas indiquer dans le message du commit qu'il modifie les traductions si d'autres changements que des traductions sont détectés.
+- Il ne faut pas indiquer dans le message du commit qu'il modifie les traductions si d'autres changements que des traductions sont détectés.
 
-Ne pas utiliser `\n` dans le message, mais utiliser plusieurs fois `-m` s'il faut sauter une ligne pour le support du multi-ligne.
+- Ne pas utiliser `\n` dans le message, mais utiliser plusieurs fois `-m` s'il faut sauter une ligne pour le support du multi-ligne.
 
-Proposer s'il faut créer un fichier changeset dans le commit pour mettre à jour le changelog en utilisant `pnpm changeset`.
+- Proposer s'il faut créer un fichier changeset dans le commit pour mettre à jour le changelog en utilisant `pnpm changeset`.
+
+- Vérifier s'il y a des console.log et indiquer s'il faut les supprimer.
 
 # Traductions
 
