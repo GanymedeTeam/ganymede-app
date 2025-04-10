@@ -13,7 +13,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
-import { ReportButton } from './-report-button.tsx'
+import { ReportDialog } from './-report-dialog.tsx'
 import { SummaryDialog } from './-summary-dialog.tsx'
 
 const useOnCopyStep = (cb: () => void) => {
@@ -146,7 +146,7 @@ export function GuidePage({
               />
               <div className="ml-auto flex">
                 <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />
-                <ReportButton guideId={guide.id} stepIndex={index} />
+                <ReportDialog guideId={guide.id} stepIndex={index} />
               </div>
             </>
           )}

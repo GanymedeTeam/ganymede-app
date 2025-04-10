@@ -27,19 +27,21 @@ export function rankList<T extends Record<any, unknown>>({ list, keys, sortKeys,
     .sort(([itemA, rankA], [itemB, rankB]) => {
       const rankComparison = rankB.rank - rankA.rank
 
+      if (rankComparison !== 0) {
+        return rankComparison
+      }
+
       if (sortKeys) {
         for (const key of sortKeys) {
           const [aValue, bValue] = [key(itemA) || Number.MAX_SAFE_INTEGER, key(itemB) || Number.MAX_SAFE_INTEGER]
 
-          if (aValue === 0 && bValue !== 0) return -1
-          if (bValue === 0 && aValue !== 0) return 1
-
-          const keyComparison = bValue - aValue
-          if (keyComparison !== 0) return keyComparison
+          if (aValue !== bValue) {
+            return aValue - bValue
+          }
         }
       }
 
-      return rankComparison
+      return 0
     })
     .map(([item]) => {
       return item
