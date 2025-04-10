@@ -112,3 +112,7 @@ export class DeleteGuidesInSystemError extends Error {
 export function deleteGuidesFromSystem(guides: GuideOrFolderToDelete[]) {
   return fromPromise(taurpc.guides.deleteGuidesFromSystem(guides), DeleteGuidesInSystemError.from)
 }
+
+export function onCopyCurrentGuideStep() {
+  return taurpc.guides.copyCurrentGuideStep
+}

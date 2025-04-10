@@ -4,14 +4,27 @@ import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
 import { Position } from '@/components/position.tsx'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
+import { onCopyCurrentGuideStep } from '@/ipc/guides.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set-conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
+import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { toast } from 'sonner'
 import { ReportButton } from './-report-button.tsx'
 import { SummaryDialog } from './-summary-dialog.tsx'
+
+const useOnCopyStep = (cb: () => void) => {
+  useEffect(() => {
+    const unlisten = onCopyCurrentGuideStep().on(cb)
+
+    return () => {
+      unlisten.then((cb) => cb())
+    }
+  }, [cb])
+}
 
 export function GuidePage({
   id,
@@ -20,6 +33,7 @@ export function GuidePage({
   id: number
   stepIndex: number
 }) {
+  const { t } = useLingui()
   const guide = useGuide(id)
   const step = guide.steps[index]
   const stepMax = guide.steps.length - 1
@@ -105,6 +119,11 @@ export function GuidePage({
 
     return true
   }
+
+  useOnCopyStep(() => {
+    navigator.clipboard.writeText((index + 1).toString())
+    toast.success(t`Le numéro de l'étape (${index + 1}) a été copié dans le presse-papiers.`)
+  })
 
   return (
     <PageScrollableContent hasTitleBar ref={scrollableRef}>

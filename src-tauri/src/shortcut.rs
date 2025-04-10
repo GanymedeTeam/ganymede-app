@@ -7,6 +7,7 @@ use thiserror::Error as ThisError;
 
 use crate::conf::Conf;
 use crate::event::Event;
+use crate::guides::GuidesEventTrigger;
 
 #[derive(Debug, ThisError)]
 pub enum Error {
@@ -20,6 +21,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
     let reset_conf_shortcut = Shortcut::from_str("Alt+Shift+P").unwrap();
     let go_next_step_shortcut = Shortcut::from_str("CommandOrControl+Shift+E").unwrap();
     let go_previous_step_shortcut = Shortcut::from_str("CommandOrControl+Shift+A").unwrap();
+    let copy_current_step_shortcut = Shortcut::from_str("CommandOrControl+Shift+C").unwrap();
 
     app.handle()
         .plugin(
@@ -80,6 +82,16 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                         .expect("[Shortcut] failed to emit previous event");
                                 }
                             }
+
+                            if shortcut == &copy_current_step_shortcut {
+                                info!("Shortcut {} pressed", shortcut.to_string());
+
+                                let trigger = GuidesEventTrigger::new(app.clone());
+
+                                trigger
+                                    .copy_current_guide_step()
+                                    .expect("[Shortcut] failed to copy current step");
+                            }
                         }
                         _ => {}
                     }
@@ -127,9 +139,24 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
         );
     }
 
+    let copy_current_step_register = app
+        .global_shortcut()
+        .register(copy_current_step_shortcut)
+        .map_err(Error::Register);
+
+    if let Err(err) = &copy_current_step_register {
+        error!("[Shortcut]: {:?}", err);
+    } else {
+        info!(
+            "[Shortcut] registered: {}",
+            copy_current_step_shortcut.to_string()
+        );
+    }
+
     reset_register
         .and(go_next_step_register)
-        .and(go_previous_step_register)?;
+        .and(go_previous_step_register)
+        .and(copy_current_step_register)?;
 
     Ok(())
 }
