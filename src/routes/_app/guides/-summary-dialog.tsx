@@ -1,5 +1,6 @@
 import { GenericLoader } from '@/components/generic-loader.tsx'
 import { Button } from '@/components/ui/button.tsx'
+import { ClearInput } from '@/components/ui/clear-input.tsx'
 import {
   Dialog,
   DialogContent,
@@ -12,8 +13,9 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx'
 import { Skeleton } from '@/components/ui/skeleton.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useGuideOrUndefined } from '@/hooks/use_guide.ts'
+import { rankList } from '@/lib/rank.ts'
 import { summaryQuery } from '@/queries/summary.query.ts'
-import { Plural, Trans } from '@lingui/react/macro'
+import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import debounce from 'debounce-fn'
 import { BookTextIcon } from 'lucide-react'
@@ -66,6 +68,8 @@ export function SummaryDialog({
   guideId: number
   onChangeStep: (step: number) => void
 }) {
+  const { t } = useLingui()
+  const [searchTerm, setSearchTerm] = useState('')
   const [open, setOpen] = useState(false)
   const summary = useQuery({
     ...summaryQuery(guideId),
@@ -81,6 +85,14 @@ export function SummaryDialog({
     }
   }, [])
   const hasScroll = useHasVerticalScroll(!open ? null : elementRef)
+
+  const filteredQuests = summary.isSuccess
+    ? rankList({
+        list: summary.data.quests,
+        keys: [(quest) => quest.name],
+        term: searchTerm,
+      })
+    : []
 
   if (!guide) {
     return null
@@ -105,6 +117,27 @@ export function SummaryDialog({
             </span>
           </DialogDescription>
         </DialogHeader>
+        {summary.isSuccess && summary.data.quests.length > 0 && (
+          <ClearInput
+            value={searchTerm}
+            onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+            onValueChange={setSearchTerm}
+            autoComplete="off"
+            autoCorrect="off"
+            placeholder={t`Rechercher une quête`}
+            disabled={!summary.isSuccess}
+          />
+        )}
+        {summary.isSuccess && summary.data.quests.length === 0 && (
+          <p className="text-center">
+            <Trans>Aucune quête dans ce guide.</Trans>
+          </p>
+        )}
+        {summary.isSuccess && summary.data.quests.length !== 0 && filteredQuests.length === 0 && searchTerm && (
+          <p className="text-center">
+            <Trans>Aucune quête ne correspond à votre recherche.</Trans>
+          </p>
+        )}
         {summary.isLoading && (
           <ScrollArea className="h-full">
             <div className="flex flex-col gap-2">
@@ -128,82 +161,63 @@ export function SummaryDialog({
         {summary.isSuccess && (
           <ScrollArea className="h-full" ref={contentRef}>
             <div className="group flex flex-col gap-2" data-has-scroll={hasScroll}>
-              {summary.data.quests.length === 0 && (
-                <p className="text-center">
-                  <Trans>Aucune quête dans ce guide.</Trans>
-                </p>
-              )}
-              {summary.data.quests.map((quest) => {
-                const firstStatus = quest.statuses[0]
-                const firstStep =
-                  'started' in firstStatus
-                    ? firstStatus.started
-                    : 'inProgress' in firstStatus
-                      ? firstStatus.inProgress
-                      : 'completed' in firstStatus
-                        ? firstStatus.completed
-                        : firstStatus.setup
+              {filteredQuests.map((quest) => (
+                <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
+                  <div className="flex items-center gap-1">
+                    <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
+                    <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
+                  </div>
+                  <span className="flex flex-col gap-1">
+                    <Plural value={quest.statuses.length} one="Étape" other="Étapes" />{' '}
+                    <div className="flex flex-wrap gap-1">
+                      {quest.statuses.map((status) => {
+                        const statusText =
+                          'started' in status
+                            ? 'started'
+                            : 'inProgress' in status
+                              ? 'inProgress'
+                              : 'completed' in status
+                                ? 'completed'
+                                : 'setup'
+                        const step =
+                          'started' in status
+                            ? status.started
+                            : 'inProgress' in status
+                              ? status.inProgress
+                              : 'completed' in status
+                                ? status.completed
+                                : status.setup
 
-                return (
-                  <TooltipProvider delayDuration={1000} key={quest.name}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => {
-                            onChangeStep(firstStep - 1)
-                            setOpen(false)
-                          }}
-                          className="flex flex-col rounded-lg bg-primary-800 p-2 text-left hover:bg-primary group-data-[has-scroll=true]:mr-3"
-                        >
-                          <div className="flex items-center gap-1">
-                            <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
-                            <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
-                          </div>
-                          <span>
-                            <Plural value={quest.statuses.length} one="Étape" other="Étapes" />{' '}
-                            {quest.statuses
-                              .map((status) => {
-                                if ('started' in status) {
-                                  return (
-                                    <span key={`started-${status.started}`} className="text-red-500">
-                                      {status.started}
-                                    </span>
-                                  )
-                                }
-
-                                if ('completed' in status) {
-                                  return (
-                                    <span key={`completed-${status.completed}`} className="text-green-500">
-                                      {status.completed}
-                                    </span>
-                                  )
-                                }
-
-                                if ('setup' in status) {
-                                  return (
-                                    <span key={`setup-${status.setup}`} className="text-orange-400">
-                                      {status.setup}
-                                    </span>
-                                  )
-                                }
-
-                                return <span key={`inProgress-${status.inProgress}`}>{status.inProgress}</span>
-                              })
-                              .reduce((acc, curr) => (
-                                <>
-                                  {acc}, {curr}
-                                </>
-                              ))}
-                          </span>
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <Trans>Aller à l'étape</Trans>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                )
-              })}
+                        return (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  key={`${statusText}-${step}`}
+                                  onClick={() => {
+                                    onChangeStep(step - 1)
+                                    setOpen(false)
+                                  }}
+                                  className="bg-accent data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
+                                  data-status={statusText}
+                                >
+                                  {step}
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                {statusText === 'completed' && <Trans>Fin</Trans>}
+                                {statusText === 'started' && <Trans>Début</Trans>}
+                                {statusText === 'inProgress' && <Trans>En cours</Trans>}
+                                {statusText === 'setup' && <Trans>Préparation</Trans>}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        )
+                      })}
+                    </div>
+                  </span>
+                </div>
+              ))}
             </div>
           </ScrollArea>
         )}

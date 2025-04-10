@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: quest.statuses.length
-#: src/routes/_app/guides/-summary-dialog.tsx:163
+#: src/routes/_app/guides/-summary-dialog.tsx:171
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
@@ -33,10 +33,6 @@ msgstr "Exibir os guias concluídos"
 #: src/routes/_app/auto-pilot.tsx:132
 msgid "Ajouter"
 msgstr "Adicionar"
-
-#: src/routes/_app/guides/-summary-dialog.tsx:201
-msgid "Aller à l'étape"
-msgstr "Ir para o passo"
 
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
@@ -66,6 +62,10 @@ msgstr "Nenhum perfil encontrado."
 #: src/routes/_app/guides/-summary-dialog.tsx:133
 msgid "Aucune quête dans ce guide."
 msgstr "Nenhuma missão neste guia."
+
+#: src/routes/_app/guides/-summary-dialog.tsx:138
+msgid "Aucune quête ne correspond à votre recherche."
+msgstr "Nenhuma missão corresponde à sua pesquisa."
 
 #: src/components/almanax-frame.tsx:59
 msgid "Aujourd'hui"
@@ -209,6 +209,10 @@ msgstr "Crie seus guias no site oficial e baixe os de outros usuários!"
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
+#: src/routes/_app/guides/-summary-dialog.tsx:209
+msgid "Début"
+msgstr "Início"
+
 #: src/routes/_app/guides/-report-button.tsx:86
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
@@ -228,6 +232,10 @@ msgstr "Pasta dos guias transferidos atualizada"
 #: src/routes/_app/notes.create.tsx:38
 msgid "Éditer une note"
 msgstr "Editar uma nota"
+
+#: src/routes/_app/guides/-summary-dialog.tsx:210
+msgid "En cours"
+msgstr "Em andamento"
 
 #: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
@@ -250,9 +258,13 @@ msgid "Erreur lors du rafraichissement des guides téléchargés"
 msgstr "Erro ao atualizar os guias transferidos"
 
 #: src/routes/_app/guides/-guide-update-all-result-dialog.tsx:81
-#: src/components/title-bar.tsx:134
+#: src/components/title-bar.tsx:137
 msgid "Fermer"
 msgstr "Fechar"
+
+#: src/routes/_app/guides/-summary-dialog.tsx:208
+msgid "Fin"
+msgstr "Fim"
 
 #: src/routes/_app/index.tsx:88
 msgid "Ganymède - Non affilié à Ankama Games"
@@ -312,7 +324,7 @@ msgstr "id <0>{0}</0>"
 msgid "Il semblerait que la mise à jour ait eu un problème."
 msgstr "Parece que houve um problema com a atualização."
 
-#: src/routes/_app/guides/-summary-dialog.tsx:121
+#: src/routes/_app/guides/-summary-dialog.tsx:154
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Não foi possível obter o resumo do guia."
 
@@ -400,7 +412,7 @@ msgstr "Abrir a pasta dos guias baixados"
 
 #: src/routes/_app/settings.tsx:42
 #: src/routes/_app/settings.tsx:76
-#: src/components/title-bar.tsx:112
+#: src/components/title-bar.tsx:115
 msgid "Paramètres"
 msgstr "Configurações"
 
@@ -416,6 +428,10 @@ msgstr "Mais opções"
 #: src/components/error-component.tsx:47
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>."
 msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>."
+
+#: src/routes/_app/guides/-summary-dialog.tsx:211
+msgid "Préparation"
+msgstr "Preparação"
 
 #: src/routes/_app/index.tsx:25
 msgid "Présentation"
@@ -446,7 +462,11 @@ msgstr "Pesquisar um guia"
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
-#: src/components/title-bar.tsx:124
+#: src/routes/_app/guides/-summary-dialog.tsx:127
+msgid "Rechercher une quête"
+msgstr "Pesquisar uma missão"
+
+#: src/components/title-bar.tsx:127
 msgid "Réduire"
 msgstr "Minimizar"
 
@@ -462,11 +482,11 @@ msgstr "Selecionar"
 msgid "Site officiel"
 msgstr "Site oficial"
 
-#: src/routes/_app/guides/-summary-dialog.tsx:101
+#: src/routes/_app/guides/-summary-dialog.tsx:113
 msgid "Sommaire"
 msgstr "Resumo"
 
-#: src/components/title-bar.tsx:91
+#: src/components/title-bar.tsx:94
 msgid "Supporter Ganymède"
 msgstr "Apoiar Ganymède"
 
