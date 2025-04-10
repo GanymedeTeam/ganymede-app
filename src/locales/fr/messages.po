@@ -36,6 +36,7 @@ msgstr "Ajouter"
 
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
+#: src/routes/_app/guides/-report-dialog.tsx:166
 msgid "Annuler"
 msgstr "Annuler"
 
@@ -99,7 +100,7 @@ msgid "Causée par :"
 msgstr "Causée par :"
 
 #. placeholder {0}: sendReport.error.status
-#: src/routes/_app/guides/-report-button.tsx:106
+#: src/routes/_app/guides/-report-dialog.tsx:119
 msgid "Causée par: {0}"
 msgstr "Causée par: {0}"
 
@@ -158,6 +159,10 @@ msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
+#: src/routes/_app/guides/-report-dialog.tsx:143
+msgid "Confirmer l'envoi du rapport"
+msgstr "Confirmer l'envoi du rapport"
+
 #: src/routes/_app/notes.create.tsx:82
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
@@ -213,7 +218,7 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Début"
 
-#: src/routes/_app/guides/-report-button.tsx:86
+#: src/routes/_app/guides/-report-dialog.tsx:99
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 
@@ -241,11 +246,7 @@ msgstr "En cours"
 msgid "Enregistrer la note"
 msgstr "Enregistrer la note"
 
-#: src/routes/_app/guides/-report-button.tsx:122
-msgid "Envoyer"
-msgstr "Envoyer"
-
-#: src/routes/_app/guides/-report-button.tsx:59
+#: src/routes/_app/guides/-report-dialog.tsx:72
 msgid "Envoyer un rapport"
 msgstr "Envoyer un rapport"
 
@@ -338,6 +339,10 @@ msgstr "Informations supplémentaires : {0}"
 msgid "J'ai compris"
 msgstr "J'ai compris"
 
+#: src/routes/_app/guides/-report-dialog.tsx:176
+msgid "Je confirme que mon guide est à jour."
+msgstr "Je confirme que mon guide est à jour."
+
 #: src/components/select-lang.tsx:10
 msgid "Langue"
 msgstr "Langue"
@@ -383,6 +388,10 @@ msgstr "Mise à jour terminée. L'application va redémarrer."
 #: src/routes/_app/notes.index.tsx:72
 msgid "Modifier la note"
 msgstr "Modifier la note"
+
+#: src/routes/_app/guides/-report-dialog.tsx:137
+msgid "Mon guide est à jour, envoyer le message"
+msgstr "Mon guide est à jour, envoyer le message"
 
 #: src/routes/_app/auto-pilot.tsx:29
 #: src/routes/_app/auto-pilot.tsx:117
@@ -442,7 +451,7 @@ msgstr "Préparation"
 msgid "Présentation"
 msgstr "Présentation"
 
-#: src/routes/_app/guides/-report-button.tsx:81
+#: src/routes/_app/guides/-report-dialog.tsx:94
 msgid "Problème rencontré"
 msgstr "Problème rencontré"
 
@@ -457,6 +466,10 @@ msgstr "Rafraichir le dossier des guides téléchargés"
 #: src/routes/_app/guides/index.tsx:223
 msgid "Rafraichissement des guides téléchargés"
 msgstr "Rafraichissement des guides téléchargés"
+
+#: src/routes/_app/guides/-report-dialog.tsx:146
+msgid "Récapitulatif du message"
+msgstr "Récapitulatif du message"
 
 #: src/routes/_app/guides/index.tsx:494
 #: src/routes/_app/downloads/$status.tsx:181
@@ -550,7 +563,7 @@ msgstr "Une erreur est survenue"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Une erreur est survenue lors de la récupération de la configuration."
 
-#: src/routes/_app/guides/-report-button.tsx:115
+#: src/routes/_app/guides/-report-dialog.tsx:128
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Votre message nous a été transmis. Bon jeu !"
 
@@ -558,8 +571,8 @@ msgstr "Votre message nous a été transmis. Bon jeu !"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 
-#: src/routes/_app/guides/-report-button.tsx:66
-#: src/routes/_app/guides/-report-button.tsx:71
+#: src/routes/_app/guides/-report-dialog.tsx:79
+#: src/routes/_app/guides/-report-dialog.tsx:84
 msgid "Votre pseudo"
 msgstr "Votre pseudo"
 

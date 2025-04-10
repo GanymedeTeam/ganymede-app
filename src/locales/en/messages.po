@@ -36,6 +36,7 @@ msgstr "Add"
 
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
+#: src/routes/_app/guides/-report-dialog.tsx:166
 msgid "Annuler"
 msgstr "Cancel"
 
@@ -99,7 +100,7 @@ msgid "Causée par :"
 msgstr "Caused by:"
 
 #. placeholder {0}: sendReport.error.status
-#: src/routes/_app/guides/-report-button.tsx:106
+#: src/routes/_app/guides/-report-dialog.tsx:119
 msgid "Causée par: {0}"
 msgstr "Caused by: {0}"
 
@@ -158,6 +159,10 @@ msgstr "Click to copy the monster's name. Ctrl+click to open on dofusdb"
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Click to open in browser"
 
+#: src/routes/_app/guides/-report-dialog.tsx:143
+msgid "Confirmer l'envoi du rapport"
+msgstr "Confirm sending the report"
+
 #: src/routes/_app/notes.create.tsx:82
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Note content.{linesBreak}From the previous menu, once created, I can edit it by clicking on it or copy its content."
@@ -213,7 +218,7 @@ msgstr "from <0>{0}</0>"
 msgid "Début"
 msgstr "Start"
 
-#: src/routes/_app/guides/-report-button.tsx:86
+#: src/routes/_app/guides/-report-dialog.tsx:99
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
 
@@ -241,11 +246,7 @@ msgstr "In progress"
 msgid "Enregistrer la note"
 msgstr "Save the note"
 
-#: src/routes/_app/guides/-report-button.tsx:122
-msgid "Envoyer"
-msgstr "Send"
-
-#: src/routes/_app/guides/-report-button.tsx:59
+#: src/routes/_app/guides/-report-dialog.tsx:72
 msgid "Envoyer un rapport"
 msgstr "Send a report"
 
@@ -338,6 +339,10 @@ msgstr "More info: {0}"
 msgid "J'ai compris"
 msgstr "I understand"
 
+#: src/routes/_app/guides/-report-dialog.tsx:176
+msgid "Je confirme que mon guide est à jour."
+msgstr "I confirm that my guide is up to date."
+
 #: src/components/select-lang.tsx:10
 msgid "Langue"
 msgstr "Language"
@@ -383,6 +388,10 @@ msgstr "Update completed. The application will restart."
 #: src/routes/_app/notes.index.tsx:72
 msgid "Modifier la note"
 msgstr "Edit the note"
+
+#: src/routes/_app/guides/-report-dialog.tsx:137
+msgid "Mon guide est à jour, envoyer le message"
+msgstr "My guide is up to date, send the message"
 
 #: src/routes/_app/auto-pilot.tsx:29
 #: src/routes/_app/auto-pilot.tsx:117
@@ -442,7 +451,7 @@ msgstr "Preparation"
 msgid "Présentation"
 msgstr "Presentation"
 
-#: src/routes/_app/guides/-report-button.tsx:81
+#: src/routes/_app/guides/-report-dialog.tsx:94
 msgid "Problème rencontré"
 msgstr "Issue encountered"
 
@@ -457,6 +466,10 @@ msgstr "Refresh downloaded guides folder"
 #: src/routes/_app/guides/index.tsx:223
 msgid "Rafraichissement des guides téléchargés"
 msgstr "Refreshing downloaded guides"
+
+#: src/routes/_app/guides/-report-dialog.tsx:146
+msgid "Récapitulatif du message"
+msgstr "Message summary"
 
 #: src/routes/_app/guides/index.tsx:494
 #: src/routes/_app/downloads/$status.tsx:181
@@ -550,7 +563,7 @@ msgstr "An error occurred"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "An error occurred while retrieving the configuration."
 
-#: src/routes/_app/guides/-report-button.tsx:115
+#: src/routes/_app/guides/-report-dialog.tsx:128
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Your message has been sent to us. Have a great game!"
 
@@ -558,8 +571,8 @@ msgstr "Your message has been sent to us. Have a great game!"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Your progress in guides will be reset. The downloaded guides will still be available."
 
-#: src/routes/_app/guides/-report-button.tsx:66
-#: src/routes/_app/guides/-report-button.tsx:71
+#: src/routes/_app/guides/-report-dialog.tsx:79
+#: src/routes/_app/guides/-report-dialog.tsx:84
 msgid "Votre pseudo"
 msgstr "Your username"
 
