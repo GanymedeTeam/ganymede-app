@@ -36,6 +36,7 @@ msgstr "Adicionar"
 
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
+#: src/routes/_app/guides/-report-dialog.tsx:166
 msgid "Annuler"
 msgstr "Cancelar"
 
@@ -99,7 +100,7 @@ msgid "Causée par :"
 msgstr "Causada por:"
 
 #. placeholder {0}: sendReport.error.status
-#: src/routes/_app/guides/-report-button.tsx:106
+#: src/routes/_app/guides/-report-dialog.tsx:119
 msgid "Causée par: {0}"
 msgstr "Causado por: {0}"
 
@@ -158,6 +159,10 @@ msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
+#: src/routes/_app/guides/-report-dialog.tsx:143
+msgid "Confirmer l'envoi du rapport"
+msgstr "Confirmar o envio do relatório"
+
 #: src/routes/_app/notes.create.tsx:82
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Conteúdo da nota.{linesBreak}No menu anterior, uma vez criada, posso editá-la clicando nela ou copiar seu conteúdo."
@@ -213,7 +218,7 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Início"
 
-#: src/routes/_app/guides/-report-button.tsx:86
+#: src/routes/_app/guides/-report-dialog.tsx:99
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
 
@@ -241,11 +246,7 @@ msgstr "Em andamento"
 msgid "Enregistrer la note"
 msgstr "Salvar a nota"
 
-#: src/routes/_app/guides/-report-button.tsx:122
-msgid "Envoyer"
-msgstr "Enviar"
-
-#: src/routes/_app/guides/-report-button.tsx:59
+#: src/routes/_app/guides/-report-dialog.tsx:72
 msgid "Envoyer un rapport"
 msgstr "Enviar um relatório"
 
@@ -338,6 +339,10 @@ msgstr "Informações adicionais: {0}"
 msgid "J'ai compris"
 msgstr "Entendi"
 
+#: src/routes/_app/guides/-report-dialog.tsx:176
+msgid "Je confirme que mon guide est à jour."
+msgstr "Confirmo que meu guia está atualizado."
+
 #: src/components/select-lang.tsx:10
 msgid "Langue"
 msgstr "Idioma"
@@ -383,6 +388,10 @@ msgstr "Atualização concluída. A aplicação vai reiniciar."
 #: src/routes/_app/notes.index.tsx:72
 msgid "Modifier la note"
 msgstr "Editar a nota"
+
+#: src/routes/_app/guides/-report-dialog.tsx:137
+msgid "Mon guide est à jour, envoyer le message"
+msgstr "Meu guia está atualizado, enviar a mensagem"
 
 #: src/routes/_app/auto-pilot.tsx:29
 #: src/routes/_app/auto-pilot.tsx:117
@@ -442,7 +451,7 @@ msgstr "Preparação"
 msgid "Présentation"
 msgstr "Apresentação"
 
-#: src/routes/_app/guides/-report-button.tsx:81
+#: src/routes/_app/guides/-report-dialog.tsx:94
 msgid "Problème rencontré"
 msgstr "Problema encontrado"
 
@@ -457,6 +466,10 @@ msgstr "Atualizar a pasta dos guias baixados"
 #: src/routes/_app/guides/index.tsx:223
 msgid "Rafraichissement des guides téléchargés"
 msgstr "A atualizar os guias transferidos"
+
+#: src/routes/_app/guides/-report-dialog.tsx:146
+msgid "Récapitulatif du message"
+msgstr "Resumo da mensagem"
 
 #: src/routes/_app/guides/index.tsx:494
 #: src/routes/_app/downloads/$status.tsx:181
@@ -550,7 +563,7 @@ msgstr "Ocorreu um erro"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Ocorreu um erro ao recuperar a configuração."
 
-#: src/routes/_app/guides/-report-button.tsx:115
+#: src/routes/_app/guides/-report-dialog.tsx:128
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 
@@ -558,8 +571,8 @@ msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 
-#: src/routes/_app/guides/-report-button.tsx:66
-#: src/routes/_app/guides/-report-button.tsx:71
+#: src/routes/_app/guides/-report-dialog.tsx:79
+#: src/routes/_app/guides/-report-dialog.tsx:84
 msgid "Votre pseudo"
 msgstr "O seu nome de utilizador"
 
