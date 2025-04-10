@@ -1,5 +1,25 @@
 # ganymede-app
 
+## 1.11.0
+
+### Minor Changes
+
+- 859ac39: Vous pouvez désormais supprimer des guides ou des dossiers directement dans l'application sans passer par l'Explorer Windows ou le Finder macOS.
+- 33e343d: Les blocs de quête indiquent désormais si une quête commence, se poursuit ou se termine.
+- efe17d7: Ajout d'un bouton en haut de la liste de vos guides pour tous les mettre à jour d'un seul coup.
+- fa3222f: L’onglet actif a désormais un style différent, plus conforme à ce qu’il aurait dû être dès le départ.
+- a552347: Un bouton pour nous soutenir a été ajouté.
+- f62a471: Un nouveau bouton fait son apparition en bas de la liste de vos guides pour vous aider à trouver d'autres guides.
+- fa3222f: Ajout d'un sommaire dans les guides, indiquant l'emplacement des quêtes et vous permettant de reprendre ou de commencer un guide, même si certaines quêtes ont déjà été entamées.
+
+### Patch Changes
+
+- 124dc9e: Ajout d'un raccourci clavier permettant de copier l'étape actuelle du guide affiché (CTRL + MAJ + C ou CMD + MAJ + C sur macOS). Ce raccourci ne fonctionne pas si une autre application écoute déjà sur ce raccourci avant le lancement de Ganymède (Chrome pourrait bloquer).
+- 859ac39: Ajout d'un lien dans l'application pour nous soutenir via Ko-fi.
+- 859ac39: Correction de problèmes supplémentaires concernants les positions, entraînant la disparition de certains caractères dans le contenu des guides.
+- 651a8b1: Certains textes pouvaient disparaître après certaines positions dans le texte d'un guide
+- a17e5d6: L'historique infini avec le lien vers les paramètres est corrigé.
+
 ## 1.10.0
 
 ### Minor Changes
