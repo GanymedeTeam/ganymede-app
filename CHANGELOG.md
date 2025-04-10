@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.11.1
+
+### Patch Changes
+
+- 609efed: Ajout d'un récap de votre report et une mention pour bien mettre à jour votre guide avant de report.
+
 ## 1.11.0
 
 ### Minor Changes
