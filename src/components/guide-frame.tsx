@@ -17,7 +17,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
-import { AlertCircleIcon, BookCheckIcon, BookPlusIcon } from 'lucide-react'
+import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
 import { Fragment, ReactNode } from 'react'
 import { DownloadImage } from './download-image.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip.tsx'
@@ -60,7 +60,7 @@ export function GuideFrame({
           return <Trans>lien masqué</Trans>
         }
 
-        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|\.|,|:|;)\s]*)/gu
+        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|\.|,|:|;|'|")\s]*)/gu
 
         let elems: ReactNode[] = []
 
@@ -289,7 +289,7 @@ export function GuideFrame({
         // #region quest-block
         if (domNode.attribs['data-type'] === 'quest-block') {
           const questName: string = domNode.attribs['questname']
-          const status = domNode.attribs['status'] as 'in_progress' | 'start' | 'end'
+          const status = domNode.attribs['status'] as 'in_progress' | 'start' | 'end' | 'setup'
 
           return (
             <TooltipProvider>
@@ -304,7 +304,8 @@ export function GuideFrame({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className="flex max-w-[calc(100vw-3rem)] items-center gap-1">
-                  {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4" />}
+                  {status === 'setup' && <PackageSearchIcon className="size-4 min-h-4 min-w-4 text-orange-400" />}
+                  {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4 text-red-500" />}
                   {status === 'end' && <BookCheckIcon className="size-4 min-h-4 min-w-4 text-green-400" />}
                   <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
                   <span className="text-balance text-base">{questName}</span>

@@ -2,17 +2,36 @@ import { FlagPerLang } from '@/components/flag-per-lang.tsx'
 import { GenericLoader } from '@/components/generic-loader.tsx'
 import { GuideDownloadButton } from '@/components/guide-download-button.tsx'
 import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear-input.tsx'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu.tsx'
+import { ScrollArea } from '@/components/ui/scroll-area.tsx'
 import { useInterval } from '@/hooks/use_interval.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
-import { GuidesOrFolder } from '@/ipc/bindings.ts'
+import { GuideOrFolderToDelete, GuidesOrFolder } from '@/ipc/bindings.ts'
+import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { getStepOr } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
 import { OpenedGuideZod } from '@/lib/tabs.ts'
 import { cn } from '@/lib/utils.ts'
+import { useDeleteGuidesInSystem } from '@/mutations/delete_guides_in_system.mutation.ts'
 import { useOpenGuidesFolder } from '@/mutations/open-guides-folder.mutation.ts'
 import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -25,14 +44,18 @@ import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-quer
 import { Link, createFileRoute } from '@tanstack/react-router'
 import {
   ChevronRightIcon,
+  CircleCheckIcon,
   DownloadCloudIcon,
   FolderIcon,
   FolderOpenIcon,
   FolderSyncIcon,
   ImportIcon,
+  MenuIcon,
   ServerCrashIcon,
+  SquareMousePointerIcon,
 } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { BackButtonLink } from '../downloads/-back-button-link.tsx'
 
@@ -47,6 +70,31 @@ export const Route = createFileRoute('/_app/guides/')({
   pendingComponent: Pending,
 })
 
+/**
+ * @param path folder path in the system
+ */
+function createPagePath(path: string) {
+  const paths = path.split('/')
+
+  if (paths.length === 0) return ''
+  if (paths.length <= 3) {
+    return paths
+      .map((segment, index) =>
+        index < paths.length - 1 && segment.length > 10 ? `${segment.slice(0, 10)}...` : segment,
+      )
+      .join('/')
+  }
+
+  const lastPaths = paths.slice(-2).map((segment, index, array) => {
+    if (index === array.length - 1 && segment.length > 15) {
+      return `${segment.slice(0, 15)}...`
+    }
+    return segment.length > 10 ? `${segment.slice(0, 10)}...` : segment
+  })
+
+  return `.../${lastPaths.join('/')}`
+}
+
 function Pending() {
   const { t } = useLingui()
   const { path, from } = Route.useSearch()
@@ -55,7 +103,7 @@ function Pending() {
 
   return (
     <Page
-      title={comesFromGuide ? t`Choisissez un guide` : t`Guides`}
+      title={comesFromGuide ? t`Choisissez un guide` : t`Guides ${createPagePath(path)}`}
       key="guide-page"
       className="slot-[page-title-text]:whitespace-nowrap"
       backButton={path !== '' && <BackButtonLink to="/guides" search={{ path }} disabled />}
@@ -82,7 +130,14 @@ function Pending() {
   )
 }
 
+type GuideWithFolder = Extract<GuidesOrFolder, { type: 'guide' }> & Pick<GuideWithStepsWithFolder, 'folder'>
+
 function GuidesPage() {
+  const [openAlertDialogDeleteGuide, setOpenAlertDialogDeleteGuide] = useState(false)
+  const [isSelect, setSelect] = useState(false)
+  const [selectedItemsToDelete, setSelectedItemsToDelete] = useState(
+    [] as ({ type: 'guide'; guide: GuideWithFolder } | { type: 'folder'; folder: string })[],
+  )
   const path = Route.useSearch({
     select: (search) => (search.path.startsWith('/') ? search.path.slice(1) : search.path),
   })
@@ -120,7 +175,7 @@ function GuidesPage() {
       return {
         ...guide,
         currentStep,
-      } as Extract<GuidesOrFolder, { type: 'guide' }> & { currentStep: number | null }
+      } as GuideWithFolder & { currentStep: number | null }
     })
     .filter((guide) => guide !== null)
   const notDoneGuides = conf.data.showDoneGuides
@@ -140,6 +195,7 @@ function GuidesPage() {
             return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
               currentStep: number | null
               type: 'guide'
+              folder: string | null
             }
           }),
           keys: [(guide) => guide.name],
@@ -155,9 +211,18 @@ function GuidesPage() {
 
   const onRefresh = () => {
     if (!guides.isFetching) {
-      guides.refetch()
-      queryClient.invalidateQueries(guidesQuery())
-      queryClient.invalidateQueries(hasGuidesNotUpdatedQuery)
+      toast.promise(
+        Promise.all([
+          guides.refetch(),
+          queryClient.invalidateQueries(guidesQuery()),
+          queryClient.invalidateQueries(hasGuidesNotUpdatedQuery),
+        ]),
+        {
+          success: t`Dossier des guides téléchargés rafraichi`,
+          error: t`Erreur lors du rafraichissement des guides téléchargés`,
+          loading: t`Rafraichissement des guides téléchargés`,
+        },
+      )
     }
   }
 
@@ -173,6 +238,62 @@ function GuidesPage() {
     }
   }
 
+  const onSelectGuide = () => {
+    setSelect(true)
+    setSelectedItemsToDelete([])
+  }
+
+  const onDeleteGuidesInSystem = () => {
+    if (selectedItemsToDelete.length === 0) return
+
+    const guidesAndFolder = selectedItemsToDelete.map((guideOrFolder) => {
+      if (guideOrFolder.type === 'guide') {
+        return {
+          type: 'guide',
+          id: guideOrFolder.guide.id,
+          folder: guideOrFolder.guide.folder,
+        } satisfies Extract<GuideOrFolderToDelete, { type: 'guide' }>
+      }
+
+      return {
+        type: 'folder',
+        folder: guideOrFolder.folder,
+      } satisfies Extract<GuideOrFolderToDelete, { type: 'folder' }>
+    })
+
+    toast
+      .promise(deleteGuidesInSystem.mutateAsync(guidesAndFolder), {
+        loading: t`Suppression des guides`,
+        success: t`Guides supprimés`,
+        error: t`Erreur lors de la suppression des guides`,
+      })
+      .unwrap()
+      .catch((err) => {
+        console.error(err)
+      })
+      .then(() => {
+        setOpenAlertDialogDeleteGuide(false)
+        setSelect(false)
+        setSelectedItemsToDelete([])
+      })
+      .finally(() => {
+        guides.refetch()
+        queryClient.invalidateQueries(guidesQuery())
+      })
+  }
+
+  const isItemToDeleteSelected = (guideIdOrFolder: string | number) => {
+    return selectedItemsToDelete.some((guide) => {
+      if (typeof guideIdOrFolder === 'string') {
+        const fullPath = `${path !== '' ? `${path}/` : ''}${guideIdOrFolder}`
+
+        return guide.type === 'folder' && guide.folder === fullPath
+      }
+
+      return guide.type === 'guide' && guide.guide.id === guideIdOrFolder
+    })
+  }
+
   const paths = path.split('/')
   const pathsWithoutLast = paths.slice(0, -1)
   const comesFromGuide = comesFrom !== undefined
@@ -180,12 +301,13 @@ function GuidesPage() {
   const updateAllAtOnceGotError =
     updateAllAtOnce.isSuccess && Object.values(updateAllAtOnce.data).some((v) => v !== null)
   const hasSomeGuideNotUpdated = useQuery(hasGuidesNotUpdatedQuery)
+  const deleteGuidesInSystem = useDeleteGuidesInSystem()
 
   return (
     <Page
       key="guide-page"
       className="slot-[page-title-text]:whitespace-nowrap"
-      title={comesFromGuide ? t`Choisissez un guide` : t`Guides`}
+      title={comesFromGuide ? t`Choisissez un guide` : t`Guides ${createPagePath(path)}`}
       backButton={
         path !== '' ? (
           <BackButtonLink
@@ -231,25 +353,33 @@ function GuidesPage() {
           >
             <ImportIcon className="size-4" />
           </Button>
-          <Button
-            size="icon-sm"
-            variant="secondary"
-            onClick={onRefresh}
-            title={t`Rafraichir le dossier des guides téléchargés`}
-            className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
-            disabled={updateAllAtOnce.isPending || guides.isFetching}
-          >
-            <FolderSyncIcon className="size-4" />
-          </Button>
-          <Button
-            size="icon-sm"
-            variant="secondary"
-            onClick={onOpenExplorer}
-            title={t`Ouvrir le dossier des guides téléchargés`}
-            className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
-          >
-            <FolderOpenIcon className="size-4" />
-          </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                size="icon-sm"
+                variant="secondary"
+                title={t`Plus d'options`}
+                className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
+              >
+                <MenuIcon className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="max-w-[calc(75vw)]">
+              <DropdownMenuItem onClick={onSelectGuide}>
+                <SquareMousePointerIcon className="size-4" />
+                <Trans>Sélectionner</Trans>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onOpenExplorer}>
+                <FolderOpenIcon className="size-4" />
+                <Trans>Ouvrir le dossier des guides téléchargés</Trans>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onRefresh} disabled={isSelect}>
+                <FolderSyncIcon className="size-4" />
+                <Trans>Rafraichir le dossier des guides téléchargés</Trans>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       }
     >
@@ -266,24 +396,149 @@ function GuidesPage() {
             </div>
           )}
 
-          <ClearInput
-            value={searchTerm}
-            onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-            onValueChange={setSearchTerm}
-            autoComplete="off"
-            autoCorrect="off"
-            placeholder={t`Rechercher un guide`}
-          />
+          {isSelect ? (
+            <div className="-my-2 -translate-y-2 sticky top-0 z-10 flex gap-2 bg-background py-2">
+              <AlertDialog open={openAlertDialogDeleteGuide} onOpenChange={setOpenAlertDialogDeleteGuide}>
+                <AlertDialogTrigger asChild disabled={selectedItemsToDelete.length === 0}>
+                  <Button className="w-full" variant="destructive">
+                    <Trans>Supprimer</Trans>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      <Trans>Suppression de guides</Trans>
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      <Trans>Vous vous apprêtez à supprimer des guides de votre système.</Trans>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <ScrollArea className="h-full">
+                    <div className="flex flex-col gap-2">
+                      {selectedItemsToDelete.map((guideOrFolder) => {
+                        if (guideOrFolder.type === 'folder') {
+                          return (
+                            <Card
+                              key={guideOrFolder.folder}
+                              className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base"
+                            >
+                              <div className="flex min-w-9 flex-col items-center gap-0.5">
+                                <FolderIcon />
+                              </div>
+                              <div className="flex grow flex-col gap-1">
+                                <h3 className="grow text-balance font-mono">{guideOrFolder.folder}</h3>
+                              </div>
+                            </Card>
+                          )
+                        }
+
+                        const guide = guideOrFolder.guide
+
+                        return (
+                          <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+                            <div className="flex min-w-9 flex-col items-center gap-0.5">
+                              <FlagPerLang lang={guide.lang} />
+                              <span className="whitespace-nowrap text-xxs">
+                                <Trans>
+                                  id <span className="text-yellow-300">{guide.id}</span>
+                                </Trans>
+                              </span>
+                            </div>
+                            <div className="flex grow flex-col gap-1">
+                              <h3 className="grow text-balance">{guide.name}</h3>
+                            </div>
+                            <div className="flex flex-col items-center gap-1">
+                              <Button variant="secondary" size="icon" disabled>
+                                <ChevronRightIcon />
+                              </Button>
+                              <Button variant="secondary" disabled>
+                                <CircleCheckIcon />
+                              </Button>
+                            </div>
+                          </Card>
+                        )
+                      })}
+                    </div>
+                  </ScrollArea>
+                  <AlertDialogFooter className="xs:flex-row xs:items-center xs:justify-center">
+                    <AlertDialogCancel className="mt-0 xs:h-9 xs:px-4 xs:text-sm">
+                      <Trans>Annuler</Trans>
+                    </AlertDialogCancel>
+                    <Button
+                      variant="destructive"
+                      className="xs:h-9 xs:px-4 xs:text-sm"
+                      onClick={onDeleteGuidesInSystem}
+                    >
+                      <Trans>Supprimer</Trans>
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <Button
+                className="w-full"
+                onClick={() => {
+                  setSelect(false)
+                  setSelectedItemsToDelete([])
+                }}
+              >
+                <Trans>Annuler</Trans>
+              </Button>
+            </div>
+          ) : (
+            <ClearInput
+              value={searchTerm}
+              onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+              onValueChange={setSearchTerm}
+              autoComplete="off"
+              autoCorrect="off"
+              placeholder={t`Rechercher un guide`}
+            />
+          )}
 
           {filteredGuides.map((guide) => {
             if (guide.type === 'folder') {
+              const fullPath = `${path !== '' ? `${path}/` : ''}${guide.name}`
+              const isThisFolderSelected = isItemToDeleteSelected(fullPath)
+
               return (
-                <Card key={guide.name} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" asChild>
+                <Card
+                  key={guide.name}
+                  className={cn(
+                    'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base',
+                    isThisFolderSelected && 'bg-accent',
+                  )}
+                  asChild
+                >
                   <Link
                     className="items-center"
                     to="/guides"
-                    search={{ path: `${path}/${guide.name}`, ...(comesFromGuide ? { from: comesFrom } : {}) }}
+                    search={{
+                      path: fullPath,
+                      ...(comesFromGuide ? { from: comesFrom } : {}),
+                    }}
                     draggable={false}
+                    onClick={(evt) => {
+                      if (!isSelect) {
+                        return
+                      }
+
+                      evt.preventDefault()
+                      evt.stopPropagation()
+
+                      if (isThisFolderSelected) {
+                        setSelectedItemsToDelete((prev) =>
+                          prev.filter((itemsToDelete) => {
+                            if (itemsToDelete.type === 'folder') {
+                              return itemsToDelete.folder !== guide.name
+                            }
+
+                            return true
+                          }),
+                        )
+                      } else {
+                        setSelectedItemsToDelete((prev) => [...prev, { type: 'folder', folder: fullPath }])
+                      }
+                    }}
                   >
                     <span className="grow">{guide.name}</span>
                     <FolderIcon className="size-4 xs:size-6 focus-visible:bg-white" />
@@ -296,9 +551,37 @@ function GuidesPage() {
             const step = clamp((guide.currentStep ?? 0) + 1, 1, totalSteps)
             const percentage = totalSteps === 1 ? 100 : (((step - 1) / (totalSteps - 1)) * 100).toFixed(1)
             const hasOpenButton = guide.steps.length > 0
+            const isThisGuideSelected = isItemToDeleteSelected(guide.id)
 
             return (
-              <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+              <Card
+                key={guide.id}
+                className={cn(
+                  'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base',
+                  isSelect && 'cursor-pointer **:cursor-pointer',
+                  isThisGuideSelected && 'bg-accent',
+                )}
+                onClick={(evt) => {
+                  if (!isSelect) {
+                    return
+                  }
+
+                  evt.preventDefault()
+                  evt.stopPropagation()
+
+                  if (isThisGuideSelected) {
+                    setSelectedItemsToDelete((prev) =>
+                      prev.filter((itemsToDelete) => {
+                        if (itemsToDelete.type === 'folder') return true
+
+                        return itemsToDelete.guide.id !== guide.id
+                      }),
+                    )
+                  } else {
+                    setSelectedItemsToDelete((prev) => [...prev, { type: 'guide', guide }])
+                  }
+                }}
+              >
                 <div className="flex min-w-9 flex-col items-center gap-0.5">
                   <FlagPerLang lang={guide.lang} />
                   <span className="whitespace-nowrap text-xxs">
@@ -317,26 +600,32 @@ function GuidesPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
-                    <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }}>
-                      <ChevronRightIcon />
-                    </Link>
-                  </Button>
-                  <GuideDownloadButton guide={guide} />
+                  {!isSelect && (
+                    <>
+                      <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
+                        <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }}>
+                          <ChevronRightIcon />
+                        </Link>
+                      </Button>
+                      <GuideDownloadButton guide={guide} />
+                    </>
+                  )}
                 </div>
               </Card>
             )
           })}
 
-          <Link
-            to="/downloads/$status"
-            params={{ status: 'gp' }}
-            search={{ page: 1 }}
-            className="flex flex-col items-center justify-center gap-2 rounded-xl border border-muted-foreground border-dashed px-2 py-3 text-muted-foreground"
-          >
-            <DownloadCloudIcon />
-            <Trans>Télécharger un guide</Trans>
-          </Link>
+          {!isSelect && (
+            <Link
+              to="/downloads/$status"
+              params={{ status: 'gp' }}
+              search={{ page: 1 }}
+              className="flex flex-col items-center justify-center gap-2 rounded-xl border border-muted-foreground border-dashed px-2 py-3 text-muted-foreground"
+            >
+              <DownloadCloudIcon />
+              <Trans>Télécharger un guide</Trans>
+            </Link>
+          )}
         </div>
       </PageScrollableContent>
     </Page>

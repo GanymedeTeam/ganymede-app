@@ -1,4 +1,4 @@
-import { Status } from '@/ipc/bindings.ts'
+import { GuideOrFolderToDelete, Status } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder, taurpc } from '@/ipc/ipc.ts'
 import { error } from '@tauri-apps/plugin-log'
 import { ResultAsync, fromPromise } from 'neverthrow'
@@ -101,4 +101,14 @@ export class HasGuidesNotUpdatedError extends Error {
 
 export function hasGuidesNotUpdated() {
   return fromPromise(taurpc.guides.hasGuidesNotUpdated(), HasGuidesNotUpdatedError.from)
+}
+
+export class DeleteGuidesInSystemError extends Error {
+  static from(error: unknown) {
+    return new DeleteGuidesInSystemError('Failed to delete guide from system', { cause: error })
+  }
+}
+
+export function deleteGuidesFromSystem(guides: GuideOrFolderToDelete[]) {
+  return fromPromise(taurpc.guides.deleteGuidesFromSystem(guides), DeleteGuidesInSystemError.from)
 }
