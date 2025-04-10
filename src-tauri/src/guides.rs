@@ -572,7 +572,11 @@ impl GuidesApi for GuidesApiImpl {
 
                                     *s_value == step_index as u32 + 1
                                 });
-                                if status.is_none() {
+
+                                let in_vec_status =
+                                    quest.statuses.iter().any(|s| s == &summary_quest_status);
+
+                                if !in_vec_status {
                                     quest.statuses.push(summary_quest_status);
                                 }
                             } else {
