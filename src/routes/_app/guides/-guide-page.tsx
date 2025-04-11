@@ -11,6 +11,7 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
+import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { ReportDialog } from './-report-dialog.tsx'
@@ -121,8 +122,13 @@ export function GuidePage({
   }
 
   useOnCopyStep(() => {
-    navigator.clipboard.writeText((index + 1).toString())
-    toast.success(t`Le numéro de l'étape (${index + 1}) a été copié dans le presse-papiers.`)
+    toast
+      .promise(writeText((index + 1).toString()), {
+        success: t`Le numéro de l'étape (${index + 1}) a été copié dans le presse-papiers.`,
+        error: t`Erreur lors de la copie du numéro de l'étape (${index + 1}).`,
+        loading: t`Copie du numéro de l'étape (${index + 1})...`,
+      })
+      .unwrap()
   })
 
   return (
