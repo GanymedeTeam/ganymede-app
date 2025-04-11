@@ -171,6 +171,11 @@ msgstr "Conteúdo da nota.{linesBreak}No menu anterior, uma vez criada, posso ed
 msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
+#. placeholder {0}: index + 1
+#: src/routes/_app/guides/-guide-page.tsx:129
+msgid "Copie du numéro de l'étape ({0})..."
+msgstr "A copiar o número da etapa ({0})..."
+
 #: src/components/copy-on-click.tsx:21
 msgid "Copier : {title}"
 msgstr "Copiar: {title}"
@@ -249,6 +254,11 @@ msgstr "Salvar a nota"
 #: src/routes/_app/guides/-report-dialog.tsx:72
 msgid "Envoyer un rapport"
 msgstr "Enviar um relatório"
+
+#. placeholder {0}: index + 1
+#: src/routes/_app/guides/-guide-page.tsx:128
+msgid "Erreur lors de la copie du numéro de l'étape ({0})."
+msgstr "Erro ao copiar o número da etapa ({0})."
 
 #: src/routes/_app/guides/index.tsx:268
 msgid "Erreur lors de la suppression des guides"
@@ -348,7 +358,7 @@ msgid "Langue"
 msgstr "Idioma"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-guide-page.tsx:125
+#: src/routes/_app/guides/-guide-page.tsx:127
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 
