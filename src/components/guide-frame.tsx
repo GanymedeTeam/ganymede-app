@@ -4,6 +4,7 @@ import { useProfile } from '@/hooks/use_profile.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { copyPosition } from '@/lib/copy-position.ts'
 import { getGuideById } from '@/lib/guide.ts'
+import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download-guide-from-server.mutation.ts'
@@ -244,11 +245,17 @@ export function GuideFrame({
                 type="button"
                 className="group contents cursor-pointer"
                 onClick={async (evt) => {
-                  // open in browser if ctrl/cmd is pressed
-                  if (isMacOs ? evt.metaKey : evt.ctrlKey) {
-                    openUrlInBrowser.mutate(
-                      `https://dofusdb.fr/${currentGuide.lang}/database/${domNode.attribs.type === 'item' ? 'object' : domNode.attribs.type}/${domNode.attribs.dofusdbid}`,
-                    )
+                  const dofusDbId = domNode.attribs.dofusdbid
+                  const resourceType = domNode.attribs.type
+                  
+                  // open in browser, alt + click for DPLN and ctrl/cmd + click for DofusDB
+                  if (evt.altKey) {
+                    const urlToOpen = getDofusPourLesNoobsUrl(dofusDbId, resourceType)
+                    if (urlToOpen) {
+                      openUrlInBrowser.mutate(urlToOpen)
+                    }
+                  } else if (isMacOs ? evt.metaKey : evt.ctrlKey) {
+                    openUrlInBrowser.mutate(`https://dofusdb.fr/${currentGuide.lang}/database/${resourceType === 'item' ? 'object' : resourceType}/${dofusDbId}`)
                   } else {
                     await writeText(name)
                   }
