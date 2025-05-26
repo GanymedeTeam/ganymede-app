@@ -1,6 +1,9 @@
-import { isAppOldVersion } from '@/ipc/api.ts'
 import { queryOptions } from '@tanstack/react-query'
 import { debug, warn } from '@tauri-apps/plugin-log'
+import { err, ok } from 'neverthrow'
+
+import { GetIsAppOldVersionError, isAppOldVersion } from '@/ipc/api.ts'
+import { errorToObject } from '@/lib/error.ts'
 
 export const isAppOldVersionQuery = queryOptions({
   queryKey: ['version', 'is-app-old-version'],
@@ -8,18 +11,21 @@ export const isAppOldVersionQuery = queryOptions({
     const res = await isAppOldVersion()
 
     if (res.isErr()) {
-      debug(`Error in isAppOldVersionQuery: ${JSON.stringify(res.error, Object.getOwnPropertyNames(res.error), 2)}`)
+      await debug(`Error in isAppOldVersionQuery: ${JSON.stringify(errorToObject(res.error), undefined, 2)}`)
 
       // if the error is caused by a JSON parsing error or a GitHub error, we can safely ignore it
-      if (res.error.cause === 'Json' || res.error.cause === 'GitHub') {
-        warn(`Ignoring error in isAppOldVersionQuery: ${res.error.message}`)
+      if (
+        res.error instanceof GetIsAppOldVersionError &&
+        (res.error.isJsonMalformedError() || res.error.isGitHubError())
+      ) {
+        await warn(`Ignoring error in isAppOldVersionQuery: ${res.error.message}`)
 
-        return false
+        return err(res.error.cause)
       }
 
-      throw res.error
+      return err({ Unknown: res.error.message })
     }
 
-    return res.value
+    return ok(res.value)
   },
 })

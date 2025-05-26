@@ -331,6 +331,10 @@ msgstr "Guides supprimés"
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
+#: src/routes/_app.tsx:24
+msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
+msgstr "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
+
 #: src/routes/app-old-version.tsx:117
 msgid "Il semblerait que la mise à jour ait eu un problème."
 msgstr "Il semblerait que la mise à jour ait eu un problème."
@@ -338,6 +342,10 @@ msgstr "Il semblerait que la mise à jour ait eu un problème."
 #: src/routes/_app/guides/-summary-dialog.tsx:154
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Impossible de récupérer le sommaire du guide."
+
+#: src/routes/_app.tsx:23
+msgid "Impossible de vérifier la mise à jour de l'application."
+msgstr "Impossible de vérifier la mise à jour de l'application."
 
 #. placeholder {0}: info.componentStack
 #: src/components/error-component.tsx:95
