@@ -1,5 +1,12 @@
 # ganymede-app
 
+## 1.11.3
+
+### Patch Changes
+
+- 4a08129: L'application ne crashera plus si elle n'a pas pu vérifier les mises à jour.
+- f4e2f6e: Petite correction lors de la copie de l'étape courante via le raccourci clavier.
+
 ## 1.11.2
 
 ### Patch Changes
