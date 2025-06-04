@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.11.4
+
+### Patch Changes
+
+- 5b7e6a6: Il est désormais possible de sélectionner du texte dans un guide. Par exemple, pouvoir copier le nom d'un zaap.
+
 ## 1.11.3
 
 ### Patch Changes
