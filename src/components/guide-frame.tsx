@@ -421,5 +421,5 @@ export function GuideFrame({
     },
   }
 
-  return <div className={className}>{parse(html, options)}</div>
+  return <div className={cn('select-text **:select-text', className)}>{parse(html, options)}</div>
 }

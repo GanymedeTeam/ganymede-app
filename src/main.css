@@ -97,7 +97,7 @@
     --opacity: 0.93;
   }
 
-  * {
+  :where(*) {
     -webkit-user-select: none;
     user-select: none;
   }
@@ -109,7 +109,7 @@
     color: var(--color-foreground);
   }
 
-  :not(input):not(textarea):not(select):not(a):not(button):not(button *):not(a *):not(.select-text):not(code) {
+  :where(*:not(:is(input, textarea, select, a, button, .select-text, code, button *, a *))) {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
