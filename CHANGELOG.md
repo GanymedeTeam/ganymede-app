@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.12.0
+
+### Minor Changes
+
+- dc5a887: Possibilité via Alt+clic d'ouvrir les quêtes sur Dofus pour les noobs. Implémenté par @maner\_
+
 ## 1.11.4
 
 ### Patch Changes
