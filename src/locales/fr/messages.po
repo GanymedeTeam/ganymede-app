@@ -122,40 +122,40 @@ msgstr "Chasse au trésor"
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
-#: src/components/guide-frame.tsx:264
-msgid "Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb"
-msgstr "Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb"
+#: src/components/guide-frame.tsx:273
+msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
+msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:265
+#: src/components/guide-frame.tsx:274
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:272
-msgid "Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb"
-msgstr "Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb"
+#: src/components/guide-frame.tsx:281
+msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
+msgstr "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 
-#: src/components/guide-frame.tsx:273
-msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb"
-msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb"
+#: src/components/guide-frame.tsx:282
+msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
+msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 
-#: src/components/guide-frame.tsx:260
-msgid "Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb"
-msgstr "Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb"
+#: src/components/guide-frame.tsx:269
+msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
+msgstr "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:261
+#: src/components/guide-frame.tsx:270
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:268
-msgid "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
-msgstr "Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb"
+#: src/components/guide-frame.tsx:277
+msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
+msgstr "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:269
+#: src/components/guide-frame.tsx:278
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/guide-frame.tsx:341
-#: src/components/guide-frame.tsx:376
+#: src/components/guide-frame.tsx:350
+#: src/components/guide-frame.tsx:385
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
@@ -374,7 +374,7 @@ msgstr "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 
-#: src/components/guide-frame.tsx:60
+#: src/components/guide-frame.tsx:61
 msgid "lien masqué"
 msgstr "lien masqué"
 

@@ -247,7 +247,7 @@ export function GuideFrame({
                 onClick={async (evt) => {
                   const dofusDbId = domNode.attribs.dofusdbid
                   const resourceType = domNode.attribs.type
-                  
+
                   // open in browser, alt + click for DPLN and ctrl/cmd + click for DofusDB
                   if (evt.altKey) {
                     const urlToOpen = getDofusPourLesNoobsUrl(dofusDbId, resourceType)
@@ -255,7 +255,9 @@ export function GuideFrame({
                       openUrlInBrowser.mutate(urlToOpen)
                     }
                   } else if (isMacOs ? evt.metaKey : evt.ctrlKey) {
-                    openUrlInBrowser.mutate(`https://dofusdb.fr/${currentGuide.lang}/database/${resourceType === 'item' ? 'object' : resourceType}/${dofusDbId}`)
+                    openUrlInBrowser.mutate(
+                      `https://dofusdb.fr/${currentGuide.lang}/database/${resourceType === 'item' ? 'object' : resourceType}/${dofusDbId}`,
+                    )
                   } else {
                     await writeText(name)
                   }
@@ -264,20 +266,20 @@ export function GuideFrame({
                   switch (domNode.attribs.type) {
                     case 'dungeon':
                       return isMacOs
-                        ? t`Cliquez pour copier le nom du donjon. Cmd+clic pour ouvrir sur dofusdb`
+                        ? t`Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb`
                         : t`Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb`
                     case 'item':
                       return isMacOs
-                        ? t`Cliquez pour copier le nom de l'objet. Cmd+clic pour ouvrir sur dofusdb`
+                        ? t`Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb`
                         : t`Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb`
                     case 'monster':
                       return isMacOs
-                        ? t`Cliquez pour copier le nom du monstre. Cmd+clic pour ouvrir sur dofusdb`
+                        ? t`Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb`
                         : t`Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb`
                     case 'quest':
                       return isMacOs
-                        ? t`Cliquez pour copier le nom de la quête. Cmd+clic pour ouvrir sur dofusdb`
-                        : t`Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb`
+                        ? t`Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN`
+                        : t`Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN`
                   }
                 })()}
               >
