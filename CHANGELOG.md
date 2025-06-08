@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.12.1
+
+### Patch Changes
+
+- 5741d8f: Correction de certaines traductions.
+
 ## 1.12.0
 
 ### Minor Changes
