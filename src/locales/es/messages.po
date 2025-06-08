@@ -136,7 +136,7 @@ msgstr "Haz clic para copiar el nombre de la misión. ⌘+clic para abrir en dof
 
 #: src/components/guide-frame.tsx:282
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
-msgstr "Haz clic para copiar el nombre de la misión. ⌘+clic para abrir en dofusdb. Alt+clic para abrir en DPLN"
+msgstr "Haz clic para copiar el nombre de la misión. Ctrl+clic para abrir en dofusdb. Alt+clic para abrir en DPLN"
 
 #: src/components/guide-frame.tsx:269
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
