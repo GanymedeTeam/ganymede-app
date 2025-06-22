@@ -1,4 +1,4 @@
-import { GuideWithSteps, createTauRPCProxy } from '@/ipc/bindings.ts'
+import { createTauRPCProxy, GuideWithSteps } from '@/ipc/bindings.ts'
 
 export const taurpc = createTauRPCProxy()
 

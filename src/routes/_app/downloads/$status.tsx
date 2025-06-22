@@ -1,8 +1,16 @@
-import { BottomBar } from '@/components/bottom-bar.tsx'
-import { FlagPerLang } from '@/components/flag-per-lang.tsx'
-import { GenericLoader } from '@/components/generic-loader.tsx'
-import { GuideDownloadButton } from '@/components/guide-download-button.tsx'
-import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
+import { t } from '@lingui/core/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { useDebounce } from '@uidotdev/usehooks'
+import { ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { z } from 'zod'
+import { BottomBar } from '@/components/bottom_bar.tsx'
+import { FlagPerLang } from '@/components/flag_per_lang.tsx'
+import { GenericLoader } from '@/components/generic_loader.tsx'
+import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
+import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,10 +19,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog.tsx'
+} from '@/components/ui/alert_dialog.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
-import { ClearInput } from '@/components/ui/clear-input.tsx'
+import { ClearInput } from '@/components/ui/clear_input.tsx'
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
@@ -24,18 +32,10 @@ import { getProgress } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
 import { paginate } from '@/lib/search.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides-from-server.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
+import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides_from_server.query.ts'
 import { Page } from '@/routes/-page.tsx'
-import { t } from '@lingui/core/macro'
-import { Trans, useLingui } from '@lingui/react/macro'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, createFileRoute } from '@tanstack/react-router'
-import { useDebounce } from '@uidotdev/usehooks'
-import { ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
-import { useRef, useState } from 'react'
-import { z } from 'zod'
-import { BackButtonLink } from './-back-button-link.tsx'
+import { BackButtonLink } from './-back_button_link.tsx'
 
 const SearchZod = z.object({
   page: z.coerce.number(),

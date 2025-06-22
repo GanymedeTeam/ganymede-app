@@ -1,7 +1,7 @@
-import { TitleBar } from '@/components/title-bar.tsx'
-import { Toaster } from '@/components/ui/sonner.tsx'
 import { QueryClient } from '@tanstack/react-query'
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
+import { TitleBar } from '@/components/title_bar.tsx'
+import { Toaster } from '@/components/ui/sonner.tsx'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient

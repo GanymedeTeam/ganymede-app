@@ -1,3 +1,8 @@
+import { Trans, useLingui } from '@lingui/react/macro'
+import { rankItem } from '@tanstack/match-sorter-utils'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
+import { type MouseEvent, useState } from 'react'
 import { Button } from '@/components/ui/button.tsx'
 import {
   Command,
@@ -11,13 +16,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { useProfile } from '@/hooks/use_profile.ts'
 import { getProfileById } from '@/lib/profile.ts'
 import { cn } from '@/lib/utils.ts'
-import { useSetConf } from '@/mutations/set-conf.mutation.ts'
+import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { Trans, useLingui } from '@lingui/react/macro'
-import { rankItem } from '@tanstack/match-sorter-utils'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
-import { type MouseEvent, useState } from 'react'
 
 export function Profiles() {
   const { t } = useLingui()

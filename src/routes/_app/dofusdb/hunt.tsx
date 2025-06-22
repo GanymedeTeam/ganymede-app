@@ -1,7 +1,7 @@
-import { getLang } from '@/lib/conf.ts'
-import { confQuery } from '@/queries/conf.query.ts'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { getLang } from '@/lib/conf.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 
 export const Route = createFileRoute('/_app/dofusdb/hunt')({
   component: () => {

@@ -1,18 +1,19 @@
+import { Link, type LinkProps, useLinkProps } from '@tanstack/react-router'
 import { ChevronLeftIcon, ChevronRightIcon, EllipsisIcon } from 'lucide-react'
-import * as React from 'react'
-
-import { ButtonProps, buttonVariants } from '@/components/ui/button.tsx'
+import type * as React from 'react'
+import { type ButtonProps, buttonVariants } from '@/components/ui/button.tsx'
 import { cn } from '@/lib/utils.ts'
-import { Link, LinkProps, useLinkProps } from '@tanstack/react-router'
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
-  <nav
-    role="navigation"
-    aria-label="pagination"
-    className={cn('mx-auto flex w-full justify-center', className)}
-    {...props}
-  />
-)
+function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
+  return (
+    <nav
+      role="navigation"
+      aria-label="pagination"
+      className={cn('mx-auto flex w-full justify-center', className)}
+      {...props}
+    />
+  )
+}
 
 function PaginationContent({ className, ref, ...props }: React.ComponentPropsWithRef<'ul'>) {
   return <ul ref={ref} className={cn('flex flex-row items-center gap-1', className)} {...props} />

@@ -1,6 +1,6 @@
+import { fromPromise } from 'neverthrow'
 import { Conf } from '@/ipc/bindings.ts'
 import { taurpc } from '@/ipc/ipc.ts'
-import { fromPromise } from 'neverthrow'
 
 export class GetConfError extends Error {
   static from(error: unknown) {

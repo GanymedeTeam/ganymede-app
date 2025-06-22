@@ -1,7 +1,7 @@
-import { PageContent } from '@/components/page-content.tsx'
-import { PageTitle, PageTitleText } from '@/components/page-title.tsx'
-import { cn } from '@/lib/utils.ts'
 import { type PropsWithChildren, type ReactNode } from 'react'
+import { PageContent } from '@/components/page_content.tsx'
+import { PageTitle, PageTitleText } from '@/components/page_title.tsx'
+import { cn } from '@/lib/utils.ts'
 
 export function Page({
   title,

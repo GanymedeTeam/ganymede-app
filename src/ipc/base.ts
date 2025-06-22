@@ -1,5 +1,5 @@
-import { taurpc } from '@/ipc/ipc.ts'
 import { fromPromise } from 'neverthrow'
+import { taurpc } from '@/ipc/ipc.ts'
 
 export class OpenUrlInBrowserError extends Error {
   static from(error: unknown) {

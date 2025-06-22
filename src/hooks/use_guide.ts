@@ -1,5 +1,5 @@
-import { guidesQuery } from '@/queries/guides.query.ts'
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { guidesQuery } from '@/queries/guides.query.ts'
 
 export function useGuide(guideId: number) {
   const guides = useSuspenseQuery(guidesQuery())

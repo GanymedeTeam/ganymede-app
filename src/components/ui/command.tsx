@@ -1,7 +1,7 @@
-import { type DialogProps } from '@radix-ui/react-dialog'
+import type { DialogProps } from '@radix-ui/react-dialog'
 import { Command as CommandPrimitive } from 'cmdk'
 import { Search } from 'lucide-react'
-import * as React from 'react'
+import type * as React from 'react'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog.tsx'
 import { cn } from '@/lib/utils.ts'
@@ -92,7 +92,7 @@ function CommandItem({ className, ref, ...props }: React.ComponentPropsWithRef<t
   )
 }
 
-const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+function CommandShortcut({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
   return <span className={cn('ml-auto text-muted-foreground text-xs tracking-widest', className)} {...props} />
 }
 

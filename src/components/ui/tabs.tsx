@@ -1,5 +1,5 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import React from 'react'
+import type React from 'react'
 
 import { cn } from '@/lib/utils.ts'
 
@@ -35,15 +35,17 @@ function TabsTrigger({
   )
 }
 
-const TabsContent = ({ className, ref, ...props }: React.ComponentPropsWithRef<typeof TabsPrimitive.Content>) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn(
-      'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-      className,
-    )}
-    {...props}
-  />
-)
+function TabsContent({ className, ref, ...props }: React.ComponentPropsWithRef<typeof TabsPrimitive.Content>) {
+  return (
+    <TabsPrimitive.Content
+      ref={ref}
+      className={cn(
+        'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 
 export { Tabs, TabsList, TabsTrigger, TabsContent }

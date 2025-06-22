@@ -1,5 +1,5 @@
-import { isProduction } from '@/ipc/base.ts'
 import { queryOptions } from '@tanstack/react-query'
+import { isProduction } from '@/ipc/base.ts'
 
 export const isProductionQuery = queryOptions({
   queryKey: ['app', 'isProduction'],

@@ -1,14 +1,14 @@
-import { GenericLoader } from '@/components/generic-loader.tsx'
-import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { useSetConf } from '@/mutations/set-conf.mutation.ts'
-import { confQuery } from '@/queries/conf.query.ts'
-import { Page } from '@/routes/-page.tsx'
 import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { GenericLoader } from '@/components/generic_loader.tsx'
+import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { useSetConf } from '@/mutations/set_conf.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
+import { Page } from '@/routes/-page.tsx'
 
 export const Route = createFileRoute('/_app/notes/')({
   component: NotesPage,

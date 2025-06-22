@@ -1,5 +1,5 @@
-import { getFlatGuides, getGuides } from '@/ipc/guides.ts'
 import { queryOptions } from '@tanstack/react-query'
+import { getFlatGuides, getGuides } from '@/ipc/guides.ts'
 
 export function guidesQuery(folder = '') {
   return queryOptions({

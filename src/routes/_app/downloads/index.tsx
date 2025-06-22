@@ -1,11 +1,11 @@
-import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
+import { Trans, useLingui } from '@lingui/react/macro'
+import { AnyRouter, createFileRoute, Link, LinkComponentProps, type RegisteredRouter } from '@tanstack/react-router'
+import { BookOpenCheckIcon, BookOpenTextIcon, NotebookPenIcon, TrophyIcon } from 'lucide-react'
+import { type PropsWithChildren } from 'react'
+import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { cn } from '@/lib/utils.ts'
 import { Page } from '@/routes/-page.tsx'
-import { Trans, useLingui } from '@lingui/react/macro'
-import { AnyRouter, Link, LinkComponentProps, type RegisteredRouter, createFileRoute } from '@tanstack/react-router'
-import { BookOpenCheckIcon, BookOpenTextIcon, NotebookPenIcon, TrophyIcon } from 'lucide-react'
-import { type PropsWithChildren } from 'react'
 
 export const Route = createFileRoute('/_app/downloads/')({
   component: DownloadIndex,

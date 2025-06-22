@@ -1,4 +1,5 @@
 import mappingData from '../assets/mapping.json'
+
 // To refresh the mapping file: https://github.com/AntoninHuaut/DofusNoobsIdentifier
 
 interface MappingData {

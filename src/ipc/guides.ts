@@ -1,7 +1,7 @@
+import { error } from '@tauri-apps/plugin-log'
+import { fromPromise, ResultAsync } from 'neverthrow'
 import { GuideOrFolderToDelete, Status } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder, taurpc } from '@/ipc/ipc.ts'
-import { error } from '@tauri-apps/plugin-log'
-import { ResultAsync, fromPromise } from 'neverthrow'
 
 export class GetGuidesError extends Error {
   static from(error: unknown) {

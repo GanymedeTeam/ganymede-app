@@ -1,47 +1,6 @@
-import { FlagPerLang } from '@/components/flag-per-lang.tsx'
-import { GenericLoader } from '@/components/generic-loader.tsx'
-import { GuideDownloadButton } from '@/components/guide-download-button.tsx'
-import { PageScrollableContent } from '@/components/page-scrollable-content.tsx'
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { Card } from '@/components/ui/card.tsx'
-import { ClearInput } from '@/components/ui/clear-input.tsx'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx'
-import { ScrollArea } from '@/components/ui/scroll-area.tsx'
-import { useInterval } from '@/hooks/use_interval.ts'
-import { useProfile } from '@/hooks/use_profile.ts'
-import { GuideOrFolderToDelete, GuidesOrFolder } from '@/ipc/bindings.ts'
-import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
-import { clamp } from '@/lib/clamp.ts'
-import { getStepOr } from '@/lib/progress.ts'
-import { rankList } from '@/lib/rank.ts'
-import { OpenedGuideZod } from '@/lib/tabs.ts'
-import { cn } from '@/lib/utils.ts'
-import { useDeleteGuidesInSystem } from '@/mutations/delete_guides_in_system.mutation.ts'
-import { useOpenGuidesFolder } from '@/mutations/open-guides-folder.mutation.ts'
-import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
-import { confQuery } from '@/queries/conf.query.ts'
-import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
-import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query.ts'
-import { Page } from '@/routes/-page.tsx'
-import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide-update-all-result-dialog.tsx'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ChevronRightIcon,
   CircleCheckIcon,
@@ -57,7 +16,48 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { BackButtonLink } from '../downloads/-back-button-link.tsx'
+import { FlagPerLang } from '@/components/flag_per_lang.tsx'
+import { GenericLoader } from '@/components/generic_loader.tsx'
+import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
+import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert_dialog.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { Card } from '@/components/ui/card.tsx'
+import { ClearInput } from '@/components/ui/clear_input.tsx'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown_menu.tsx'
+import { ScrollArea } from '@/components/ui/scroll_area.tsx'
+import { useInterval } from '@/hooks/use_interval.ts'
+import { useProfile } from '@/hooks/use_profile.ts'
+import { GuideOrFolderToDelete, GuidesOrFolder } from '@/ipc/bindings.ts'
+import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
+import { clamp } from '@/lib/clamp.ts'
+import { getStepOr } from '@/lib/progress.ts'
+import { rankList } from '@/lib/rank.ts'
+import { OpenedGuideZod } from '@/lib/tabs.ts'
+import { cn } from '@/lib/utils.ts'
+import { useDeleteGuidesInSystem } from '@/mutations/delete_guides_in_system.mutation.ts'
+import { useOpenGuidesFolder } from '@/mutations/open_guides_folder.mutation.ts'
+import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
+import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
+import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query.ts'
+import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide_update_all_result_dialog.tsx'
+import { Page } from '@/routes/-page.tsx'
+import { BackButtonLink } from '../downloads/-back_button_link.tsx'
 
 const Search = z.object({
   path: z.string().default(''),

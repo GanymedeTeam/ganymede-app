@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/react/macro'
-import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 import { toast } from 'sonner'
 

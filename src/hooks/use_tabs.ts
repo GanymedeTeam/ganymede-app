@@ -1,6 +1,6 @@
-import { OpenedGuide } from '@/lib/tabs.ts'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { OpenedGuide } from '@/lib/tabs.ts'
 
 type State = {
   tabs: OpenedGuide[]

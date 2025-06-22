@@ -1,6 +1,6 @@
+import { fromPromise } from 'neverthrow'
 import { ReportPayload } from '@/ipc/bindings.ts'
 import { taurpc } from '@/ipc/ipc.ts'
-import { fromPromise } from 'neverthrow'
 
 export class ReportError extends Error {
   public status: number

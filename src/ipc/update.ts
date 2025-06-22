@@ -1,5 +1,5 @@
-import { taurpc } from '@/ipc/ipc.ts'
 import { fromPromise } from 'neverthrow'
+import { taurpc } from '@/ipc/ipc.ts'
 
 class StartUpdateError extends Error {
   static from(err: unknown) {

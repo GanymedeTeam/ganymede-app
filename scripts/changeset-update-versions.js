@@ -1,6 +1,6 @@
-import * as url from 'node:url'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
+import * as url from 'node:url'
 import packageJson from '../package.json' with { type: 'json' }
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -15,7 +15,10 @@ let tauriConfContent = await fs.readFile(tauriConfPath, 'utf-8')
 console.log('Updating versions in Cargo.toml, Cargo.lock and tauri.conf.json')
 
 cargoContent = cargoContent.replace(/version = (.*)/, `version = "${packageJson.version}"`)
-cargoLockContent = cargoLockContent.replace(/\[\[package]]\s*name\s=\s"ganymede"\s*version\s=\s"(.*)"/g, `[[package]]\nname = "ganymede"\nversion = "${packageJson.version}"`)
+cargoLockContent = cargoLockContent.replace(
+  /\[\[package]]\s*name\s=\s"ganymede"\s*version\s=\s"(.*)"/g,
+  `[[package]]\nname = "ganymede"\nversion = "${packageJson.version}"`,
+)
 tauriConfContent = tauriConfContent.replace(/"version": "(.*)"/, `"version": "${packageJson.version}"`)
 
 await fs.writeFile(cargoTomlPath, cargoContent, 'utf-8')

@@ -1,6 +1,6 @@
+import { useMutation } from '@tanstack/react-query'
 import { GuideOrFolderToDelete } from '@/ipc/bindings.ts'
 import { deleteGuidesFromSystem } from '@/ipc/guides.ts'
-import { useMutation } from '@tanstack/react-query'
 
 export function useDeleteGuidesInSystem() {
   return useMutation({

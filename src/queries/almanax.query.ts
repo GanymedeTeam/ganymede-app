@@ -1,7 +1,7 @@
-import { getAlmanax } from '@/ipc/almanax.ts'
-import { ConfLang } from '@/ipc/bindings.ts'
 import { queryOptions } from '@tanstack/react-query'
 import { type Dayjs } from 'dayjs'
+import { getAlmanax } from '@/ipc/almanax.ts'
+import { ConfLang } from '@/ipc/bindings.ts'
 
 export const almanaxQuery = (lang: ConfLang, level: number, date: Dayjs) => {
   return queryOptions({
