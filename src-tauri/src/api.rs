@@ -6,8 +6,8 @@ use tauri::AppHandle;
 use log::info;
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
-pub const GANYMEDE_API: &str = "https://ganymede-dofus.com/api";
-pub const GANYMEDE_API_V2: &str = "https://ganymede-dofus.com/api/v2";
+pub const GANYMEDE_API: &str = "https://ganymede-app.com/api";
+pub const GANYMEDE_API_V2: &str = "https://ganymede-app.com/api/v2";
 
 pub const API_KEY_HEADER: &str = "X-API-KEY";
 pub const API_KEY: &str = env!("GANYMEDE_API_KEY");

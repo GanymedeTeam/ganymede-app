@@ -18,6 +18,7 @@ import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Skeleton } from '@/components/ui/skeleton.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useGuideOrUndefined } from '@/hooks/use_guide.ts'
+import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { rankList } from '@/lib/rank.ts'
 import { summaryQuery } from '@/queries/summary.query.ts'
 
@@ -158,7 +159,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
               {filteredQuests.map((quest) => (
                 <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
                   <div className="flex items-center gap-1">
-                    <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
+                    <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} className="size-6" />
                     <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
                   </div>
                   <span className="flex flex-col gap-1">

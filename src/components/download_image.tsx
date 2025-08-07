@@ -4,12 +4,13 @@ import { fromPromise } from 'neverthrow'
 import { ComponentProps } from 'react'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { taurpc } from '@/ipc/ipc.ts'
+import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { cn } from '@/lib/utils.ts'
 
 class FetchImageError extends Error {}
 
 export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'srcset'> & {}) {
-  const enabled = !!src && src.startsWith('http') && (src.includes('dofusdb.fr') || src.includes('ganymede-dofus.com'))
+  const enabled = !!src && src.startsWith('http') && (src.includes('dofusdb.fr') || src.includes(GANYMEDE_HOST))
   const image = useQuery({
     queryKey: ['image', src],
     queryFn: async () => {

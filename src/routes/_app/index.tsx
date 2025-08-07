@@ -7,6 +7,7 @@ import { DiscordIcon } from '@/components/icons/discord_icon.tsx'
 import { TwitterIcon } from '@/components/icons/twitter_icon.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { PageTitleExtra } from '@/components/page_title.tsx'
+import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { isProductionQuery } from '@/queries/is_production.query.ts'
 import { versionQuery } from '@/queries/version.query.ts'
 import { Page } from '@/routes/-page.tsx'
@@ -75,7 +76,7 @@ function Index() {
                 <TwitterIcon className="size-4" />
               </a>
               <a
-                href="https://ganymede-dofus.com"
+                href={`https://${GANYMEDE_HOST}`}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="flex size-9 items-center justify-center"

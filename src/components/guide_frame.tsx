@@ -8,6 +8,7 @@ import { Fragment, ReactNode } from 'react'
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
+import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { copyPosition } from '@/lib/copy_position.ts'
 import { getGuideById } from '@/lib/guide.ts'
@@ -316,7 +317,7 @@ export function GuideFrame({
                   {status === 'setup' && <PackageSearchIcon className="size-4 min-h-4 min-w-4 text-orange-400" />}
                   {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4 text-red-500" />}
                   {status === 'end' && <BookCheckIcon className="size-4 min-h-4 min-w-4 text-green-400" />}
-                  <img src="https://ganymede-dofus.com/images/icon_quest.png" className="size-6" />
+                  <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} className="size-6" />
                   <span className="text-balance text-base">{questName}</span>
                 </TooltipContent>
               </Tooltip>

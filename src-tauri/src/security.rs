@@ -1,9 +1,10 @@
-const VALID_LINKS: [&'static str; 28] = [
+const VALID_LINKS: [&'static str; 29] = [
     "https://www.dofuspourlesnoobs.com",
     "https://dofuspourlesnoobs.com",
     "https://huzounet.fr",
     "https://www.dofusbook.net",
     "https://dofusbook.net",
+    "https://ganymede-app.com",
     "https://ganymede-dofus.com",
     "https://dofus-portals.fr",
     "https://www.youtube.com",

@@ -4,7 +4,7 @@ version = "1.12.1"
 description = "Dofus Ganymede app."
 authors = ["Kiyozz"]
 edition = "2021"
-links = "https://ganymede-dofus.com"
+links = "https://ganymede-app.com"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
