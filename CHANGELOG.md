@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.12.2
+
+### Patch Changes
+
+- 7d9265d: Changement de nom de domaine à cause de certains blocages de FAI/serveur DNS.
+
 ## 1.12.1
 
 ### Patch Changes
