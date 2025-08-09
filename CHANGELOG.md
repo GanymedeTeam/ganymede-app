@@ -1,5 +1,12 @@
 # ganymede-app
 
+## 1.12.3
+
+### Patch Changes
+
+- 54b4037: Il est désormais re-possible de report un problème dans un guide (un bug UI l'empêchait)
+- 54b4037: Correction de la pagination dans la page téléchargement de guides.
+
 ## 1.12.2
 
 ### Patch Changes

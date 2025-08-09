@@ -1532,7 +1532,7 @@ dependencies = [
 
 [[package]]
 name = "ganymede"
-version = "1.12.2"
+version = "1.12.3"
 dependencies = [
  "chrono",
  "chrono-tz",
