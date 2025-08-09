@@ -23,7 +23,13 @@ import {
 import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
-import { Pagination, PaginationContent, PaginationItem, PaginationLink } from '@/components/ui/pagination.tsx'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
 import { getLang } from '@/lib/conf.ts'
@@ -99,6 +105,33 @@ function titleByStatus(status: string) {
   }
 }
 
+function getPaginationRange(current: number, total: number, delta = 2) {
+  const range: (number | '...')[] = []
+
+  const left = Math.max(2, current - delta)
+  const right = Math.min(total - 1, current + delta)
+
+  range.push(1)
+
+  if (left > 2) {
+    range.push('...')
+  }
+
+  for (let i = left; i <= right; i++) {
+    range.push(i)
+  }
+
+  if (right < total - 1) {
+    range.push('...')
+  }
+
+  if (total > 1) {
+    range.push(total)
+  }
+
+  return range
+}
+
 function DownloadGuidePage() {
   const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
@@ -139,6 +172,8 @@ function DownloadGuidePage() {
 
   const hasPagination = term === '' && guides.data.length !== 0 && guides.data.length > itemsPerPage
   const intl = new Intl.NumberFormat(getLang(conf.data.lang).toLowerCase(), {})
+
+  const pages = getPaginationRange(page, nextPages, 3)
 
   return (
     <Page key={`download-${status}`} title={title} backButton={<BackButtonLink to="/downloads" />}>
@@ -248,17 +283,21 @@ function DownloadGuidePage() {
           <BottomBar asChild>
             <Pagination>
               <PaginationContent>
-                {Array.from({ length: nextPages }).map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
-                      size="icon"
-                      from={Route.fullPath}
-                      to="."
-                      params={{ status }}
-                      search={{ page: index + 1 }}
-                    >
-                      {index + 1}
-                    </PaginationLink>
+                {pages.map((paginationPage, idx) => (
+                  <PaginationItem key={idx}>
+                    {paginationPage === '...' ? (
+                      <PaginationEllipsis />
+                    ) : (
+                      <PaginationLink
+                        size="icon"
+                        from={Route.fullPath}
+                        to="."
+                        params={{ status }}
+                        search={{ page: paginationPage }}
+                      >
+                        {paginationPage}
+                      </PaginationLink>
+                    )}
                   </PaginationItem>
                 ))}
               </PaginationContent>
