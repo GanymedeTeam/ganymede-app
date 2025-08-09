@@ -8,234 +8,87 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppOldVersionRouteImport } from './routes/app-old-version'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
+import { Route as AppAutoPilotRouteImport } from './routes/_app/auto-pilot'
+import { Route as AppNotesIndexRouteImport } from './routes/_app/notes.index'
+import { Route as AppGuidesIndexRouteImport } from './routes/_app/guides/index'
+import { Route as AppDownloadsIndexRouteImport } from './routes/_app/downloads/index'
+import { Route as AppNotesCreateRouteImport } from './routes/_app/notes.create'
+import { Route as AppGuidesIdRouteImport } from './routes/_app/guides/$id'
+import { Route as AppDownloadsStatusRouteImport } from './routes/_app/downloads/$status'
+import { Route as AppDofusdbMapRouteImport } from './routes/_app/dofusdb/map'
+import { Route as AppDofusdbHuntRouteImport } from './routes/_app/dofusdb/hunt'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AppOldVersionImport } from './routes/app-old-version'
-import { Route as AppImport } from './routes/_app'
-import { Route as AppIndexImport } from './routes/_app/index'
-import { Route as AppSettingsImport } from './routes/_app/settings'
-import { Route as AppAutoPilotImport } from './routes/_app/auto-pilot'
-import { Route as AppNotesIndexImport } from './routes/_app/notes.index'
-import { Route as AppGuidesIndexImport } from './routes/_app/guides/index'
-import { Route as AppDownloadsIndexImport } from './routes/_app/downloads/index'
-import { Route as AppNotesCreateImport } from './routes/_app/notes.create'
-import { Route as AppGuidesIdImport } from './routes/_app/guides/$id'
-import { Route as AppDownloadsStatusImport } from './routes/_app/downloads/$status'
-import { Route as AppDofusdbMapImport } from './routes/_app/dofusdb/map'
-import { Route as AppDofusdbHuntImport } from './routes/_app/dofusdb/hunt'
-
-// Create/Update Routes
-
-const AppOldVersionRoute = AppOldVersionImport.update({
+const AppOldVersionRoute = AppOldVersionRouteImport.update({
   id: '/app-old-version',
   path: '/app-old-version',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AppRoute = AppImport.update({
+const AppRoute = AppRouteImport.update({
   id: '/_app',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AppIndexRoute = AppIndexImport.update({
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppSettingsRoute = AppSettingsImport.update({
+const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppAutoPilotRoute = AppAutoPilotImport.update({
+const AppAutoPilotRoute = AppAutoPilotRouteImport.update({
   id: '/auto-pilot',
   path: '/auto-pilot',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppNotesIndexRoute = AppNotesIndexImport.update({
+const AppNotesIndexRoute = AppNotesIndexRouteImport.update({
   id: '/notes/',
   path: '/notes/',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppGuidesIndexRoute = AppGuidesIndexImport.update({
+const AppGuidesIndexRoute = AppGuidesIndexRouteImport.update({
   id: '/guides/',
   path: '/guides/',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppDownloadsIndexRoute = AppDownloadsIndexImport.update({
+const AppDownloadsIndexRoute = AppDownloadsIndexRouteImport.update({
   id: '/downloads/',
   path: '/downloads/',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppNotesCreateRoute = AppNotesCreateImport.update({
+const AppNotesCreateRoute = AppNotesCreateRouteImport.update({
   id: '/notes/create',
   path: '/notes/create',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppGuidesIdRoute = AppGuidesIdImport.update({
+const AppGuidesIdRoute = AppGuidesIdRouteImport.update({
   id: '/guides/$id',
   path: '/guides/$id',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppDownloadsStatusRoute = AppDownloadsStatusImport.update({
+const AppDownloadsStatusRoute = AppDownloadsStatusRouteImport.update({
   id: '/downloads/$status',
   path: '/downloads/$status',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppDofusdbMapRoute = AppDofusdbMapImport.update({
+const AppDofusdbMapRoute = AppDofusdbMapRouteImport.update({
   id: '/dofusdb/map',
   path: '/dofusdb/map',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AppDofusdbHuntRoute = AppDofusdbHuntImport.update({
+const AppDofusdbHuntRoute = AppDofusdbHuntRouteImport.update({
   id: '/dofusdb/hunt',
   path: '/dofusdb/hunt',
   getParentRoute: () => AppRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AppImport
-      parentRoute: typeof rootRoute
-    }
-    '/app-old-version': {
-      id: '/app-old-version'
-      path: '/app-old-version'
-      fullPath: '/app-old-version'
-      preLoaderRoute: typeof AppOldVersionImport
-      parentRoute: typeof rootRoute
-    }
-    '/_app/auto-pilot': {
-      id: '/_app/auto-pilot'
-      path: '/auto-pilot'
-      fullPath: '/auto-pilot'
-      preLoaderRoute: typeof AppAutoPilotImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/settings': {
-      id: '/_app/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AppSettingsImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/': {
-      id: '/_app/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AppIndexImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/dofusdb/hunt': {
-      id: '/_app/dofusdb/hunt'
-      path: '/dofusdb/hunt'
-      fullPath: '/dofusdb/hunt'
-      preLoaderRoute: typeof AppDofusdbHuntImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/dofusdb/map': {
-      id: '/_app/dofusdb/map'
-      path: '/dofusdb/map'
-      fullPath: '/dofusdb/map'
-      preLoaderRoute: typeof AppDofusdbMapImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/downloads/$status': {
-      id: '/_app/downloads/$status'
-      path: '/downloads/$status'
-      fullPath: '/downloads/$status'
-      preLoaderRoute: typeof AppDownloadsStatusImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/guides/$id': {
-      id: '/_app/guides/$id'
-      path: '/guides/$id'
-      fullPath: '/guides/$id'
-      preLoaderRoute: typeof AppGuidesIdImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/notes/create': {
-      id: '/_app/notes/create'
-      path: '/notes/create'
-      fullPath: '/notes/create'
-      preLoaderRoute: typeof AppNotesCreateImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/downloads/': {
-      id: '/_app/downloads/'
-      path: '/downloads'
-      fullPath: '/downloads'
-      preLoaderRoute: typeof AppDownloadsIndexImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/guides/': {
-      id: '/_app/guides/'
-      path: '/guides'
-      fullPath: '/guides'
-      preLoaderRoute: typeof AppGuidesIndexImport
-      parentRoute: typeof AppImport
-    }
-    '/_app/notes/': {
-      id: '/_app/notes/'
-      path: '/notes'
-      fullPath: '/notes'
-      preLoaderRoute: typeof AppNotesIndexImport
-      parentRoute: typeof AppImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface AppRouteChildren {
-  AppAutoPilotRoute: typeof AppAutoPilotRoute
-  AppSettingsRoute: typeof AppSettingsRoute
-  AppIndexRoute: typeof AppIndexRoute
-  AppDofusdbHuntRoute: typeof AppDofusdbHuntRoute
-  AppDofusdbMapRoute: typeof AppDofusdbMapRoute
-  AppDownloadsStatusRoute: typeof AppDownloadsStatusRoute
-  AppGuidesIdRoute: typeof AppGuidesIdRoute
-  AppNotesCreateRoute: typeof AppNotesCreateRoute
-  AppDownloadsIndexRoute: typeof AppDownloadsIndexRoute
-  AppGuidesIndexRoute: typeof AppGuidesIndexRoute
-  AppNotesIndexRoute: typeof AppNotesIndexRoute
-}
-
-const AppRouteChildren: AppRouteChildren = {
-  AppAutoPilotRoute: AppAutoPilotRoute,
-  AppSettingsRoute: AppSettingsRoute,
-  AppIndexRoute: AppIndexRoute,
-  AppDofusdbHuntRoute: AppDofusdbHuntRoute,
-  AppDofusdbMapRoute: AppDofusdbMapRoute,
-  AppDownloadsStatusRoute: AppDownloadsStatusRoute,
-  AppGuidesIdRoute: AppGuidesIdRoute,
-  AppNotesCreateRoute: AppNotesCreateRoute,
-  AppDownloadsIndexRoute: AppDownloadsIndexRoute,
-  AppGuidesIndexRoute: AppGuidesIndexRoute,
-  AppNotesIndexRoute: AppNotesIndexRoute,
-}
-
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
-
 export interface FileRoutesByFullPath {
-  '': typeof AppRouteWithChildren
   '/app-old-version': typeof AppOldVersionRoute
   '/auto-pilot': typeof AppAutoPilotRoute
   '/settings': typeof AppSettingsRoute
@@ -249,7 +102,6 @@ export interface FileRoutesByFullPath {
   '/guides': typeof AppGuidesIndexRoute
   '/notes': typeof AppNotesIndexRoute
 }
-
 export interface FileRoutesByTo {
   '/app-old-version': typeof AppOldVersionRoute
   '/auto-pilot': typeof AppAutoPilotRoute
@@ -264,9 +116,8 @@ export interface FileRoutesByTo {
   '/guides': typeof AppGuidesIndexRoute
   '/notes': typeof AppNotesIndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/app-old-version': typeof AppOldVersionRoute
   '/_app/auto-pilot': typeof AppAutoPilotRoute
@@ -281,11 +132,9 @@ export interface FileRoutesById {
   '/_app/guides/': typeof AppGuidesIndexRoute
   '/_app/notes/': typeof AppNotesIndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
     | '/app-old-version'
     | '/auto-pilot'
     | '/settings'
@@ -329,92 +178,141 @@ export interface FileRouteTypes {
     | '/_app/notes/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   AppOldVersionRoute: typeof AppOldVersionRoute
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/app-old-version': {
+      id: '/app-old-version'
+      path: '/app-old-version'
+      fullPath: '/app-old-version'
+      preLoaderRoute: typeof AppOldVersionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/auto-pilot': {
+      id: '/_app/auto-pilot'
+      path: '/auto-pilot'
+      fullPath: '/auto-pilot'
+      preLoaderRoute: typeof AppAutoPilotRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notes/': {
+      id: '/_app/notes/'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AppNotesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guides/': {
+      id: '/_app/guides/'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof AppGuidesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/downloads/': {
+      id: '/_app/downloads/'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof AppDownloadsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notes/create': {
+      id: '/_app/notes/create'
+      path: '/notes/create'
+      fullPath: '/notes/create'
+      preLoaderRoute: typeof AppNotesCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/guides/$id': {
+      id: '/_app/guides/$id'
+      path: '/guides/$id'
+      fullPath: '/guides/$id'
+      preLoaderRoute: typeof AppGuidesIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/downloads/$status': {
+      id: '/_app/downloads/$status'
+      path: '/downloads/$status'
+      fullPath: '/downloads/$status'
+      preLoaderRoute: typeof AppDownloadsStatusRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dofusdb/map': {
+      id: '/_app/dofusdb/map'
+      path: '/dofusdb/map'
+      fullPath: '/dofusdb/map'
+      preLoaderRoute: typeof AppDofusdbMapRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dofusdb/hunt': {
+      id: '/_app/dofusdb/hunt'
+      path: '/dofusdb/hunt'
+      fullPath: '/dofusdb/hunt'
+      preLoaderRoute: typeof AppDofusdbHuntRouteImport
+      parentRoute: typeof AppRoute
+    }
+  }
+}
+
+interface AppRouteChildren {
+  AppAutoPilotRoute: typeof AppAutoPilotRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppDofusdbHuntRoute: typeof AppDofusdbHuntRoute
+  AppDofusdbMapRoute: typeof AppDofusdbMapRoute
+  AppDownloadsStatusRoute: typeof AppDownloadsStatusRoute
+  AppGuidesIdRoute: typeof AppGuidesIdRoute
+  AppNotesCreateRoute: typeof AppNotesCreateRoute
+  AppDownloadsIndexRoute: typeof AppDownloadsIndexRoute
+  AppGuidesIndexRoute: typeof AppGuidesIndexRoute
+  AppNotesIndexRoute: typeof AppNotesIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAutoPilotRoute: AppAutoPilotRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppDofusdbHuntRoute: AppDofusdbHuntRoute,
+  AppDofusdbMapRoute: AppDofusdbMapRoute,
+  AppDownloadsStatusRoute: AppDownloadsStatusRoute,
+  AppGuidesIdRoute: AppGuidesIdRoute,
+  AppNotesCreateRoute: AppNotesCreateRoute,
+  AppDownloadsIndexRoute: AppDownloadsIndexRoute,
+  AppGuidesIndexRoute: AppGuidesIndexRoute,
+  AppNotesIndexRoute: AppNotesIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AppOldVersionRoute: AppOldVersionRoute,
 }
-
-export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_app",
-        "/app-old-version"
-      ]
-    },
-    "/_app": {
-      "filePath": "_app.tsx",
-      "children": [
-        "/_app/auto-pilot",
-        "/_app/settings",
-        "/_app/",
-        "/_app/dofusdb/hunt",
-        "/_app/dofusdb/map",
-        "/_app/downloads/$status",
-        "/_app/guides/$id",
-        "/_app/notes/create",
-        "/_app/downloads/",
-        "/_app/guides/",
-        "/_app/notes/"
-      ]
-    },
-    "/app-old-version": {
-      "filePath": "app-old-version.tsx"
-    },
-    "/_app/auto-pilot": {
-      "filePath": "_app/auto-pilot.tsx",
-      "parent": "/_app"
-    },
-    "/_app/settings": {
-      "filePath": "_app/settings.tsx",
-      "parent": "/_app"
-    },
-    "/_app/": {
-      "filePath": "_app/index.tsx",
-      "parent": "/_app"
-    },
-    "/_app/dofusdb/hunt": {
-      "filePath": "_app/dofusdb/hunt.tsx",
-      "parent": "/_app"
-    },
-    "/_app/dofusdb/map": {
-      "filePath": "_app/dofusdb/map.tsx",
-      "parent": "/_app"
-    },
-    "/_app/downloads/$status": {
-      "filePath": "_app/downloads/$status.tsx",
-      "parent": "/_app"
-    },
-    "/_app/guides/$id": {
-      "filePath": "_app/guides/$id.tsx",
-      "parent": "/_app"
-    },
-    "/_app/notes/create": {
-      "filePath": "_app/notes.create.tsx",
-      "parent": "/_app"
-    },
-    "/_app/downloads/": {
-      "filePath": "_app/downloads/index.tsx",
-      "parent": "/_app"
-    },
-    "/_app/guides/": {
-      "filePath": "_app/guides/index.tsx",
-      "parent": "/_app"
-    },
-    "/_app/notes/": {
-      "filePath": "_app/notes.index.tsx",
-      "parent": "/_app"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
+export const routeTree = rootRouteImport
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
