@@ -131,7 +131,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                     <Trans>Mon guide est à jour, envoyer le message</Trans>
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
+                <AlertDialogContent className="slot-[overlay]:z-70 z-60 flex h-full max-h-[90vh] flex-col">
                   <AlertDialogHeader>
                     <AlertDialogTitle>
                       <Trans>Confirmer l'envoi du rapport</Trans>
