@@ -146,7 +146,9 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
               />
               <div className="ml-auto flex">
                 <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />
-                <ReportDialog guideId={guide.id} stepIndex={index} />
+                {(guide.status === 'gp' || guide.status === 'certified') && (
+                  <ReportDialog guideId={guide.id} stepIndex={index} />
+                )}
               </div>
             </>
           )}
