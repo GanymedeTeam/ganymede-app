@@ -1,0 +1,14 @@
+{
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:tauri.app)",
+      "WebFetch(domain:github.com)"
+    ],
+    "deny": [
+      "Bash(pnpm changeset:version)",
+      "Read(./.env.*)",
+      "Read(./src-tauri/target)"
+    ]
+  }
+}

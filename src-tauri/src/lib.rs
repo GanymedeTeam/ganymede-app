@@ -1,6 +1,7 @@
 use crate::almanax::{AlmanaxApi, AlmanaxApiImpl};
 use crate::api::{Api, ApiImpl};
 use crate::conf::{ConfApi, ConfApiImpl};
+use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
 use crate::first_start::FirstStartExt;
 use crate::guides::{download_default_guide, GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
@@ -19,6 +20,7 @@ use taurpc::Router;
 mod almanax;
 mod api;
 mod conf;
+mod deep_link;
 mod event;
 mod first_start;
 mod guides;
@@ -142,7 +144,8 @@ pub fn run() {
         .merge(ImageApiImpl.into_handler())
         .merge(UpdateApiImpl.into_handler())
         .merge(ConfApiImpl.into_handler())
-        .merge(ReportApiImpl.into_handler());
+        .merge(ReportApiImpl.into_handler())
+        .merge(DeepLinkApiImpl.into_handler());
 
     sentry::add_breadcrumb(sentry::Breadcrumb {
         category: Some("sentry.transaction".into()),
@@ -238,6 +241,24 @@ pub fn run() {
             use tauri_plugin_deep_link::DeepLinkExt;
 
             app.deep_link().register_all()?;
+        }
+
+        // Setup deep link handler
+        {
+            use tauri_plugin_deep_link::DeepLinkExt;
+            let app_handle = app.handle().clone();
+
+            app.deep_link().on_open_url(move |event| {
+                for url in event.urls() {
+                    info!("[Lib] Deep link received: {}", url);
+                    if let Err(err) =
+                        crate::deep_link::handle_deep_link_url(app_handle.clone(), &url)
+                    {
+                        error!("[Lib] Failed to handle deep link URL: {:?}", err);
+                        sentry::capture_error(&err);
+                    }
+                }
+            });
         }
 
         Ok(())
