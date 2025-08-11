@@ -393,6 +393,8 @@ pub trait GuidesApi {
     ) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
     async fn copy_current_guide_step();
+    #[taurpc(alias = "guideExists")]
+    async fn guide_exists(app_handle: AppHandle, guide_id: u32) -> Result<bool, Error>;
 }
 
 #[derive(Clone)]
@@ -708,6 +710,16 @@ impl GuidesApi for GuidesApiImpl {
         }
 
         Ok(())
+    }
+
+    async fn guide_exists(self, app_handle: AppHandle, guide_id: u32) -> Result<bool, Error> {
+        debug!("[Guides] Checking if guide {} exists", guide_id);
+
+        let guides = self.get_flat_guides(app_handle, "".into()).await?;
+        let exists = guides.iter().any(|g| g.id == guide_id);
+
+        debug!("[Guides] Guide {} exists: {}", guide_id, exists);
+        Ok(exists)
     }
 }
 

@@ -34,12 +34,14 @@ msgstr "Afficher les guides terminés"
 msgid "Ajouter"
 msgstr "Ajouter"
 
+#: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/guides/-report_dialog.tsx:160
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
 msgid "Annuler"
 msgstr "Annuler"
 
+#: src/components/deep_link_guide_download_dialog.tsx:38
 #: src/routes/_app/downloads/$status.tsx:184
 msgid "Attention"
 msgstr "Attention"
@@ -167,6 +169,10 @@ msgstr "Confirmer l'envoi du rapport"
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 
+#: src/components/deep_link_guide_download_dialog.tsx:67
+msgid "Continuer"
+msgstr "Continuer"
+
 #: src/routes/_app/settings.tsx:132
 msgid "Copie d'autopilote"
 msgstr "Copie d'autopilote"
@@ -264,9 +270,17 @@ msgstr "Erreur lors de la copie du numéro de l'étape ({0})."
 msgid "Erreur lors de la suppression des guides"
 msgstr "Erreur lors de la suppression des guides"
 
+#: src/hooks/use_deep_link_guide_handler.ts:77
+msgid "Erreur lors de la vérification du guide"
+msgstr "Erreur lors de la vérification du guide"
+
 #: src/routes/_app/guides/index.tsx:222
 msgid "Erreur lors du rafraichissement des guides téléchargés"
 msgstr "Erreur lors du rafraichissement des guides téléchargés"
+
+#: src/hooks/use_deep_link_guide_handler.ts:100
+msgid "Erreur lors du téléchargement du guide"
+msgstr "Erreur lors du téléchargement du guide"
 
 #: src/components/title_bar.tsx:137
 #: src/routes/_app/guides/-guide_update_all_result_dialog.tsx:75
@@ -284,6 +298,10 @@ msgstr "Ganymède - Non affilié à Ankama Games"
 #: src/routes/_app/settings.tsx:122
 msgid "Grande"
 msgstr "Grande"
+
+#: src/hooks/use_deep_link_guide_handler.ts:93
+msgid "Guide téléchargé avec succès"
+msgstr "Guide téléchargé avec succès"
 
 #: src/components/title_bar.tsx:53
 #: src/routes/_app/downloads/$status.tsx:104
@@ -364,6 +382,17 @@ msgstr "Je confirme que mon guide est à jour."
 #: src/components/select_lang.tsx:10
 msgid "Langue"
 msgstr "Langue"
+
+#: src/components/deep_link_guide_download_dialog.tsx:49
+msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
+msgstr "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
+
+#. placeholder {0}: pendingStep + 1
+#. placeholder {1}: progressionStep + 1
+#. placeholder {2}: profile.name
+#: src/components/deep_link_guide_download_dialog.tsx:42
+msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
+msgstr "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 
 #. placeholder {0}: index + 1
 #: src/routes/_app/guides/-guide_page.tsx:121
@@ -548,10 +577,19 @@ msgstr "Supprimer de la liste"
 msgid "Taille de texte des guides"
 msgstr "Taille de texte des guides"
 
+#: src/components/deep_link_guide_download_dialog.tsx:65
+msgid "Téléchargement..."
+msgstr "Téléchargement..."
+
+#: src/components/deep_link_guide_download_dialog.tsx:69
+msgid "Télécharger"
+msgstr "Télécharger"
+
 #: src/routes/app-old-version.tsx:116
 msgid "Télécharger la version {toVersion}"
 msgstr "Télécharger la version {toVersion}"
 
+#: src/components/deep_link_guide_download_dialog.tsx:38
 #: src/components/guide_download_button.tsx:46
 msgid "Télécharger le guide"
 msgstr "Télécharger le guide"

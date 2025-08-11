@@ -116,3 +116,13 @@ export function deleteGuidesFromSystem(guides: GuideOrFolderToDelete[]) {
 export function onCopyCurrentGuideStep() {
   return taurpc.guides.copyCurrentGuideStep
 }
+
+export class GuideExistsError extends Error {
+  static from(error: unknown) {
+    return new GuideExistsError('Failed to check if guide exists', { cause: error })
+  }
+}
+
+export function guideExists(guideId: number) {
+  return fromPromise(taurpc.guides.guideExists(guideId), GuideExistsError.from)
+}

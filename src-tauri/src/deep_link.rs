@@ -13,6 +13,23 @@ pub enum Error {
     InvalidGuideId(String),
 }
 
+#[taurpc::ipc_type]
+#[derive(Debug)]
+pub struct OpenGuideStep {
+    pub step: u32,
+    #[serde(rename = "progressionStep")]
+    pub progression_step: Option<u32>,
+}
+
+impl Default for OpenGuideStep {
+    fn default() -> Self {
+        OpenGuideStep {
+            step: 0,
+            progression_step: None,
+        }
+    }
+}
+
 #[taurpc::procedures(
     path = "deep_link",
     event_trigger = DeepLinkApiEventTrigger,
@@ -21,7 +38,7 @@ pub enum Error {
 pub trait DeepLinkApi {
     #[taurpc(event)]
     #[taurpc(alias = "openGuideRequest")]
-    async fn open_guide_request(guide_id: u32, step: u32);
+    async fn open_guide_request(guide_id: u32, step: OpenGuideStep);
 }
 
 #[derive(Clone)]
@@ -30,7 +47,7 @@ pub struct DeepLinkApiImpl;
 #[taurpc::resolvers]
 impl DeepLinkApi for DeepLinkApiImpl {}
 
-fn get_guide_current_step(app: &AppHandle, guide_id: u32) -> Result<u32, Error> {
+fn get_guide_current_step(app: &AppHandle, guide_id: u32) -> Result<Option<u32>, Error> {
     let conf = Conf::get(app)?;
 
     let profile = conf
@@ -47,14 +64,14 @@ fn get_guide_current_step(app: &AppHandle, guide_id: u32) -> Result<u32, Error> 
                 "[DeepLink] Found progress for guide {}: current_step = {}",
                 guide_id, progress.current_step
             );
-            Ok(progress.current_step)
+            Ok(Some(progress.current_step))
         }
         None => {
             debug!(
-                "[DeepLink] No progress found for guide {}, defaulting to step 0",
+                "[DeepLink] No progress found for guide {}, defaulting to step default",
                 guide_id
             );
-            Ok(0)
+            Ok(None)
         }
     }
 }
@@ -76,21 +93,30 @@ pub fn handle_deep_link_url(app: AppHandle, url: &tauri::Url) -> Result<(), Erro
             .parse::<u32>()
             .map_err(|_| Error::InvalidGuideId(guide_id_str.to_string()))?;
 
+        let current_guide_step = get_guide_current_step(&app, guide_id)?;
+
         let step = match captures.get(2) {
             Some(step_match) => {
                 let step_str = step_match.as_str();
                 step_str
                     .parse::<u32>()
+                    .map(|s| OpenGuideStep {
+                        step: s,
+                        progression_step: current_guide_step,
+                    })
                     .map_err(|_| Error::ParseUrl(format!("Invalid step: {}", step_str)))?
             }
             None => {
                 debug!("[DeepLink] No step provided, calculating from progress");
-                get_guide_current_step(&app, guide_id)?
+                OpenGuideStep {
+                    step: current_guide_step.unwrap_or(0),
+                    progression_step: current_guide_step,
+                }
             }
         };
 
         debug!(
-            "[DeepLink] Parsed deep link - guide_id: {}, step: {}",
+            "[DeepLink] Parsed deep link - guide_id: {}, step: {:?}",
             guide_id, step
         );
 

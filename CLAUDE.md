@@ -89,10 +89,46 @@ This project uses pnpm. Use pnpm instead of npm.
 - Remove obsolete translations marked with `#~`
 - Spanish and Portuguese target European variants
 
+## TauRPC Deep-Link System
+
+### Overview
+The application implements a sophisticated deep-link system that migrated from JavaScript to Rust for better performance and type safety. The system handles `ganymede://guides/open/{id}?step={step}` URLs.
+
+### Architecture
+- **Rust Backend**: `src-tauri/src/deep_link.rs` handles URL parsing and emits TauRPC events
+- **Event System**: Uses TauRPC `DeepLinkApiEventTrigger::OpenGuideRequest` for type-safe communication
+- **Frontend Handler**: `src/hooks/use_deep_link_guide_handler.ts` manages the complete flow
+- **UI Component**: `src/components/deep_link_guide_download_dialog.tsx` handles download confirmation
+
+### Deep-Link Flow
+1. **URL Reception**: Rust parses `ganymede://guides/open/{id}?step={step}`
+2. **Guide Existence Check**: Uses `guides.guideExists(guide_id)` to scan all folders recursively
+3. **Automatic Navigation**: If guide exists, navigates directly to `/guides/{id}?step={step}`
+4. **Download Dialog**: If guide missing, shows confirmation dialog with loading states
+5. **Download & Navigate**: Downloads to root folder `""` then navigates on success
+
+### Key Implementation Details
+- **State Management**: Uses multiple separate `useState` hooks, not single state object
+- **Error Handling**: Complete neverthrow Result pattern with toast notifications
+- **Guide Discovery**: `get_flat_guides("")` scans all subfolders using glob `**/*.json`
+- **Default Step Calculation**: If no step provided, uses progress from user's current profile
+- **Cross-Platform**: Handles Windows, Linux, macOS with proper URL registration
+
+### File Structure
+```
+src-tauri/src/deep_link.rs          # Rust URL parsing & event emission
+src/hooks/use_deep_link_guide_handler.ts  # Main logic hook
+src/components/deep_link_guide_download_dialog.tsx  # UI component
+src/ipc/deep_link.ts               # Frontend IPC wrapper
+```
+
 ## Important Notes
 
 - The app window is configured as always-on-top with transparency
 - Uses React 19 with strict mode enabled
 - Sentry is integrated for error reporting
-- Deep linking handles guide navigation via `ganymede://guides/open/{id}` URLs (others will come)
+- Deep linking handles guide navigation via `ganymede://guides/open/{id}` URLs with automatic download
 - The app checks for updates and redirects to update page if outdated
+- Guide files are stored as `{id}.json` and can be in any subfolder
+- TauRPC automatically generates TypeScript bindings from Rust traits
+- Parallelize the maximum

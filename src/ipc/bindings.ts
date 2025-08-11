@@ -32,6 +32,8 @@ export type IsOld = { from: string; to: string; isOld: boolean }
 
 export type Note = { name: string; text: string }
 
+export type OpenGuideStep = { step: number; progressionStep: number | null }
+
 export type Profile = { id: string; name: string; level?: number; progresses: Progress[] }
 
 export type Progress = { id: number; currentStep: number; steps: { [key in number]: ConfStep } }
@@ -62,13 +64,13 @@ export type TauRpcConfApiInputTypes = { proc_name: "get"; input_type: null } | {
 
 export type TauRpcConfApiOutputTypes = { proc_name: "get"; output_type: Conf } | { proc_name: "set"; output_type: null } | { proc_name: "toggleGuideCheckbox"; output_type: number } | { proc_name: "reset"; output_type: null }
 
-export type TauRpcDeepLinkApiInputTypes = { proc_name: "openGuideRequest"; input_type: [number, number] }
+export type TauRpcDeepLinkApiInputTypes = { proc_name: "openGuideRequest"; input_type: [number, OpenGuideStep] }
 
 export type TauRpcDeepLinkApiOutputTypes = { proc_name: "openGuideRequest"; output_type: null }
 
-export type TauRpcGuidesApiInputTypes = { proc_name: "getFlatGuides"; input_type: { __taurpc_type: string } } | { proc_name: "getGuides"; input_type: { __taurpc_type: string | null } } | { proc_name: "getGuideFromServer"; input_type: { __taurpc_type: number } } | { proc_name: "getGuidesFromServer"; input_type: { __taurpc_type: Status | null } } | { proc_name: "downloadGuideFromServer"; input_type: [number, string] } | { proc_name: "openGuidesFolder"; input_type: null } | { proc_name: "getGuideSummary"; input_type: { __taurpc_type: number } } | { proc_name: "updateAllAtOnce"; input_type: null } | { proc_name: "hasGuidesNotUpdated"; input_type: null } | { proc_name: "deleteGuidesFromSystem"; input_type: { __taurpc_type: GuideOrFolderToDelete[] } } | { proc_name: "copyCurrentGuideStep"; input_type: null }
+export type TauRpcGuidesApiInputTypes = { proc_name: "getFlatGuides"; input_type: { __taurpc_type: string } } | { proc_name: "getGuides"; input_type: { __taurpc_type: string | null } } | { proc_name: "getGuideFromServer"; input_type: { __taurpc_type: number } } | { proc_name: "getGuidesFromServer"; input_type: { __taurpc_type: Status | null } } | { proc_name: "downloadGuideFromServer"; input_type: [number, string] } | { proc_name: "openGuidesFolder"; input_type: null } | { proc_name: "getGuideSummary"; input_type: { __taurpc_type: number } } | { proc_name: "updateAllAtOnce"; input_type: null } | { proc_name: "hasGuidesNotUpdated"; input_type: null } | { proc_name: "deleteGuidesFromSystem"; input_type: { __taurpc_type: GuideOrFolderToDelete[] } } | { proc_name: "copyCurrentGuideStep"; input_type: null } | { proc_name: "guideExists"; input_type: { __taurpc_type: number } }
 
-export type TauRpcGuidesApiOutputTypes = { proc_name: "getFlatGuides"; output_type: GuideWithSteps[] } | { proc_name: "getGuides"; output_type: GuidesOrFolder[] } | { proc_name: "getGuideFromServer"; output_type: GuideWithSteps } | { proc_name: "getGuidesFromServer"; output_type: Guide[] } | { proc_name: "downloadGuideFromServer"; output_type: Guides } | { proc_name: "openGuidesFolder"; output_type: null } | { proc_name: "getGuideSummary"; output_type: Summary } | { proc_name: "updateAllAtOnce"; output_type: { [key in number]: UpdateAllAtOnceResult } } | { proc_name: "hasGuidesNotUpdated"; output_type: boolean } | { proc_name: "deleteGuidesFromSystem"; output_type: null } | { proc_name: "copyCurrentGuideStep"; output_type: null }
+export type TauRpcGuidesApiOutputTypes = { proc_name: "getFlatGuides"; output_type: GuideWithSteps[] } | { proc_name: "getGuides"; output_type: GuidesOrFolder[] } | { proc_name: "getGuideFromServer"; output_type: GuideWithSteps } | { proc_name: "getGuidesFromServer"; output_type: Guide[] } | { proc_name: "downloadGuideFromServer"; output_type: Guides } | { proc_name: "openGuidesFolder"; output_type: null } | { proc_name: "getGuideSummary"; output_type: Summary } | { proc_name: "updateAllAtOnce"; output_type: { [key in number]: UpdateAllAtOnceResult } } | { proc_name: "hasGuidesNotUpdated"; output_type: boolean } | { proc_name: "deleteGuidesFromSystem"; output_type: null } | { proc_name: "copyCurrentGuideStep"; output_type: null } | { proc_name: "guideExists"; output_type: boolean }
 
 export type TauRpcImageApiInputTypes = { proc_name: "fetchImage"; input_type: { __taurpc_type: string } }
 
@@ -90,7 +92,7 @@ export type UpdateAllAtOnceResult = null | string
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number }
 
-const ARGS_MAP = {'conf':'{"reset":[],"get":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'almanax':'{"get":["level","date"]}', 'guides':'{"getGuidesFromServer":["status"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"getGuideFromServer":["guide_id"],"copyCurrentGuideStep":[],"getGuides":["folder"],"updateAllAtOnce":[],"openGuidesFolder":[],"hasGuidesNotUpdated":[],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideSummary":["guide_id"]}', 'api':'{"isAppVersionOld":[]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"]}', 'report':'{"send_report":["payload"]}', 'image':'{"fetchImage":["url"]}'}
+const ARGS_MAP = {'almanax':'{"get":["level","date"]}', 'conf':'{"get":[],"set":["conf"],"reset":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'api':'{"isAppVersionOld":[]}', 'image':'{"fetchImage":["url"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"updateAllAtOnce":[],"getFlatGuides":["folder"],"hasGuidesNotUpdated":[],"copyCurrentGuideStep":[],"getGuides":["folder"],"openGuidesFolder":[],"downloadGuideFromServer":["guide_id","folder"],"getGuideSummary":["guide_id"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"guideExists":["guide_id"],"getGuideFromServer":["guide_id"],"getGuidesFromServer":["status"]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"]}', 'security':'{"getWhiteList":[]}', 'report':'{"send_report":["payload"]}', 'update':'{"startUpdate":[]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)
