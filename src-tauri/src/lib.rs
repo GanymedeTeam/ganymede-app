@@ -13,8 +13,6 @@ use tauri::{AppHandle, Manager};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_opener::OpenerExt;
-#[cfg(not(dev))]
-use tauri_plugin_sentry::minidump;
 use tauri_plugin_sentry::sentry;
 use taurpc::Router;
 
@@ -94,7 +92,7 @@ pub fn run() {
     ));
 
     #[cfg(not(dev))]
-    let _guard = minidump::init(&sentry_client);
+    let _guard = tauri_plugin_sentry::minidump::init(&sentry_client);
 
     let level_filter = if cfg!(debug_assertions) {
         LevelFilter::Debug
@@ -102,7 +100,18 @@ pub fn run() {
         LevelFilter::Info
     };
 
-    let app = tauri::Builder::default()
+    let mut builder = tauri::Builder::default();
+
+    #[cfg(desktop)]
+    {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|_app, argv, _cwd| {
+          info!("a new app instance was opened with {argv:?} and the deep link event was already triggered");
+          // when defining deep link schemes at runtime, you must also check `argv` here
+        }));
+    }
+
+    let app = builder
+        .plugin(tauri_plugin_deep_link::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_log::Builder::new().build())
         .plugin(tauri_plugin_updater::Builder::new().build())
@@ -222,6 +231,13 @@ pub fn run() {
                 error!("[Lib] failed to handle shortcuts: {:?}", err);
                 sentry::capture_error(&err);
             }
+        }
+
+        #[cfg(any(windows, target_os = "linux"))]
+        {
+            use tauri_plugin_deep_link::DeepLinkExt;
+
+            app.deep_link().register_all()?;
         }
 
         Ok(())

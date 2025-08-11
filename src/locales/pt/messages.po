@@ -40,7 +40,7 @@ msgstr "Adicionar"
 msgid "Annuler"
 msgstr "Cancelar"
 
-#: src/routes/_app/downloads/$status.tsx:149
+#: src/routes/_app/downloads/$status.tsx:184
 msgid "Attention"
 msgstr "Atenção"
 
@@ -48,11 +48,11 @@ msgstr "Atenção"
 msgid "Attention !"
 msgstr "Atenção!"
 
-#: src/routes/_app/downloads/$status.tsx:170
+#: src/routes/_app/downloads/$status.tsx:205
 msgid "Aucun guides trouvé"
 msgstr "Nenhum guia encontrado"
 
-#: src/routes/_app/downloads/$status.tsx:186
+#: src/routes/_app/downloads/$status.tsx:221
 msgid "Aucun guides trouvé avec {term}"
 msgstr "Nenhum guia encontrado com {term}"
 
@@ -215,7 +215,7 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "Crie seus guias no site oficial e baixe os de outros usuários!"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/downloads/$status.tsx:221
+#: src/routes/_app/downloads/$status.tsx:256
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -286,7 +286,7 @@ msgid "Grande"
 msgstr "Grande"
 
 #: src/components/title_bar.tsx:53
-#: src/routes/_app/downloads/$status.tsx:98
+#: src/routes/_app/downloads/$status.tsx:104
 msgid "Guides"
 msgstr "Guias"
 
@@ -296,26 +296,26 @@ msgstr "Guias"
 msgid "Guides {0}"
 msgstr "Guias {0}"
 
-#: src/routes/_app/downloads/$status.tsx:96
+#: src/routes/_app/downloads/$status.tsx:102
 #: src/routes/_app/downloads/index.tsx:69
 msgid "Guides certifiés"
 msgstr "Guias certificados"
 
-#: src/routes/_app/downloads/$status.tsx:92
+#: src/routes/_app/downloads/$status.tsx:98
 #: src/routes/_app/downloads/index.tsx:89
 msgid "Guides draft"
 msgstr "Guias rascunho"
 
-#: src/routes/_app/downloads/$status.tsx:94
+#: src/routes/_app/downloads/$status.tsx:100
 #: src/routes/_app/downloads/index.tsx:59
 msgid "Guides principaux"
 msgstr "Guias principais"
 
-#: src/routes/_app/downloads/$status.tsx:90
+#: src/routes/_app/downloads/$status.tsx:96
 msgid "Guides privés"
 msgstr "Guias privados"
 
-#: src/routes/_app/downloads/$status.tsx:88
+#: src/routes/_app/downloads/$status.tsx:94
 #: src/routes/_app/downloads/index.tsx:79
 msgid "Guides publics"
 msgstr "Guias públicos"
@@ -325,7 +325,7 @@ msgid "Guides supprimés"
 msgstr "Guias eliminados"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/downloads/$status.tsx:198
+#: src/routes/_app/downloads/$status.tsx:233
 #: src/routes/_app/guides/index.tsx:442
 #: src/routes/_app/guides/index.tsx:588
 msgid "id <0>{0}</0>"
@@ -353,7 +353,7 @@ msgstr "Não foi possível verificar a atualização da aplicação."
 msgid "Informations supplémentaires : {0}"
 msgstr "Informações adicionais: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:161
+#: src/routes/_app/downloads/$status.tsx:196
 msgid "J'ai compris"
 msgstr "Entendi"
 
@@ -370,7 +370,7 @@ msgstr "Idioma"
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 
-#: src/routes/_app/downloads/$status.tsx:153
+#: src/routes/_app/downloads/$status.tsx:188
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ganimedes. <0/> Embora os links para os sites sejam seguros, verifique cuidadosamente os guias <1>em nosso site</1> antes de baixá-los."
 
@@ -489,7 +489,7 @@ msgstr "A atualizar os guias transferidos"
 msgid "Récapitulatif du message"
 msgstr "Resumo da mensagem"
 
-#: src/routes/_app/downloads/$status.tsx:181
+#: src/routes/_app/downloads/$status.tsx:216
 #: src/routes/_app/guides/index.tsx:494
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
