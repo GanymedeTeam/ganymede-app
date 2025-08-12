@@ -1,140 +1,153 @@
 import { Plural, Trans } from '@lingui/react/macro'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { error } from '@tauri-apps/plugin-log'
+import dayjs from 'dayjs'
+import 'dayjs/locale/fr'
+import 'dayjs/locale/en'
+import 'dayjs/locale/es'
+import 'dayjs/locale/pt'
 import { EyeIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { EditorHtmlParsing } from '@/components/editor_html_parsing.tsx'
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
-import { Notification } from '@/ipc/bindings.ts'
+import type { Notification } from '@/ipc/bindings.ts'
+import { getLang } from '@/lib/conf.ts'
 import { useMarkNotificationViewed } from '@/mutations/mark_notification_viewed.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { unviewedNotificationsQuery } from '@/queries/notifications.query.ts'
 
-function useInterval(initialValue = 2) {
-  const [count, setCount] = useState(initialValue)
+function useTimer(seconds = 2) {
+  const [count, setCount] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
   const start = useCallback(() => {
-    setCount(initialValue)
+    setCount(seconds)
     setIsActive(true)
-  }, [initialValue])
-
-  const stop = useCallback(() => {
-    setIsActive(false)
-  }, [])
-
-  const reset = useCallback(() => {
-    setCount(initialValue)
-  }, [initialValue])
+  }, [seconds])
 
   useEffect(() => {
-    if (!isActive) return
+    if (!isActive || count <= 0) return
 
-    const interval = setInterval(() => {
-      setCount((prev) => {
-        if (prev <= 1) {
-          setIsActive(false)
-          return 0
-        }
-        return prev - 1
-      })
+    const timer = setTimeout(() => {
+      setCount(prev => prev - 1)
     }, 1000)
 
-    return () => clearInterval(interval)
-  }, [isActive])
+    return () => clearTimeout(timer)
+  }, [isActive, count])
 
-  return { count, start, stop, reset, isActive }
+  useEffect(() => {
+    if (count <= 0) {
+      setIsActive(false)
+    }
+  }, [count])
+
+  return { count, start }
 }
 
 export function NotificationAlertDialog() {
-  const queryClient = useQueryClient()
-  const [currentNotification, setCurrentNotification] = useState<Notification | null>(null)
-  const [notificationDialogOpen, setNotificationDialogOpen] = useState(false)
-  const [processedNotifications, setProcessedNotifications] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  const [totalNotifications, setTotalNotifications] = useState(0)
+  const [allNotifications, setAllNotifications] = useState<Notification[]>([])
 
   const unviewedNotifications = useQuery(unviewedNotificationsQuery)
-
+  const conf = useSuspenseQuery(confQuery)
   const markAsViewed = useMarkNotificationViewed()
-  const { count: counterValue, start: startCounter, reset: resetCounter } = useInterval(2)
+  const { count, start } = useTimer(2)
+
+  const notifications = unviewedNotifications.data ?? []
+  const currentNotification = allNotifications[currentIndex]
+  
+  const getLocale = (lang: ReturnType<typeof getLang>) => {
+    switch (lang) {
+      case 'Fr': return 'fr'
+      case 'En': return 'en'
+      case 'Es': return 'es'
+      case 'Pt': return 'pt'
+      default: return 'fr'
+    }
+  }
 
   useEffect(() => {
-    if (currentNotification) {
-      startCounter()
+    if (notifications.length > 0 && !isOpen) {
+      setCurrentIndex(0)
+      setTotalNotifications(notifications.length)
+      setAllNotifications(notifications.toReversed())
+      setIsOpen(true)
+      start()
+    } else if (notifications.length === 0 && isOpen) {
+      setIsOpen(false)
+      setCurrentIndex(0)
+      setTotalNotifications(0)
+      setAllNotifications([])
     }
-  }, [currentNotification, startCounter])
+  }, [notifications, isOpen, start])
 
   useEffect(() => {
-    if (unviewedNotifications.isSuccess && unviewedNotifications.data.length > 0) {
-      // Find the first notification that hasn't been processed yet
-      const newNotification = unviewedNotifications.data.at(0)
-
-      if (newNotification) {
-        setCurrentNotification(newNotification)
-        setNotificationDialogOpen(true)
-      }
+    if (currentNotification && isOpen) {
+      start()
     }
-  }, [unviewedNotifications.isSuccess, unviewedNotifications.data?.length, unviewedNotifications.data?.at])
+  }, [currentIndex, isOpen, start])
 
   const handleMarkAsRead = async (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.stopPropagation()
     evt.preventDefault()
 
-    if (currentNotification) {
-      try {
-        const hasNextNotification = (unviewedNotifications.data?.length ?? 0) > processedNotifications + 1
+    if (!currentNotification) return
 
-        await markAsViewed.mutateAsync(currentNotification.id)
-
-        if (hasNextNotification) {
-          setCurrentNotification(unviewedNotifications.data?.at(processedNotifications + 1) ?? null)
-          setProcessedNotifications((prev) => prev + 1)
-          resetCounter()
-        } else {
-          setNotificationDialogOpen(false)
-
-          setTimeout(() => {
-            setProcessedNotifications(0)
-            setCurrentNotification(null)
-          }, 500)
-        }
-      } catch (err) {
-        error(`Failed to mark notification as viewed: ${err instanceof Error ? err.message : 'Unknown error'}`)
-
-        await queryClient.invalidateQueries(unviewedNotificationsQuery)
-
+    try {
+      await markAsViewed.mutateAsync(currentNotification.id)
+      
+      const newIndex = currentIndex + 1
+      setCurrentIndex(newIndex)
+      
+      if (newIndex >= totalNotifications) {
         setTimeout(() => {
-          setProcessedNotifications(0)
-          setCurrentNotification(null)
+          setIsOpen(false)
+          setCurrentIndex(0)
+          setTotalNotifications(0)
+          setAllNotifications([])
         }, 500)
       }
+    } catch (err) {
+      error(`Failed to mark notification as viewed: ${err instanceof Error ? err.message : 'Unknown error'}`)
+      setIsOpen(false)
+      setCurrentIndex(0)
+      setTotalNotifications(0)
+      setAllNotifications([])
     }
   }
 
-  if (!currentNotification || !unviewedNotifications.isSuccess) {
+  if (!isOpen || !currentNotification) {
     return null
   }
 
-  const isDisabled = counterValue !== 0 || markAsViewed.isPending
+  const isDisabled = count > 0 || markAsViewed.isPending
 
   return (
-    <AlertDialog open={notificationDialogOpen} onOpenChange={setNotificationDialogOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="h-full max-h-[90vh]">
         <AlertDialogHeader aria-describedby={undefined}>
           <AlertDialogTitle>
             <Plural
-              value={unviewedNotifications.data.length}
+              value={totalNotifications}
               one="Message de l'équipe"
-              other={`Messages de l'équipe ${processedNotifications + 1}/${unviewedNotifications.data.length}`}
+              other={`Messages de l'équipe ${currentIndex + 1}/${totalNotifications}`}
             />
           </AlertDialogTitle>
+          <p className="text-muted-foreground text-sm">
+            {dayjs(currentNotification.display_at)
+              .locale(getLocale(getLang(conf.data.lang)))
+              .format('DD MMMM YYYY à HH:mm')}
+          </p>
         </AlertDialogHeader>
         <ScrollArea className="h-full" type="auto">
           <EditorHtmlParsing html={currentNotification.text} disabled={isDisabled} />
@@ -146,9 +159,9 @@ export function NotificationAlertDialog() {
             ) : (
               <>
                 <Trans>Marquer comme lu</Trans>
-                {counterValue !== 0 ? (
+                {count > 0 ? (
                   <span className="flex size-4 items-center justify-center rounded-full bg-red-500 font-bold text-white text-xs">
-                    {counterValue}
+                    {count}
                   </span>
                 ) : (
                   <EyeIcon />

@@ -22,12 +22,17 @@ pub enum Error {
     ParseApiResponse(String),
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[taurpc::ipc_type]
+#[derive(Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct Notification {
     pub id: u32,
     pub text: String,
+    #[serde(rename = "displayAt", alias = "display_at")]
     pub display_at: String,
+    #[serde(rename = "createdAt", alias = "created_at")]
     pub created_at: String,
+    #[serde(rename = "updatedAt", alias = "updated_at")]
     pub updated_at: String,
 }
 
