@@ -103,7 +103,7 @@ importers:
         specifier: ^2.4.0
         version: 2.4.0
       '@uidotdev/usehooks':
-        specifier: ^2.4.1
+        specifier: 2.4.1
         version: 2.4.1(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       class-variance-authority:
         specifier: ^0.7.1

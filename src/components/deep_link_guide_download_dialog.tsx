@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/react/macro'
 import { Loader2Icon } from 'lucide-react'
-import { useDeepLinkGuideHandler } from '@/hooks/use_deep_link_guide_handler.ts'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,6 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
+import { useDeepLinkGuideHandler } from '@/hooks/use_deep_link_guide_handler.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 
 export function DeepLinkGuideDownloadDialog() {

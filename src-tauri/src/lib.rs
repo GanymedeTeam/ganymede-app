@@ -6,6 +6,7 @@ use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
 use crate::first_start::handle_first_start_setup;
 use crate::guides::{GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
+use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::handle_shortcuts;
 use crate::update::{UpdateApi, UpdateApiImpl};
@@ -30,6 +31,7 @@ mod guides;
 mod image;
 mod item;
 mod json;
+mod notifications;
 mod quest;
 mod report;
 mod security;
@@ -114,7 +116,8 @@ pub fn run() {
         .merge(UpdateApiImpl.into_handler())
         .merge(ConfApiImpl.into_handler())
         .merge(ReportApiImpl.into_handler())
-        .merge(DeepLinkApiImpl.into_handler());
+        .merge(DeepLinkApiImpl.into_handler())
+        .merge(NotificationApiImpl.into_handler());
 
     sentry::add_breadcrumb(sentry::Breadcrumb {
         category: Some("sentry.transaction".into()),

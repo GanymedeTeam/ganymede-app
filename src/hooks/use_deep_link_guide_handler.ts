@@ -1,12 +1,12 @@
+import { useLingui } from '@lingui/react/macro'
 import { useNavigate } from '@tanstack/react-router'
 import { info } from '@tauri-apps/plugin-log'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { onOpenGuideRequest } from '@/ipc/deep_link.ts'
-import { useLingui } from '@lingui/react/macro'
-import { useDownloadGuideFromServer } from '@/mutations/download_guide_from_server.mutation.ts'
-import { guideExists } from '@/ipc/guides.ts'
 import { OpenGuideStep } from '@/ipc/bindings.ts'
+import { onOpenGuideRequest } from '@/ipc/deep_link.ts'
+import { guideExists } from '@/ipc/guides.ts'
+import { useDownloadGuideFromServer } from '@/mutations/download_guide_from_server.mutation.ts'
 
 export function useDeepLinkGuideHandler() {
   const navigate = useNavigate()

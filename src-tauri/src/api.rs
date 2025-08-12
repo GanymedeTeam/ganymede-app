@@ -1,4 +1,4 @@
-use log::{debug, info};
+use log::debug;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
@@ -10,7 +10,6 @@ pub enum Error {
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
 pub const GANYMEDE_API: &str = "https://ganymede-app.com/api";
-pub const GANYMEDE_API_V2: &str = "https://ganymede-app.com/api/v2";
 
 pub const API_KEY_HEADER: &str = "X-API-KEY";
 pub const API_KEY: &str = env!("GANYMEDE_API_KEY");

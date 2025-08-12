@@ -1,4 +1,4 @@
-use crate::api::GANYMEDE_API_V2;
+use crate::api::GANYMEDE_API;
 use crate::tauri_api_ext::GuidesPathExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -455,9 +455,9 @@ impl GuidesApi for GuidesApiImpl {
         let http_client = app_handle.state::<reqwest::Client>();
 
         let url = if let Some(status) = status {
-            format!("{}/guides?status={}", GANYMEDE_API_V2, status.to_str())
+            format!("{}/v2/guides?status={}", GANYMEDE_API, status.to_str())
         } else {
-            format!("{}/guides", GANYMEDE_API_V2)
+            format!("{}/v2/guides", GANYMEDE_API)
         };
 
         let res = http_client
@@ -752,7 +752,7 @@ pub async fn get_guide_from_server(
     info!("[Guides] get_guide_from_server: {}", guide_id);
 
     let res = http_client
-        .get(format!("{}/guides/{}", GANYMEDE_API_V2, guide_id))
+        .get(format!("{}/v2/guides/{}", GANYMEDE_API, guide_id))
         .send()
         .await
         .map_err(|err| Error::RequestGuide(err.to_string()))?;

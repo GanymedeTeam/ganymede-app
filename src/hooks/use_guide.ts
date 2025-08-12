@@ -18,3 +18,13 @@ export function useGuideOrUndefined(guideId: number) {
 
   return guides.data.find((guide) => guide.id === guideId)
 }
+
+export function useGuideIfDefined(guideId?: number) {
+  const guide = useGuideOrUndefined(guideId ?? -1)
+
+  if (!guide) {
+    return undefined
+  }
+
+  return guide
+}
