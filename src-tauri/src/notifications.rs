@@ -95,11 +95,7 @@ async fn fetch_notifications_from_api(app_handle: &AppHandle) -> Result<Vec<Noti
     debug!("[Notifications] Fetching notifications from API");
 
     let response = client
-        // .get(format!("{}/v2/notifications", GANYMEDE_API))
-        .get(format!(
-            "{}/v2/notifications",
-            "https://dev.ganymede-dofus.com/api"
-        ))
+        .get(format!("{}/v2/notifications", GANYMEDE_API))
         .send()
         .await
         .map_err(|err| Error::FetchNotifications(err.to_string()))?;
