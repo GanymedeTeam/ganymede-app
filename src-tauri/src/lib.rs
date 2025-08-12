@@ -1,24 +1,27 @@
 use crate::almanax::{AlmanaxApi, AlmanaxApiImpl};
 use crate::api::{Api, ApiImpl};
+use crate::base::{BaseApi, BaseApiImpl};
 use crate::conf::{ConfApi, ConfApiImpl};
 use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
-use crate::first_start::FirstStartExt;
-use crate::guides::{download_default_guide, GuidesApi, GuidesApiImpl};
+use crate::first_start::handle_first_start_setup;
+use crate::guides::{GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::handle_shortcuts;
 use crate::update::{UpdateApi, UpdateApiImpl};
 use log::{error, info, LevelFilter};
 use report::{ReportApi, ReportApiImpl};
-use tauri::{AppHandle, Manager};
+use tauri::Manager;
 use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
-use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_sentry::sentry;
 use taurpc::Router;
 
 mod almanax;
+#[cfg(not(dev))]
+mod analytics;
 mod api;
+mod base;
 mod conf;
 mod deep_link;
 mod event;
@@ -45,40 +48,6 @@ const LOG_TARGETS: [Target; 2] = [
     Target::new(TargetKind::Stdout),
     Target::new(TargetKind::LogDir { file_name: None }),
 ];
-
-#[taurpc::procedures(path = "base", export_to = "../src/ipc/bindings.ts")]
-trait BaseApi {
-    #[taurpc(alias = "newId")]
-    async fn new_id() -> String;
-    #[taurpc(alias = "openUrl")]
-    async fn open_url(app_handle: AppHandle, url: String) -> Result<(), String>;
-    #[taurpc(alias = "isProduction")]
-    async fn is_production() -> bool;
-}
-
-#[derive(Clone)]
-struct BaseApiImpl;
-
-#[taurpc::resolvers]
-impl BaseApi for BaseApiImpl {
-    async fn new_id(self) -> String {
-        uuid::Uuid::new_v4().to_string()
-    }
-
-    async fn open_url(self, app: AppHandle, url: String) -> Result<(), String> {
-        app.opener()
-            .open_url(url, None::<String>)
-            .map_err(|err| err.to_string())
-    }
-
-    async fn is_production(self) -> bool {
-        #[cfg(dev)]
-        return false;
-
-        #[cfg(not(dev))]
-        return true;
-    }
-}
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -178,54 +147,10 @@ pub fn run() {
             sentry::capture_error(&err);
         }
 
-        let handle = app.handle().clone();
-
-        match handle.is_first_start() {
-            Err(err) => {
-                error!("[Lib] failed to ensure first start: {:?}", err);
-                sentry::capture_error(&err);
-            }
-            Ok(first_start) => {
-                if first_start {
-                    info!("[Lib] first start");
-
-                    tauri::async_runtime::spawn(async move {
-                        let res = download_default_guide(&handle).await;
-
-                        match res {
-                            Err(err) => {
-                                error!("[Lib] cannot download default guide {:?}", err);
-                                sentry::capture_error(&err);
-                            }
-                            Ok(_) => {
-                                info!("[Lib] default guide downloaded");
-                            }
-                        }
-                    });
-                }
-            }
-        }
+        handle_first_start_setup(app.handle().clone());
 
         #[cfg(not(dev))]
-        {
-            let version = app.package_info().version.to_string();
-
-            let http_client = http_client.clone();
-
-            tauri::async_runtime::spawn(async move {
-                let res = crate::api::increment_app_download_count(version, &http_client).await;
-
-                match &res {
-                    Err(err) => {
-                        error!("[Lib] {:?}", err);
-                        sentry::capture_error(&err);
-                    }
-                    _ => {
-                        info!("[Lib] app download count incremented");
-                    }
-                }
-            });
-        }
+        crate::analytics::increment_download_count(app.handle(), http_client);
 
         #[cfg(desktop)]
         {
