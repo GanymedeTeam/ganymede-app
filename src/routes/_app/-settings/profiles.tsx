@@ -89,7 +89,6 @@ export function Profiles() {
                         ...conf.data,
                         profileInUse: currentValue,
                       })
-                      // setOpen(false)
                     }}
                   >
                     <span className="w-full">{profile.name}</span>
