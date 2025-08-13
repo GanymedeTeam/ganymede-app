@@ -100,7 +100,7 @@ export function NotificationAlertDialog() {
     if (currentNotification && isOpen) {
       start()
     }
-  }, [currentIndex, isOpen, start])
+  }, [isOpen, start, currentNotification])
 
   const handleMarkAsRead = async (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.stopPropagation()

@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { TriangleAlertIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
@@ -193,7 +194,7 @@ function Settings() {
                 if (profileName.trim() !== '' && !conf.data.profiles.find((p) => p.name === profileName.trim())) {
                   const id = await newId.mutateAsync()
 
-                  setConf.mutate({
+                  await setConf.mutateAsync({
                     ...conf.data,
                     profiles: [
                       ...conf.data.profiles,
@@ -206,7 +207,11 @@ function Settings() {
                     profileInUse: id,
                   })
 
+                  toast.success(t`Profil créé avec succès`)
+
                   form.newProfile.value = ''
+                } else {
+                  toast.error(t`Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique).`)
                 }
               }}
             >
