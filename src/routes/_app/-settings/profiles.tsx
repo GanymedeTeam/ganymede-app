@@ -3,7 +3,6 @@ import { rankItem } from '@tanstack/match-sorter-utils'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
 import { type MouseEvent, useState } from 'react'
-import { Button } from '@/components/ui/button.tsx'
 import {
   Command,
   CommandEmpty,
@@ -18,6 +17,9 @@ import { getProfileById } from '@/lib/profile.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
+import { ProfileDeleteDialog } from '@/routes/_app/-settings/profile_delete_dialog.tsx'
+import { Button } from '@/components/ui/button.tsx'
+import { toast } from 'sonner'
 
 export function Profiles() {
   const { t } = useLingui()
@@ -26,6 +28,7 @@ export function Profiles() {
   const profiles = conf.data.profiles
   const currentProfile = useProfile()
   const [open, setOpen] = useState(false)
+  const [profileDeletionOpen, setProfileDeletionOpen] = useState(false)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -60,7 +63,7 @@ export function Profiles() {
             </CommandEmpty>
             <CommandGroup>
               {profiles.map((profile) => {
-                const onClickTrash = (evt: MouseEvent) => {
+                const onClickTrash = async (evt: MouseEvent) => {
                   evt.stopPropagation()
                   const index = profiles.findIndex((p) => p.id === profile.id)
                   const nextProfileToUse =
@@ -68,11 +71,13 @@ export function Profiles() {
                       ? (profiles.at(index - 1)?.id ?? conf.data.profileInUse)
                       : conf.data.profileInUse
 
-                  setConf.mutate({
+                  await setConf.mutateAsync({
                     ...conf.data,
                     profiles: profiles.filter((p) => p.id !== profile.id),
                     profileInUse: nextProfileToUse,
                   })
+
+                  toast.success(t`Profil supprimé avec succès`)
                 }
 
                 return (
@@ -84,16 +89,23 @@ export function Profiles() {
                         ...conf.data,
                         profileInUse: currentValue,
                       })
-                      setOpen(false)
+                      // setOpen(false)
                     }}
                   >
                     <span className="w-full">{profile.name}</span>
                     <CheckIcon
                       className={cn('ml-2 size-4', currentProfile.id === profile.id ? 'opacity-100' : 'opacity-0')}
                     />
-                    <Button size="icon-sm" variant="destructive" disabled={profiles.length <= 1} onClick={onClickTrash}>
-                      <TrashIcon />
-                    </Button>
+                    <ProfileDeleteDialog
+                      profileName={profile.name}
+                      onDelete={onClickTrash}
+                      open={profileDeletionOpen}
+                      onOpenChange={setProfileDeletionOpen}
+                    >
+                      <Button size="icon-sm" variant="destructive" disabled={profiles.length <= 1}>
+                        <TrashIcon />
+                      </Button>
+                    </ProfileDeleteDialog>
                   </CommandItem>
                 )
               })}

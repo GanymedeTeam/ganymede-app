@@ -21,6 +21,7 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from './downloads/-back_button_link.tsx'
+import { toast } from 'sonner'
 
 const SearchZod = z.object({
   from: z.string().optional(),
@@ -193,7 +194,7 @@ function Settings() {
                 if (profileName.trim() !== '' && !conf.data.profiles.find((p) => p.name === profileName.trim())) {
                   const id = await newId.mutateAsync()
 
-                  setConf.mutate({
+                  await setConf.mutateAsync({
                     ...conf.data,
                     profiles: [
                       ...conf.data.profiles,
@@ -206,7 +207,11 @@ function Settings() {
                     profileInUse: id,
                   })
 
+                  toast.success(t`Profil créé avec succès`)
+
                   form.newProfile.value = ''
+                } else {
+                  toast.error(t`Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique).`)
                 }
               }}
             >
