@@ -681,4 +681,4 @@ msgstr "Actualmente estás usando la versión <0>{fromVersion}</0>."
 
 #: src/routes/_app/guides/index.tsx:416
 msgid "Vous vous apprêtez à supprimer des guides de votre système."
-msgstr "Actualizando las guías descargadas"
+msgstr "Está a punto de eliminar guías de su sistema."
