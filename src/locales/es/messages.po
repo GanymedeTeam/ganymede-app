@@ -34,13 +34,15 @@ msgstr "Mostrar las guías terminadas"
 msgid "Ajouter"
 msgstr "Añadir"
 
+#: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/guides/-report_dialog.tsx:160
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
 msgid "Annuler"
 msgstr "Cancelar"
 
-#: src/routes/_app/downloads/$status.tsx:149
+#: src/components/deep_link_guide_download_dialog.tsx:38
+#: src/routes/_app/downloads/$status.tsx:184
 msgid "Attention"
 msgstr "Atención"
 
@@ -48,11 +50,11 @@ msgstr "Atención"
 msgid "Attention !"
 msgstr "¡Atención!"
 
-#: src/routes/_app/downloads/$status.tsx:170
+#: src/routes/_app/downloads/$status.tsx:205
 msgid "Aucun guides trouvé"
 msgstr "No se encontraron guías"
 
-#: src/routes/_app/downloads/$status.tsx:186
+#: src/routes/_app/downloads/$status.tsx:221
 msgid "Aucun guides trouvé avec {term}"
 msgstr "No se encontraron guías con {term}"
 
@@ -167,6 +169,10 @@ msgstr "Confirmar el envío del informe"
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Contenido de la nota.{linesBreak}Desde el menú anterior, una vez creada, puedo modificarla haciendo clic sobre ella o copiar su contenido."
 
+#: src/components/deep_link_guide_download_dialog.tsx:67
+msgid "Continuer"
+msgstr "Continuar"
+
 #: src/routes/_app/settings.tsx:132
 msgid "Copie d'autopilote"
 msgstr "Copia del piloto automático"
@@ -215,7 +221,7 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/downloads/$status.tsx:221
+#: src/routes/_app/downloads/$status.tsx:256
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -264,9 +270,17 @@ msgstr "Error al copiar el número del paso ({0})."
 msgid "Erreur lors de la suppression des guides"
 msgstr "Error al eliminar guías"
 
+#: src/hooks/use_deep_link_guide_handler.ts:77
+msgid "Erreur lors de la vérification du guide"
+msgstr "Error al verificar la guía"
+
 #: src/routes/_app/guides/index.tsx:222
 msgid "Erreur lors du rafraichissement des guides téléchargés"
 msgstr "Error al actualizar las guías descargadas"
+
+#: src/hooks/use_deep_link_guide_handler.ts:100
+msgid "Erreur lors du téléchargement du guide"
+msgstr "Error al descargar la guía"
 
 #: src/components/title_bar.tsx:137
 #: src/routes/_app/guides/-guide_update_all_result_dialog.tsx:75
@@ -285,8 +299,12 @@ msgstr "Ganymede - No afiliado a Ankama Games"
 msgid "Grande"
 msgstr "Grande"
 
+#: src/hooks/use_deep_link_guide_handler.ts:93
+msgid "Guide téléchargé avec succès"
+msgstr "Guía descargada con éxito"
+
 #: src/components/title_bar.tsx:53
-#: src/routes/_app/downloads/$status.tsx:98
+#: src/routes/_app/downloads/$status.tsx:104
 msgid "Guides"
 msgstr "Guías"
 
@@ -296,26 +314,26 @@ msgstr "Guías"
 msgid "Guides {0}"
 msgstr "Guías {0}"
 
-#: src/routes/_app/downloads/$status.tsx:96
+#: src/routes/_app/downloads/$status.tsx:102
 #: src/routes/_app/downloads/index.tsx:69
 msgid "Guides certifiés"
 msgstr "Guías certificadas"
 
-#: src/routes/_app/downloads/$status.tsx:92
+#: src/routes/_app/downloads/$status.tsx:98
 #: src/routes/_app/downloads/index.tsx:89
 msgid "Guides draft"
 msgstr "Borradores de guías"
 
-#: src/routes/_app/downloads/$status.tsx:94
+#: src/routes/_app/downloads/$status.tsx:100
 #: src/routes/_app/downloads/index.tsx:59
 msgid "Guides principaux"
 msgstr "Guías principales"
 
-#: src/routes/_app/downloads/$status.tsx:90
+#: src/routes/_app/downloads/$status.tsx:96
 msgid "Guides privés"
 msgstr "Guías privadas"
 
-#: src/routes/_app/downloads/$status.tsx:88
+#: src/routes/_app/downloads/$status.tsx:94
 #: src/routes/_app/downloads/index.tsx:79
 msgid "Guides publics"
 msgstr "Guías públicas"
@@ -325,7 +343,7 @@ msgid "Guides supprimés"
 msgstr "Guías eliminadas"
 
 #. placeholder {0}: guide.id
-#: src/routes/_app/downloads/$status.tsx:198
+#: src/routes/_app/downloads/$status.tsx:233
 #: src/routes/_app/guides/index.tsx:442
 #: src/routes/_app/guides/index.tsx:588
 msgid "id <0>{0}</0>"
@@ -353,7 +371,7 @@ msgstr "No se pudo comprobar la actualización de la aplicación."
 msgid "Informations supplémentaires : {0}"
 msgstr "Información adicional: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:161
+#: src/routes/_app/downloads/$status.tsx:196
 msgid "J'ai compris"
 msgstr "Entendido"
 
@@ -365,12 +383,23 @@ msgstr "Confirmo que mi guía está actualizada."
 msgid "Langue"
 msgstr "Idioma"
 
+#: src/components/deep_link_guide_download_dialog.tsx:49
+msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
+msgstr "La guía #{pendingGuideId} no está descargada.<0/>¿Quiere descargarla ahora?"
+
+#. placeholder {0}: pendingStep + 1
+#. placeholder {1}: progressionStep + 1
+#. placeholder {2}: profile.name
+#: src/components/deep_link_guide_download_dialog.tsx:42
+msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
+msgstr "La guía se abrirá en <0>el paso {0}</0>. <1/>Estaba en <2>el paso {1}</2> en su perfil <3>\"{2}\"</3>."
+
 #. placeholder {0}: index + 1
 #: src/routes/_app/guides/-guide_page.tsx:121
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 
-#: src/routes/_app/downloads/$status.tsx:153
+#: src/routes/_app/downloads/$status.tsx:188
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Las guías de esta sección no han sido verificadas manualmente por el equipo de Ganymede. <0/> Aunque los enlaces a los sitios son seguros, por favor, verifica cuidadosamente las guías <1>en nuestro sitio</1> antes de descargarlas."
 
@@ -489,7 +518,7 @@ msgstr "Actualizando las guías descargadas"
 msgid "Récapitulatif du message"
 msgstr "Resumen del mensaje"
 
-#: src/routes/_app/downloads/$status.tsx:181
+#: src/routes/_app/downloads/$status.tsx:216
 #: src/routes/_app/guides/index.tsx:494
 msgid "Rechercher un guide"
 msgstr "Buscar una guía"
@@ -548,10 +577,19 @@ msgstr "Eliminar de la lista"
 msgid "Taille de texte des guides"
 msgstr "Tamaño del texto de las guías"
 
+#: src/components/deep_link_guide_download_dialog.tsx:65
+msgid "Téléchargement..."
+msgstr "Descargando..."
+
+#: src/components/deep_link_guide_download_dialog.tsx:69
+msgid "Télécharger"
+msgstr "Descargar"
+
 #: src/routes/app-old-version.tsx:116
 msgid "Télécharger la version {toVersion}"
 msgstr "Descargar la versión {toVersion}"
 
+#: src/components/deep_link_guide_download_dialog.tsx:38
 #: src/components/guide_download_button.tsx:46
 msgid "Télécharger le guide"
 msgstr "Descargar la guía"

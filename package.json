@@ -8,7 +8,8 @@
     "build": "tsc && lingui extract && vite build",
     "tauri": "tauri",
     "i18n:extract": "lingui extract",
-    "changeset:version": "changeset version && node scripts/changeset-update-versions.js"
+    "changeset:version": "changeset version && node scripts/changeset-update-versions.js",
+    "format": "biome check --unsafe --fix ./src"
   },
   "dependencies": {
     "@lingui/core": "^5.4.0",
@@ -33,6 +34,7 @@
     "@tanstack/react-router": "^1.130.12",
     "@tauri-apps/api": "^2.7.0",
     "@tauri-apps/plugin-clipboard-manager": "^2.3.0",
+    "@tauri-apps/plugin-deep-link": "~2",
     "@tauri-apps/plugin-global-shortcut": "^2.3.0",
     "@tauri-apps/plugin-http": "^2.5.1",
     "@tauri-apps/plugin-log": "^2.6.0",
@@ -40,7 +42,7 @@
     "@tauri-apps/plugin-os": "^2.3.0",
     "@tauri-apps/plugin-updater": "^2.9.0",
     "@tauri-apps/plugin-window-state": "^2.4.0",
-    "@uidotdev/usehooks": "^2.4.1",
+    "@uidotdev/usehooks": "2.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

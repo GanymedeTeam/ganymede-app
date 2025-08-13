@@ -1,4 +1,4 @@
-use crate::api::GANYMEDE_API_V2;
+use crate::api::GANYMEDE_API;
 use crate::tauri_api_ext::GuidesPathExt;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -393,6 +393,8 @@ pub trait GuidesApi {
     ) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
     async fn copy_current_guide_step();
+    #[taurpc(alias = "guideExists")]
+    async fn guide_exists(app_handle: AppHandle, guide_id: u32) -> Result<bool, Error>;
 }
 
 #[derive(Clone)]
@@ -453,9 +455,9 @@ impl GuidesApi for GuidesApiImpl {
         let http_client = app_handle.state::<reqwest::Client>();
 
         let url = if let Some(status) = status {
-            format!("{}/guides?status={}", GANYMEDE_API_V2, status.to_str())
+            format!("{}/v2/guides?status={}", GANYMEDE_API, status.to_str())
         } else {
-            format!("{}/guides", GANYMEDE_API_V2)
+            format!("{}/v2/guides", GANYMEDE_API)
         };
 
         let res = http_client
@@ -709,6 +711,16 @@ impl GuidesApi for GuidesApiImpl {
 
         Ok(())
     }
+
+    async fn guide_exists(self, app_handle: AppHandle, guide_id: u32) -> Result<bool, Error> {
+        debug!("[Guides] Checking if guide {} exists", guide_id);
+
+        let guides = self.get_flat_guides(app_handle, "".into()).await?;
+        let exists = guides.iter().any(|g| g.id == guide_id);
+
+        debug!("[Guides] Guide {} exists: {}", guide_id, exists);
+        Ok(exists)
+    }
 }
 
 pub fn ensure(app: &AppHandle) -> Result<(), Error> {
@@ -740,7 +752,7 @@ pub async fn get_guide_from_server(
     info!("[Guides] get_guide_from_server: {}", guide_id);
 
     let res = http_client
-        .get(format!("{}/guides/{}", GANYMEDE_API_V2, guide_id))
+        .get(format!("{}/v2/guides/{}", GANYMEDE_API, guide_id))
         .send()
         .await
         .map_err(|err| Error::RequestGuide(err.to_string()))?;

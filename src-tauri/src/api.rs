@@ -2,87 +2,17 @@ use log::debug;
 use serde::{Deserialize, Serialize};
 use tauri::AppHandle;
 
-#[cfg(not(dev))]
-use log::info;
+#[derive(Debug, Serialize, thiserror::Error)]
+pub enum Error {
+    #[error("failed to build client builder: {0}")]
+    BuildClientBuilder(String),
+}
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
 pub const GANYMEDE_API: &str = "https://ganymede-app.com/api";
-pub const GANYMEDE_API_V2: &str = "https://ganymede-app.com/api/v2";
 
 pub const API_KEY_HEADER: &str = "X-API-KEY";
 pub const API_KEY: &str = env!("GANYMEDE_API_KEY");
-
-#[allow(dead_code)]
-#[derive(Debug, Serialize, thiserror::Error)]
-pub enum Error {
-    #[error("failed to get os")]
-    OsNotFound,
-    #[error("failed to build client builder: {0}")]
-    BuildClientBuilder(String),
-    #[error("failed to request downloaded: {0}")]
-    RequestDownloaded(String),
-    #[error("failed to increment downloaded count: {0} - {1}")]
-    DownloadedCount(String, String),
-}
-
-#[cfg(not(dev))]
-#[derive(Serialize)]
-struct DownloadedBody {
-    #[serde(rename = "uniqueID")]
-    unique_id: String,
-    version: String,
-    os: String,
-}
-
-#[cfg(not(dev))]
-fn os_to_string(os: String) -> Option<String> {
-    match os.as_str() {
-        "windows" => Some("Windows".into()),
-        "macos" => Some("Mac_OS".into()),
-        "linux" => Some("linux".into()),
-        _ => None,
-    }
-}
-
-#[cfg(not(dev))]
-pub async fn increment_app_download_count(
-    version: String,
-    http_client: &tauri_plugin_http::reqwest::Client,
-) -> Result<tauri_plugin_http::reqwest::Response, Error> {
-    let id = machine_uid::get().unwrap();
-    let os = std::env::consts::OS.to_string();
-    let os = os_to_string(os).ok_or(Error::OsNotFound)?;
-
-    info!(
-        "[Api] id = \"{}\", version = {}, os = {:?}",
-        id, version, os
-    );
-
-    debug!("[Api] Incrementing app download count");
-
-    let body = DownloadedBody {
-        unique_id: id,
-        version,
-        os,
-    };
-
-    let res = http_client
-        .post(format!("{}/downloaded", GANYMEDE_API))
-        .header(API_KEY_HEADER, API_KEY)
-        .json(&body)
-        .send()
-        .await
-        .map_err(|err| Error::RequestDownloaded(err.to_string()))?;
-
-    if res.status().is_success() {
-        Ok(res)
-    } else {
-        Err(Error::DownloadedCount(
-            res.status().to_string(),
-            res.text().await.expect("[Api] failed to get response text"),
-        ))
-    }
-}
 
 #[derive(Deserialize)]
 struct AppRelease {

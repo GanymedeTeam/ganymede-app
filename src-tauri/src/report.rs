@@ -1,4 +1,4 @@
-use crate::api::{API_KEY, API_KEY_HEADER, GANYMEDE_API_V2};
+use crate::api::{API_KEY, API_KEY_HEADER, GANYMEDE_API};
 use log::{debug, info};
 use serde::Serialize;
 use tauri::{AppHandle, Manager};
@@ -64,8 +64,8 @@ impl ReportApi for ReportApiImpl {
 
         let res = http_client
             .post(format!(
-                "{}/guides/{}/report",
-                GANYMEDE_API_V2, payload.guide_id
+                "{}/v2/guides/{}/report",
+                GANYMEDE_API, payload.guide_id
             ))
             .header(API_KEY_HEADER, API_KEY)
             .json(&Into::<ReportApiPayload>::into(payload))
