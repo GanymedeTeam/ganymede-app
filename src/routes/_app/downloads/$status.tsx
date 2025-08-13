@@ -7,6 +7,7 @@ import { ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedI
 import { useRef, useState } from 'react'
 import { z } from 'zod'
 import { BottomBar } from '@/components/bottom_bar.tsx'
+import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
@@ -227,6 +228,14 @@ function DownloadGuidePage() {
 
                 return (
                   <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+                    {guide.node_image && (
+                      <div className="flex flex-col items-center justify-center">
+                        <DownloadImage 
+                          src={guide.node_image} 
+                          className="size-8 xs:size-10 sm:size-12 rounded object-cover"
+                        />
+                      </div>
+                    )}
                     <div className="flex w-9 flex-col items-center gap-0.5">
                       <FlagPerLang lang={guide.lang} />
                       <span className="whitespace-nowrap text-xxs">

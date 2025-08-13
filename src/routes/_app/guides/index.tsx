@@ -16,6 +16,7 @@ import {
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
@@ -386,13 +387,15 @@ function GuidesPage() {
       <PageScrollableContent className="p-2">
         <div className="flex flex-col gap-2">
           {updateAllAtOnce.isPending && (
-            <div className="fixed inset-0 top-15 z-10 flex items-center justify-center bg-accent/75">
-              <div className="flex items-center gap-2 p-2">
-                <GenericLoader className="translate-y-px" />
-                <span>
-                  <Trans>Mise à jour de vos guides {interval.seconds}s</Trans>
-                </span>
+            <div className="fixed inset-0 top-15 z-10 flex flex-col items-center justify-center bg-accent/75">
+              <div className="flex items-center">
+                <div className="flex items-center gap-2 p-2">
+                  <span>
+                    <Trans>Mise à jour de vos guides...</Trans>
+                  </span>
+                </div>
               </div>
+              <span className="text-3xl">{interval.seconds.toFixed(1)}s</span>
             </div>
           )}
 
@@ -436,6 +439,14 @@ function GuidesPage() {
 
                         return (
                           <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+                            {guide.node_image && (
+                              <div className="flex flex-col items-center justify-center">
+                                <DownloadImage
+                                  src={guide.node_image}
+                                  className="size-8 xs:size-10 sm:size-12 rounded object-cover"
+                                />
+                              </div>
+                            )}
                             <div className="flex min-w-9 flex-col items-center gap-0.5">
                               <FlagPerLang lang={guide.lang} />
                               <span className="whitespace-nowrap text-xxs">
@@ -560,6 +571,7 @@ function GuidesPage() {
                   'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base',
                   isSelect && 'cursor-pointer **:cursor-pointer',
                   isThisGuideSelected && 'bg-accent',
+                  !guide.node_image && 'pb-6',
                 )}
                 onClick={(evt) => {
                   if (!isSelect) {
@@ -581,36 +593,44 @@ function GuidesPage() {
                     setSelectedItemsToDelete((prev) => [...prev, { type: 'guide', guide }])
                   }
                 }}
+                asChild
               >
-                <div className="flex min-w-9 flex-col items-center gap-0.5">
-                  <FlagPerLang lang={guide.lang} />
-                  <span className="whitespace-nowrap text-xxs">
-                    <Trans>
-                      id <span className="text-yellow-300">{guide.id}</span>
-                    </Trans>
-                  </span>
-                </div>
-                <div className="flex grow flex-col gap-1">
-                  <h3 className="grow text-balance">{guide.name}</h3>
-                  <p className="inline-flex gap-1 self-end">
-                    <span>
-                      <span className="text-yellow-300">{step}</span>/{totalSteps}
+                <li>
+                  <div className="flex min-w-9 flex-col items-center gap-0.5">
+                    <FlagPerLang lang={guide.lang} />
+                    <span className="whitespace-nowrap text-xxs">
+                      <Trans>
+                        id <span className="text-yellow-300">{guide.id}</span>
+                      </Trans>
                     </span>
-                    <span>({percentage}%)</span>
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-1">
-                  {!isSelect && (
-                    <>
-                      <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
-                        <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }}>
-                          <ChevronRightIcon />
-                        </Link>
-                      </Button>
-                      <GuideDownloadButton guide={guide} />
-                    </>
-                  )}
-                </div>
+                    {guide.node_image && (
+                      <div className="flex flex-col items-center justify-center">
+                        <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex grow flex-col gap-1">
+                    <h3 className="grow text-balance">{guide.name}</h3>
+                    <p className="inline-flex gap-1 self-end">
+                      <span>
+                        <span className="text-yellow-300">{step}</span>/{totalSteps}
+                      </span>
+                      <span>({percentage}%)</span>
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    {!isSelect && (
+                      <>
+                        <Button asChild variant="secondary" size="icon" disabled={!hasOpenButton}>
+                          <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: step - 1 }}>
+                            <ChevronRightIcon />
+                          </Link>
+                        </Button>
+                        <GuideDownloadButton guide={guide} />
+                      </>
+                    )}
+                  </div>
+                </li>
               </Card>
             )
           })}

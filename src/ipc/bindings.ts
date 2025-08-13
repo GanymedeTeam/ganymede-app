@@ -14,7 +14,7 @@ export type Folder = { name: string }
 
 export type FontSize = "ExtraSmall" | "Small" | "Normal" | "Large" | "ExtraLarge"
 
-export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; user_id: number; description: string | null; web_description: string | null }
+export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; user_id: number; description: string | null; web_description: string | null; node_image: string | null }
 
 export type GuideLang = "en" | "fr" | "es" | "pt"
 
@@ -22,7 +22,7 @@ export type GuideOrFolderToDelete = { type: "guide"; id: number; folder: string 
 
 export type GuideStep = { name: string | null; map: string | null; pos_x: number; pos_y: number; web_text: string }
 
-export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; web_description: string | null; steps: GuideStep[] }
+export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; web_description: string | null; node_image: string | null; steps: GuideStep[] }
 
 export type Guides = { guides: GuideWithSteps[] }
 
@@ -100,7 +100,7 @@ export type User = { id: number; name: string; is_admin: number; is_certified: n
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = {'security':'{"getWhiteList":[]}', 'notifications':'{"markNotificationAsViewed":["notification_id"],"getViewedNotifications":[],"getUnviewedNotifications":[]}', 'guides':'{"updateAllAtOnce":[],"hasGuidesNotUpdated":[],"getFlatGuides":["folder"],"guideExists":["guide_id"],"downloadGuideFromServer":["guide_id","folder"],"getGuideFromServer":["guide_id"],"getGuidesFromServer":["status"],"getGuides":["folder"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"getGuideSummary":["guide_id"],"copyCurrentGuideStep":[],"openGuidesFolder":[]}', 'report':'{"send_report":["payload"]}', 'conf':'{"get":[],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"],"set":["conf"],"reset":[]}', 'api':'{"isAppVersionOld":[]}', 'almanax':'{"get":["level","date"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'base':'{"newId":[],"openUrl":["url"],"isProduction":[]}', 'image':'{"fetchImage":["url"]}', 'update':'{"startUpdate":[]}'}
+const ARGS_MAP = {'report':'{"send_report":["payload"]}', 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'guides':'{"getFlatGuides":["folder"],"guideExists":["guide_id"],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"getGuideSummary":["guide_id"],"openGuidesFolder":[],"getGuidesFromServer":["status"],"downloadGuideFromServer":["guide_id","folder"],"hasGuidesNotUpdated":[],"getGuideFromServer":["guide_id"],"updateAllAtOnce":[],"copyCurrentGuideStep":[],"getGuides":["folder"]}', 'update':'{"startUpdate":[]}', 'security':'{"getWhiteList":[]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'image':'{"fetchImage":["url"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'base':'{"openUrl":["url"],"newId":[],"isProduction":[]}', 'conf':'{"reset":[],"get":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}'}
 import { createTauRPCProxy as createProxy } from "taurpc"
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)

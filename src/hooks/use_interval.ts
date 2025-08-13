@@ -8,9 +8,9 @@ function createIntervalStore() {
   function start() {
     if (interval) return // Déjà actif
     interval = setInterval(() => {
-      count++
+      count += 0.1
       listeners.forEach((listener) => listener())
-    }, 1000)
+    }, 100)
   }
 
   function stop() {
