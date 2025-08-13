@@ -18,6 +18,11 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
+#. placeholder {0}: currentIndex + 1
+#: src/components/notification_alert_dialog.tsx:146
+msgid "{totalNotifications, plural, one {Message de l'équipe} other {Messages de l'équipe {0}/{totalNotifications}}}"
+msgstr "{totalNotifications, plural, one {Mensagem da equipa} other {Mensagens da equipa {0}/{totalNotifications}}}"
+
 #: src/routes/app-old-version.tsx:86
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog</1></0>"
@@ -26,7 +31,7 @@ msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog<
 msgid "Accueil"
 msgstr "Início"
 
-#: src/routes/_app/settings.tsx:147
+#: src/routes/_app/settings.tsx:148
 msgid "Afficher les guides terminés"
 msgstr "Exibir os guias concluídos"
 
@@ -35,6 +40,7 @@ msgid "Ajouter"
 msgstr "Adicionar"
 
 #: src/components/deep_link_guide_download_dialog.tsx:60
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:44
 #: src/routes/_app/guides/-report_dialog.tsx:160
 #: src/routes/_app/guides/index.tsx:465
 #: src/routes/_app/guides/index.tsx:484
@@ -58,7 +64,7 @@ msgstr "Nenhum guia encontrado"
 msgid "Aucun guides trouvé avec {term}"
 msgstr "Nenhum guia encontrado com {term}"
 
-#: src/routes/_app/-settings/profiles.tsx:59
+#: src/routes/_app/-settings/profiles.tsx:93
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
@@ -124,40 +130,40 @@ msgstr "Caça ao tesouro"
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
-#: src/components/guide_frame.tsx:274
+#: src/components/editor_html_parsing.tsx:278
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:275
+#: src/components/editor_html_parsing.tsx:279
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:282
+#: src/components/editor_html_parsing.tsx:286
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. ⌘+clique para abrir no dofusdb. ⌥+clique para abrir no DPLN"
 
-#: src/components/guide_frame.tsx:283
+#: src/components/editor_html_parsing.tsx:287
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb. Alt+clique para abrir no DPLN"
 
-#: src/components/guide_frame.tsx:270
+#: src/components/editor_html_parsing.tsx:274
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. ⌘+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:271
+#: src/components/editor_html_parsing.tsx:275
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:278
+#: src/components/editor_html_parsing.tsx:282
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. ⌘+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:279
+#: src/components/editor_html_parsing.tsx:283
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/guide_frame.tsx:351
-#: src/components/guide_frame.tsx:386
+#: src/components/editor_html_parsing.tsx:355
+#: src/components/editor_html_parsing.tsx:391
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
@@ -173,7 +179,7 @@ msgstr "Conteúdo da nota.{linesBreak}No menu anterior, uma vez criada, posso ed
 msgid "Continuer"
 msgstr "Continuar"
 
-#: src/routes/_app/settings.tsx:132
+#: src/routes/_app/settings.tsx:133
 msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
@@ -200,11 +206,11 @@ msgstr "Copiar a nota"
 msgid "Copier la position"
 msgstr "Copiar a posição"
 
-#: src/routes/_app/settings.tsx:216
+#: src/routes/_app/settings.tsx:221
 msgid "Créer"
 msgstr "Criar"
 
-#: src/routes/_app/settings.tsx:182
+#: src/routes/_app/settings.tsx:183
 msgid "Créer un profil"
 msgstr "Criar um perfil"
 
@@ -253,6 +259,10 @@ msgstr "Editar uma nota"
 msgid "En cours"
 msgstr "Em andamento"
 
+#: src/components/notification_alert_dialog.tsx:162
+msgid "En cours..."
+msgstr "Em progresso..."
+
 #: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
 msgstr "Salvar a nota"
@@ -265,6 +275,10 @@ msgstr "Enviar um relatório"
 #: src/routes/_app/guides/-guide_page.tsx:122
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
+
+#: src/routes/_app/settings.tsx:214
+msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
+msgstr "Erro ao criar o perfil. Verifique o nome do perfil (deve ser único)."
 
 #: src/routes/_app/guides/index.tsx:268
 msgid "Erreur lors de la suppression des guides"
@@ -282,6 +296,10 @@ msgstr "Erro ao atualizar os guias transferidos"
 msgid "Erreur lors du téléchargement du guide"
 msgstr "Erro ao transferir o guia"
 
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:39
+msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
+msgstr "Tem a certeza de que pretende eliminar este perfil? Esta ação é irreversível."
+
 #: src/components/title_bar.tsx:137
 #: src/routes/_app/guides/-guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
@@ -295,7 +313,7 @@ msgstr "Fim"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganimedes - Não afiliado à Ankama Games"
 
-#: src/routes/_app/settings.tsx:122
+#: src/routes/_app/settings.tsx:123
 msgid "Grande"
 msgstr "Grande"
 
@@ -403,9 +421,13 @@ msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ganimedes. <0/> Embora os links para os sites sejam seguros, verifique cuidadosamente os guias <1>em nosso site</1> antes de baixá-los."
 
-#: src/components/guide_frame.tsx:62
+#: src/components/editor_html_parsing.tsx:63
 msgid "lien masqué"
 msgstr "link oculto"
+
+#: src/components/notification_alert_dialog.tsx:165
+msgid "Marquer comme lu"
+msgstr "Marcar como lido"
 
 #: src/components/guide_download_button.tsx:46
 msgid "Mettre à jour le guide"
@@ -449,7 +471,7 @@ msgstr "Nome"
 msgid "Nom de la note"
 msgstr "Nome da nota"
 
-#: src/routes/_app/settings.tsx:119
+#: src/routes/_app/settings.tsx:120
 msgid "Normal"
 msgstr "Normal"
 
@@ -459,7 +481,7 @@ msgstr "Normal"
 msgid "Notes"
 msgstr "Notas"
 
-#: src/routes/_app/settings.tsx:83
+#: src/routes/_app/settings.tsx:84
 msgid "Opacité"
 msgstr "Opacidade"
 
@@ -472,12 +494,12 @@ msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
 #: src/components/title_bar.tsx:115
-#: src/routes/_app/settings.tsx:42
-#: src/routes/_app/settings.tsx:76
+#: src/routes/_app/settings.tsx:43
+#: src/routes/_app/settings.tsx:77
 msgid "Paramètres"
 msgstr "Configurações"
 
-#: src/routes/_app/settings.tsx:116
+#: src/routes/_app/settings.tsx:117
 msgid "Petite"
 msgstr "Pequena"
 
@@ -502,7 +524,20 @@ msgstr "Apresentação"
 msgid "Problème rencontré"
 msgstr "Problema encontrado"
 
-#: src/routes/_app/settings.tsx:174
+#. placeholder {0}: profile.name
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:37
+msgid "Profil \"{0}\""
+msgstr "Perfil \"{0}\""
+
+#: src/routes/_app/settings.tsx:210
+msgid "Profil créé avec succès"
+msgstr "Perfil criado com sucesso"
+
+#: src/routes/_app/-settings/profiles.tsx:62
+msgid "Profil supprimé avec succès"
+msgstr "Perfil eliminado com sucesso"
+
+#: src/routes/_app/settings.tsx:175
 msgid "Profils"
 msgstr "Perfis"
 
@@ -523,7 +558,7 @@ msgstr "Resumo da mensagem"
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
-#: src/routes/_app/-settings/profiles.tsx:56
+#: src/routes/_app/-settings/profiles.tsx:90
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
@@ -563,6 +598,7 @@ msgstr "A eliminar guias"
 msgid "Suppression des guides"
 msgstr "Eliminação de guias"
 
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:48
 #: src/routes/_app/guides/index.tsx:404
 #: src/routes/_app/guides/index.tsx:472
 msgid "Supprimer"
@@ -573,7 +609,7 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Remover da lista"
 
-#: src/routes/_app/settings.tsx:97
+#: src/routes/_app/settings.tsx:98
 msgid "Taille de texte des guides"
 msgstr "Tamanho do texto dos guias"
 
@@ -599,11 +635,11 @@ msgstr "Baixar o guia"
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
 
-#: src/routes/_app/settings.tsx:125
+#: src/routes/_app/settings.tsx:126
 msgid "Très grande"
 msgstr "Extra grande"
 
-#: src/routes/_app/settings.tsx:113
+#: src/routes/_app/settings.tsx:114
 msgid "Très petite"
 msgstr "Extra pequena"
 

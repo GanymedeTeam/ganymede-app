@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { TriangleAlertIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
@@ -21,7 +22,6 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from './downloads/-back_button_link.tsx'
-import { toast } from 'sonner'
 
 const SearchZod = z.object({
   from: z.string().optional(),

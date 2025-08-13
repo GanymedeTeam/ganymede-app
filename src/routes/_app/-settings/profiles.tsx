@@ -2,7 +2,9 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
-import { type MouseEvent, useState } from 'react'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button.tsx'
 import {
   Command,
   CommandEmpty,
@@ -18,8 +20,6 @@ import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { ProfileDeleteDialog } from '@/routes/_app/-settings/profile_delete_dialog.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { toast } from 'sonner'
 
 export function Profiles() {
   const { t } = useLingui()
@@ -28,7 +28,8 @@ export function Profiles() {
   const profiles = conf.data.profiles
   const currentProfile = useProfile()
   const [open, setOpen] = useState(false)
-  const [profileDeletionOpen, setProfileDeletionOpen] = useState(false)
+  const [openProfileDeleteDialog, setOpenProfileDeleteDialog] = useState(false)
+  const [profileDeletionOpenId, setProfileDeletionOpenId] = useState<string | null>(null)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,6 +43,36 @@ export function Profiles() {
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </button>
       </PopoverTrigger>
+      <ProfileDeleteDialog
+        profileId={profileDeletionOpenId}
+        open={openProfileDeleteDialog}
+        onDelete={async (profileId) => {
+          const index = profiles.findIndex((p) => p.id === profileId)
+          const nextProfileToUse =
+            conf.data.profileInUse === profileId
+              ? (profiles.at(index - 1)?.id ?? conf.data.profileInUse)
+              : conf.data.profileInUse
+
+          await setConf.mutateAsync({
+            ...conf.data,
+            profiles: profiles.filter((p) => p.id !== profileId),
+            profileInUse: nextProfileToUse,
+          })
+
+          toast.success(t`Profil supprimé avec succès`)
+
+          setOpenProfileDeleteDialog(false)
+        }}
+        onOpenChange={(open) => {
+          if (!open) {
+            setTimeout(() => {
+              setProfileDeletionOpenId(null)
+            }, 500)
+          }
+
+          setOpenProfileDeleteDialog(open)
+        }}
+      />
       <PopoverContent className="p-0">
         <Command
           filter={(value, search) => {
@@ -63,23 +94,6 @@ export function Profiles() {
             </CommandEmpty>
             <CommandGroup>
               {profiles.map((profile) => {
-                const onClickTrash = async (evt: MouseEvent) => {
-                  evt.stopPropagation()
-                  const index = profiles.findIndex((p) => p.id === profile.id)
-                  const nextProfileToUse =
-                    conf.data.profileInUse === profile.id
-                      ? (profiles.at(index - 1)?.id ?? conf.data.profileInUse)
-                      : conf.data.profileInUse
-
-                  await setConf.mutateAsync({
-                    ...conf.data,
-                    profiles: profiles.filter((p) => p.id !== profile.id),
-                    profileInUse: nextProfileToUse,
-                  })
-
-                  toast.success(t`Profil supprimé avec succès`)
-                }
-
                 return (
                   <CommandItem
                     key={profile.id}
@@ -95,16 +109,19 @@ export function Profiles() {
                     <CheckIcon
                       className={cn('ml-2 size-4', currentProfile.id === profile.id ? 'opacity-100' : 'opacity-0')}
                     />
-                    <ProfileDeleteDialog
-                      profileName={profile.name}
-                      onDelete={onClickTrash}
-                      open={profileDeletionOpen}
-                      onOpenChange={setProfileDeletionOpen}
+                    <Button
+                      size="icon-sm"
+                      variant="destructive"
+                      disabled={profiles.length <= 1}
+                      onClick={(evt) => {
+                        evt.stopPropagation()
+
+                        setOpenProfileDeleteDialog(true)
+                        setProfileDeletionOpenId(profile.id)
+                      }}
                     >
-                      <Button size="icon-sm" variant="destructive" disabled={profiles.length <= 1}>
-                        <TrashIcon />
-                      </Button>
-                    </ProfileDeleteDialog>
+                      <TrashIcon />
+                    </Button>
                   </CommandItem>
                 )
               })}

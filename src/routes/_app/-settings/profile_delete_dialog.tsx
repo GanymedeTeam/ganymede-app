@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/react/macro'
-import { TrashIcon } from 'lucide-react'
-import { PropsWithChildren, type MouseEvent } from 'react'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,32 +9,32 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert_dialog.tsx'
 import { Button } from '@/components/ui/button.tsx'
+import { getProfileById } from '@/lib/profile.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 
-interface ProfileDeleteDialogProps {
-  profileName: string
+interface ProfileDeleteDialogProps<T extends string | null> {
+  profileId: T
   open: boolean
   onOpenChange: (open: boolean) => void
-  onDelete: (evt: MouseEvent) => void
+  onDelete: (profileId: T) => void
 }
 
-export function ProfileDeleteDialog({
-  profileName,
+export function ProfileDeleteDialog<T extends string | null>({
+  profileId: profileId,
   onDelete,
   open,
   onOpenChange,
-  children,
-}: PropsWithChildren<ProfileDeleteDialogProps>) {
+}: ProfileDeleteDialogProps<T>) {
+  const conf = useSuspenseQuery(confQuery)
+  const profile = profileId ? getProfileById(conf.data.profiles, profileId) : undefined
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent className="max-w-sm">
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            <Trans>Profil "{profileName}"</Trans>
-          </AlertDialogTitle>
+          <AlertDialogTitle>{profile && <Trans>Profil "{profile.name}"</Trans>}</AlertDialogTitle>
           <AlertDialogDescription>
             <Trans>Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible.</Trans>
           </AlertDialogDescription>
@@ -45,7 +44,7 @@ export function ProfileDeleteDialog({
             <Trans>Annuler</Trans>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button variant="destructive" onClick={onDelete}>
+            <Button variant="destructive" onClick={() => onDelete(profileId)}>
               <Trans>Supprimer</Trans>
             </Button>
           </AlertDialogAction>
