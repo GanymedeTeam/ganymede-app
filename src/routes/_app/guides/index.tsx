@@ -443,7 +443,7 @@ function GuidesPage() {
                               <div className="flex flex-col items-center justify-center">
                                 <DownloadImage
                                   src={guide.node_image}
-                                  className="size-8 xs:size-10 sm:size-12 rounded object-cover"
+                                  className="size-8 xs:size-10 rounded object-cover sm:size-12"
                                 />
                               </div>
                             )}

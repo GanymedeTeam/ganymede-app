@@ -230,9 +230,9 @@ function DownloadGuidePage() {
                   <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
                     {guide.node_image && (
                       <div className="flex flex-col items-center justify-center">
-                        <DownloadImage 
-                          src={guide.node_image} 
-                          className="size-8 xs:size-10 sm:size-12 rounded object-cover"
+                        <DownloadImage
+                          src={guide.node_image}
+                          className="size-8 xs:size-10 rounded object-cover sm:size-12"
                         />
                       </div>
                     )}
