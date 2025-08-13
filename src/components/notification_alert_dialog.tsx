@@ -37,7 +37,7 @@ function useTimer(seconds = 2) {
     if (!isActive || count <= 0) return
 
     const timer = setTimeout(() => {
-      setCount(prev => prev - 1)
+      setCount((prev) => prev - 1)
     }, 1000)
 
     return () => clearTimeout(timer)
@@ -65,14 +65,19 @@ export function NotificationAlertDialog() {
 
   const notifications = unviewedNotifications.data ?? []
   const currentNotification = allNotifications[currentIndex]
-  
+
   const getLocale = (lang: ReturnType<typeof getLang>) => {
     switch (lang) {
-      case 'Fr': return 'fr'
-      case 'En': return 'en'
-      case 'Es': return 'es'
-      case 'Pt': return 'pt'
-      default: return 'fr'
+      case 'Fr':
+        return 'fr'
+      case 'En':
+        return 'en'
+      case 'Es':
+        return 'es'
+      case 'Pt':
+        return 'pt'
+      default:
+        return 'fr'
     }
   }
 
@@ -105,10 +110,10 @@ export function NotificationAlertDialog() {
 
     try {
       await markAsViewed.mutateAsync(currentNotification.id)
-      
+
       const newIndex = currentIndex + 1
       setCurrentIndex(newIndex)
-      
+
       if (newIndex >= totalNotifications) {
         setTimeout(() => {
           setIsOpen(false)
@@ -131,6 +136,7 @@ export function NotificationAlertDialog() {
   }
 
   const isDisabled = count > 0 || markAsViewed.isPending
+  const locale = getLocale(getLang(conf.data.lang))
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -144,9 +150,7 @@ export function NotificationAlertDialog() {
             />
           </AlertDialogTitle>
           <p className="text-muted-foreground text-sm">
-            {dayjs(currentNotification.display_at)
-              .locale(getLocale(getLang(conf.data.lang)))
-              .format('DD MMMM YYYY à HH:mm')}
+            {dayjs(currentNotification.displayAt).locale(locale).format('DD MMMM YYYY à HH:mm')}
           </p>
         </AlertDialogHeader>
         <ScrollArea className="h-full" type="auto">

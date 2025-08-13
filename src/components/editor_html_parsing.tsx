@@ -142,7 +142,7 @@ export function EditorHtmlParsing({
               child.attribs.src.includes('images/texteditor/guides.png'),
           )
 
-          if (domGuideId !== undefined && (!Number.isNaN(domGuideId) || !Number.isNaN(stepNumber))) {
+          if (domGuideId !== undefined && !Number.isNaN(domGuideId) && !Number.isNaN(stepNumber)) {
             const guideInSystem = getGuideById(guides.data, domGuideId)
 
             stepNumber = clamp(stepNumber, 1, guideInSystem?.steps.length ?? stepNumber)

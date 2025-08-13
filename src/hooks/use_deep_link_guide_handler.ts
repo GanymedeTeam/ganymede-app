@@ -89,7 +89,7 @@ export function useDeepLinkGuideHandler() {
         folder: '',
       })
 
-      if (!(pendingStep !== null && progressionStep !== null)) {
+      if (pendingStep === null || progressionStep === null) {
         toast.success(t`Guide téléchargé avec succès`)
       }
 
