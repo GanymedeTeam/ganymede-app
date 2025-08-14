@@ -87,8 +87,7 @@
         "useNamespaceKeyword": "error",
         "noWith": "error"
       }
-    },
-    "includes": ["**", "!**/dist", "!**/node_modules", "!src/routeTree.gen.ts"]
+    }
   },
   "javascript": {
     "formatter": {
@@ -262,5 +261,16 @@
         }
       }
     }
-  ]
+  ],
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/src-tauri",
+      "!**/node_modules",
+      "!**/.claude",
+      "!**/routeTree.gen.ts",
+      "!**/ipc/bindings.ts"
+    ]
+  }
 }

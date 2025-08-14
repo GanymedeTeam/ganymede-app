@@ -9,7 +9,7 @@
     "tauri": "tauri",
     "i18n:extract": "lingui extract",
     "changeset:version": "changeset version && node scripts/changeset-update-versions.js",
-    "format": "biome check --unsafe --fix ./src"
+    "format": "biome check --unsafe --fix"
   },
   "dependencies": {
     "@lingui/core": "^5.4.0",

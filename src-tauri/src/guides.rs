@@ -103,6 +103,7 @@ pub struct Guide {
     pub user_id: u32,
     pub description: Option<String>,
     pub web_description: Option<String>,
+    pub node_image: Option<String>,
 }
 
 #[taurpc::ipc_type]
@@ -120,6 +121,7 @@ pub struct GuideWithSteps {
     pub order: u32,
     pub user: User,
     pub web_description: Option<String>,
+    pub node_image: Option<String>,
     pub steps: Vec<GuideStep>,
     #[serde(skip_deserializing, serialize_with = "crate::json::serialize_path")]
     pub folder: Option<PathBuf>,

@@ -131,4 +131,4 @@ src/ipc/deep_link.ts               # Frontend IPC wrapper
 - The app checks for updates and redirects to update page if outdated
 - Guide files are stored as `{id}.json` and can be in any subfolder
 - TauRPC automatically generates TypeScript bindings from Rust traits
-- Parallelize the maximum
+- **Parallelize the maximum of tasks. You can Update multiple files at once to be faster.**
