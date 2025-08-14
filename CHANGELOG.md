@@ -1,5 +1,14 @@
 # ganymede-app
 
+## 1.13.0
+
+### Minor Changes
+
+- 903e0ea: Ajout d'une image indiquant sur quelle zone/dofus/boss un guide fait référence.
+- 93dbd18: Ajout d'une fonctionnalité pour pouvoir ouvrir l'application avec un bouton à travers le site web. Par exemple : ouvrir ce guide sur l'application.
+- 87840c8: Une alerte apparait désormais à la suppression d'un profil en cas de mauvaise manip.
+- 93dbd18: Ajout d'un système de notifications interne
+
 ## 1.12.3
 
 ### Patch Changes
