@@ -59,6 +59,7 @@ import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query
 import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide_update_all_result_dialog.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
+import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 
 const Search = z.object({
   path: z.string().default(''),
@@ -597,17 +598,19 @@ function GuidesPage() {
               >
                 <li>
                   <div className="flex min-w-9 flex-col items-center gap-0.5">
-                    <FlagPerLang lang={guide.lang} />
+                    {guide.node_image ? (
+                      <div className="flex flex-col items-center justify-center">
+                        <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
+                      </div>
+                    ) : (
+                      <DefaultGuideIcon className="size-8" />
+                    )}
                     <span className="whitespace-nowrap text-xxs">
                       <Trans>
                         id <span className="text-yellow-300">{guide.id}</span>
                       </Trans>
                     </span>
-                    {guide.node_image && (
-                      <div className="flex flex-col items-center justify-center">
-                        <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
-                      </div>
-                    )}
+                    <FlagPerLang lang={guide.lang} />
                   </div>
                   <div className="flex grow flex-col gap-1">
                     <h3 className="grow text-balance">{guide.name}</h3>

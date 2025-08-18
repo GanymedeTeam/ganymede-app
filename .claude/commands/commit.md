@@ -46,6 +46,7 @@ Avoid
 * Vague titles like: "update", "fix stuff"
 * Overly long or unfocused titles
 * Excessive detail in bullet points
+* Mentions TauRPC bindings updates if no Rust code is related
 
 ## Allowed Types
 

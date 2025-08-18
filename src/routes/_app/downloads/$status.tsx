@@ -43,6 +43,7 @@ import { guidesQuery } from '@/queries/guides.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides_from_server.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from './-back_button_link.tsx'
+import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 
 const SearchZod = z.object({
   page: z.coerce.number(),
@@ -229,17 +230,19 @@ function DownloadGuidePage() {
                 return (
                   <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
                     <div className="flex min-w-9 flex-col items-center gap-0.5">
-                      <FlagPerLang lang={guide.lang} />
+                      {guide.node_image ? (
+                        <div className="flex flex-col items-center justify-center">
+                          <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
+                        </div>
+                      ) : (
+                        <DefaultGuideIcon className="size-8" />
+                      )}
                       <span className="whitespace-nowrap text-xxs">
                         <Trans>
                           id <span className="text-yellow-300">{guide.id}</span>
                         </Trans>
                       </span>
-                      {guide.node_image && (
-                        <div className="flex flex-col items-center justify-center">
-                          <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
-                        </div>
-                      )}
+                      <FlagPerLang lang={guide.lang} />
                     </div>
                     <div className="flex grow flex-col gap-1">
                       <h3 className="grow text-balance">{guide.name}</h3>
