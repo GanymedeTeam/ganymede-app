@@ -3,7 +3,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
-import { ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
+import { BookIcon, ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { z } from 'zod'
 import { BottomBar } from '@/components/bottom_bar.tsx'
@@ -11,7 +11,6 @@ import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
-import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import {
   AlertDialog,
@@ -134,6 +133,8 @@ function getPaginationRange(current: number, total: number, delta = 2) {
   return range
 }
 
+const USE_GUIDE_IMAGE = false
+
 function DownloadGuidePage() {
   const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
@@ -230,12 +231,14 @@ function DownloadGuidePage() {
                 return (
                   <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
                     <div className="flex min-w-9 flex-col items-center gap-0.5">
-                      {guide.node_image ? (
-                        <div className="flex flex-col items-center justify-center">
-                          <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
+                      {USE_GUIDE_IMAGE && (
+                        <div className="flex grow flex-col items-center">
+                          {guide.node_image ? (
+                            <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
+                          ) : (
+                            <BookIcon className="size-6" />
+                          )}
                         </div>
-                      ) : (
-                        <DefaultGuideIcon className="size-8" />
                       )}
                       <span className="whitespace-nowrap text-xxs">
                         <Trans>
