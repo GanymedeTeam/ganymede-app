@@ -20,6 +20,7 @@ import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
+import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import {
   AlertDialog,
@@ -59,7 +60,6 @@ import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query
 import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide_update_all_result_dialog.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
-import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 
 const Search = z.object({
   path: z.string().default(''),

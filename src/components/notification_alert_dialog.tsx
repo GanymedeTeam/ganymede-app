@@ -140,7 +140,7 @@ export function NotificationAlertDialog() {
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent className="h-full max-h-[90vh]">
+      <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
         <AlertDialogHeader aria-describedby={undefined}>
           <AlertDialogTitle>
             <Plural

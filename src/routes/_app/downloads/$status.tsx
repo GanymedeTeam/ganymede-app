@@ -11,6 +11,7 @@ import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
+import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import {
   AlertDialog,
@@ -43,7 +44,6 @@ import { guidesQuery } from '@/queries/guides.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides_from_server.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from './-back_button_link.tsx'
-import { DefaultGuideIcon } from '@/components/icons/default_guide_icon.tsx'
 
 const SearchZod = z.object({
   page: z.coerce.number(),
