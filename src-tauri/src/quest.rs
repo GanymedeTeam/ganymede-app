@@ -3,7 +3,8 @@ use tauri_plugin_http::reqwest;
 
 use crate::api::DOFUSDB_API;
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "QuestError")]
 pub enum Error {
     #[error("failed to request quest data: {0}")]
     RequestQuest(String),

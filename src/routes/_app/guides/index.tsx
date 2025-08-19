@@ -4,7 +4,6 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   BookIcon,
   ChevronRightIcon,
-  CircleCheckIcon,
   DownloadCloudIcon,
   FolderIcon,
   FolderOpenIcon,
@@ -289,9 +288,7 @@ function GuidesPage() {
   const isItemToDeleteSelected = (guideIdOrFolder: string | number) => {
     return selectedItemsToDelete.some((guide) => {
       if (typeof guideIdOrFolder === 'string') {
-        const fullPath = `${path !== '' ? `${path}/` : ''}${guideIdOrFolder}`
-
-        return guide.type === 'folder' && guide.folder === fullPath
+        return guide.type === 'folder' && guide.folder === guideIdOrFolder
       }
 
       return guide.type === 'guide' && guide.guide.id === guideIdOrFolder
@@ -403,7 +400,7 @@ function GuidesPage() {
           )}
 
           {isSelect ? (
-            <div className="-my-2 -translate-y-2 sticky top-0 z-10 flex gap-2 bg-background py-2">
+            <div className="sticky top-0 z-10 flex gap-2 bg-background py-0">
               <AlertDialog open={openAlertDialogDeleteGuide} onOpenChange={setOpenAlertDialogDeleteGuide}>
                 <AlertDialogTrigger asChild disabled={selectedItemsToDelete.length === 0}>
                   <Button className="w-full" variant="destructive">
@@ -442,7 +439,7 @@ function GuidesPage() {
 
                         return (
                           <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
-                            {guide.node_image && (
+                            {USE_GUIDE_IMAGE && guide.node_image && (
                               <div className="flex flex-col items-center justify-center">
                                 <DownloadImage
                                   src={guide.node_image}
@@ -460,14 +457,6 @@ function GuidesPage() {
                             </div>
                             <div className="flex grow flex-col gap-1">
                               <h3 className="grow text-balance">{guide.name}</h3>
-                            </div>
-                            <div className="flex flex-col items-center gap-1">
-                              <Button variant="secondary" size="icon" disabled>
-                                <ChevronRightIcon />
-                              </Button>
-                              <Button variant="secondary" disabled>
-                                <CircleCheckIcon />
-                              </Button>
                             </div>
                           </Card>
                         )
@@ -514,17 +503,18 @@ function GuidesPage() {
               const fullPath = `${path !== '' ? `${path}/` : ''}${guide.name}`
               const isThisFolderSelected = isItemToDeleteSelected(fullPath)
 
+              console.log('isThisFolderSelected', isThisFolderSelected)
+
               return (
                 <Card
                   key={guide.name}
+                  aria-selected={isThisFolderSelected}
                   className={cn(
-                    'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base',
-                    isThisFolderSelected && 'bg-accent',
+                    'flex items-center gap-2 p-2 xs:px-3 text-xxs xs:text-sm aria-selected:bg-accent sm:text-base',
                   )}
                   asChild
                 >
                   <Link
-                    className="items-center"
                     to="/guides"
                     search={{
                       path: fullPath,
@@ -543,7 +533,9 @@ function GuidesPage() {
                         setSelectedItemsToDelete((prev) =>
                           prev.filter((itemsToDelete) => {
                             if (itemsToDelete.type === 'folder') {
-                              return itemsToDelete.folder !== guide.name
+                              const fullPath = `${path !== '' ? `${path}/` : ''}${guide.name}`
+                              console.log({ itemsToDelete, guide })
+                              return itemsToDelete.folder !== fullPath
                             }
 
                             return true
@@ -570,10 +562,10 @@ function GuidesPage() {
             return (
               <Card
                 key={guide.id}
+                aria-selected={isThisGuideSelected}
                 className={cn(
-                  'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base',
+                  'flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm aria-selected:bg-accent sm:text-base',
                   isSelect && 'cursor-pointer **:cursor-pointer',
-                  isThisGuideSelected && 'bg-accent',
                 )}
                 onClick={(evt) => {
                   if (!isSelect) {

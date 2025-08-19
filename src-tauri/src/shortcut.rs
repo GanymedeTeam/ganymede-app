@@ -1,15 +1,14 @@
 use log::{error, info};
 use std::str::FromStr;
-use tauri::{App, Emitter, Manager};
+use tauri::{App, Emitter, Manager, Wry};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutState};
 use tauri_plugin_sentry::sentry;
-use thiserror::Error as ThisError;
 
 use crate::conf::Conf;
 use crate::event::Event;
 use crate::guides::GuidesEventTrigger;
 
-#[derive(Debug, ThisError)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("failed to register shortcut: {0}")]
     Register(tauri_plugin_global_shortcut::Error),
@@ -89,7 +88,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                 let trigger = GuidesEventTrigger::new(app.clone());
 
                                 trigger
-                                    .copy_current_guide_step()
+                                    .copy_current_guide_step::<Wry>()
                                     .expect("[Shortcut] failed to copy current step");
                             }
                         }

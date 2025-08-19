@@ -1,8 +1,9 @@
 use serde::Serialize;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "ImageError")]
 pub enum Error {
     #[error("RequestImage({0})")]
     RequestImage(String),
@@ -13,7 +14,10 @@ pub enum Error {
 #[taurpc::procedures(path = "image", export_to = "../src/ipc/bindings.ts")]
 pub trait ImageApi {
     #[taurpc(alias = "fetchImage")]
-    async fn fetch_image(app_handle: AppHandle, url: String) -> Result<Vec<u8>, Error>;
+    async fn fetch_image<R: Runtime>(
+        app_handle: AppHandle<R>,
+        url: String,
+    ) -> Result<Vec<u8>, Error>;
 }
 
 #[derive(Clone)]
@@ -21,7 +25,11 @@ pub struct ImageApiImpl;
 
 #[taurpc::resolvers]
 impl ImageApi for ImageApiImpl {
-    async fn fetch_image(self, app_handle: AppHandle, url: String) -> Result<Vec<u8>, Error> {
+    async fn fetch_image<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        url: String,
+    ) -> Result<Vec<u8>, Error> {
         let http_client = app_handle.state::<reqwest::Client>();
 
         http_client

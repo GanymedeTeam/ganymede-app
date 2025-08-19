@@ -41,7 +41,7 @@ function Item({ guideId, error }: { guideId: number; error: string }) {
 export function GuideUpdateAllResultDialog({
   children,
   result,
-}: PropsWithChildren<{ result: Record<number, UpdateAllAtOnceResult> }>) {
+}: PropsWithChildren<{ result: Partial<Record<number, UpdateAllAtOnceResult>> }>) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>

@@ -5,14 +5,15 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::{fmt, fs, vec};
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_sentry::sentry;
 
 pub const DEFAULT_GUIDE_ID: u32 = 1074;
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "GuidesError")]
 pub enum Error {
     #[error("cannot parse glob pattern: {0}")]
     Pattern(String),
@@ -48,6 +49,8 @@ pub enum Error {
     DeleteGuideFileInSystem(String),
     #[error("cannot delete guide folder in system: {0}")]
     DeleteGuideFolderInSystem(String),
+    #[error("error in opener plugin")]
+    Opener(String),
 }
 
 #[taurpc::ipc_type]
@@ -186,8 +189,8 @@ pub enum GuideOrFolderToDelete {
 }
 
 impl GuidesOrFolder {
-    pub fn from_handle(
-        app: &AppHandle,
+    pub fn from_handle<R: Runtime>(
+        app: &AppHandle<R>,
         folder: Option<String>,
     ) -> Result<Vec<GuidesOrFolder>, Error> {
         let mut guide_folder = app.path().app_guides_dir();
@@ -301,7 +304,7 @@ impl Guides {
         Ok(Guides { guides })
     }
 
-    fn from_handle(app: &AppHandle, folder: String) -> Result<Guides, Error> {
+    fn from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Result<Guides, Error> {
         let mut guides_dir = app.path().app_guides_dir();
 
         if folder != "" {
@@ -311,7 +314,7 @@ impl Guides {
         Guides::from_path(&guides_dir)
     }
 
-    fn write(&self, app: &AppHandle) -> Result<(), Error> {
+    fn write<R: Runtime>(&self, app: &AppHandle<R>) -> Result<(), Error> {
         let guides_dir = &app.path().app_guides_dir();
 
         for guide in &self.guides {
@@ -353,50 +356,56 @@ impl Guides {
 #[taurpc::procedures(path = "guides", event_trigger = GuidesEventTrigger, export_to = "../src/ipc/bindings.ts")]
 pub trait GuidesApi {
     #[taurpc(alias = "getFlatGuides")]
-    async fn get_flat_guides(
-        app_handle: AppHandle,
+    async fn get_flat_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
         folder: String,
     ) -> Result<Vec<GuideWithSteps>, Error>;
     #[taurpc(alias = "getGuides")]
-    async fn get_guides(
-        app_handle: AppHandle,
+    async fn get_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
         folder: Option<String>,
     ) -> Result<Vec<GuidesOrFolder>, Error>;
     #[taurpc(alias = "getGuideFromServer")]
-    async fn get_guide_from_server(
-        app_handle: AppHandle,
+    async fn get_guide_from_server<R: Runtime>(
+        app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<GuideWithSteps, Error>;
     #[taurpc(alias = "getGuidesFromServer")]
-    async fn get_guides_from_server(
-        app_handle: AppHandle,
+    async fn get_guides_from_server<R: Runtime>(
+        app_handle: AppHandle<R>,
         status: Option<Status>,
     ) -> Result<Vec<Guide>, Error>;
     #[taurpc(alias = "downloadGuideFromServer")]
-    async fn download_guide_from_server(
-        app_handle: AppHandle,
+    async fn download_guide_from_server<R: Runtime>(
+        app_handle: AppHandle<R>,
         guide_id: u32,
         folder: String,
     ) -> Result<Guides, Error>;
     #[taurpc(alias = "openGuidesFolder")]
-    async fn open_guides_folder(app_handle: AppHandle) -> Result<(), tauri_plugin_opener::Error>;
+    async fn open_guides_folder<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
     #[taurpc(alias = "getGuideSummary")]
-    async fn get_guide_summary(app_handle: AppHandle, guide_id: u32) -> Result<Summary, Error>;
+    async fn get_guide_summary<R: Runtime>(
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<Summary, Error>;
     #[taurpc(alias = "updateAllAtOnce")]
-    async fn update_all_at_once(
-        app_handle: AppHandle,
+    async fn update_all_at_once<R: Runtime>(
+        app_handle: AppHandle<R>,
     ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error>;
     #[taurpc(alias = "hasGuidesNotUpdated")]
-    async fn has_guides_not_updated(app_handle: AppHandle) -> Result<bool, Error>;
+    async fn has_guides_not_updated<R: Runtime>(app_handle: AppHandle<R>) -> Result<bool, Error>;
     #[taurpc(alias = "deleteGuidesFromSystem")]
-    async fn delete_guides_from_system(
-        app_handle: AppHandle,
+    async fn delete_guides_from_system<R: Runtime>(
+        app_handle: AppHandle<R>,
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
-    async fn copy_current_guide_step();
+    async fn copy_current_guide_step<R: Runtime>(app_handle: AppHandle<R>);
     #[taurpc(alias = "guideExists")]
-    async fn guide_exists(app_handle: AppHandle, guide_id: u32) -> Result<bool, Error>;
+    async fn guide_exists<R: Runtime>(
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<bool, Error>;
 }
 
 #[derive(Clone)]
@@ -404,9 +413,9 @@ pub struct GuidesApiImpl;
 
 #[taurpc::resolvers]
 impl GuidesApi for GuidesApiImpl {
-    async fn get_flat_guides(
+    async fn get_flat_guides<R: Runtime>(
         self,
-        app: AppHandle,
+        app: AppHandle<R>,
         folder: String,
     ) -> Result<Vec<GuideWithSteps>, Error> {
         let guides = Guides::from_handle(&app, folder)?;
@@ -414,25 +423,25 @@ impl GuidesApi for GuidesApiImpl {
         Ok(guides.guides.into_iter().collect())
     }
 
-    async fn get_guides(
+    async fn get_guides<R: Runtime>(
         self,
-        app: AppHandle,
+        app: AppHandle<R>,
         folder: Option<String>,
     ) -> Result<Vec<GuidesOrFolder>, Error> {
         GuidesOrFolder::from_handle(&app, folder)
     }
 
-    async fn get_guide_from_server(
+    async fn get_guide_from_server<R: Runtime>(
         self,
-        app_handle: AppHandle,
+        app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<GuideWithSteps, Error> {
         get_guide_from_server(guide_id, &app_handle.state::<reqwest::Client>()).await
     }
 
-    async fn get_guides_from_server(
+    async fn get_guides_from_server<R: Runtime>(
         self,
-        app_handle: AppHandle,
+        app_handle: AppHandle<R>,
         status: Option<Status>,
     ) -> Result<Vec<Guide>, Error> {
         info!("[Guides] get_guides_from_server, status: {:?}", status);
@@ -476,9 +485,9 @@ impl GuidesApi for GuidesApiImpl {
         crate::json::from_str::<Vec<Guide>>(text.as_str()).map_err(Error::GuidesMalformed)
     }
 
-    async fn download_guide_from_server(
+    async fn download_guide_from_server<R: Runtime>(
         self,
-        app: AppHandle,
+        app: AppHandle<R>,
         guide_id: u32,
         folder: String,
     ) -> Result<Guides, Error> {
@@ -506,17 +515,18 @@ impl GuidesApi for GuidesApiImpl {
         Ok(guides)
     }
 
-    async fn open_guides_folder(self, app: AppHandle) -> Result<(), tauri_plugin_opener::Error> {
+    async fn open_guides_folder<R: Runtime>(self, app: AppHandle<R>) -> Result<(), Error> {
         let resolver = app.app_handle().path();
         let guides_dir = resolver.app_guides_dir();
 
         app.opener()
             .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
+            .map_err(|err| Error::Opener(err.to_string()))
     }
 
-    async fn get_guide_summary(
+    async fn get_guide_summary<R: Runtime>(
         self,
-        app_handle: AppHandle,
+        app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<Summary, Error> {
         let start = std::time::Instant::now();
@@ -614,9 +624,9 @@ impl GuidesApi for GuidesApiImpl {
         }
     }
 
-    async fn update_all_at_once(
+    async fn update_all_at_once<R: Runtime>(
         self,
-        app_handle: AppHandle,
+        app_handle: AppHandle<R>,
     ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
         info!("[Guides] update_all_at_once");
 
@@ -649,7 +659,10 @@ impl GuidesApi for GuidesApiImpl {
         Ok(results)
     }
 
-    async fn has_guides_not_updated(self, app_handle: AppHandle) -> Result<bool, Error> {
+    async fn has_guides_not_updated<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+    ) -> Result<bool, Error> {
         info!("[Guides] has_guides_not_updated");
 
         let guides_in_server = self
@@ -670,9 +683,9 @@ impl GuidesApi for GuidesApiImpl {
         Ok(false)
     }
 
-    async fn delete_guides_from_system(
+    async fn delete_guides_from_system<R: Runtime>(
         self,
-        app_handle: AppHandle,
+        app_handle: AppHandle<R>,
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error> {
         info!(
@@ -714,7 +727,11 @@ impl GuidesApi for GuidesApiImpl {
         Ok(())
     }
 
-    async fn guide_exists(self, app_handle: AppHandle, guide_id: u32) -> Result<bool, Error> {
+    async fn guide_exists<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<bool, Error> {
         debug!("[Guides] Checking if guide {} exists", guide_id);
 
         let guides = self.get_flat_guides(app_handle, "".into()).await?;
@@ -771,8 +788,8 @@ pub async fn get_guide_from_server(
     Ok(guide)
 }
 
-async fn download_guide_by_id(
-    app: &AppHandle,
+async fn download_guide_by_id<R: Runtime>(
+    app: &AppHandle<R>,
     guides: &mut Guides,
     guide_id: u32,
     folder: String,

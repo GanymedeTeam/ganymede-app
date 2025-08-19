@@ -15,17 +15,11 @@ crate-type = ["lib", "cdylib", "staticlib"]
 [build-dependencies]
 tauri-build = { version = "2.0.3", features = [] }
 
-[workspace]
-members = [
-  "taurpc",
-  "taurpc/taurpc-macros"
-]
-
 [dependencies]
 uuid = { version = "1.16.0", features = ["v6", "fast-rng"] }
 tauri = { version = "2.7.0", features = ["macos-private-api"] }
-specta = { version = "=2.0.0-rc.20", features = ["derive"] }
-specta-util = { version = "0.0.7", features = ["export"] }
+specta = { version = "=2.0.0-rc.22", features = ["derive"] }
+specta-typescript = "0.0.9"
 tokio = { version = "1.42.0", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -41,7 +35,7 @@ tauri-plugin-sentry = "0.2"
 thiserror = "2.0.12"
 tauri-plugin-log = "2.6.0"
 log = "0.4.26"
-taurpc = { path = "./taurpc", version = "0.3.2" }
+taurpc = { version = "0.5.1" }
 tauri-plugin-opener = "2.4.0"
 chrono-tz = "0.10.1"
 scraper = "0.23.1"

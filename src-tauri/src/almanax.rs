@@ -4,7 +4,7 @@ use crate::quest::get_quest_data;
 use chrono::prelude::*;
 use chrono_tz::Europe::Paris;
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
 use crate::conf::{Conf, ConfLang};
@@ -12,7 +12,8 @@ use crate::conf::{Conf, ConfLang};
 const REWARD_REDUCED_SCALE: f32 = 0.7;
 const REWARD_SCALE_CAP: f32 = 1.5;
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "AlmanaxError")]
 pub enum Error {
     #[error("failed to get almanax data from DofusDb")]
     DofusDbAlmanaxMalformed(#[from] crate::json::Error),
@@ -181,7 +182,11 @@ pub async fn get_item_data(item_id: u32, http_client: &reqwest::Client) -> Resul
 
 #[taurpc::procedures(path = "almanax", export_to = "../src/ipc/bindings.ts")]
 pub trait AlmanaxApi {
-    async fn get(app_handle: AppHandle, level: u32, date: String) -> Result<AlmanaxReward, Error>;
+    async fn get<R: Runtime>(
+        app_handle: AppHandle<R>,
+        level: u32,
+        date: String,
+    ) -> Result<AlmanaxReward, Error>;
 }
 
 #[derive(Clone)]
@@ -189,7 +194,12 @@ pub struct AlmanaxApiImpl;
 
 #[taurpc::resolvers]
 impl AlmanaxApi for AlmanaxApiImpl {
-    async fn get(self, app: AppHandle, level: u32, date: String) -> Result<AlmanaxReward, Error> {
+    async fn get<R: Runtime>(
+        self,
+        app: AppHandle<R>,
+        level: u32,
+        date: String,
+    ) -> Result<AlmanaxReward, Error> {
         let http_client = app.state::<reqwest::Client>();
         let almanax = get_almanax_data(date, &http_client).await?;
         let quest = get_quest_data(almanax.id, &http_client)

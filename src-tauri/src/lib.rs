@@ -107,6 +107,11 @@ pub fn run() {
     let app = app.plugin(tauri_plugin_sentry::init_with_no_injection(&sentry_client));
 
     let router = Router::new()
+        .export_config(
+            specta_typescript::Typescript::default()
+                .formatter(specta_typescript::formatter::biome)
+                .header("// @ts-nocheck\n/** biome-ignore */\n"),
+        )
         .merge(BaseApiImpl.into_handler())
         .merge(AlmanaxApiImpl.into_handler())
         .merge(GuidesApiImpl.into_handler())

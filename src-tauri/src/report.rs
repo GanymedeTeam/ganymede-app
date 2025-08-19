@@ -1,10 +1,11 @@
 use crate::api::{API_KEY, API_KEY_HEADER, GANYMEDE_API};
 use log::{debug, info};
 use serde::Serialize;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
-#[derive(thiserror::Error, Debug, Serialize)]
+#[derive(thiserror::Error, Debug, Serialize, taurpc::specta::Type)]
+#[specta(rename = "ReportError")]
 pub enum Error {
     #[error("failed to save report: {0}")]
     Server(String),
@@ -46,7 +47,10 @@ impl From<ReportPayload> for ReportApiPayload {
 
 #[taurpc::procedures(path = "report", export_to = "../src/ipc/bindings.ts")]
 pub trait ReportApi {
-    async fn send_report(app_handle: AppHandle, payload: ReportPayload) -> Result<(), Error>;
+    async fn send_report<R: Runtime>(
+        app_handle: AppHandle<R>,
+        payload: ReportPayload,
+    ) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -54,7 +58,11 @@ pub struct ReportApiImpl;
 
 #[taurpc::resolvers]
 impl ReportApi for ReportApiImpl {
-    async fn send_report(self, app_handle: AppHandle, payload: ReportPayload) -> Result<(), Error> {
+    async fn send_report<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        payload: ReportPayload,
+    ) -> Result<(), Error> {
         let http_client = app_handle.state::<reqwest::Client>();
 
         info!(

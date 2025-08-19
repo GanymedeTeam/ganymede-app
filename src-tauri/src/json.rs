@@ -2,7 +2,8 @@ use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize, Serializer};
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "JsonError")]
 pub enum Error {
     #[error("failed to parse JSON: {0}")]
     Json(String),

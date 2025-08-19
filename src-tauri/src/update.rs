@@ -1,13 +1,23 @@
 use crate::event::Event;
 use log::{debug, info};
-use tauri::{AppHandle, Emitter};
+use serde::Serialize;
+use tauri::{AppHandle, Emitter, Runtime};
 use tauri_plugin_sentry::sentry;
 use tauri_plugin_updater::UpdaterExt;
+
+#[derive(Serialize, Debug, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "UpdateError")]
+pub enum Error {
+    #[error("Update error: {0}")]
+    CheckUpdateError(String),
+    #[error("Failed to get updater: {0}")]
+    GetUpdaterError(String),
+}
 
 #[taurpc::procedures(path = "update", export_to = "../src/ipc/bindings.ts")]
 pub trait UpdateApi {
     #[taurpc(alias = "startUpdate")]
-    async fn start_update(app_handle: AppHandle) -> tauri_plugin_updater::Result<()>;
+    async fn start_update<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -15,7 +25,7 @@ pub struct UpdateApiImpl;
 
 #[taurpc::resolvers]
 impl UpdateApi for UpdateApiImpl {
-    async fn start_update(self, app: AppHandle) -> tauri_plugin_updater::Result<()> {
+    async fn start_update<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<(), Error> {
         debug!("[Update] starting update check");
 
         sentry::add_breadcrumb(sentry::Breadcrumb {
@@ -25,7 +35,13 @@ impl UpdateApi for UpdateApiImpl {
             ..Default::default()
         });
 
-        if let Some(update) = app.updater()?.check().await? {
+        if let Some(update) = app_handle
+            .updater()
+            .map_err(|err| Error::GetUpdaterError(err.to_string()))?
+            .check()
+            .await
+            .map_err(|err| Error::CheckUpdateError(err.to_string()))?
+        {
             debug!("[Update] update found");
 
             sentry::add_breadcrumb(sentry::Breadcrumb {
@@ -35,7 +51,7 @@ impl UpdateApi for UpdateApiImpl {
                 ..Default::default()
             });
 
-            app.emit(Event::UpdateStarted.into(), 0).unwrap();
+            app_handle.emit(Event::UpdateStarted.into(), 0).unwrap();
 
             let mut downloaded = 0;
 
@@ -44,7 +60,8 @@ impl UpdateApi for UpdateApiImpl {
                 .download(
                     |chunk_length, content_length| {
                         downloaded += chunk_length;
-                        app.emit(Event::UpdateInProgress.into(), (downloaded, content_length))
+                        app_handle
+                            .emit(Event::UpdateInProgress.into(), (downloaded, content_length))
                             .unwrap();
                         info!("[Update] downloaded {downloaded} from {content_length:?}");
                     },
@@ -55,7 +72,7 @@ impl UpdateApi for UpdateApiImpl {
                             message: Some("update downloaded".to_string()),
                             ..Default::default()
                         });
-                        app.emit(Event::UpdateFinished.into(), 0).unwrap();
+                        app_handle.emit(Event::UpdateFinished.into(), 0).unwrap();
                         info!("[Update] download finished");
                     },
                 )
@@ -83,7 +100,7 @@ impl UpdateApi for UpdateApiImpl {
             });
 
             // not required, but we can restart the app after the update
-            app.restart();
+            app_handle.restart();
         }
 
         Ok(())

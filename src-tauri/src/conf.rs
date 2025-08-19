@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
 use std::fs;
-use tauri::{AppHandle, Manager, Window, Wry};
+use tauri::{AppHandle, Manager, Runtime, Window};
 
 const DEFAULT_LEVEL: u32 = 200;
 
@@ -12,7 +12,8 @@ const fn default_level() -> u32 {
     DEFAULT_LEVEL
 }
 
-#[derive(Debug, Serialize, thiserror::Error)]
+#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[specta(rename = "ConfError")]
 pub enum Error {
     #[error("failed to get conf, file is malformed")]
     Malformed(#[from] crate::json::Error),
@@ -32,7 +33,8 @@ pub enum Error {
     ResetConf(Box<Error>),
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[derive(Debug)]
+#[taurpc::ipc_type]
 pub struct Profile {
     pub id: String,
     pub name: String,
@@ -41,12 +43,14 @@ pub struct Profile {
     pub progresses: Vec<Progress>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[derive(Debug)]
+#[taurpc::ipc_type]
 pub struct ConfStep {
     pub checkboxes: Vec<u32>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[derive(Debug)]
+#[taurpc::ipc_type]
 #[serde(rename_all = "camelCase")]
 pub struct Progress {
     pub id: u32, // guide id
@@ -71,13 +75,15 @@ pub enum FontSize {
     ExtraLarge,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[derive(Debug)]
+#[taurpc::ipc_type]
 pub struct AutoPilot {
     pub name: String,
     pub position: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, taurpc::specta::Type)]
+#[derive(Debug)]
+#[taurpc::ipc_type]
 pub struct Note {
     pub name: String,
     pub text: String,
@@ -152,7 +158,7 @@ impl ConfStep {
 
 impl Conf {
     /// Get the conf file content, if it does not exist, return default conf
-    pub fn get(app: &AppHandle) -> Result<Conf, Error> {
+    pub fn get<R: Runtime>(app: &AppHandle<R>) -> Result<Conf, Error> {
         let conf_path = app.path().app_conf_file();
 
         let file = fs::read_to_string(conf_path);
@@ -168,7 +174,7 @@ impl Conf {
     }
 
     /// Save the conf into the conf file. Normalize the conf before saving it
-    pub fn save(&mut self, app: &AppHandle) -> Result<(), Error> {
+    pub fn save<R: Runtime>(&mut self, app: &AppHandle<R>) -> Result<(), Error> {
         let conf_path = app.path().app_conf_file();
 
         self.normalize();
@@ -266,16 +272,16 @@ pub fn ensure(app: &AppHandle) -> Result<(), Error> {
 
 #[taurpc::procedures(path = "conf", export_to = "../src/ipc/bindings.ts")]
 pub trait ConfApi {
-    async fn get(app_handle: AppHandle) -> Result<Conf, Error>;
-    async fn set(conf: Conf, app_handle: AppHandle) -> Result<(), Error>;
+    async fn get<R: Runtime>(app_handle: AppHandle<R>) -> Result<Conf, Error>;
+    async fn set<R: Runtime>(conf: Conf, app_handle: AppHandle<R>) -> Result<(), Error>;
     #[taurpc(alias = "toggleGuideCheckbox")]
-    async fn toggle_guide_checkbox(
-        app_handle: AppHandle,
+    async fn toggle_guide_checkbox<R: Runtime>(
+        app_handle: AppHandle<R>,
         guide_id: u32,
         step_index: u32,
         checkbox_index: u32,
     ) -> Result<u32, Error>;
-    async fn reset(app_handle: AppHandle, window: Window) -> Result<(), Error>;
+    async fn reset<R: Runtime>(app_handle: AppHandle<R>, window: Window<R>) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -283,17 +289,17 @@ pub struct ConfApiImpl;
 
 #[taurpc::resolvers]
 impl ConfApi for ConfApiImpl {
-    async fn get(self, app: AppHandle) -> Result<Conf, Error> {
+    async fn get<R: Runtime>(self, app: AppHandle<R>) -> Result<Conf, Error> {
         Conf::get(&app)
     }
 
-    async fn set(self, conf: Conf, app: AppHandle) -> Result<(), Error> {
+    async fn set<R: Runtime>(self, conf: Conf, app: AppHandle<R>) -> Result<(), Error> {
         conf.clone().borrow_mut().save(&app)
     }
 
-    async fn toggle_guide_checkbox(
+    async fn toggle_guide_checkbox<R: Runtime>(
         self,
-        app: AppHandle,
+        app: AppHandle<R>,
         guide_id: u32,
         step_index: u32,
         checkbox_index: u32,
@@ -327,7 +333,7 @@ impl ConfApi for ConfApiImpl {
         Ok(checkbox_index)
     }
 
-    async fn reset(self, app: AppHandle, window: Window<Wry>) -> Result<(), Error> {
+    async fn reset<R: Runtime>(self, app: AppHandle<R>, window: Window<R>) -> Result<(), Error> {
         Conf::default()
             .save(&app)
             .map_err(|e| Error::ResetConf(Box::new(e)))?;
