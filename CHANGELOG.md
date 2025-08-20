@@ -1,12 +1,5 @@
 # ganymede-app
 
-## 1.13.0
-
-### Minor Changes
-
-- 87840c8: Une alerte apparait désormais à la suppression d'un profil en cas de mauvaise manip.
-- 93dbd18: Ajout d'un système de notifications interne
-
 ## 1.12.3
 
 ### Patch Changes
