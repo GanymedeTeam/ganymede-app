@@ -1,5 +1,13 @@
 # ganymede-app
 
+## 1.13.0
+
+### Minor Changes
+
+- ec3698b: Ajout d'un système de notifications interne.
+- ec3698b: Une alerte apparait désormais à la suppression d'un profil en cas de mauvaise manip.
+- 99a5174: Ajout d'une fonctionnalité pour pouvoir ouvrir l'application avec un bouton à travers le site web. Par exemple : ouvrir ce guide sur l'application. Cette fonctionnalité sera implémentée sur le site web ultérieurement.
+
 ## 1.12.3
 
 ### Patch Changes
