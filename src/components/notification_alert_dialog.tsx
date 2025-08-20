@@ -85,7 +85,7 @@ export function NotificationAlertDialog() {
     if (notifications.length > 0 && !isOpen) {
       setCurrentIndex(0)
       setTotalNotifications(notifications.length)
-      setAllNotifications(notifications.toReversed())
+      setAllNotifications(notifications.slice().reverse())
       setIsOpen(true)
       start()
     } else if (notifications.length === 0 && isOpen) {

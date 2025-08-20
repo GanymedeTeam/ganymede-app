@@ -51,6 +51,19 @@ const LOG_TARGETS: [Target; 2] = [
     Target::new(TargetKind::LogDir { file_name: None }),
 ];
 
+fn formatter(file: &std::path::Path) -> std::io::Result<()> {
+    std::process::Command::new("pnpm")
+        .arg("biome")
+        .arg("format")
+        .arg(file)
+        .output()
+        .map(|_| ())
+        .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
+}
+
+// Asserts that the formatter function matches the expected signature
+const _: specta_typescript::FormatterFn = formatter;
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -109,7 +122,7 @@ pub fn run() {
     let router = Router::new()
         .export_config(
             specta_typescript::Typescript::default()
-                .formatter(specta_typescript::formatter::biome)
+                .formatter(formatter)
                 .header("// @ts-nocheck\n/** biome-ignore */\n"),
         )
         .merge(BaseApiImpl.into_handler())
