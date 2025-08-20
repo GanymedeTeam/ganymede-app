@@ -4,7 +4,6 @@
 
 ### Minor Changes
 
-- 93dbd18: Ajout d'une fonctionnalité pour pouvoir ouvrir l'application avec un bouton à travers le site web. Par exemple : ouvrir ce guide sur l'application. Cette fonctionnalité sera implémentée sur le site web ultérieurement.
 - 87840c8: Une alerte apparait désormais à la suppression d'un profil en cas de mauvaise manip.
 - 93dbd18: Ajout d'un système de notifications interne
 
