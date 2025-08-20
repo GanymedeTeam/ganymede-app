@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.13.1
+
+### Patch Changes
+
+- 7428077: Correction d'une erreur sur les anciennes versions de macOS concernant les notifications internes.
+
 ## 1.13.0
 
 ### Minor Changes
