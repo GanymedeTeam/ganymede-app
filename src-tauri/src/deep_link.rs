@@ -1,9 +1,11 @@
 use crate::conf::{Conf, Error as ConfError};
-use log::{debug, warn};
+use log::{debug, error, warn};
 use regex::Regex;
+use serde::Serialize;
 use tauri::AppHandle;
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, thiserror::Error, Serialize, taurpc::specta::Type)]
+#[specta(rename = "DeepLinkError")]
 pub enum Error {
     #[error("failed to get conf: {0}")]
     Conf(#[from] ConfError),
@@ -47,7 +49,10 @@ pub struct DeepLinkApiImpl;
 #[taurpc::resolvers]
 impl DeepLinkApi for DeepLinkApiImpl {}
 
-fn get_guide_current_step(app: &AppHandle, guide_id: u32) -> Result<Option<u32>, Error> {
+fn get_guide_current_step<R: tauri::Runtime>(
+    app: &AppHandle<R>,
+    guide_id: u32,
+) -> Result<Option<u32>, Error> {
     let conf = Conf::get(app)?;
 
     let profile = conf
@@ -76,14 +81,13 @@ fn get_guide_current_step(app: &AppHandle, guide_id: u32) -> Result<Option<u32>,
     }
 }
 
-pub fn handle_deep_link_url(app: AppHandle, url: &tauri::Url) -> Result<(), Error> {
+pub fn handle_deep_link_url<R: tauri::Runtime>(app: AppHandle<R>, url: &str) -> Result<(), Error> {
     debug!("[DeepLink] Handling URL: {}", url);
 
-    let url_str = url.as_str();
     let guide_open_regex = Regex::new(r"ganymede://guides/open/(\d+)(?:\?step=(\d+))?")
         .map_err(|e| Error::ParseUrl(e.to_string()))?;
 
-    if let Some(captures) = guide_open_regex.captures(url_str) {
+    if let Some(captures) = guide_open_regex.captures(url) {
         let guide_id_str = captures
             .get(1)
             .ok_or_else(|| Error::ParseUrl("Missing guide ID".to_string()))?
@@ -130,13 +134,10 @@ pub fn handle_deep_link_url(app: AppHandle, url: &tauri::Url) -> Result<(), Erro
 
         Ok(())
     } else {
-        warn!(
-            "[DeepLink] URL does not match expected pattern: {}",
-            url_str
-        );
+        warn!("[DeepLink] URL does not match expected pattern: {}", url);
         Err(Error::ParseUrl(format!(
             "URL does not match expected pattern: {}",
-            url_str
+            url
         )))
     }
 }

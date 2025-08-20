@@ -184,10 +184,9 @@ pub fn run() {
             app.deep_link().on_open_url(move |event| {
                 for url in event.urls() {
                     info!("[Lib] Deep link received: {}", url);
-                    if let Err(err) =
-                        crate::deep_link::handle_deep_link_url(app_handle.clone(), &url)
-                    {
-                        error!("[Lib] Failed to handle deep link URL: {:?}", err);
+
+                    if let Err(err) = crate::deep_link::handle_deep_link_url(app_handle.clone(), url.as_str()) {
+                        error!("[Lib] Failed to handle deep link URL immediately, storing for later: {:?}", err);
                         sentry::capture_error(&err);
                     }
                 }
