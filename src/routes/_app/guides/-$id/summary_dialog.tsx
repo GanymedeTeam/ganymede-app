@@ -96,7 +96,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="ghost">
+        <Button size="icon" variant="ghost" className="size-6 sm:size-8">
           <BookTextIcon />
         </Button>
       </DialogTrigger>

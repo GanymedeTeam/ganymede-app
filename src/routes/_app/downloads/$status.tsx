@@ -1,16 +1,12 @@
 import { t } from '@lingui/core/macro'
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
-import { BookIcon, ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { z } from 'zod'
 import { BottomBar } from '@/components/bottom_bar.tsx'
-import { DownloadImage } from '@/components/download_image.tsx'
-import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
-import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import {
   AlertDialog,
@@ -21,8 +17,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
-import { Button } from '@/components/ui/button.tsx'
-import { Card } from '@/components/ui/card.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
 import {
   Pagination,
@@ -41,6 +35,7 @@ import { paginate } from '@/lib/search.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides_from_server.query.ts'
+import { GuideItem } from '@/routes/_app/guides/-index/guide_item.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from './-back_button_link.tsx'
 
@@ -132,8 +127,6 @@ function getPaginationRange(current: number, total: number, delta = 2) {
 
   return range
 }
-
-const USE_GUIDE_IMAGE = false
 
 function DownloadGuidePage() {
   const { t } = useLingui()
@@ -229,63 +222,14 @@ function DownloadGuidePage() {
                 const isGuideDownloaded = getGuideById(downloads.data, guide.id)
 
                 return (
-                  <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
-                    <div className="flex min-w-9 flex-col items-center gap-0.5">
-                      {USE_GUIDE_IMAGE && (
-                        <div className="flex grow flex-col items-center">
-                          {guide.node_image ? (
-                            <DownloadImage src={guide.node_image} className="size-8 rounded object-cover" />
-                          ) : (
-                            <BookIcon className="size-6" />
-                          )}
-                        </div>
-                      )}
-                      <span className="whitespace-nowrap text-xxs">
-                        <Trans>
-                          id <span className="text-yellow-300">{guide.id}</span>
-                        </Trans>
-                      </span>
-                      <FlagPerLang lang={guide.lang} />
-                    </div>
-                    <div className="flex grow flex-col gap-1">
-                      <h3 className="grow text-balance">{guide.name}</h3>
-                      <span className="mt-2 inline-flex flex-wrap justify-end gap-1 whitespace-nowrap text-xxs">
-                        {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
-                        <FileDownIcon className="size-3" />
-                      </span>
-                      <div className="flex justify-end gap-1">
-                        <span className="inline-flex flex-wrap justify-end gap-1 whitespace-nowrap text-xxs">
-                          {intl.format(guide.likes)}
-                          <ThumbsUpIcon className="size-3" />
-                        </span>
-                        <span className="inline-flex flex-wrap justify-end gap-1 whitespace-nowrap text-xxs">
-                          {intl.format(guide.dislikes)}
-                          <ThumbsDownIcon className="size-3" />
-                        </span>
-                      </div>
-                      <p className="inline-flex items-center gap-1 self-end">
-                        <span>
-                          <Trans>
-                            de <span className="font-semibold text-blue-400">{guide.user.name}</span>
-                          </Trans>
-                        </span>
-                        {guide.user.is_certified === 1 && <VerifiedIcon className="size-3 xs:size-4 text-orange-300" />}
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-center justify-end gap-1">
-                      <Button variant="secondary" size="icon" disabled={!isGuideDownloaded} asChild>
-                        <Link
-                          to="/guides/$id"
-                          params={{ id: guide.id }}
-                          search={{ step: getProgress(profile, guide.id)?.currentStep ?? 0 }}
-                          draggable={false}
-                        >
-                          <ChevronRightIcon />
-                        </Link>
-                      </Button>
-                      <GuideDownloadButton guide={guide} />
-                    </div>
-                  </Card>
+                  <GuideItem
+                    key={guide.id}
+                    variant="server"
+                    guide={guide}
+                    intl={intl}
+                    isGuideDownloaded={!!isGuideDownloaded}
+                    currentStep={getProgress(profile, guide.id)?.currentStep ?? 0}
+                  />
                 )
               })}
             </div>

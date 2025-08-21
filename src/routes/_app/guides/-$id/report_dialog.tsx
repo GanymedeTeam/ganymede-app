@@ -57,7 +57,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
         }}
       >
         <DialogTrigger asChild>
-          <Button variant="ghost">
+          <Button variant="ghost" size="icon" className="size-6 sm:size-8">
             <BugIcon />
           </Button>
         </DialogTrigger>

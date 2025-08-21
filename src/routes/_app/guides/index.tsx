@@ -263,6 +263,7 @@ function GuidesPage() {
             return (
               <GuideItem
                 key={guide.id}
+                variant="local"
                 guide={guide}
                 isSelected={isThisGuideSelected}
                 onSelect={onSelectGuide}
