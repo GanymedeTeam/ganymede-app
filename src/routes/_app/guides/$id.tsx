@@ -102,11 +102,11 @@ function GuideIdPage() {
           })
         }}
       >
-        <TabsList className="group" data-multiple={tabs.length > 1 ? 'true' : 'false'}>
+        <TabsList className="group pl-0 sm:pl-0" data-multiple={tabs.length > 1 ? 'true' : 'false'}>
           {tabs.map((guideId) => (
             <GuideTabsTrigger key={guideId} id={guideId} currentId={params.id} />
           ))}
-          <Button size="icon" className="min-h-6 min-w-6 self-center sm:size-6" variant="secondary" asChild>
+          <Button size="icon" className="ml-1 min-h-6 min-w-6 self-center sm:size-6" variant="secondary" asChild>
             <Link
               to="/guides"
               search={{

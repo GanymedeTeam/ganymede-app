@@ -28,7 +28,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
   // TODO: add node_image to the tab
 
   return (
-    <div className="group/tab relative line-clamp-1 flex w-full items-center justify-center">
+    <div className="group/tab relative line-clamp-1 flex w-full justify-center">
       <TabsTrigger value={id.toString()} title={guide.name}>
         {guide.name}
       </TabsTrigger>

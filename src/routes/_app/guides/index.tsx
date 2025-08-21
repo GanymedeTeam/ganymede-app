@@ -41,6 +41,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useInterval } from '@/hooks/use_interval.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GuideOrFolderToDelete, GuidesOrFolder } from '@/ipc/bindings.ts'
@@ -59,7 +60,6 @@ import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query
 import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide_update_all_result_dialog.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 
 const Search = z.object({
   path: z.string().default(''),
