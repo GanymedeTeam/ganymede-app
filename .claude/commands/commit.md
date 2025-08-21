@@ -40,6 +40,7 @@ feat(auth): add JWT login flow
 * Title should be a clear summary, max 50 characters.
 * Use the body (optional) to explain *why*, not just *what*.
 * Bullet points should be concise and high-level.
+* Do not `git add --all` or any `git add`.
 
 Avoid
 

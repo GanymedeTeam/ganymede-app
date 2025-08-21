@@ -13,7 +13,7 @@ import {
   ServerCrashIcon,
   SquareMousePointerIcon,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { DownloadImage } from '@/components/download_image.tsx'
@@ -59,6 +59,7 @@ import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query
 import { GuideUpdateAllResultDialog } from '@/routes/_app/guides/-guide_update_all_result_dialog.tsx'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 
 const Search = z.object({
   path: z.string().default(''),
@@ -111,13 +112,7 @@ function Pending() {
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
           <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
-            <ImportIcon className="size-4" />
-          </Button>
-          <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
-            <FolderSyncIcon className="size-4" />
-          </Button>
-          <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
-            <FolderOpenIcon className="size-4" />
+            <MenuIcon />
           </Button>
         </div>
       }
@@ -141,6 +136,7 @@ function GuidesPage() {
   const [selectedItemsToDelete, setSelectedItemsToDelete] = useState(
     [] as ({ type: 'guide'; guide: GuideWithFolder } | { type: 'folder'; folder: string })[],
   )
+  const [isHasUpdateTooltipOpen, setHasUpdateTooltipOpen] = useState(false)
   const path = Route.useSearch({
     select: (search) => (search.path.startsWith('/') ? search.path.slice(1) : search.path),
   })
@@ -304,6 +300,24 @@ function GuidesPage() {
   const hasSomeGuideNotUpdated = useQuery(hasGuidesNotUpdatedQuery)
   const deleteGuidesInSystem = useDeleteGuidesInSystem()
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined
+
+    if (hasSomeGuideNotUpdated.isSuccess && hasSomeGuideNotUpdated.data) {
+      setHasUpdateTooltipOpen(true)
+
+      timer = setTimeout(() => {
+        setHasUpdateTooltipOpen(false)
+      }, 5000)
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [hasSomeGuideNotUpdated.isSuccess, hasSomeGuideNotUpdated.data])
+
   return (
     <Page
       key="guide-page"
@@ -341,19 +355,28 @@ function GuidesPage() {
               </Button>
             </GuideUpdateAllResultDialog>
           )}
-          <Button
-            size="icon-sm"
-            variant="secondary"
-            onClick={onUpdateAllAtOnce}
-            title={t`Mettre à jour tous les guides`}
-            className={cn(
-              'size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7',
-              hasSomeGuideNotUpdated.isSuccess && hasSomeGuideNotUpdated.data && 'text-orange-400',
-            )}
-            disabled={updateAllAtOnce.isPending || guides.isFetching}
-          >
-            <ImportIcon className="size-4" />
-          </Button>
+          <TooltipProvider disableHoverableContent>
+            <Tooltip open={isHasUpdateTooltipOpen} onOpenChange={setHasUpdateTooltipOpen}>
+              <TooltipTrigger>
+                <Button
+                  size="icon-sm"
+                  variant="secondary"
+                  onClick={onUpdateAllAtOnce}
+                  title={t`Mettre à jour tous les guides`}
+                  className={cn(
+                    'size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7',
+                    hasSomeGuideNotUpdated.isSuccess && hasSomeGuideNotUpdated.data && 'text-orange-400',
+                  )}
+                  disabled={updateAllAtOnce.isPending || guides.isFetching}
+                >
+                  <ImportIcon className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent align="center" side="bottom">
+                <Trans>Des mises à jour sont disponibles</Trans>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
