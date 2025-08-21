@@ -124,6 +124,7 @@ src/ipc/deep_link.ts               # Frontend IPC wrapper
 
 ## Important Notes
 
+- Never use `any` in TypeScript
 - The app window is configured as always-on-top with transparency
 - Uses React 19 with strict mode enabled
 - Sentry is integrated for error reporting

@@ -11,8 +11,8 @@ import { useTabs } from '@/hooks/use_tabs.ts'
 import { getGuideById, getStepClamped } from '@/lib/guide.ts'
 import { getProgress } from '@/lib/progress.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
-import { GuidePage } from './-guide_page.tsx'
-import { GuideTabsTrigger } from './-guide_tabs_trigger.tsx'
+import { GuidePage } from './-$id/guide_page.tsx'
+import { GuideTabsTrigger } from './-$id/guide_tabs_trigger.tsx'
 
 const ParamsZod = z.object({
   id: z.coerce.number(),

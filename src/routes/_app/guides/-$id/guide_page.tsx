@@ -14,8 +14,8 @@ import { onCopyCurrentGuideStep } from '@/ipc/guides.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { ReportDialog } from './-report_dialog.tsx'
-import { SummaryDialog } from './-summary_dialog.tsx'
+import { ReportDialog } from './report_dialog.tsx'
+import { SummaryDialog } from './summary_dialog.tsx'
 
 const useOnCopyStep = (cb: () => void) => {
   useEffect(() => {
