@@ -20,11 +20,11 @@ z is the translated text
 
 ## Bonus
 
-You could see translations starting with -#. Those are unused translations. Warn the user about this, but do not remove them. To remove them, you could ask to use `pnpm i18n:extract --clean`.
+You could see translations starting with #~. Those are unused translations. Warn the user about this, but do not remove them. To remove them, you could ask to use `pnpm i18n:extract --clean`.
 
 ## Rules
 
 * Use European Portuguese
 * Use European Spanish
 
-You can check the source file to know the context and have better context.
+You can check the source file to know the context and generate better translation.
