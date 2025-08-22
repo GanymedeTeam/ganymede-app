@@ -16,7 +16,7 @@ function Card({
 }
 
 function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('flex flex-col space-y-1.5 p-3 xs:p-6', className)} {...props} />
+  return <div ref={ref} className={cn('flex flex-col gap-y-1.5 p-3 xs:p-6', className)} {...props} />
 }
 
 function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {

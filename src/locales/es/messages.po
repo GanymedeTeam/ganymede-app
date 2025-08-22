@@ -18,6 +18,10 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Paso} other {Pasos}}"
 
+#: src/routes/_app/downloads/index.tsx:89
+msgid "{children}"
+msgstr "{children}"
+
 #. placeholder {0}: currentIndex + 1
 #: src/components/notification_alert_dialog.tsx:146
 msgid "{totalNotifications, plural, one {Message de l'équipe} other {Messages de l'équipe {0}/{totalNotifications}}}"
@@ -94,7 +98,7 @@ msgstr "¡Bienvenido a <0>GÁNYMEDE</0>!"
 msgid "Carte"
 msgstr "Mapa"
 
-#: src/routes/_app/downloads/index.tsx:50
+#: src/routes/_app/downloads/index.tsx:129
 msgid "Catégories"
 msgstr "Categorías"
 
@@ -112,7 +116,7 @@ msgstr "Causada por:"
 msgid "Causée par: {0}"
 msgstr "Causado por: {0}"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:114
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:127
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Algunos guías no se han actualizado"
@@ -239,7 +243,7 @@ msgstr "Inicio"
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe el problema encontrado. El paso y la guía se incluirán automáticamente."
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:140
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:164
 msgid "Des mises à jour sont disponibles"
 msgstr "Actualizaciones disponibles"
 
@@ -337,17 +341,17 @@ msgid "Guides {0}"
 msgstr "Guías {0}"
 
 #: src/routes/_app/downloads/$status.tsx:98
-#: src/routes/_app/downloads/index.tsx:69
+#: src/routes/_app/downloads/index.tsx:154
 msgid "Guides certifiés"
 msgstr "Guías certificadas"
 
 #: src/routes/_app/downloads/$status.tsx:94
-#: src/routes/_app/downloads/index.tsx:89
+#: src/routes/_app/downloads/index.tsx:182
 msgid "Guides draft"
 msgstr "Borradores de guías"
 
 #: src/routes/_app/downloads/$status.tsx:96
-#: src/routes/_app/downloads/index.tsx:59
+#: src/routes/_app/downloads/index.tsx:140
 msgid "Guides principaux"
 msgstr "Guías principales"
 
@@ -356,7 +360,7 @@ msgid "Guides privés"
 msgstr "Guías privadas"
 
 #: src/routes/_app/downloads/$status.tsx:90
-#: src/routes/_app/downloads/index.tsx:79
+#: src/routes/_app/downloads/index.tsx:168
 msgid "Guides publics"
 msgstr "Guías públicas"
 
@@ -423,9 +427,25 @@ msgstr "La guía se abrirá en <0>el paso {0}</0>. <1/>Estaba en <2>el paso {1}<
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 
+#: src/routes/_app/downloads/index.tsx:143
+msgid "Les guides créés par l'équipe Ganymède"
+msgstr "Guías creadas por el equipo de Ganymede"
+
 #: src/routes/_app/downloads/$status.tsx:184
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Las guías de esta sección no han sido verificadas manualmente por el equipo de Ganymede. <0/> Aunque los enlaces a los sitios son seguros, por favor, verifica cuidadosamente las guías <1>en nuestro sitio</1> antes de descargarlas."
+
+#: src/routes/_app/downloads/index.tsx:157
+msgid "Les guides de la communauté, validés par l'équipe Ganymède"
+msgstr "Guías de la comunidad, validadas por el equipo de Ganymede"
+
+#: src/routes/_app/downloads/index.tsx:185
+msgid "Les guides en cours d'écriture"
+msgstr "Guías en proceso de escritura"
+
+#: src/routes/_app/downloads/index.tsx:171
+msgid "Les guides partagés par la communauté"
+msgstr "Guías compartidas por la comunidad"
 
 #: src/components/editor_html_parsing.tsx:63
 msgid "lien masqué"
@@ -439,10 +459,11 @@ msgstr "Marcar como leído"
 msgid "Mettre à jour le guide"
 msgstr "Actualizar la guía"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:129
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:153
 msgid "Mettre à jour tous les guides"
 msgstr "Actualizar todas las guías"
 
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:113
 #: src/routes/_app/guides/-index/update_loading_overlay.tsx:16
 msgid "Mise à jour de vos guides..."
 msgstr "Actualizando sus guías..."
@@ -494,7 +515,7 @@ msgstr "Opacidad"
 msgid "Ou le bouton suivant"
 msgstr "O el botón siguiente"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:163
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:187
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir la carpeta de guías descargadas"
 
@@ -508,7 +529,7 @@ msgstr "Configuraciones"
 msgid "Petite"
 msgstr "Pequeña"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:150
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:174
 msgid "Plus d'options"
 msgstr "Más opciones"
 
@@ -546,7 +567,7 @@ msgstr "Perfil eliminado con éxito"
 msgid "Profils"
 msgstr "Perfiles"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:167
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:191
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Actualizar la carpeta de guías descargadas"
 
@@ -579,7 +600,7 @@ msgstr "Minimizar"
 msgid "Réinitialiser"
 msgstr "Restablecer"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:159
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:183
 msgid "Sélectionner"
 msgstr "Seleccionar"
 

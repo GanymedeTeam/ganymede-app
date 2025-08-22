@@ -41,6 +41,7 @@ feat(auth): add JWT login flow
 * Use the body (optional) to explain *why*, not just *what*.
 * Bullet points should be concise and high-level.
 * Do not `git add --all` or any `git add`.
+* Do not mention translations changes unless only translations has changed.
 
 Avoid
 

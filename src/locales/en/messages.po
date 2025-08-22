@@ -18,6 +18,10 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Step} other {Steps}}"
 
+#: src/routes/_app/downloads/index.tsx:89
+msgid "{children}"
+msgstr "{children}"
+
 #. placeholder {0}: currentIndex + 1
 #: src/components/notification_alert_dialog.tsx:146
 msgid "{totalNotifications, plural, one {Message de l'équipe} other {Messages de l'équipe {0}/{totalNotifications}}}"
@@ -94,7 +98,7 @@ msgstr "Welcome to <0>GANYMÈDE</0>!"
 msgid "Carte"
 msgstr "Map"
 
-#: src/routes/_app/downloads/index.tsx:50
+#: src/routes/_app/downloads/index.tsx:129
 msgid "Catégories"
 msgstr "Categories"
 
@@ -112,7 +116,7 @@ msgstr "Caused by:"
 msgid "Causée par: {0}"
 msgstr "Caused by: {0}"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:114
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:127
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Some guides have not been updated"
@@ -239,7 +243,7 @@ msgstr "Start"
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:140
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:164
 msgid "Des mises à jour sont disponibles"
 msgstr "Updates are available"
 
@@ -337,17 +341,17 @@ msgid "Guides {0}"
 msgstr "Guides {0}"
 
 #: src/routes/_app/downloads/$status.tsx:98
-#: src/routes/_app/downloads/index.tsx:69
+#: src/routes/_app/downloads/index.tsx:154
 msgid "Guides certifiés"
 msgstr "Certified guides"
 
 #: src/routes/_app/downloads/$status.tsx:94
-#: src/routes/_app/downloads/index.tsx:89
+#: src/routes/_app/downloads/index.tsx:182
 msgid "Guides draft"
 msgstr "Draft guides"
 
 #: src/routes/_app/downloads/$status.tsx:96
-#: src/routes/_app/downloads/index.tsx:59
+#: src/routes/_app/downloads/index.tsx:140
 msgid "Guides principaux"
 msgstr "Main guides"
 
@@ -356,7 +360,7 @@ msgid "Guides privés"
 msgstr "Private guides"
 
 #: src/routes/_app/downloads/$status.tsx:90
-#: src/routes/_app/downloads/index.tsx:79
+#: src/routes/_app/downloads/index.tsx:168
 msgid "Guides publics"
 msgstr "Publics guides"
 
@@ -423,9 +427,25 @@ msgstr "The guide will open at <0>step {0}</0>. <1/>You were at <2>step {1}</2> 
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "The step number ({0}) has been copied to the clipboard."
 
+#: src/routes/_app/downloads/index.tsx:143
+msgid "Les guides créés par l'équipe Ganymède"
+msgstr "Guides created by the Ganymede team"
+
 #: src/routes/_app/downloads/$status.tsx:184
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Guides in this section have not been manually verified by the Ganymede team. <0/> Although the links to the sites are secure, please carefully check the guides <1>on our site</1> before downloading them."
+
+#: src/routes/_app/downloads/index.tsx:157
+msgid "Les guides de la communauté, validés par l'équipe Ganymède"
+msgstr "Community guides, validated by the Ganymede team"
+
+#: src/routes/_app/downloads/index.tsx:185
+msgid "Les guides en cours d'écriture"
+msgstr "Guides being written"
+
+#: src/routes/_app/downloads/index.tsx:171
+msgid "Les guides partagés par la communauté"
+msgstr "Guides shared by the community"
 
 #: src/components/editor_html_parsing.tsx:63
 msgid "lien masqué"
@@ -439,10 +459,11 @@ msgstr "Mark as read"
 msgid "Mettre à jour le guide"
 msgstr "Update the guide"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:129
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:153
 msgid "Mettre à jour tous les guides"
 msgstr "Update all guides"
 
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:113
 #: src/routes/_app/guides/-index/update_loading_overlay.tsx:16
 msgid "Mise à jour de vos guides..."
 msgstr "Updating your guides..."
@@ -494,7 +515,7 @@ msgstr "Opacity"
 msgid "Ou le bouton suivant"
 msgstr "Or the next button"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:163
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:187
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Open downloaded guides folder"
 
@@ -508,7 +529,7 @@ msgstr "Settings"
 msgid "Petite"
 msgstr "Small"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:150
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:174
 msgid "Plus d'options"
 msgstr "More options"
 
@@ -546,7 +567,7 @@ msgstr "Profile deleted successfully"
 msgid "Profils"
 msgstr "Profiles"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:167
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:191
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Refresh downloaded guides folder"
 
@@ -579,7 +600,7 @@ msgstr "Minimize"
 msgid "Réinitialiser"
 msgstr "Reset"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:159
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:183
 msgid "Sélectionner"
 msgstr "Select"
 

@@ -85,7 +85,7 @@ This project uses pnpm. Use pnpm instead of npm.
 ### Translations
 - French is the source language (msgid)
 - All languages must have complete translations before commit
-- Check for missing translations with `pnpm i18n:extract --clean`
+- Check for missing translations with `pnpm i18n:extract`
 - Remove obsolete translations marked with `#~`
 - Spanish and Portuguese target European variants
 

@@ -26,7 +26,6 @@ import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
 import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
 import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query.ts'
 import { GuideUpdateAllResultDialog } from './guide_update_all_result_dialog.tsx'
-import { createPortal } from 'react-dom'
 
 interface ActionsToolbarProps {
   path: string
