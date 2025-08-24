@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react'
 
-function isLockedSnapshotFromDialog() {
+function isLockedFromDialogSnapshot() {
   const dialog =
     document.body.querySelector('div[role="dialog"]') || document.body.querySelector('div[role="alertdialog"]')
 
@@ -17,7 +17,7 @@ export function useIsBodyLockedFromDialog() {
         const fromBody = mutation.target === document.body
         const fromAttribute = mutation.type === 'attributes'
 
-        if (fromAttribute && fromBody && mutation.attributeName === 'style' && isLockedSnapshotFromDialog()) {
+        if (fromAttribute && fromBody && mutation.attributeName === 'style' && isLockedFromDialogSnapshot()) {
           // this style is added by radix-ui, we want to remove it
           document.body.style.removeProperty('pointer-events')
         }
@@ -33,5 +33,5 @@ export function useIsBodyLockedFromDialog() {
     return () => {
       observer.disconnect()
     }
-  }, isLockedSnapshotFromDialog)
+  }, isLockedFromDialogSnapshot)
 }
