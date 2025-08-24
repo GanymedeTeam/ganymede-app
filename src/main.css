@@ -40,7 +40,8 @@
   --text-xxs: 0.625rem;
   --text-xxs--line-height: calc(0.75 / 0.625);
   --breakpoint-xs: 320px;
-  --spacing-app-without-header: calc(100vh - 30px);
+  --spacing-titlebar: 30px;
+  --spacing-app-without-header: calc(100vh - var(--spacing-titlebar));
 }
 
 /*

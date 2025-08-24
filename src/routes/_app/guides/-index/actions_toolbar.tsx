@@ -44,12 +44,22 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
   const updateAllAtOnce = useUpdateAllAtOnce({
     onMutate: () => {
       interval.start()
+
+      // disable user interactions
+      document.body.style.pointerEvents = 'none'
+      document.body.setAttribute('aria-busy', 'true')
+      document.body.setAttribute('data-scroll-locked', '1')
     },
     onSettled: () => {
       interval.stop()
       setTimeout(() => {
         interval.reset()
       }, 100)
+
+      // re-enable user interactions
+      document.body.removeAttribute('aria-busy')
+      document.body.removeAttribute('data-scroll-locked')
+      document.body.style.removeProperty('pointer-events')
     },
   })
 
@@ -114,7 +124,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
               </span>
             </div>
           </div>
-          <span className="text-3xl">{interval.seconds.toFixed(1)}s</span>
+          <span className="text-3xl">{interval.value.toFixed(1)}s</span>
         </div>
       )}
       <div className="flex w-full items-center justify-end gap-1 text-sm">

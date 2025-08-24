@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
+import { useIsBodyLockedFromDialog } from '@/hooks/use_is_body_locked_from_dialog.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { KoFiIcon } from './icons/ko_fi_icon.tsx'
 
@@ -30,14 +31,15 @@ export function TitleBar() {
   const { t } = useLingui()
   const location = useLocation()
   const openInBrowser = useOpenUrlInBrowser()
+  const isBodyLocked = useIsBodyLockedFromDialog()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
 
   return (
-    <div className="sticky top-0 z-10 flex h-[30px] items-center bg-primary text-primary-foreground">
+    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-primary text-primary-foreground">
       {!linksAreDisabled && (
         <DropdownMenu>
-          <DropdownMenuTrigger className="h-full px-2 outline-hidden">
+          <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>
             <MenuIcon className="size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" alignOffset={6} sideOffset={0}>
@@ -113,7 +115,7 @@ export function TitleBar() {
             className="inline-flex size-7 items-center justify-center hover:bg-primary-800 aria-disabled:pointer-events-none"
             draggable={false}
             title={t`Paramètres`}
-            disabled={location.pathname === '/settings'}
+            disabled={location.pathname === '/settings' || isBodyLocked}
           >
             <SettingsIcon className="size-4" />
           </Link>
