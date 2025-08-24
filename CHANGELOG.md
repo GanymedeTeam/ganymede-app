@@ -1,5 +1,17 @@
 # ganymede-app
 
+## 1.14.0
+
+### Minor Changes
+
+- 5a0b6a5: Ajout d'une petite alerte lorsque qu'une mise à jour des guides est disponible
+- 9333d09: Modification visuelle de la page de sélection de la catégorie de guide à télécharger.
+
+### Patch Changes
+
+- 6af8dab: Correction d'alignement des onglets de guide quand la fenêtre est plus grande.
+- 95ccaa8: Possibilité de déplacer la fenêtre si une notification est affichée.
+
 ## 1.13.1
 
 ### Patch Changes
