@@ -40,7 +40,7 @@ function createIntervalStore() {
 const intervalStore = createIntervalStore()
 
 export function useInterval() {
-  const seconds = useSyncExternalStore(intervalStore.subscribe, intervalStore.getSnapshot)
+  const value = useSyncExternalStore(intervalStore.subscribe, intervalStore.getSnapshot)
 
-  return { seconds, reset: intervalStore.reset, start: intervalStore.start, stop: intervalStore.stop }
+  return { value, reset: intervalStore.reset, start: intervalStore.start, stop: intervalStore.stop }
 }

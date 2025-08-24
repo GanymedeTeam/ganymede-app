@@ -13,7 +13,6 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert_dialog.tsx'
 import { Button } from '@/components/ui/button.tsx'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog.tsx'
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
@@ -45,7 +44,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
 
   return (
     <>
-      <Dialog
+      <AlertDialog
         onOpenChange={(open) => {
           if (!open) {
             setTimeout(() => {
@@ -56,15 +55,15 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
           }
         }}
       >
-        <DialogTrigger asChild>
+        <AlertDialogTrigger asChild>
           <Button variant="ghost" size="icon" className="size-6 sm:size-8">
             <BugIcon />
           </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogTitle>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogTitle>
             <Trans>Envoyer un rapport</Trans>
-          </DialogTitle>
+          </AlertDialogTitle>
           <form ref={formRef} id="report-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
             {!sendReport.isSuccess && (
               <>
@@ -124,59 +123,66 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
             )}
 
             {!sendReport.isSuccess && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button disabled={content.trim().length === 0 || sendReport.isPending}>
-                    {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
-                    <Trans>Mon guide est à jour, envoyer le message</Trans>
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      <Trans>Confirmer l'envoi du rapport</Trans>
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      <Trans>Récapitulatif du message</Trans>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <ScrollArea className="-my-1 prose-sm h-full" type="auto">
-                    <p className="py-2">
-                      {formRef.current &&
-                        (new FormData(formRef.current).get('content') as string)
-                          .trim()
-                          .split('\n')
-                          .filter((line) => line.trim().length > 0)
-                          .map((line, index) => (
-                            <Fragment key={index}>
-                              {line}
-                              <br />
-                            </Fragment>
-                          ))}
-                    </p>
-                  </ScrollArea>
-                  <AlertDialogFooter className="xs:flex-row xs:items-center xs:justify-center">
-                    <AlertDialogCancel className="mt-0 xs:h-9 xs:px-4 xs:text-sm">
-                      <Trans>Annuler</Trans>
-                    </AlertDialogCancel>
-                    <AlertDialogAction asChild>
-                      <Button
-                        type="submit"
-                        form="report-form"
-                        disabled={content.trim().length === 0 || sendReport.isPending}
-                        className="xs:h-9 xs:px-4 xs:text-sm [&_svg]:size-4"
-                      >
+              <AlertDialogFooter>
+                <AlertDialogCancel>
+                  <Trans>Annuler</Trans>
+                </AlertDialogCancel>
+                <AlertDialog>
+                  <AlertDialogAction asChild>
+                    <AlertDialogTrigger asChild>
+                      <Button disabled={content.trim().length === 0 || sendReport.isPending}>
                         {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
-                        <Trans>Je confirme que mon guide est à jour.</Trans>
+                        <Trans>Mon guide est à jour, envoyer le message</Trans>
                       </Button>
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+                    </AlertDialogTrigger>
+                  </AlertDialogAction>
+
+                  <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        <Trans>Confirmer l'envoi du rapport</Trans>
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        <Trans>Récapitulatif du message</Trans>
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <ScrollArea className="-my-1 prose-sm h-full" type="auto">
+                      <p className="py-2">
+                        {formRef.current &&
+                          (new FormData(formRef.current).get('content') as string)
+                            .trim()
+                            .split('\n')
+                            .filter((line) => line.trim().length > 0)
+                            .map((line, index) => (
+                              <Fragment key={index}>
+                                {line}
+                                <br />
+                              </Fragment>
+                            ))}
+                      </p>
+                    </ScrollArea>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>
+                        <Trans>Annuler</Trans>
+                      </AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Button
+                          type="submit"
+                          form="report-form"
+                          disabled={content.trim().length === 0 || sendReport.isPending}
+                        >
+                          {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
+                          <Trans>Je confirme que mon guide est à jour.</Trans>
+                        </Button>
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </AlertDialogFooter>
             )}
           </form>
-        </DialogContent>
-      </Dialog>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }
