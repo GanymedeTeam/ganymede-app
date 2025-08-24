@@ -7,6 +7,9 @@ function isLockedSnapshotFromDialog() {
   return document.body.dataset['scroll-locked'] === '1' && dialog?.id?.includes('radix-')
 }
 
+/**
+ * A custom hook that returns whether the body is locked from dialog interactions.
+ */
 export function useIsBodyLockedFromDialog() {
   return useSyncExternalStore((onChange) => {
     const observer = new MutationObserver((mutations) => {

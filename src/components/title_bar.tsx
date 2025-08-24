@@ -36,7 +36,7 @@ export function TitleBar() {
   const linksAreDisabled = location.pathname.includes('app-old-version')
 
   return (
-    <div className="sticky top-0 z-60 flex h-[30px] items-center bg-primary text-primary-foreground">
+    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-primary text-primary-foreground">
       {!linksAreDisabled && (
         <DropdownMenu>
           <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>

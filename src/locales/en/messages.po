@@ -31,7 +31,7 @@ msgstr "{totalNotifications, plural, one {Team message} other {Team messages {0}
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>You can find the release notes on our Discord <1>#changelog</1></0>"
 
-#: src/components/title_bar.tsx:47
+#: src/components/title_bar.tsx:49
 msgid "Accueil"
 msgstr "Home"
 
@@ -45,7 +45,8 @@ msgstr "Add"
 
 #: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/guides/-$id/report_dialog.tsx:160
+#: src/routes/_app/guides/-$id/report_dialog.tsx:128
+#: src/routes/_app/guides/-$id/report_dialog.tsx:166
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -84,7 +85,7 @@ msgstr "No quests match your search."
 msgid "Aujourd'hui"
 msgstr "Today"
 
-#: src/components/title_bar.tsx:66
+#: src/components/title_bar.tsx:68
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
 msgid "Autopilotage"
@@ -94,7 +95,7 @@ msgstr "Autopilot"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Welcome to <0>GANYMÈDE</0>!"
 
-#: src/components/title_bar.tsx:79
+#: src/components/title_bar.tsx:81
 msgid "Carte"
 msgstr "Map"
 
@@ -112,11 +113,11 @@ msgid "Causée par :"
 msgstr "Caused by:"
 
 #. placeholder {0}: sendReport.error.status
-#: src/routes/_app/guides/-$id/report_dialog.tsx:113
+#: src/routes/_app/guides/-$id/report_dialog.tsx:112
 msgid "Causée par: {0}"
 msgstr "Caused by: {0}"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:127
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:137
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Some guides have not been updated"
@@ -125,7 +126,7 @@ msgstr "Some guides have not been updated"
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "This tool is designed to assist you throughout your adventure on <0>Dofus</0>!"
 
-#: src/components/title_bar.tsx:85
+#: src/components/title_bar.tsx:87
 msgid "Chasse au trésor"
 msgstr "Hunt"
 
@@ -171,7 +172,7 @@ msgstr "Click to copy the monster's name. Ctrl+click to open on dofusdb"
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Click to open in browser"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:137
+#: src/routes/_app/guides/-$id/report_dialog.tsx:143
 msgid "Confirmer l'envoi du rapport"
 msgstr "Confirm sending the report"
 
@@ -239,11 +240,11 @@ msgstr "from <0>{0}</0>"
 msgid "Début"
 msgstr "Start"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:93
+#: src/routes/_app/guides/-$id/report_dialog.tsx:92
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:164
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:174
 msgid "Des mises à jour sont disponibles"
 msgstr "Updates are available"
 
@@ -255,7 +256,7 @@ msgstr "Details"
 msgid "Discord de Ganymède"
 msgstr "Ganymède's Discord"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:81
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:91
 msgid "Dossier des guides téléchargés rafraichi"
 msgstr "Folder of downloaded guides updated"
 
@@ -275,7 +276,7 @@ msgstr "In progress..."
 msgid "Enregistrer la note"
 msgstr "Save the note"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:66
+#: src/routes/_app/guides/-$id/report_dialog.tsx:65
 msgid "Envoyer un rapport"
 msgstr "Send a report"
 
@@ -296,7 +297,7 @@ msgstr "Error deleting guides"
 msgid "Erreur lors de la vérification du guide"
 msgstr "Error while checking guide"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:82
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:92
 msgid "Erreur lors du rafraichissement des guides téléchargés"
 msgstr "Error refreshing downloaded guides"
 
@@ -308,7 +309,7 @@ msgstr "Error while downloading guide"
 msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
 msgstr "Are you sure you want to delete this profile? This action is irreversible."
 
-#: src/components/title_bar.tsx:137
+#: src/components/title_bar.tsx:139
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
 msgstr "Close"
@@ -329,7 +330,7 @@ msgstr "Large"
 msgid "Guide téléchargé avec succès"
 msgstr "Guide downloaded successfully"
 
-#: src/components/title_bar.tsx:53
+#: src/components/title_bar.tsx:55
 #: src/routes/_app/downloads/$status.tsx:100
 msgid "Guides"
 msgstr "Guides"
@@ -403,7 +404,7 @@ msgstr "More info: {0}"
 msgid "J'ai compris"
 msgstr "I understand"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:170
+#: src/routes/_app/guides/-$id/report_dialog.tsx:175
 msgid "Je confirme que mon guide est à jour."
 msgstr "I confirm that my guide is up to date."
 
@@ -459,12 +460,11 @@ msgstr "Mark as read"
 msgid "Mettre à jour le guide"
 msgstr "Update the guide"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:153
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:163
 msgid "Mettre à jour tous les guides"
 msgstr "Update all guides"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:113
-#: src/routes/_app/guides/-index/update_loading_overlay.tsx:16
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:123
 msgid "Mise à jour de vos guides..."
 msgstr "Updating your guides..."
 
@@ -484,7 +484,7 @@ msgstr "Update completed. The application will restart."
 msgid "Modifier la note"
 msgstr "Edit the note"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:131
+#: src/routes/_app/guides/-$id/report_dialog.tsx:135
 msgid "Mon guide est à jour, envoyer le message"
 msgstr "My guide is up to date, send the message"
 
@@ -501,7 +501,7 @@ msgstr "Note's name"
 msgid "Normal"
 msgstr "Normal"
 
-#: src/components/title_bar.tsx:72
+#: src/components/title_bar.tsx:74
 #: src/routes/_app/notes.index.tsx:24
 #: src/routes/_app/notes.index.tsx:50
 msgid "Notes"
@@ -515,11 +515,11 @@ msgstr "Opacity"
 msgid "Ou le bouton suivant"
 msgstr "Or the next button"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:187
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:197
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Open downloaded guides folder"
 
-#: src/components/title_bar.tsx:115
+#: src/components/title_bar.tsx:117
 #: src/routes/_app/settings.tsx:43
 #: src/routes/_app/settings.tsx:77
 msgid "Paramètres"
@@ -529,7 +529,7 @@ msgstr "Settings"
 msgid "Petite"
 msgstr "Small"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:174
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:184
 msgid "Plus d'options"
 msgstr "More options"
 
@@ -546,7 +546,7 @@ msgstr "Preparation"
 msgid "Présentation"
 msgstr "Presentation"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:88
+#: src/routes/_app/guides/-$id/report_dialog.tsx:87
 msgid "Problème rencontré"
 msgstr "Issue encountered"
 
@@ -567,15 +567,15 @@ msgstr "Profile deleted successfully"
 msgid "Profils"
 msgstr "Profiles"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:191
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:201
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Refresh downloaded guides folder"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:83
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:93
 msgid "Rafraichissement des guides téléchargés"
 msgstr "Refreshing downloaded guides"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:140
+#: src/routes/_app/guides/-$id/report_dialog.tsx:146
 msgid "Récapitulatif du message"
 msgstr "Message summary"
 
@@ -592,7 +592,7 @@ msgstr "Search a profile..."
 msgid "Rechercher une quête"
 msgstr "Search for a quest"
 
-#: src/components/title_bar.tsx:127
+#: src/components/title_bar.tsx:129
 msgid "Réduire"
 msgstr "Minimize"
 
@@ -600,7 +600,7 @@ msgstr "Minimize"
 msgid "Réinitialiser"
 msgstr "Reset"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:183
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:193
 msgid "Sélectionner"
 msgstr "Select"
 
@@ -612,7 +612,7 @@ msgstr "Official website"
 msgid "Sommaire"
 msgstr "Summary"
 
-#: src/components/title_bar.tsx:94
+#: src/components/title_bar.tsx:96
 msgid "Supporter Ganymède"
 msgstr "Support Ganymede"
 
@@ -656,7 +656,7 @@ msgstr "Download version {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Download the guide"
 
-#: src/components/title_bar.tsx:59
+#: src/components/title_bar.tsx:61
 #: src/routes/_app/guides/index.tsx:283
 msgid "Télécharger un guide"
 msgstr "Download a guide"
@@ -681,7 +681,7 @@ msgstr "An error occurred"
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "An error occurred while retrieving the configuration."
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:122
+#: src/routes/_app/guides/-$id/report_dialog.tsx:121
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Your message has been sent to us. Have a great game!"
 
@@ -689,8 +689,8 @@ msgstr "Your message has been sent to us. Have a great game!"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Your progress in guides will be reset. The downloaded guides will still be available."
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:73
-#: src/routes/_app/guides/-$id/report_dialog.tsx:78
+#: src/routes/_app/guides/-$id/report_dialog.tsx:72
+#: src/routes/_app/guides/-$id/report_dialog.tsx:77
 msgid "Votre pseudo"
 msgstr "Your username"
 
