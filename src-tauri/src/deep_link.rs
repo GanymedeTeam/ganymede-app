@@ -1,5 +1,6 @@
 use crate::conf::{Conf, Error as ConfError};
-use log::{debug, error, warn};
+use crate::oauth;
+use log::{debug, error, info, warn};
 use regex::Regex;
 use serde::Serialize;
 use tauri::AppHandle;
@@ -87,6 +88,41 @@ pub fn handle_deep_link_url<R: tauri::Runtime>(app: AppHandle<R>, url: &str) -> 
     let guide_open_regex = Regex::new(r"ganymede://guides/open/(\d+)(?:\?step=(\d+))?")
         .map_err(|e| Error::ParseUrl(e.to_string()))?;
 
+    let oauth_callback_regex = Regex::new(r"ganymede://oauth/callback\?code=([^&]+)&state=([^&]+)")
+        .map_err(|e| Error::ParseUrl(e.to_string()))?;
+
+    // Check for OAuth callback first
+    if let Some(captures) = oauth_callback_regex.captures(url) {
+        let code = captures
+            .get(1)
+            .ok_or_else(|| Error::ParseUrl("Missing OAuth code".to_string()))?
+            .as_str()
+            .to_string();
+
+        let state_id = captures
+            .get(2)
+            .ok_or_else(|| Error::ParseUrl("Missing OAuth state".to_string()))?
+            .as_str()
+            .to_string();
+
+        debug!("[DeepLink] Parsed OAuth callback - code: {}, state: {}", code, state_id);
+
+        // Spawner une tâche asynchrone pour gérer l'OAuth callback
+        let app_clone = app.clone();
+        let code_clone = code.clone();
+        let state_clone = state_id.clone();
+        tauri::async_runtime::spawn(async move {
+            if let Err(e) = oauth::handle_oauth_callback_directly(&app_clone, &code_clone, &state_clone).await {
+                error!("[DeepLink] Failed to handle OAuth callback: {:?}", e);
+            } else {
+                info!("[DeepLink] OAuth callback handled successfully");
+            }
+        });
+
+        return Ok(());
+    }
+
+    // Check for guide opening
     if let Some(captures) = guide_open_regex.captures(url) {
         let guide_id_str = captures
             .get(1)

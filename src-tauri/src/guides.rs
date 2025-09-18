@@ -54,6 +54,7 @@ pub enum Error {
 }
 
 #[taurpc::ipc_type]
+#[specta(rename = "GuideUser")]
 pub struct User {
     pub id: u32,
     pub name: String,

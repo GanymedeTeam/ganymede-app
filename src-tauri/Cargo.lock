@@ -1558,17 +1558,20 @@ dependencies = [
 name = "ganymede"
 version = "1.13.1"
 dependencies = [
+ "base64 0.22.1",
  "chrono",
  "chrono-tz",
  "glob",
  "log",
  "machine-uid",
+ "rand 0.8.5",
  "regex",
  "scraper",
  "semver",
  "serde",
  "serde_json",
  "serde_path_to_error",
+ "sha2",
  "specta",
  "specta-typescript",
  "tauri",
@@ -1587,6 +1590,7 @@ dependencies = [
  "taurpc",
  "thiserror 2.0.12",
  "tokio",
+ "urlencoding",
  "uuid",
 ]
 
@@ -5636,9 +5640,9 @@ dependencies = [
 
 [[package]]
 name = "taurpc"
-version = "0.5.1"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d9c82102620c5d56eafdc268383430e84b57d3e32bb90dacf43d4afb2a6f5006"
+checksum = "86b50200191672e88993412c29a295f55e6b057433fd453d34012087e84777cd"
 dependencies = [
  "anyhow",
  "heck 0.5.0",
@@ -5656,9 +5660,9 @@ dependencies = [
 
 [[package]]
 name = "taurpc-macros"
-version = "0.5.1"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52dac96e03af03e6454eedeb76be7248dbee4b5094b546aa20e8dc25fd01b734"
+checksum = "f022ab395113abbe1f1b4710c670912a84b55571d320a9c67c0fd17765743048"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -6221,6 +6225,12 @@ dependencies = [
  "percent-encoding",
  "serde",
 ]
+
+[[package]]
+name = "urlencoding"
+version = "2.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "daf8dba3b7eb870caf1ddeed7bc9d2a049f3cfdfae7cb521b087cc33ae4c49da"
 
 [[package]]
 name = "urlpattern"

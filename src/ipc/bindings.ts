@@ -12,6 +12,8 @@ export type AlmanaxReward = { name: string; quantity: number; kamas: number; exp
 
 export type AppVersionError = { GitHub: string } | { JsonMalformed: string } | { SemverParse: string }
 
+export type AuthTokens = { access_token: string; refresh_token: string | null; expires_at: number | null; token_type: string }
+
 export type AutoPilot = { name: string; position: string }
 
 export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; fontSize?: FontSize; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number }
@@ -26,7 +28,7 @@ export type Folder = { name: string }
 
 export type FontSize = "ExtraSmall" | "Small" | "Normal" | "Large" | "ExtraLarge"
 
-export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; user_id: number; description: string | null; web_description: string | null; node_image: string | null }
+export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: GuideUser; user_id: number; description: string | null; web_description: string | null; node_image: string | null }
 
 export type GuideLang = "en" | "fr" | "es" | "pt"
 
@@ -34,7 +36,9 @@ export type GuideOrFolderToDelete = { type: "guide"; id: number; folder: string 
 
 export type GuideStep = { name: string | null; map: string | null; pos_x: number; pos_y: number; web_text: string }
 
-export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: User; web_description: string | null; node_image: string | null; steps: GuideStep[] }
+export type GuideUser = { id: number; name: string; is_admin: number; is_certified: number }
+
+export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: GuideUser; web_description: string | null; node_image: string | null; steps: GuideStep[] }
 
 export type Guides = { guides: GuideWithSteps[] }
 
@@ -53,6 +57,8 @@ export type Note = { name: string; text: string }
 export type Notification = { id: number; text: string; displayAt: string; createdAt: string; updatedAt: string }
 
 export type NotificationsError = { Malformed: JsonError } | { SerializeViewedNotifications: JsonError } | { UnhandledIo: string } | { SaveViewedNotifications: string } | { FetchNotifications: string } | { ParseApiResponse: string }
+
+export type OAuthError = { OpenBrowser: string } | { SaveAuth: string } | { LoadAuth: string } | { CleanAuth: string } | { Json: JsonError } | { TokenExchange: string } | { InvalidTokenResponse: string }
 
 export type OpenGuideStep = { step: number; progressionStep: number | null }
 
@@ -78,11 +84,13 @@ export type UpdateAllAtOnceResult = null | string
 
 export type UpdateError = { CheckUpdateError: string } | { GetUpdaterError: string }
 
-export type User = { id: number; name: string; is_admin: number; is_certified: number }
+export type User = { id: number; name: string; is_admin: number; is_certified: number; lang: string }
+
+export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: string } | { InvalidUserResponse: string }
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -110,9 +118,14 @@ updateAllAtOnce: () => Promise<Partial<{ [key in number]: UpdateAllAtOnceResult 
 "notifications": {getUnviewedNotifications: () => Promise<Notification[]>, 
 getViewedNotifications: () => Promise<ViewedNotifications>, 
 markNotificationAsViewed: (notificationId: number) => Promise<null>},
+"oauth": {cleanAuthTokens: () => Promise<AuthTokens | null>, 
+getAuthTokens: () => Promise<AuthTokens | null>, 
+onOAuthFlowEnd: () => Promise<void>, 
+startOAuthFlow: () => Promise<null>},
 "report": {send_report: (payload: ReportPayload) => Promise<null>},
 "security": {getWhiteList: () => Promise<string[]>},
-"update": {startUpdate: () => Promise<null>} };
+"update": {startUpdate: () => Promise<null>},
+"user": {getMe: () => Promise<User>} };
 
 
 export const createTauRPCProxy = () => createProxy<Router>(ARGS_MAP)

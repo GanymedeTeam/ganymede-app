@@ -31,7 +31,7 @@ msgstr "{totalNotifications, plural, one {Mensagem da equipa} other {Mensagens d
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog</1></0>"
 
-#: src/components/title_bar.tsx:49
+#: src/components/title_bar.tsx:95
 msgid "Accueil"
 msgstr "Início"
 
@@ -85,7 +85,7 @@ msgstr "Nenhuma missão corresponde à sua pesquisa."
 msgid "Aujourd'hui"
 msgstr "Hoje"
 
-#: src/components/title_bar.tsx:68
+#: src/components/title_bar.tsx:114
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
 msgid "Autopilotage"
@@ -95,7 +95,7 @@ msgstr "Piloto automático"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bem-vindo ao <0>GANYMÈDE</0>!"
 
-#: src/components/title_bar.tsx:81
+#: src/components/title_bar.tsx:127
 msgid "Carte"
 msgstr "Mapa"
 
@@ -126,7 +126,7 @@ msgstr "Alguns guias não foram atualizados"
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Esta ferramenta foi projetada para ajudá-lo ao longo de sua aventura em <0>Dofus</0>!"
 
-#: src/components/title_bar.tsx:87
+#: src/components/title_bar.tsx:133
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
@@ -240,6 +240,10 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Início"
 
+#: src/components/title_bar.tsx:64
+msgid "Déconnecté"
+msgstr "Desconectado"
+
 #: src/routes/_app/guides/-$id/report_dialog.tsx:92
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
@@ -309,7 +313,7 @@ msgstr "Erro ao transferir o guia"
 msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
 msgstr "Tem a certeza de que pretende eliminar este perfil? Esta ação é irreversível."
 
-#: src/components/title_bar.tsx:139
+#: src/components/title_bar.tsx:185
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
 msgstr "Fechar"
@@ -330,7 +334,7 @@ msgstr "Grande"
 msgid "Guide téléchargé avec succès"
 msgstr "Guia transferido com sucesso"
 
-#: src/components/title_bar.tsx:55
+#: src/components/title_bar.tsx:101
 #: src/routes/_app/downloads/$status.tsx:100
 msgid "Guides"
 msgstr "Guias"
@@ -501,7 +505,7 @@ msgstr "Nome da nota"
 msgid "Normal"
 msgstr "Normal"
 
-#: src/components/title_bar.tsx:74
+#: src/components/title_bar.tsx:120
 #: src/routes/_app/notes.index.tsx:24
 #: src/routes/_app/notes.index.tsx:50
 msgid "Notes"
@@ -519,7 +523,7 @@ msgstr "Ou o próximo botão"
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
-#: src/components/title_bar.tsx:117
+#: src/components/title_bar.tsx:163
 #: src/routes/_app/settings.tsx:43
 #: src/routes/_app/settings.tsx:77
 msgid "Paramètres"
@@ -592,13 +596,22 @@ msgstr "Procurar um perfil..."
 msgid "Rechercher une quête"
 msgstr "Pesquisar uma missão"
 
-#: src/components/title_bar.tsx:129
+#: src/components/title_bar.tsx:175
 msgid "Réduire"
 msgstr "Minimizar"
 
 #: src/components/error_component.tsx:57
 msgid "Réinitialiser"
 msgstr "Restabelecer"
+
+#: src/components/title_bar.tsx:87
+#: src/routes/_app/oauth/waiting.tsx:58
+msgid "Se connecter"
+msgstr "Iniciar sessão"
+
+#: src/components/title_bar.tsx:74
+msgid "Se déconnecter"
+msgstr "Terminar sessão"
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:193
 msgid "Sélectionner"
@@ -612,7 +625,7 @@ msgstr "Site oficial"
 msgid "Sommaire"
 msgstr "Resumo"
 
-#: src/components/title_bar.tsx:96
+#: src/components/title_bar.tsx:142
 msgid "Supporter Ganymède"
 msgstr "Apoiar Ganymède"
 
@@ -656,7 +669,7 @@ msgstr "Baixar a versão {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
-#: src/components/title_bar.tsx:61
+#: src/components/title_bar.tsx:107
 #: src/routes/_app/guides/index.tsx:283
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
@@ -677,9 +690,18 @@ msgstr "Twitter do Ganimedes"
 msgid "Une erreur est survenue"
 msgstr "Ocorreu um erro"
 
+#: src/components/title_bar.tsx:68
+msgid "Une erreur est survenue lors de la déconnexion"
+msgstr "Ocorreu um erro durante o término da sessão"
+
 #: src/components/error_component.tsx:43
 msgid "Une erreur est survenue lors de la récupération de la configuration."
 msgstr "Ocorreu um erro ao recuperar a configuração."
+
+#. placeholder {0}: user.error.message
+#: src/routes/_app/oauth/waiting.tsx:36
+msgid "Une erreur est survenue lors de la récupération de vos informations utilisateur : {0}"
+msgstr "Ocorreu um erro ao recuperar as suas informações de utilizador: {0}"
 
 #: src/routes/_app/guides/-$id/report_dialog.tsx:121
 msgid "Votre message nous a été transmis. Bon jeu !"
@@ -693,6 +715,15 @@ msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estar�
 #: src/routes/_app/guides/-$id/report_dialog.tsx:77
 msgid "Votre pseudo"
 msgstr "O seu nome de utilizador"
+
+#: src/routes/_app/oauth/waiting.tsx:61
+msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
+msgstr "Será redirecionado para a página de início de sessão do Ganymède."
+
+#. placeholder {0}: user.data?.name ?? 'non trouvé'
+#: src/routes/_app/oauth/waiting.tsx:46
+msgid "Vous êtes maintenant connecté en tant que \"{0}\"."
+msgstr "Está agora conectado como \"{0}\"."
 
 #: src/routes/app-old-version.tsx:65
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."

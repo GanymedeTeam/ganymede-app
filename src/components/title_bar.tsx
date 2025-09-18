@@ -1,11 +1,15 @@
 import { Trans, useLingui } from '@lingui/react/macro'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useLocation } from '@tanstack/react-router'
 import { getCurrentWindow } from '@tauri-apps/api/window'
+import { error } from '@tauri-apps/plugin-log'
 import {
   CloudDownloadIcon,
   CrosshairIcon,
   HomeIcon,
   LocateIcon,
+  LogInIcon,
+  LogOutIcon,
   MapIcon,
   MenuIcon,
   MinusIcon,
@@ -14,6 +18,7 @@ import {
   SettingsIcon,
   XIcon,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +27,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { useIsBodyLockedFromDialog } from '@/hooks/use_is_body_locked_from_dialog.ts'
+import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
+import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
+import { getAuthTokensQuery } from '@/queries/get_auth_tokens.query.ts'
 import { KoFiIcon } from './icons/ko_fi_icon.tsx'
 
 const appWindow = getCurrentWindow()
@@ -32,6 +40,9 @@ export function TitleBar() {
   const location = useLocation()
   const openInBrowser = useOpenUrlInBrowser()
   const isBodyLocked = useIsBodyLockedFromDialog()
+  const startOAuthFlow = useStartOAuthFlow()
+  const authTokens = useQuery(getAuthTokensQuery)
+  const cleanAuthTokens = useCleanAuthTokens()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
 
@@ -43,6 +54,41 @@ export function TitleBar() {
             <MenuIcon className="size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" alignOffset={6} sideOffset={0}>
+            {authTokens.isSuccess && authTokens.data !== null ? (
+              <DropdownMenuItem
+                className="gap-2"
+                onClick={async () => {
+                  try {
+                    await cleanAuthTokens.mutateAsync()
+
+                    toast.success(t`Déconnecté`)
+                  } catch (err) {
+                    error('Failed to clean auth tokens: ' + (err instanceof Error ? err.message : String(err)))
+
+                    toast.error(t`Une erreur est survenue lors de la déconnexion`)
+                  }
+                }}
+                disabled={cleanAuthTokens.isPending}
+              >
+                <LogOutIcon />
+                <Trans>Se déconnecter</Trans>
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                className="gap-2"
+                asChild
+                onClick={() => {
+                  startOAuthFlow.mutate()
+                }}
+                disabled={startOAuthFlow.isPending}
+              >
+                <Link to="/oauth/waiting" draggable={false}>
+                  <LogInIcon />
+                  <Trans>Se connecter</Trans>
+                </Link>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2" asChild>
               <Link to="/" draggable={false}>
                 <HomeIcon />

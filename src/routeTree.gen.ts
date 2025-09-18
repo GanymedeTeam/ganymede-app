@@ -17,6 +17,7 @@ import { Route as AppAutoPilotRouteImport } from './routes/_app/auto-pilot'
 import { Route as AppNotesIndexRouteImport } from './routes/_app/notes.index'
 import { Route as AppGuidesIndexRouteImport } from './routes/_app/guides/index'
 import { Route as AppDownloadsIndexRouteImport } from './routes/_app/downloads/index'
+import { Route as AppOauthWaitingRouteImport } from './routes/_app/oauth/waiting'
 import { Route as AppNotesCreateRouteImport } from './routes/_app/notes.create'
 import { Route as AppGuidesIdRouteImport } from './routes/_app/guides/$id'
 import { Route as AppDownloadsStatusRouteImport } from './routes/_app/downloads/$status'
@@ -62,6 +63,11 @@ const AppDownloadsIndexRoute = AppDownloadsIndexRouteImport.update({
   path: '/downloads/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppOauthWaitingRoute = AppOauthWaitingRouteImport.update({
+  id: '/oauth/waiting',
+  path: '/oauth/waiting',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppNotesCreateRoute = AppNotesCreateRouteImport.update({
   id: '/notes/create',
   path: '/notes/create',
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/downloads/$status': typeof AppDownloadsStatusRoute
   '/guides/$id': typeof AppGuidesIdRoute
   '/notes/create': typeof AppNotesCreateRoute
+  '/oauth/waiting': typeof AppOauthWaitingRoute
   '/downloads': typeof AppDownloadsIndexRoute
   '/guides': typeof AppGuidesIndexRoute
   '/notes': typeof AppNotesIndexRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByTo {
   '/downloads/$status': typeof AppDownloadsStatusRoute
   '/guides/$id': typeof AppGuidesIdRoute
   '/notes/create': typeof AppNotesCreateRoute
+  '/oauth/waiting': typeof AppOauthWaitingRoute
   '/downloads': typeof AppDownloadsIndexRoute
   '/guides': typeof AppGuidesIndexRoute
   '/notes': typeof AppNotesIndexRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/_app/downloads/$status': typeof AppDownloadsStatusRoute
   '/_app/guides/$id': typeof AppGuidesIdRoute
   '/_app/notes/create': typeof AppNotesCreateRoute
+  '/_app/oauth/waiting': typeof AppOauthWaitingRoute
   '/_app/downloads/': typeof AppDownloadsIndexRoute
   '/_app/guides/': typeof AppGuidesIndexRoute
   '/_app/notes/': typeof AppNotesIndexRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/downloads/$status'
     | '/guides/$id'
     | '/notes/create'
+    | '/oauth/waiting'
     | '/downloads'
     | '/guides'
     | '/notes'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/downloads/$status'
     | '/guides/$id'
     | '/notes/create'
+    | '/oauth/waiting'
     | '/downloads'
     | '/guides'
     | '/notes'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/_app/downloads/$status'
     | '/_app/guides/$id'
     | '/_app/notes/create'
+    | '/_app/oauth/waiting'
     | '/_app/downloads/'
     | '/_app/guides/'
     | '/_app/notes/'
@@ -241,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDownloadsIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/oauth/waiting': {
+      id: '/_app/oauth/waiting'
+      path: '/oauth/waiting'
+      fullPath: '/oauth/waiting'
+      preLoaderRoute: typeof AppOauthWaitingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/notes/create': {
       id: '/_app/notes/create'
       path: '/notes/create'
@@ -288,6 +307,7 @@ interface AppRouteChildren {
   AppDownloadsStatusRoute: typeof AppDownloadsStatusRoute
   AppGuidesIdRoute: typeof AppGuidesIdRoute
   AppNotesCreateRoute: typeof AppNotesCreateRoute
+  AppOauthWaitingRoute: typeof AppOauthWaitingRoute
   AppDownloadsIndexRoute: typeof AppDownloadsIndexRoute
   AppGuidesIndexRoute: typeof AppGuidesIndexRoute
   AppNotesIndexRoute: typeof AppNotesIndexRoute
@@ -302,6 +322,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppDownloadsStatusRoute: AppDownloadsStatusRoute,
   AppGuidesIdRoute: AppGuidesIdRoute,
   AppNotesCreateRoute: AppNotesCreateRoute,
+  AppOauthWaitingRoute: AppOauthWaitingRoute,
   AppDownloadsIndexRoute: AppDownloadsIndexRoute,
   AppGuidesIndexRoute: AppGuidesIndexRoute,
   AppNotesIndexRoute: AppNotesIndexRoute,

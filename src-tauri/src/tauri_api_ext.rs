@@ -18,6 +18,10 @@ pub trait ViewedNotificationsPathExt {
     fn app_viewed_notifications_file(&self) -> PathBuf;
 }
 
+pub trait AuthPathExt {
+    fn app_auth_file(&self) -> PathBuf;
+}
+
 impl<R: Runtime> ConfPathExt for PathResolver<R> {
     fn app_conf_file(&self) -> PathBuf {
         let path = self.app_config_dir().expect("[TauriApi] app_config_file");
@@ -51,5 +55,12 @@ impl<R: Runtime> ViewedNotificationsPathExt for PathResolver<R> {
             .expect("[TauriApi] app_viewed_notifications_file");
 
         path.join("viewed_notifications.json")
+    }
+}
+
+impl<R: Runtime> AuthPathExt for PathResolver<R> {
+    fn app_auth_file(&self) -> PathBuf {
+        let path = self.app_config_dir().expect("[TauriApi] app_auth_file");
+        path.join("auth.json")
     }
 }
