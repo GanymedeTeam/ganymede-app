@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
+import { debug } from '@tauri-apps/plugin-log'
 import { PlusIcon } from 'lucide-react'
 import { z } from 'zod'
 import { PageContent } from '@/components/page_content.tsx'
@@ -8,6 +9,7 @@ import { Button } from '@/components/ui/button.tsx'
 import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
+import { registerGuideOpen } from '@/ipc/guides.ts'
 import { getGuideById, getStepClamped } from '@/lib/guide.ts'
 import { getProgress } from '@/lib/progress.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
@@ -63,6 +65,12 @@ export const Route = createFileRoute('/_app/guides/$id')({
     const { addOrReplaceTab } = useTabs.getState()
 
     addOrReplaceTab(guideById.id)
+
+    const registerResult = await registerGuideOpen(guideById.id)
+
+    if (registerResult.isErr()) {
+      await debug(`Error registering guide open: ${registerResult.error.message}`)
+    }
   },
 })
 

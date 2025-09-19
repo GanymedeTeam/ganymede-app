@@ -35,7 +35,7 @@ msgstr "<0>Você encontrará as notas de versão em nosso Discord <1>#changelog<
 msgid "Accueil"
 msgstr "Início"
 
-#: src/routes/_app/settings.tsx:148
+#: src/routes/_app/settings.tsx:142
 msgid "Afficher les guides terminés"
 msgstr "Exibir os guias concluídos"
 
@@ -52,12 +52,16 @@ msgstr "Adicionar"
 msgid "Annuler"
 msgstr "Cancelar"
 
+#: src/routes/_app/settings.tsx:157
+msgid "Apparence"
+msgstr "Aparência"
+
 #: src/components/deep_link_guide_download_dialog.tsx:38
 #: src/routes/_app/downloads/$status.tsx:180
 msgid "Attention"
 msgstr "Atenção"
 
-#: src/components/error_component.tsx:63
+#: src/components/error_component.tsx:62
 msgid "Attention !"
 msgstr "Atenção!"
 
@@ -103,12 +107,12 @@ msgstr "Mapa"
 msgid "Catégories"
 msgstr "Categorias"
 
-#: src/components/error_component.tsx:89
+#: src/components/error_component.tsx:88
 msgid "Cause non retrouvée."
 msgstr "Causa não encontrada."
 
-#: src/components/error_component.tsx:81
-#: src/components/error_component.tsx:112
+#: src/components/error_component.tsx:80
+#: src/components/error_component.tsx:111
 msgid "Causée par :"
 msgstr "Causada por:"
 
@@ -184,7 +188,7 @@ msgstr "Conteúdo da nota.{linesBreak}No menu anterior, uma vez criada, posso ed
 msgid "Continuer"
 msgstr "Continuar"
 
-#: src/routes/_app/settings.tsx:133
+#: src/routes/_app/settings.tsx:125
 msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
@@ -211,11 +215,11 @@ msgstr "Copiar a nota"
 msgid "Copier la position"
 msgstr "Copiar a posição"
 
-#: src/routes/_app/settings.tsx:221
+#: src/routes/_app/settings.tsx:266
 msgid "Créer"
 msgstr "Criar"
 
-#: src/routes/_app/settings.tsx:183
+#: src/routes/_app/settings.tsx:228
 msgid "Créer un profil"
 msgstr "Criar um perfil"
 
@@ -252,7 +256,7 @@ msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos autom
 msgid "Des mises à jour sont disponibles"
 msgstr "Atualizações disponíveis"
 
-#: src/components/error_component.tsx:75
+#: src/components/error_component.tsx:74
 msgid "Détails"
 msgstr "Detalhes"
 
@@ -289,7 +293,7 @@ msgstr "Enviar um relatório"
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
 
-#: src/routes/_app/settings.tsx:214
+#: src/routes/_app/settings.tsx:259
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Erro ao criar o perfil. Verifique o nome do perfil (deve ser único)."
 
@@ -326,7 +330,11 @@ msgstr "Fim"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganimedes - Não afiliado à Ankama Games"
 
-#: src/routes/_app/settings.tsx:123
+#: src/routes/_app/settings.tsx:104
+msgid "Général"
+msgstr "Geral"
+
+#: src/routes/_app/settings.tsx:199
 msgid "Grande"
 msgstr "Grande"
 
@@ -382,7 +390,7 @@ msgstr "id <0>{0}</0>"
 msgid "id <0>{id}</0>"
 msgstr "id <0>{id}</0>"
 
-#: src/routes/_app.tsx:24
+#: src/routes/_app.tsx:28
 msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
 msgstr "Pode ser um problema de ligação ou um erro do servidor."
 
@@ -394,13 +402,13 @@ msgstr "Parece que houve um problema com a atualização."
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Não foi possível obter o resumo do guia."
 
-#: src/routes/_app.tsx:23
+#: src/routes/_app.tsx:27
 msgid "Impossible de vérifier la mise à jour de l'application."
 msgstr "Não foi possível verificar a atualização da aplicação."
 
 #. placeholder {0}: info.componentStack
-#: src/components/error_component.tsx:95
-#: src/components/error_component.tsx:127
+#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:126
 msgid "Informations supplémentaires : {0}"
 msgstr "Informações adicionais: {0}"
 
@@ -501,8 +509,8 @@ msgstr "Nome"
 msgid "Nom de la note"
 msgstr "Nome da nota"
 
-#: src/routes/_app/settings.tsx:120
-msgid "Normal"
+#: src/routes/_app/settings.tsx:196
+msgid "Normale"
 msgstr "Normal"
 
 #: src/components/title_bar.tsx:120
@@ -511,25 +519,29 @@ msgstr "Normal"
 msgid "Notes"
 msgstr "Notas"
 
-#: src/routes/_app/settings.tsx:84
+#: src/routes/_app/settings.tsx:160
 msgid "Opacité"
 msgstr "Opacidade"
 
-#: src/components/error_component.tsx:53
-msgid "Ou le bouton suivant"
-msgstr "Ou o próximo botão"
+#: src/components/error_component.tsx:52
+msgid "ou le bouton suivant"
+msgstr "ou o botão seguinte"
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:197
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
+#: src/routes/_app/settings.tsx:108
+msgid "Ouvrir les guides à l'ouverture"
+msgstr "Abrir guias ao iniciar"
+
 #: src/components/title_bar.tsx:163
-#: src/routes/_app/settings.tsx:43
-#: src/routes/_app/settings.tsx:77
+#: src/routes/_app/settings.tsx:44
+#: src/routes/_app/settings.tsx:99
 msgid "Paramètres"
 msgstr "Configurações"
 
-#: src/routes/_app/settings.tsx:117
+#: src/routes/_app/settings.tsx:193
 msgid "Petite"
 msgstr "Pequena"
 
@@ -539,8 +551,8 @@ msgstr "Mais opções"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
 #: src/components/error_component.tsx:47
-msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>."
-msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>."
+msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
+msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:206
 msgid "Préparation"
@@ -559,7 +571,7 @@ msgstr "Problema encontrado"
 msgid "Profil \"{0}\""
 msgstr "Perfil \"{0}\""
 
-#: src/routes/_app/settings.tsx:210
+#: src/routes/_app/settings.tsx:255
 msgid "Profil créé avec succès"
 msgstr "Perfil criado com sucesso"
 
@@ -567,7 +579,7 @@ msgstr "Perfil criado com sucesso"
 msgid "Profil supprimé avec succès"
 msgstr "Perfil eliminado com sucesso"
 
-#: src/routes/_app/settings.tsx:175
+#: src/routes/_app/settings.tsx:220
 msgid "Profils"
 msgstr "Perfis"
 
@@ -600,7 +612,7 @@ msgstr "Pesquisar uma missão"
 msgid "Réduire"
 msgstr "Minimizar"
 
-#: src/components/error_component.tsx:57
+#: src/components/error_component.tsx:56
 msgid "Réinitialiser"
 msgstr "Restabelecer"
 
@@ -648,7 +660,7 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Remover da lista"
 
-#: src/routes/_app/settings.tsx:98
+#: src/routes/_app/settings.tsx:174
 msgid "Taille de texte des guides"
 msgstr "Tamanho do texto dos guias"
 
@@ -674,11 +686,11 @@ msgstr "Baixar o guia"
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
 
-#: src/routes/_app/settings.tsx:126
+#: src/routes/_app/settings.tsx:202
 msgid "Très grande"
 msgstr "Extra grande"
 
-#: src/routes/_app/settings.tsx:114
+#: src/routes/_app/settings.tsx:190
 msgid "Très petite"
 msgstr "Extra pequena"
 
@@ -686,7 +698,7 @@ msgstr "Extra pequena"
 msgid "Twitter de Ganymède"
 msgstr "Twitter do Ganimedes"
 
-#: src/components/error_component.tsx:106
+#: src/components/error_component.tsx:105
 msgid "Une erreur est survenue"
 msgstr "Ocorreu um erro"
 
@@ -707,7 +719,7 @@ msgstr "Ocorreu um erro ao recuperar as suas informações de utilizador: {0}"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 
-#: src/components/error_component.tsx:66
+#: src/components/error_component.tsx:65
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 

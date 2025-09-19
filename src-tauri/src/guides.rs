@@ -21,14 +21,22 @@ pub enum Error {
     ReadGuidesDirGlob(String),
     #[error("cannot read a guide file: {0}")]
     ReadGuideFile(String),
+    #[error("cannot read a recent guides file: {0}")]
+    ReadRecentGuidesFile(String),
     #[error("malformed guide: {0}")]
     GuideMalformed(#[from] crate::json::Error),
+    #[error("malformed recent guides file: {0}")]
+    RecentGuidesFileMalformed(String),
     #[error("cannot serialize guide: {0}")]
     SerializeGuide(crate::json::Error),
+    #[error("cannot serialize recent guides file: {0}")]
+    SerializeRecentGuidesFile(crate::json::Error),
     #[error("cannot create the guides directory: {0}")]
     CreateGuidesDir(String),
     #[error("cannot write a guide file: {0}")]
     WriteGuideFile(String),
+    #[error("cannot write recent guides file: {0}")]
+    WriteRecentGuidesFile(String),
     #[error("cannot request a guide from server: {0}")]
     RequestGuide(String),
     #[error("cannot get the content of a guide request: {0}")]
@@ -188,6 +196,8 @@ pub enum GuideOrFolderToDelete {
     Guide { id: u32, folder: Option<String> },
     Folder { folder: String },
 }
+
+pub type RecentGuides = Vec<u32>;
 
 impl GuidesOrFolder {
     pub fn from_handle<R: Runtime>(
@@ -407,6 +417,19 @@ pub trait GuidesApi {
         app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<bool, Error>;
+    #[taurpc(alias = "registerGuideOpen")]
+    async fn register_guide_open<R: Runtime>(
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<(), Error>;
+    #[taurpc(alias = "registerGuideClose")]
+    async fn register_guide_close<R: Runtime>(
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<(), Error>;
+    #[taurpc(alias = "getRecentGuides")]
+    async fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>)
+        -> Result<RecentGuides, Error>;
 }
 
 #[derive(Clone)]
@@ -741,8 +764,32 @@ impl GuidesApi for GuidesApiImpl {
         debug!("[Guides] Guide {} exists: {}", guide_id, exists);
         Ok(exists)
     }
+
+    async fn register_guide_open<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<(), Error> {
+        register_guide_open(app_handle, guide_id)
+    }
+
+    async fn register_guide_close<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        guide_id: u32,
+    ) -> Result<(), Error> {
+        register_guide_close(app_handle, guide_id)
+    }
+
+    async fn get_recent_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+    ) -> Result<RecentGuides, Error> {
+        get_recent_guides(app_handle)
+    }
 }
 
+/// Ensure the guides directory exists
 pub fn ensure(app: &AppHandle) -> Result<(), Error> {
     let guides_dir = &app.path().app_guides_dir();
 
@@ -755,6 +802,7 @@ pub fn ensure(app: &AppHandle) -> Result<(), Error> {
     Ok(())
 }
 
+/// Download the default guide (tutorial guide) into the guides directory
 pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
     let mut guides = Guides::from_handle(app, "".into())?;
 
@@ -765,6 +813,7 @@ pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
     Ok(guides)
 }
 
+/// Fetch a guide from the server by its ID
 pub async fn get_guide_from_server(
     guide_id: u32,
     http_client: &reqwest::Client,
@@ -789,6 +838,7 @@ pub async fn get_guide_from_server(
     Ok(guide)
 }
 
+/// Download a guide by its ID and save it into the specified folder
 async fn download_guide_by_id<R: Runtime>(
     app: &AppHandle<R>,
     guides: &mut Guides,
@@ -810,5 +860,78 @@ async fn download_guide_by_id<R: Runtime>(
     Ok(())
 }
 
-// implement a command to know if a guide is downloaded, with glob pattern, so in front we can display the button and know where it is
-// warn if the guide is in two places or more
+fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
+    debug!("[Guides] register_guide_open for guide {guide_id}");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+
+    if !recent_guides_list.contains(&guide_id) {
+        recent_guides_list.insert(0, guide_id); // Add to the start of the list
+        if recent_guides_list.len() > 6 {
+            recent_guides_list.pop(); // Keep only the last 6 entries
+        }
+
+        write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+    }
+
+    Ok(())
+}
+
+fn register_guide_close<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
+    debug!("[Guides] register_guide_close for guide {guide_id}");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+
+    recent_guides_list.retain(|&id| id != guide_id);
+
+    write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+
+    Ok(())
+}
+
+fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<RecentGuides, Error> {
+    debug!("[Guides] get_recent_guides");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    read_recent_guides(&recent_guides_path)
+}
+
+fn write_recent_guides(
+    recent_guides_path: &PathBuf,
+    recent_guides: &RecentGuides,
+) -> Result<(), Error> {
+    let json =
+        crate::json::serialize_pretty(recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
+
+    debug!(
+        "[Guides] writing recent guides file: {:?}",
+        recent_guides_path
+    );
+
+    fs::write(recent_guides_path.as_path(), json)
+        .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
+
+    Ok(())
+}
+
+fn read_recent_guides(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
+    if recent_guides_path.exists() {
+        debug!("[Guides] reading recent guides file",);
+
+        let file = fs::read_to_string(&recent_guides_path)
+            .map_err(|err| Error::ReadRecentGuidesFile(err.to_string()))?;
+        let recent_guides_list = crate::json::from_str::<RecentGuides>(file.as_str())
+            .map_err(|err| Error::RecentGuidesFileMalformed(err.to_string()))?;
+
+        Ok(recent_guides_list)
+    } else {
+        debug!("[Guides] recent guides file does not exist, returning empty list");
+
+        Ok(vec![])
+    }
+}

@@ -126,3 +126,33 @@ export class GuideExistsError extends Error {
 export function guideExists(guideId: number) {
   return fromPromise(taurpc.guides.guideExists(guideId), GuideExistsError.from)
 }
+
+export class GetRecentGuidesError extends Error {
+  static from(error: unknown) {
+    return new GetRecentGuidesError('Failed to get recent guides', { cause: error })
+  }
+}
+
+export function getRecentGuides() {
+  return fromPromise(taurpc.guides.getRecentGuides(), GetRecentGuidesError.from)
+}
+
+export class RegisterGuideOpenError extends Error {
+  static from(error: unknown) {
+    return new RegisterGuideOpenError('Failed to register guide open', { cause: error })
+  }
+}
+
+export function registerGuideOpen(guideId: number) {
+  return fromPromise(taurpc.guides.registerGuideOpen(guideId), RegisterGuideOpenError.from)
+}
+
+export class RegisterGuideCloseError extends Error {
+  static from(error: unknown) {
+    return new RegisterGuideCloseError('Failed to register guide close', { cause: error })
+  }
+}
+
+export function registerGuideClose(guideId: number) {
+  return fromPromise(taurpc.guides.registerGuideClose(guideId), RegisterGuideCloseError.from)
+}

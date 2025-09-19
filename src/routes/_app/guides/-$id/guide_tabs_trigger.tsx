@@ -7,10 +7,13 @@ import { useProfile } from '@/hooks/use_profile.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { getStepOr } from '@/lib/progress.ts'
+import { useRegisterGuideClose } from '@/mutations/register_guide_close.mutation.ts'
+import { debug } from '@tauri-apps/plugin-log'
 
 export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: number }) {
   const guide = useGuideOrUndefined(id)
   const removeTab = useTabs((s) => s.removeTab)
+  const registerGuideClose = useRegisterGuideClose()
   const tabs = useTabs((s) => s.tabs)
   const navigate = useNavigate()
   const profile = useProfile()
@@ -18,8 +21,9 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
   useEffect(() => {
     if (!guide) {
       removeTab(id)
+      registerGuideClose.mutate(id)
     }
-  }, [guide, id, removeTab])
+  }, [guide, id, removeTab, registerGuideClose])
 
   if (!guide) {
     return null
@@ -51,8 +55,12 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
 
             const positionInList = tabs.findIndex((tab) => tab === id)
 
+            debug(`Closing tab: ${id} at position ${positionInList} - current: ${currentId}`)
+
             if (currentId === id && positionInList !== -1) {
-              const nextGuide = tabs[clamp(positionInList - 1, 0, tabs.length - 1)]
+              const nextGuide = tabs.filter((tab) => tab !== id)[clamp(positionInList - 1, 0, tabs.length - 1)]
+
+              debug(`Navigating to next guide: ${nextGuide}`)
 
               // go to previous tab if it exists
               await navigate({
@@ -67,6 +75,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
             }
           } finally {
             removeTab(id)
+            registerGuideClose.mutate(id)
           }
         }}
       >

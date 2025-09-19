@@ -16,7 +16,7 @@ export type AuthTokens = { access_token: string; refresh_token: string | null; e
 
 export type AutoPilot = { name: string; position: string }
 
-export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; fontSize?: FontSize; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number }
+export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; fontSize?: FontSize; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean }
 
 export type ConfError = { Malformed: JsonError } | { CreateConfDir: string } | { ConfDir: string } | { SerializeConf: JsonError } | { UnhandledIo: string } | { SaveConf: string } | "GetProfileInUse" | { ResetConf: ConfError }
 
@@ -42,7 +42,7 @@ export type GuideWithSteps = { id: number; name: string; description: string | n
 
 export type Guides = { guides: GuideWithSteps[] }
 
-export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { GuideMalformed: JsonError } | { SerializeGuide: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
+export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
 
 export type GuidesOrFolder = ({ type: "guide" } & GuideWithSteps) | ({ type: "folder" } & Folder)
 
@@ -90,7 +90,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":[],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id"],"registerGuideOpen":["guide_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -110,9 +110,12 @@ getGuideFromServer: (guideId: number) => Promise<GuideWithSteps>,
 getGuideSummary: (guideId: number) => Promise<Summary>, 
 getGuides: (folder: string | null) => Promise<GuidesOrFolder[]>, 
 getGuidesFromServer: (status: Status | null) => Promise<Guide[]>, 
+getRecentGuides: () => Promise<number[]>, 
 guideExists: (guideId: number) => Promise<boolean>, 
 hasGuidesNotUpdated: () => Promise<boolean>, 
 openGuidesFolder: () => Promise<null>, 
+registerGuideClose: (guideId: number) => Promise<null>, 
+registerGuideOpen: (guideId: number) => Promise<null>, 
 updateAllAtOnce: () => Promise<Partial<{ [key in number]: UpdateAllAtOnceResult }>>},
 "image": {fetchImage: (url: string) => Promise<number[]>},
 "notifications": {getUnviewedNotifications: () => Promise<Notification[]>, 

@@ -12,6 +12,10 @@ const fn default_level() -> u32 {
     DEFAULT_LEVEL
 }
 
+const fn default_auto_open_guides() -> bool {
+    true
+}
+
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
 #[specta(rename = "ConfError")]
 pub enum Error {
@@ -104,6 +108,8 @@ pub struct Conf {
     pub auto_pilots: Vec<AutoPilot>,
     pub notes: Vec<Note>,
     pub opacity: f32,
+    #[serde(default = "default_auto_open_guides")]
+    pub auto_open_guides: bool,
 }
 
 impl Progress {
@@ -229,6 +235,7 @@ impl Default for Conf {
             auto_pilots: vec![],
             notes: vec![],
             opacity: 0.98,
+            auto_open_guides: true,
         }
     }
 }

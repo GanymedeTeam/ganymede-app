@@ -2,8 +2,12 @@ import { Trans } from '@lingui/react/macro'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 import { toast } from 'sonner'
-
+import { useTabs } from '@/hooks/use_tabs.ts'
+import { getProfile } from '@/lib/profile.ts'
+import { getProgress } from '@/lib/progress.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { isAppOldVersionQuery } from '@/queries/is_old_version.query.ts'
+import { recentGuidesQuery } from '@/queries/recent_guides.query.ts'
 
 let lastCheckTime = 0
 const recheckInterval = 1000 * 60 * 10 // 10 minutes
@@ -41,6 +45,37 @@ export const Route = createFileRoute('/_app')({
           toVersion: isOldVersion.to,
         },
       })
+    }
+
+    const conf = await queryClient.ensureQueryData(confQuery)
+
+    if (conf.autoOpenGuides) {
+      const recentGuides = await queryClient.ensureQueryData(recentGuidesQuery)
+
+      if (recentGuides.length > 0) {
+        await debug(`Recent guides: ${recentGuides.join(', ')}`)
+
+        const { setTabs } = useTabs.getState()
+
+        setTabs(recentGuides)
+
+        const firstRecentGuide = recentGuides.at(0)
+
+        if (!firstRecentGuide) {
+          await debug('No recent guides found, not redirecting. Should not happen.')
+
+          return
+        }
+
+        const profile = getProfile(conf)
+        const progress = getProgress(profile, firstRecentGuide)
+
+        throw redirect({
+          to: '/guides/$id',
+          params: { id: firstRecentGuide },
+          search: { step: progress?.currentStep ?? 0 },
+        })
+      }
     }
   },
   component: () => <Outlet />,

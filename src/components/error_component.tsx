@@ -47,10 +47,9 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
             <Trans>
               Pour réinitialiser la configuration, exécuter le raccourci clavier :{' '}
               <strong className="whitespace-nowrap italic">{isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'}</strong>
-              .
             </Trans>
             <br />
-            <Trans>Ou le bouton suivant</Trans>
+            <Trans>ou le bouton suivant</Trans>
           </p>
 
           <Button onClick={onClickResetConf} size="lg">
