@@ -1,5 +1,23 @@
 # ganymede-app
 
+## 1.14.0
+
+### Minor Changes
+
+- e7db4df: Meilleure gestion des erreurs et de leur affichage.
+- 2cdfd99: Possibilité de se connecter sur l'app (les fonctionnalités liées à la connexion arrivera plus tard).
+- 216b259: Possibilité d'ouvrir les derniers guides à l'ouverture de l'app automatiquement.
+- 5a0b6a5: Ajout d'une petite alerte lorsque qu'une mise à jour des guides est disponible
+- 216b259: Nouveau design des paramètres.
+- 9333d09: Modification visuelle de la page de sélection de la catégorie de guide à télécharger.
+
+### Patch Changes
+
+- 5c68aad: Correction de la modal de report bug quand l'app était en très petit.
+- 2886c67: Correction de l'affichage de long liens.
+- 6af8dab: Correction d'alignement des onglets de guide quand la fenêtre est plus grande.
+- 95ccaa8: Possibilité de déplacer la fenêtre si une notification est affichée.
+
 ## 1.13.1
 
 ### Patch Changes
