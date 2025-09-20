@@ -1,16 +1,19 @@
-use crate::api::GANYMEDE_API;
-use crate::tauri_api_ext::GuidesPathExt;
+use std::{collections::HashMap, fmt, fs, path::PathBuf, vec};
+
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::path::PathBuf;
-use std::{fmt, fs, vec};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_opener::OpenerExt;
 use tauri_plugin_sentry::sentry;
 
+use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
+
 pub const DEFAULT_GUIDE_ID: u32 = 1074;
+
+// ================================================================================================
+// Enums
+// ================================================================================================
 
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
 #[specta(rename = "GuidesError")]
@@ -61,15 +64,6 @@ pub enum Error {
     Opener(String),
 }
 
-#[taurpc::ipc_type]
-#[specta(rename = "GuideUser")]
-pub struct User {
-    pub id: u32,
-    pub name: String,
-    pub is_admin: u8,
-    pub is_certified: u8,
-}
-
 #[derive(Serialize, Deserialize, Clone, taurpc::specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub enum GuideLang {
@@ -87,6 +81,49 @@ pub enum Status {
     Private,
     Certified,
     Gp,
+}
+
+#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(rename_all = "camelCase")]
+pub enum SummaryQuestStatus {
+    Setup(u32),
+    Started(u32),
+    InProgress(u32),
+    Completed(u32),
+}
+
+#[derive(Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(tag = "type", rename_all = "camelCase")]
+pub enum GuidesOrFolder {
+    Guide(GuideWithSteps),
+    Folder(Folder),
+}
+
+#[derive(Serialize, Clone, taurpc::specta::Type)]
+#[serde(untagged, rename_all = "camelCase")]
+pub enum UpdateAllAtOnceResult {
+    Success,
+    Failure(String),
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(tag = "type", rename_all = "camelCase")]
+pub enum GuideOrFolderToDelete {
+    Guide { id: u32, folder: Option<String> },
+    Folder { folder: String },
+}
+
+// ================================================================================================
+// Structs
+// ================================================================================================
+
+#[taurpc::ipc_type]
+#[specta(rename = "GuideUser")]
+pub struct User {
+    pub id: u32,
+    pub name: String,
+    pub is_admin: u8,
+    pub is_certified: u8,
 }
 
 #[taurpc::ipc_type]
@@ -152,27 +189,11 @@ pub struct Folder {
     pub name: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, taurpc::specta::Type)]
-#[serde(tag = "type", rename_all = "camelCase")]
-pub enum GuidesOrFolder {
-    Guide(GuideWithSteps),
-    Folder(Folder),
-}
-
 #[derive(Debug)]
 #[taurpc::ipc_type]
 #[serde(rename_all = "camelCase")]
 pub struct Summary {
     pub quests: Vec<QuestSummary>,
-}
-
-#[derive(Debug, PartialEq, Eq, Hash, Serialize, Deserialize, Clone, taurpc::specta::Type)]
-#[serde(rename_all = "camelCase")]
-pub enum SummaryQuestStatus {
-    Setup(u32),
-    Started(u32),
-    InProgress(u32),
-    Completed(u32),
 }
 
 #[derive(Debug)]
@@ -183,71 +204,11 @@ pub struct QuestSummary {
     pub statuses: Vec<SummaryQuestStatus>,
 }
 
-#[derive(Serialize, Clone, taurpc::specta::Type)]
-#[serde(untagged, rename_all = "camelCase")]
-pub enum UpdateAllAtOnceResult {
-    Success,
-    Failure(String),
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
-#[serde(tag = "type", rename_all = "camelCase")]
-pub enum GuideOrFolderToDelete {
-    Guide { id: u32, folder: Option<String> },
-    Folder { folder: String },
-}
-
 pub type RecentGuides = Vec<u32>;
 
-impl GuidesOrFolder {
-    pub fn from_handle<R: Runtime>(
-        app: &AppHandle<R>,
-        folder: Option<String>,
-    ) -> Result<Vec<GuidesOrFolder>, Error> {
-        let mut guide_folder = app.path().app_guides_dir();
-
-        if let Some(folder) = folder {
-            guide_folder = guide_folder.join(folder);
-        }
-
-        println!("[Guides] get_guides_or_folder in {:?}", guide_folder);
-
-        let mut result = vec![];
-
-        for entry in
-            fs::read_dir(guide_folder).map_err(|err| Error::ReadGuidesDir(err.to_string()))?
-        {
-            let entry = entry.map_err(|err| Error::ReadGuidesDir(err.to_string()))?;
-            let path = entry.path();
-            let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
-
-            if path.is_dir() {
-                result.push(GuidesOrFolder::Folder(Folder { name: file_name }));
-            } else if path.is_file() {
-                let extension = path.extension();
-
-                if let Some(ext) = extension {
-                    if ext == "json" {
-                        let file = fs::read_to_string(&path)
-                            .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
-                        let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
-                            .map_err(Error::GuideMalformed)?;
-
-                        guide.folder = Some(if path.is_dir() {
-                            path
-                        } else {
-                            path.parent().unwrap().to_path_buf()
-                        });
-
-                        result.push(GuidesOrFolder::Guide(guide));
-                    }
-                }
-            }
-        }
-
-        Ok(result)
-    }
-}
+// ================================================================================================
+// Type Implementations
+// ================================================================================================
 
 impl Status {
     fn to_str(&self) -> &'static str {
@@ -275,94 +236,294 @@ impl fmt::Display for Status {
     }
 }
 
-impl Guides {
-    fn from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
-        info!("[Guides] get_guides in {:?}", path_buf);
+// ================================================================================================
+// Public Functions
+// ================================================================================================
 
-        let options = glob::MatchOptions {
-            case_sensitive: false,
-            require_literal_separator: false,
-            require_literal_leading_dot: false,
-        };
+/// Ensure the guides directory exists
+pub fn ensure_guides_dir(app_handle: &AppHandle) -> Result<(), Error> {
+    let guides_dir = &app_handle.path().app_guides_dir();
 
-        let files = glob::glob_with(path_buf.join("**/*.json").to_str().unwrap(), options)
-            .map_err(|err| Error::Pattern(err.to_string()))?;
+    if !guides_dir.exists() {
+        fs::create_dir_all(guides_dir).map_err(|err| Error::CreateGuidesDir(err.to_string()))?;
+    }
 
-        let mut guides = vec![];
+    Ok(())
+}
 
-        for entry in files {
-            let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
+/// Download the default guide (tutorial guide) into the guides directory
+pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
+    let mut guides = get_guides_from_handle(app, "".into())?;
 
-            let file = fs::read_to_string(file_path.to_str().unwrap())
-                .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
+    download_guide_by_id(app, &mut guides, DEFAULT_GUIDE_ID, "".into()).await?;
 
-            let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
-                .map_err(Error::GuideMalformed)?;
+    write_guides(&guides, app)?;
 
-            guide.folder = Some(if file_path.is_dir() {
-                file_path
-            } else {
-                file_path.parent().unwrap().to_path_buf()
-            });
+    Ok(guides)
+}
 
-            if guides.iter().any(|g: &GuideWithSteps| g.id == guide.id) {
-                continue;
+/// Fetch a guide from the server by its ID
+pub async fn get_guide_from_server(
+    guide_id: u32,
+    http_client: &reqwest::Client,
+) -> Result<GuideWithSteps, Error> {
+    info!("[Guides] get_guide_from_server: {}", guide_id);
+
+    let res = http_client
+        .get(format!("{}/v2/guides/{}", GANYMEDE_API, guide_id))
+        .send()
+        .await
+        .map_err(|err| Error::RequestGuide(err.to_string()))?;
+    let text = res
+        .text()
+        .await
+        .map_err(|err| Error::RequestGuideContent(err.to_string()))?;
+
+    let mut guide = crate::json::from_str::<GuideWithSteps>(text.as_str())
+        .map_err(Error::GuideWithStepsMalformed)?;
+
+    guide.folder = None;
+
+    Ok(guide)
+}
+
+// ================================================================================================
+// Private Functions
+// ================================================================================================
+
+fn get_guides_or_folder_from_handle<R: Runtime>(
+    app: &AppHandle<R>,
+    folder: Option<String>,
+) -> Result<Vec<GuidesOrFolder>, Error> {
+    let mut guide_folder = app.path().app_guides_dir();
+
+    if let Some(folder) = folder {
+        guide_folder = guide_folder.join(folder);
+    }
+
+    println!("[Guides] get_guides_or_folder in {:?}", guide_folder);
+
+    let mut result = vec![];
+
+    for entry in fs::read_dir(guide_folder).map_err(|err| Error::ReadGuidesDir(err.to_string()))? {
+        let entry = entry.map_err(|err| Error::ReadGuidesDir(err.to_string()))?;
+        let path = entry.path();
+        let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+
+        if path.is_dir() {
+            result.push(GuidesOrFolder::Folder(Folder { name: file_name }));
+        } else if path.is_file() {
+            let extension = path.extension();
+
+            if let Some(ext) = extension {
+                if ext == "json" {
+                    let file = fs::read_to_string(&path)
+                        .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
+                    let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
+                        .map_err(Error::GuideMalformed)?;
+
+                    guide.folder = Some(if path.is_dir() {
+                        path
+                    } else {
+                        path.parent().unwrap().to_path_buf()
+                    });
+
+                    result.push(GuidesOrFolder::Guide(guide));
+                }
             }
-
-            guides.push(guide);
         }
-
-        Ok(Guides { guides })
     }
 
-    fn from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Result<Guides, Error> {
-        let mut guides_dir = app.path().app_guides_dir();
+    Ok(result)
+}
 
-        if folder != "" {
-            guides_dir = guides_dir.join(folder);
+fn get_guides_from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
+    info!("[Guides] get_guides in {:?}", path_buf);
+
+    let options = glob::MatchOptions {
+        case_sensitive: false,
+        require_literal_separator: false,
+        require_literal_leading_dot: false,
+    };
+
+    let files = glob::glob_with(path_buf.join("**/*.json").to_str().unwrap(), options)
+        .map_err(|err| Error::Pattern(err.to_string()))?;
+
+    let mut guides = vec![];
+
+    for entry in files {
+        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
+
+        let file = fs::read_to_string(file_path.to_str().unwrap())
+            .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
+
+        let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
+            .map_err(Error::GuideMalformed)?;
+
+        guide.folder = Some(if file_path.is_dir() {
+            file_path
+        } else {
+            file_path.parent().unwrap().to_path_buf()
+        });
+
+        if guides.iter().any(|g: &GuideWithSteps| g.id == guide.id) {
+            continue;
         }
 
-        Guides::from_path(&guides_dir)
+        guides.push(guide);
     }
 
-    fn write<R: Runtime>(&self, app: &AppHandle<R>) -> Result<(), Error> {
-        let guides_dir = &app.path().app_guides_dir();
+    Ok(Guides { guides })
+}
 
-        for guide in &self.guides {
-            let json = crate::json::serialize_pretty(guide).map_err(Error::SerializeGuide)?;
+fn get_guides_from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Result<Guides, Error> {
+    let mut guides_dir = app.path().app_guides_dir();
 
-            if !guides_dir.exists() {
-                fs::create_dir_all(guides_dir)
-                    .map_err(|err| Error::CreateGuidesDir(err.to_string()))?;
-            }
-
-            let file = guide
-                .folder
-                .as_ref()
-                .unwrap_or(guides_dir)
-                .join(format!("{}.json", guide.id));
-
-            debug!("Writing guide to {:?}", file);
-
-            fs::write(file.as_path(), json)
-                .map_err(|err| Error::WriteGuideFile(err.to_string()))?;
-        }
-
-        Ok(())
+    if folder != "" {
+        guides_dir = guides_dir.join(folder);
     }
 
-    fn add_or_replace(&mut self, guide: GuideWithSteps) -> Result<(), Error> {
-        let guide_ref = &guide;
+    get_guides_from_path(&guides_dir)
+}
 
-        // Update the guide file if it exists
-        match self.guides.iter().position(|g| g.id == guide_ref.id) {
-            Some(index) => self.guides[index] = guide,
-            None => self.guides.push(guide),
+fn write_guides<R: Runtime>(guides: &Guides, app: &AppHandle<R>) -> Result<(), Error> {
+    let guides_dir = &app.path().app_guides_dir();
+
+    for guide in &guides.guides {
+        let json = crate::json::serialize_pretty(guide).map_err(Error::SerializeGuide)?;
+
+        if !guides_dir.exists() {
+            fs::create_dir_all(guides_dir)
+                .map_err(|err| Error::CreateGuidesDir(err.to_string()))?;
         }
 
-        Ok(())
+        let file = guide
+            .folder
+            .as_ref()
+            .unwrap_or(guides_dir)
+            .join(format!("{}.json", guide.id));
+
+        debug!("Writing guide to {:?}", file);
+
+        fs::write(file.as_path(), json).map_err(|err| Error::WriteGuideFile(err.to_string()))?;
+    }
+
+    Ok(())
+}
+
+fn add_or_replace_guide(guides: &mut Guides, guide: GuideWithSteps) -> Result<(), Error> {
+    let guide_ref = &guide;
+
+    // Update the guide file if it exists
+    match guides.guides.iter().position(|g| g.id == guide_ref.id) {
+        Some(index) => guides.guides[index] = guide,
+        None => guides.guides.push(guide),
+    }
+
+    Ok(())
+}
+
+/// Download a guide by its ID and save it into the specified folder
+async fn download_guide_by_id<R: Runtime>(
+    app: &AppHandle<R>,
+    guides: &mut Guides,
+    guide_id: u32,
+    folder: String,
+) -> Result<(), Error> {
+    let http_client = app.state::<reqwest::Client>();
+    let mut guide = get_guide_from_server(guide_id, &http_client).await?;
+
+    guide.folder = Some(app.path().app_guides_dir().join(folder.clone()));
+
+    debug!(
+        "[Guides] download_guide_by_id: {} in {:?} (via {})",
+        guide_id, guide.folder, folder
+    );
+
+    add_or_replace_guide(guides, guide)?;
+
+    Ok(())
+}
+
+fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
+    debug!("[Guides] register_guide_open for guide {guide_id}");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+
+    if !recent_guides_list.contains(&guide_id) {
+        recent_guides_list.insert(0, guide_id); // Add to the start of the list
+        if recent_guides_list.len() > 6 {
+            recent_guides_list.pop(); // Keep only the last 6 entries
+        }
+
+        write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+    }
+
+    Ok(())
+}
+
+fn register_guide_close<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
+    debug!("[Guides] register_guide_close for guide {guide_id}");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+
+    recent_guides_list.retain(|&id| id != guide_id);
+
+    write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+
+    Ok(())
+}
+
+fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<RecentGuides, Error> {
+    debug!("[Guides] get_recent_guides");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    read_recent_guides(&recent_guides_path)
+}
+
+fn write_recent_guides(
+    recent_guides_path: &PathBuf,
+    recent_guides: &RecentGuides,
+) -> Result<(), Error> {
+    let json =
+        crate::json::serialize_pretty(recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
+
+    debug!(
+        "[Guides] writing recent guides file: {:?}",
+        recent_guides_path
+    );
+
+    fs::write(recent_guides_path.as_path(), json)
+        .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
+
+    Ok(())
+}
+
+fn read_recent_guides(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
+    if recent_guides_path.exists() {
+        debug!("[Guides] reading recent guides file",);
+
+        let file = fs::read_to_string(&recent_guides_path)
+            .map_err(|err| Error::ReadRecentGuidesFile(err.to_string()))?;
+        let recent_guides_list = crate::json::from_str::<RecentGuides>(file.as_str())
+            .map_err(|err| Error::RecentGuidesFileMalformed(err.to_string()))?;
+
+        Ok(recent_guides_list)
+    } else {
+        debug!("[Guides] recent guides file does not exist, returning empty list");
+
+        Ok(vec![])
     }
 }
+
+// ================================================================================================
+// TauRPC API Trait & Implementation
+// ================================================================================================
 
 #[taurpc::procedures(path = "guides", event_trigger = GuidesEventTrigger, export_to = "../src/ipc/bindings.ts")]
 pub trait GuidesApi {
@@ -442,7 +603,7 @@ impl GuidesApi for GuidesApiImpl {
         app: AppHandle<R>,
         folder: String,
     ) -> Result<Vec<GuideWithSteps>, Error> {
-        let guides = Guides::from_handle(&app, folder)?;
+        let guides = get_guides_from_handle(&app, folder)?;
 
         Ok(guides.guides.into_iter().collect())
     }
@@ -452,7 +613,7 @@ impl GuidesApi for GuidesApiImpl {
         app: AppHandle<R>,
         folder: Option<String>,
     ) -> Result<Vec<GuidesOrFolder>, Error> {
-        GuidesOrFolder::from_handle(&app, folder)
+        get_guides_or_folder_from_handle(&app, folder)
     }
 
     async fn get_guide_from_server<R: Runtime>(
@@ -530,11 +691,11 @@ impl GuidesApi for GuidesApiImpl {
             ..Default::default()
         });
 
-        let mut guides = Guides::from_handle(&app, folder.clone())?;
+        let mut guides = get_guides_from_handle(&app, folder.clone())?;
 
         download_guide_by_id(&app, &mut guides, guide_id, folder).await?;
 
-        guides.write(&app)?;
+        write_guides(&guides, &app)?;
 
         Ok(guides)
     }
@@ -654,7 +815,7 @@ impl GuidesApi for GuidesApiImpl {
     ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
         info!("[Guides] update_all_at_once");
 
-        let mut guides = Guides::from_handle(&app_handle, "".to_string())?;
+        let mut guides = get_guides_from_handle(&app_handle, "".to_string())?;
         let mut results = HashMap::new();
 
         for guide in guides.guides.clone() {
@@ -678,7 +839,7 @@ impl GuidesApi for GuidesApiImpl {
             }
         }
 
-        guides.write(&app_handle)?;
+        write_guides(&guides, &app_handle)?;
 
         Ok(results)
     }
@@ -693,7 +854,7 @@ impl GuidesApi for GuidesApiImpl {
             .get_guides_from_server(app_handle.clone(), None)
             .await?;
 
-        let guides_in_system = Guides::from_handle(&app_handle, "".to_string())?;
+        let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?;
 
         for guide in guides_in_server {
             if let Some(guide_in_system) = guides_in_system.guides.iter().find(|g| g.id == guide.id)
@@ -786,152 +947,5 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle<R>,
     ) -> Result<RecentGuides, Error> {
         get_recent_guides(app_handle)
-    }
-}
-
-/// Ensure the guides directory exists
-pub fn ensure(app: &AppHandle) -> Result<(), Error> {
-    let guides_dir = &app.path().app_guides_dir();
-
-    info!("Log dir: {:?}", &app.path().app_log_dir().unwrap());
-
-    if !guides_dir.exists() {
-        fs::create_dir_all(guides_dir).map_err(|err| Error::CreateGuidesDir(err.to_string()))?;
-    }
-
-    Ok(())
-}
-
-/// Download the default guide (tutorial guide) into the guides directory
-pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
-    let mut guides = Guides::from_handle(app, "".into())?;
-
-    download_guide_by_id(app, &mut guides, DEFAULT_GUIDE_ID, "".into()).await?;
-
-    guides.write(app)?;
-
-    Ok(guides)
-}
-
-/// Fetch a guide from the server by its ID
-pub async fn get_guide_from_server(
-    guide_id: u32,
-    http_client: &reqwest::Client,
-) -> Result<GuideWithSteps, Error> {
-    info!("[Guides] get_guide_from_server: {}", guide_id);
-
-    let res = http_client
-        .get(format!("{}/v2/guides/{}", GANYMEDE_API, guide_id))
-        .send()
-        .await
-        .map_err(|err| Error::RequestGuide(err.to_string()))?;
-    let text = res
-        .text()
-        .await
-        .map_err(|err| Error::RequestGuideContent(err.to_string()))?;
-
-    let mut guide = crate::json::from_str::<GuideWithSteps>(text.as_str())
-        .map_err(Error::GuideWithStepsMalformed)?;
-
-    guide.folder = None;
-
-    Ok(guide)
-}
-
-/// Download a guide by its ID and save it into the specified folder
-async fn download_guide_by_id<R: Runtime>(
-    app: &AppHandle<R>,
-    guides: &mut Guides,
-    guide_id: u32,
-    folder: String,
-) -> Result<(), Error> {
-    let http_client = app.state::<reqwest::Client>();
-    let mut guide = get_guide_from_server(guide_id, &http_client).await?;
-
-    guide.folder = Some(app.path().app_guides_dir().join(folder.clone()));
-
-    debug!(
-        "[Guides] download_guide_by_id: {} in {:?} (via {})",
-        guide_id, guide.folder, folder
-    );
-
-    guides.add_or_replace(guide)?;
-
-    Ok(())
-}
-
-fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
-    debug!("[Guides] register_guide_open for guide {guide_id}");
-
-    let recent_guides_path = app_handle.path().app_recent_guides_file();
-
-    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
-
-    if !recent_guides_list.contains(&guide_id) {
-        recent_guides_list.insert(0, guide_id); // Add to the start of the list
-        if recent_guides_list.len() > 6 {
-            recent_guides_list.pop(); // Keep only the last 6 entries
-        }
-
-        write_recent_guides(&recent_guides_path, &recent_guides_list)?;
-    }
-
-    Ok(())
-}
-
-fn register_guide_close<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
-    debug!("[Guides] register_guide_close for guide {guide_id}");
-
-    let recent_guides_path = app_handle.path().app_recent_guides_file();
-
-    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
-
-    recent_guides_list.retain(|&id| id != guide_id);
-
-    write_recent_guides(&recent_guides_path, &recent_guides_list)?;
-
-    Ok(())
-}
-
-fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<RecentGuides, Error> {
-    debug!("[Guides] get_recent_guides");
-
-    let recent_guides_path = app_handle.path().app_recent_guides_file();
-
-    read_recent_guides(&recent_guides_path)
-}
-
-fn write_recent_guides(
-    recent_guides_path: &PathBuf,
-    recent_guides: &RecentGuides,
-) -> Result<(), Error> {
-    let json =
-        crate::json::serialize_pretty(recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
-
-    debug!(
-        "[Guides] writing recent guides file: {:?}",
-        recent_guides_path
-    );
-
-    fs::write(recent_guides_path.as_path(), json)
-        .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
-
-    Ok(())
-}
-
-fn read_recent_guides(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
-    if recent_guides_path.exists() {
-        debug!("[Guides] reading recent guides file",);
-
-        let file = fs::read_to_string(&recent_guides_path)
-            .map_err(|err| Error::ReadRecentGuidesFile(err.to_string()))?;
-        let recent_guides_list = crate::json::from_str::<RecentGuides>(file.as_str())
-            .map_err(|err| Error::RecentGuidesFileMalformed(err.to_string()))?;
-
-        Ok(recent_guides_list)
-    } else {
-        debug!("[Guides] recent guides file does not exist, returning empty list");
-
-        Ok(vec![])
     }
 }

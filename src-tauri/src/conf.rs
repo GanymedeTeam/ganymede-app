@@ -1,10 +1,10 @@
-use crate::tauri_api_ext::ConfPathExt;
+use std::{borrow::BorrowMut, collections::HashMap, fs};
+
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
-use std::borrow::BorrowMut;
-use std::collections::HashMap;
-use std::fs;
 use tauri::{AppHandle, Manager, Runtime, Window};
+
+use crate::tauri_api_ext::ConfPathExt;
 
 const DEFAULT_LEVEL: u32 = 200;
 
@@ -37,6 +37,23 @@ pub enum Error {
     ResetConf(Box<Error>),
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum ConfLang {
+    En,
+    Fr,
+    Es,
+    Pt,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum FontSize {
+    ExtraSmall,
+    Small,
+    Normal,
+    Large,
+    ExtraLarge,
+}
+
 #[derive(Debug)]
 #[taurpc::ipc_type]
 pub struct Profile {
@@ -60,23 +77,6 @@ pub struct Progress {
     pub id: u32, // guide id
     pub current_step: u32,
     pub steps: HashMap<u32, ConfStep>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
-pub enum ConfLang {
-    En,
-    Fr,
-    Es,
-    Pt,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
-pub enum FontSize {
-    ExtraSmall,
-    Small,
-    Normal,
-    Large,
-    ExtraLarge,
 }
 
 #[derive(Debug)]
@@ -139,10 +139,8 @@ impl Profile {
             return &mut self.progresses[index];
         }
 
-        // If no Progress is found, we create a new one
         self.progresses.push(Progress::new(guide_id));
 
-        // We return a mutable reference to the newly created Progress
         self.progresses
             .last_mut()
             .expect("[Conf] the element has just been added, it should exist.")
@@ -163,13 +161,11 @@ impl ConfStep {
 }
 
 impl Conf {
-    /// Get the conf file content, if it does not exist, return default conf
     pub fn get<R: Runtime>(app: &AppHandle<R>) -> Result<Conf, Error> {
         let conf_path = app.path().app_conf_file();
 
         let file = fs::read_to_string(conf_path);
 
-        // if conf file does not exist, return default conf, otherwise parse the file content
         match file {
             Err(err) => match err.kind() {
                 std::io::ErrorKind::NotFound => Ok(Conf::default()),
@@ -179,7 +175,6 @@ impl Conf {
         }
     }
 
-    /// Save the conf into the conf file. Normalize the conf before saving it
     pub fn save<R: Runtime>(&mut self, app: &AppHandle<R>) -> Result<(), Error> {
         let conf_path = app.path().app_conf_file();
 
@@ -251,9 +246,8 @@ impl Default for Profile {
     }
 }
 
-/// Ensure that the conf file exists, if not, create it with default values
-pub fn ensure(app: &AppHandle) -> Result<(), Error> {
-    let resolver = app.path();
+pub fn ensure_conf_file(app_handle: &AppHandle) -> Result<(), Error> {
+    let resolver = app_handle.path();
     let conf_dir = resolver
         .app_config_dir()
         .map_err(|err| Error::ConfDir(err.to_string()))?;
@@ -271,7 +265,7 @@ pub fn ensure(app: &AppHandle) -> Result<(), Error> {
 
         let default_conf = &mut Conf::default();
 
-        default_conf.save(app)?;
+        default_conf.save(app_handle)?;
     }
 
     Ok(())
