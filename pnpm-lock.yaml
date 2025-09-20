@@ -144,15 +144,15 @@ importers:
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.1.13)
       tauri-plugin-sentry-api:
         specifier: ^0.2.0
         version: 0.2.0
       taurpc:
         specifier: 1.8.1
         version: 1.8.1
+      tw-animate-css:
+        specifier: ^1.3.8
+        version: 1.3.8
       zod:
         specifier: ^4.1.9
         version: 4.1.9
@@ -197,10 +197,10 @@ importers:
         specifier: ^22.13.14
         version: 22.13.14
       '@types/react':
-        specifier: ^19.1.13
+        specifier: ^19.0.8
         version: 19.1.13
       '@types/react-dom':
-        specifier: ^19.1.9
+        specifier: ^19.0.3
         version: 19.1.9(@types/react@19.1.13)
       '@vitejs/plugin-react':
         specifier: ^5.0.3
@@ -2872,11 +2872,6 @@ packages:
   tailwind-merge@3.3.1:
     resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
 
-  tailwindcss-animate@1.0.7:
-    resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders'
-
   tailwindcss@4.1.13:
     resolution: {integrity: sha512-i+zidfmTqtwquj4hMEwdjshYYgMbOrPzb9a0M3ZgNa0JMoZeFC6bxZvO8yr8ozS6ix2SDz0+mvryPeBs2TFE+w==}
 
@@ -2934,6 +2929,9 @@ packages:
     resolution: {integrity: sha512-+wKjMNU9w/EaQayHXb7WA7ZaHY6hN8WgfvHNQ3t1PnU91/7O8TcTnIhCDYTZwnt8JsO9IBqZ30Ln1r7pPF52Aw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  tw-animate-css@1.3.8:
+    resolution: {integrity: sha512-Qrk3PZ7l7wUcGYhwZloqfkWCmaXZAoqjkdbIDvzfGshwGtexa/DAs9koXxIkrpEasyevandomzCBAV1Yyop5rw==}
 
   typescript@5.9.2:
     resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
@@ -5722,10 +5720,6 @@ snapshots:
 
   tailwind-merge@3.3.1: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.1.13):
-    dependencies:
-      tailwindcss: 4.1.13
-
   tailwindcss@4.1.13: {}
 
   tapable@2.2.3: {}
@@ -5795,6 +5789,8 @@ snapshots:
       get-tsconfig: 4.10.1
     optionalDependencies:
       fsevents: 2.3.3
+
+  tw-animate-css@1.3.8: {}
 
   typescript@5.9.2: {}
 

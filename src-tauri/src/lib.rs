@@ -17,7 +17,6 @@ use report::{ReportApi, ReportApiImpl};
 use tauri::Manager;
 use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
-use tauri_plugin_sentry::sentry;
 use taurpc::Router;
 
 mod almanax;
@@ -71,18 +70,24 @@ const _: specta_typescript::FormatterFn = formatter;
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    #[cfg(not(dev))]
-    let sentry_client = sentry::init((
+    #[cfg(not(debug_assertions))]
+    use tauri_plugin_sentry::{
+        init_with_no_injection, minidump,
+        sentry::{add_breadcrumb, capture_error, init, release_name, Breadcrumb, ClientOptions},
+    };
+
+    #[cfg(not(debug_assertions))]
+    let sentry_client = init((
         env!("SENTRY_DSN"),
-        sentry::ClientOptions {
-            release: sentry::release_name!(),
+        ClientOptions {
+            release: release_name!(),
             attach_stacktrace: true,
             ..Default::default()
         },
     ));
 
-    #[cfg(not(dev))]
-    let _guard = tauri_plugin_sentry::minidump::init(&sentry_client);
+    #[cfg(not(debug_assertions))]
+    let _guard = minidump::init(&sentry_client);
 
     let level_filter = if cfg!(debug_assertions) {
         LevelFilter::Debug
@@ -120,8 +125,8 @@ pub fn run() {
                 .build(),
         );
 
-    #[cfg(not(dev))]
-    let app = app.plugin(tauri_plugin_sentry::init_with_no_injection(&sentry_client));
+    #[cfg(not(debug_assertions))]
+    let app = app.plugin(init_with_no_injection(&sentry_client));
 
     let router = Router::new()
         .export_config(
@@ -143,7 +148,8 @@ pub fn run() {
         .merge(OAuthApiImpl.into_handler())
         .merge(UserApiImpl.into_handler());
 
-    sentry::add_breadcrumb(sentry::Breadcrumb {
+    #[cfg(not(debug_assertions))]
+    add_breadcrumb(Breadcrumb {
         category: Some("sentry.transaction".into()),
         message: Some("app plugins initialized".into()),
         ..Default::default()
@@ -158,7 +164,8 @@ pub fn run() {
 
         app.manage(http_client.clone());
 
-        sentry::add_breadcrumb(sentry::Breadcrumb {
+        #[cfg(not(debug_assertions))]
+        add_breadcrumb(Breadcrumb {
             category: Some("sentry.transaction".into()),
             message: Some("app setup".into()),
             ..Default::default()
@@ -166,12 +173,14 @@ pub fn run() {
 
         if let Err(err) = crate::conf::ensure_conf_file(app.handle()) {
             error!("[Lib] failed to ensure conf: {:?}", err);
-            sentry::capture_error(&err);
+            #[cfg(not(debug_assertions))]
+            capture_error(&err);
         }
 
         if let Err(err) = crate::guides::ensure_guides_dir(app.handle()) {
             error!("[Lib] failed to ensure guides: {:?}", err);
-            sentry::capture_error(&err);
+            #[cfg(not(debug_assertions))]
+            capture_error(&err);
         }
 
         handle_first_start_setup(app.handle().clone());
@@ -184,7 +193,8 @@ pub fn run() {
             // we do not want to crash the app if some shortcuts are not registered
             if let Err(err) = handle_shortcuts(app) {
                 error!("[Lib] failed to handle shortcuts: {:?}", err);
-                sentry::capture_error(&err);
+                #[cfg(not(debug_assertions))]
+                capture_error(&err);
             }
         }
 
@@ -206,7 +216,8 @@ pub fn run() {
 
                     if let Err(err) = crate::deep_link::handle_deep_link_url(app_handle.clone(), url.as_str()) {
                         error!("[Lib] Failed to handle deep link URL immediately, storing for later: {:?}", err);
-                        sentry::capture_error(&err);
+                        #[cfg(not(debug_assertions))]
+                        capture_error(&err);
                     }
                 }
             });

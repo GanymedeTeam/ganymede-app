@@ -5,7 +5,6 @@ use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_opener::OpenerExt;
-use tauri_plugin_sentry::sentry;
 
 use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
 
@@ -535,22 +534,27 @@ fn fetch_guides_from_server<R: Runtime>(
     async move {
         info!("[Guides] get_guides_from_server, status: {:?}", status);
 
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Get guides from server".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
+        #[cfg(not(debug_assertions))]
+        {
+            use tauri_plugin_sentry::sentry::{add_breadcrumb, protocol::Map, Breadcrumb};
 
-                if let Some(status) = status.clone() {
-                    map.insert("status".into(), status.to_string().into());
-                } else {
-                    map.insert("status".into(), "all".into());
-                }
+            add_breadcrumb(Breadcrumb {
+                ty: "sentry.transaction".into(),
+                message: Some("Get guides from server".into()),
+                data: {
+                    let mut map = Map::new();
 
-                map
-            },
-            ..Default::default()
-        });
+                    if let Some(status) = status.clone() {
+                        map.insert("status".into(), status.to_string().into());
+                    } else {
+                        map.insert("status".into(), "all".into());
+                    }
+
+                    map
+                },
+                ..Default::default()
+            });
+        }
 
         let http_client = app_handle.state::<reqwest::Client>();
 
@@ -583,19 +587,24 @@ fn download_and_save_guide<R: Runtime>(
     let app = app.clone();
     async move {
         info!("[Guides] download_guide_from_server");
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Download guide from server".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
+        #[cfg(not(debug_assertions))]
+        {
+            use tauri_plugin_sentry::sentry::{add_breadcrumb, protocol::Map, Breadcrumb};
 
-                map.insert("guide_id".into(), guide_id.into());
-                map.insert("folder".into(), folder.clone().into());
+            add_breadcrumb(Breadcrumb {
+                ty: "sentry.transaction".into(),
+                message: Some("Download guide from server".into()),
+                data: {
+                    let mut map = Map::new();
 
-                map
-            },
-            ..Default::default()
-        });
+                    map.insert("guide_id".into(), guide_id.into());
+                    map.insert("folder".into(), folder.clone().into());
+
+                    map
+                },
+                ..Default::default()
+            });
+        }
 
         let mut guides = get_guides_from_handle(&app, folder.clone())?;
 
@@ -625,18 +634,23 @@ fn generate_guide_summary<R: Runtime>(
         let start = std::time::Instant::now();
         info!("[Guides] get_guide_summary: {}", guide_id);
 
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Get guide summary".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
+        #[cfg(not(debug_assertions))]
+        {
+            use tauri_plugin_sentry::sentry::{add_breadcrumb, protocol::Map, Breadcrumb};
 
-                map.insert("guide_id".into(), guide_id.into());
+            add_breadcrumb(Breadcrumb {
+                ty: "sentry.transaction".into(),
+                message: Some("Get guide summary".into()),
+                data: {
+                    let mut map = Map::new();
 
-                map
-            },
-            ..Default::default()
-        });
+                    map.insert("guide_id".into(), guide_id.into());
+
+                    map
+                },
+                ..Default::default()
+            });
+        }
 
         let guides = get_guides_from_handle(&app_handle, "".to_string())?;
         let guide = guides.guides.iter().find(|g| g.id == guide_id);

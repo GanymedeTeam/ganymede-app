@@ -54,7 +54,7 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
   }
 
   return (
-    <Page title={`Erreur`} className="[&_[data-slot=page-title]]:top-0">
+    <Page title={`Erreur`} className="slot-[page-title]:top-0">
       <PageScrollableContent className="flex h-app-without-header flex-col gap-4 px-4 py-2">
         {(conf.isError && conf.error instanceof GetConfError) || location.pathname.includes('/settings') ? (
           <section>

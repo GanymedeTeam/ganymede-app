@@ -2,7 +2,6 @@ use log::{debug, error, info};
 use serde::Serialize;
 use tauri::AppHandle;
 use tauri_plugin_http::reqwest;
-use tauri_plugin_sentry::sentry;
 
 use crate::api::{API_KEY, API_KEY_HEADER, GANYMEDE_API};
 
@@ -82,7 +81,8 @@ pub fn increment_download_count(app_handle: &AppHandle, http_client: reqwest::Cl
         match &res {
             Err(err) => {
                 error!("[Analytics] {:?}", err);
-                sentry::capture_error(&err);
+                #[cfg(not(debug_assertions))]
+                tauri_plugin_sentry::sentry::capture_error(&err);
             }
             _ => {
                 info!("[Analytics] app download count incremented");

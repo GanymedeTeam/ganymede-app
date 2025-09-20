@@ -1,8 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "./assets/fonts/fonts.css";
 
 @plugin "@tailwindcss/typography";
-@plugin "tailwindcss-animate";
 @plugin "../tailwind-slot-plugin.ts";
 
 @theme {

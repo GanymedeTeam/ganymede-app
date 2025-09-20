@@ -2,7 +2,6 @@ use log::{error, info};
 use std::str::FromStr;
 use tauri::{App, Emitter, Manager, Wry};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutState};
-use tauri_plugin_sentry::sentry;
 
 use crate::conf::Conf;
 use crate::event::Event;
@@ -28,26 +27,33 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                 .with_handler(move |app, shortcut, event| {
                     let state = event.state();
 
-                    sentry::add_breadcrumb(sentry::Breadcrumb {
-                        category: Some("sentry.transaction".into()),
-                        data: {
-                            let mut map = sentry::protocol::Map::new();
+                    #[cfg(not(debug_assertions))]
+                    {
+                        use tauri_plugin_sentry::sentry::{
+                            add_breadcrumb, protocol::Map, Breadcrumb,
+                        };
 
-                            map.insert(
-                                "type".into(),
-                                match state {
-                                    ShortcutState::Pressed => "pressed",
-                                    ShortcutState::Released => "released",
-                                }
-                                .into(),
-                            );
+                        add_breadcrumb(Breadcrumb {
+                            category: Some("sentry.transaction".into()),
+                            data: {
+                                let mut map = Map::new();
 
-                            map.insert("shortcut".into(), shortcut.to_string().into());
+                                map.insert(
+                                    "type".into(),
+                                    match state {
+                                        ShortcutState::Pressed => "pressed",
+                                        ShortcutState::Released => "released",
+                                    }
+                                    .into(),
+                                );
 
-                            map
-                        },
-                        ..Default::default()
-                    });
+                                map.insert("shortcut".into(), shortcut.to_string().into());
+
+                                map
+                            },
+                            ..Default::default()
+                        });
+                    }
 
                     match state {
                         ShortcutState::Pressed => {

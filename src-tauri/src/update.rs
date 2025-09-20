@@ -2,7 +2,6 @@ use crate::event::Event;
 use log::{debug, info};
 use serde::Serialize;
 use tauri::{AppHandle, Emitter, Runtime};
-use tauri_plugin_sentry::sentry;
 use tauri_plugin_updater::UpdaterExt;
 
 #[derive(Serialize, Debug, thiserror::Error, taurpc::specta::Type)]
@@ -26,9 +25,13 @@ pub struct UpdateApiImpl;
 #[taurpc::resolvers]
 impl UpdateApi for UpdateApiImpl {
     async fn start_update<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<(), Error> {
+        #[cfg(not(debug_assertions))]
+        use tauri_plugin_sentry::sentry::{add_breadcrumb, Breadcrumb};
+
         debug!("[Update] starting update check");
 
-        sentry::add_breadcrumb(sentry::Breadcrumb {
+        #[cfg(not(debug_assertions))]
+        add_breadcrumb(Breadcrumb {
             ty: "info".into(),
             category: Some("update".into()),
             message: Some("starting update check".to_string()),
@@ -44,7 +47,8 @@ impl UpdateApi for UpdateApiImpl {
         {
             debug!("[Update] update found");
 
-            sentry::add_breadcrumb(sentry::Breadcrumb {
+            #[cfg(not(debug_assertions))]
+            add_breadcrumb(Breadcrumb {
                 ty: "info".into(),
                 category: Some("update".into()),
                 message: Some("update found".to_string()),
@@ -66,7 +70,8 @@ impl UpdateApi for UpdateApiImpl {
                         info!("[Update] downloaded {downloaded} from {content_length:?}");
                     },
                     || {
-                        sentry::add_breadcrumb(sentry::Breadcrumb {
+                        #[cfg(not(debug_assertions))]
+                        add_breadcrumb(Breadcrumb {
                             ty: "info".into(),
                             category: Some("update".into()),
                             message: Some("update downloaded".to_string()),
@@ -81,7 +86,8 @@ impl UpdateApi for UpdateApiImpl {
 
             debug!("[Update] downloaded");
 
-            sentry::add_breadcrumb(sentry::Breadcrumb {
+            #[cfg(not(debug_assertions))]
+            add_breadcrumb(Breadcrumb {
                 ty: "info".into(),
                 category: Some("update".into()),
                 message: Some("installing update".to_string()),
@@ -92,7 +98,8 @@ impl UpdateApi for UpdateApiImpl {
 
             info!("[Update] update installed");
 
-            sentry::add_breadcrumb(sentry::Breadcrumb {
+            #[cfg(not(debug_assertions))]
+            add_breadcrumb(Breadcrumb {
                 ty: "info".into(),
                 category: Some("update".into()),
                 message: Some("restarting the application".to_string()),

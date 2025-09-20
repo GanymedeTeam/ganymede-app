@@ -2,7 +2,6 @@ use crate::guides::download_default_guide;
 use crate::tauri_api_ext::FirstTimePathExt;
 use log::{error, info};
 use tauri::{AppHandle, Manager, Runtime};
-use tauri_plugin_sentry::sentry;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -35,12 +34,16 @@ impl<R: Runtime> FirstStartExt for AppHandle<R> {
 }
 
 pub fn handle_first_start_setup(app_handle: AppHandle) {
+    #[cfg(not(debug_assertions))]
+    use tauri_plugin_sentry::sentry::capture_error;
+
     let handle = app_handle.clone();
 
     match handle.is_first_start() {
         Err(err) => {
             error!("[Lib] failed to ensure first start: {:?}", err);
-            sentry::capture_error(&err);
+            #[cfg(not(debug_assertions))]
+            capture_error(&err);
         }
         Ok(first_start) => {
             if first_start {
@@ -52,7 +55,8 @@ pub fn handle_first_start_setup(app_handle: AppHandle) {
                     match res {
                         Err(err) => {
                             error!("[Lib] cannot download default guide {:?}", err);
-                            sentry::capture_error(&err);
+                            #[cfg(not(debug_assertions))]
+                            capture_error(&err);
                         }
                         Ok(_) => {
                             info!("[Lib] default guide downloaded");
