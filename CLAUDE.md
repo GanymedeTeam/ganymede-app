@@ -76,6 +76,68 @@ This project uses pnpm. Use pnpm instead of npm.
 - Follow standard Rust conventions
 - Error management with thiserror
 
+### Rust File Organization
+When organizing Rust files, follow this strict order to maintain consistency across the codebase:
+
+**Standard File Structure Order:**
+1. **use statements** - imports organized hierarchically
+2. **const** - constants and const functions
+3. **enum** - all enums grouped together
+4. **struct** - all structs grouped together  
+5. **type aliases** - type definitions
+6. **impl** - all implementations grouped
+7. **pub fn** - public functions
+8. **fn** - private functions
+9. **TauRPC** - trait, struct, and impl at the end
+
+**Import Organization:**
+```rust
+// 1. Standard library imports (grouped)
+use std::{collections::HashMap, fs, path::PathBuf};
+
+// 2. External crate imports
+use log::{debug, info};
+use serde::{Deserialize, Serialize};
+use tauri::{AppHandle, Manager, Runtime};
+
+// 3. Internal crate imports
+use crate::tauri_api_ext::ConfPathExt;
+```
+
+**Type Organization:**
+- Group all enums together first, then all structs together
+- Organize by logical relationship within each group
+- Keep related types close to each other
+
+**Implementation Guidelines:**
+- All `impl` blocks grouped together after type definitions
+- `impl Default` typically placed at the end of implementations
+- Consider converting complex `impl` blocks to standalone functions for better organization
+- Example: `impl Guides` → `get_guides_from_path()`, `write_guides()`, etc.
+
+**TauRPC Placement:**
+Always place TauRPC elements at the very end of the file in this order:
+```rust
+#[taurpc::procedures(...)]
+pub trait ApiName { ... }
+
+#[derive(Clone)]
+pub struct ApiNameImpl;
+
+#[taurpc::resolvers]
+impl ApiName for ApiNameImpl { ... }
+```
+
+**Examples:**
+- `src/guides.rs` - 938 lines reorganized following these conventions
+- `src/conf.rs` - 361 lines reorganized following these conventions
+
+**Benefits:**
+- Consistent code organization across the entire codebase
+- Easier navigation and maintenance
+- Better code readability
+- Follows Rust community best practices
+
 ### Git Conventions
 - Angular format: `feat(subject): description`
 - Branch naming: `type/issue-number/description` (e.g., `feat/50/new-summary-feature`)

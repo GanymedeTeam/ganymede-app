@@ -8,6 +8,7 @@ pub trait ConfPathExt {
 
 pub trait GuidesPathExt {
     fn app_guides_dir(&self) -> PathBuf;
+    fn app_recent_guides_file(&self) -> PathBuf;
 }
 
 pub trait FirstTimePathExt {
@@ -35,6 +36,14 @@ impl<R: Runtime> GuidesPathExt for PathResolver<R> {
         let path = self.app_config_dir().expect("[TauriApi] app_guides_dir");
 
         path.join("guides")
+    }
+
+    fn app_recent_guides_file(&self) -> PathBuf {
+        let path = self
+            .app_config_dir()
+            .expect("[TauriApi] app_recent_guides_file");
+
+        path.join("recent_guides.json")
     }
 }
 

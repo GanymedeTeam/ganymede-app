@@ -164,12 +164,12 @@ pub fn run() {
             ..Default::default()
         });
 
-        if let Err(err) = crate::conf::ensure(app.handle()) {
+        if let Err(err) = crate::conf::ensure_conf_file(app.handle()) {
             error!("[Lib] failed to ensure conf: {:?}", err);
             sentry::capture_error(&err);
         }
 
-        if let Err(err) = crate::guides::ensure(app.handle()) {
+        if let Err(err) = crate::guides::ensure_guides_dir(app.handle()) {
             error!("[Lib] failed to ensure guides: {:?}", err);
             sentry::capture_error(&err);
         }

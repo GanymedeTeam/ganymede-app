@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
-use crate::conf::{Conf, ConfLang};
+use crate::conf::ConfLang;
 
 const REWARD_REDUCED_SCALE: f32 = 0.7;
 const REWARD_SCALE_CAP: f32 = 1.5;
@@ -211,7 +211,7 @@ impl AlmanaxApi for AlmanaxApiImpl {
             .generated
             .quantities[0];
         let item = get_item_data(item_id, &http_client).await?;
-        let conf = Conf::get(&app).map_err(Error::Conf)?;
+        let conf = crate::conf::get_conf(&app).map_err(Error::Conf)?;
 
         let name = match conf.lang {
             crate::conf::ConfLang::En => item.name.en,

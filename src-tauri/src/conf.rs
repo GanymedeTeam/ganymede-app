@@ -1,16 +1,24 @@
-use crate::tauri_api_ext::ConfPathExt;
+use std::{borrow::BorrowMut, collections::HashMap, fs};
+
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
-use std::borrow::BorrowMut;
-use std::collections::HashMap;
-use std::fs;
 use tauri::{AppHandle, Manager, Runtime, Window};
+
+use crate::tauri_api_ext::ConfPathExt;
+
+// Constants
 
 const DEFAULT_LEVEL: u32 = 200;
 
 const fn default_level() -> u32 {
     DEFAULT_LEVEL
 }
+
+const fn default_auto_open_guides() -> bool {
+    true
+}
+
+// Enums
 
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
 #[specta(rename = "ConfError")]
@@ -32,6 +40,25 @@ pub enum Error {
     #[error("failed to reset conf: {0}")]
     ResetConf(Box<Error>),
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum ConfLang {
+    En,
+    Fr,
+    Es,
+    Pt,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum FontSize {
+    ExtraSmall,
+    Small,
+    Normal,
+    Large,
+    ExtraLarge,
+}
+
+// Structs
 
 #[derive(Debug)]
 #[taurpc::ipc_type]
@@ -56,23 +83,6 @@ pub struct Progress {
     pub id: u32, // guide id
     pub current_step: u32,
     pub steps: HashMap<u32, ConfStep>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
-pub enum ConfLang {
-    En,
-    Fr,
-    Es,
-    Pt,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
-pub enum FontSize {
-    ExtraSmall,
-    Small,
-    Normal,
-    Large,
-    ExtraLarge,
 }
 
 #[derive(Debug)]
@@ -104,97 +114,90 @@ pub struct Conf {
     pub auto_pilots: Vec<AutoPilot>,
     pub notes: Vec<Note>,
     pub opacity: f32,
+    #[serde(default = "default_auto_open_guides")]
+    pub auto_open_guides: bool,
 }
 
-impl Progress {
-    pub fn add_or_update_step(&mut self, step: ConfStep, step_index: u32) {
-        match self.steps.get(&step_index) {
-            Some(s) => {
-                self.steps.insert(step_index, s.clone());
-            }
-            None => {
-                self.steps.insert(step_index, step.clone());
-            }
-        }
-    }
+// Functions
 
-    pub fn new(id: u32) -> Self {
-        Progress {
-            id,
-            current_step: 0,
-            steps: HashMap::new(),
+fn add_or_update_progress_step(progress: &mut Progress, step: ConfStep, step_index: u32) {
+    match progress.steps.get(&step_index) {
+        Some(s) => {
+            progress.steps.insert(step_index, s.clone());
+        }
+        None => {
+            progress.steps.insert(step_index, step.clone());
         }
     }
 }
 
-impl Profile {
-    pub fn get_progress_mut(&mut self, guide_id: u32) -> &mut Progress {
-        if let Some(index) = self.progresses.iter().position(|p| p.id == guide_id) {
-            return &mut self.progresses[index];
-        }
-
-        // If no Progress is found, we create a new one
-        self.progresses.push(Progress::new(guide_id));
-
-        // We return a mutable reference to the newly created Progress
-        self.progresses
-            .last_mut()
-            .expect("[Conf] the element has just been added, it should exist.")
+fn create_progress(id: u32) -> Progress {
+    Progress {
+        id,
+        current_step: 0,
+        steps: HashMap::new(),
     }
 }
 
-impl ConfStep {
-    pub fn toggle_checkbox(&mut self, checkbox_index: u32) {
-        match self.checkboxes.iter().position(|&i| i == checkbox_index) {
-            Some(index) => {
-                self.checkboxes.remove(index);
-            }
-            None => {
-                self.checkboxes.push(checkbox_index);
-            }
+fn get_profile_progress_mut(profile: &mut Profile, guide_id: u32) -> &mut Progress {
+    if let Some(index) = profile.progresses.iter().position(|p| p.id == guide_id) {
+        return &mut profile.progresses[index];
+    }
+
+    profile.progresses.push(create_progress(guide_id));
+
+    profile.progresses
+        .last_mut()
+        .expect("[Conf] the element has just been added, it should exist.")
+}
+
+fn toggle_conf_step_checkbox(step: &mut ConfStep, checkbox_index: u32) {
+    match step.checkboxes.iter().position(|&i| i == checkbox_index) {
+        Some(index) => {
+            step.checkboxes.remove(index);
+        }
+        None => {
+            step.checkboxes.push(checkbox_index);
         }
     }
 }
 
-impl Conf {
-    /// Get the conf file content, if it does not exist, return default conf
-    pub fn get<R: Runtime>(app: &AppHandle<R>) -> Result<Conf, Error> {
-        let conf_path = app.path().app_conf_file();
+pub fn get_conf<R: Runtime>(app: &AppHandle<R>) -> Result<Conf, Error> {
+    let conf_path = app.path().app_conf_file();
 
-        let file = fs::read_to_string(conf_path);
+    let file = fs::read_to_string(conf_path);
 
-        // if conf file does not exist, return default conf, otherwise parse the file content
-        match file {
-            Err(err) => match err.kind() {
-                std::io::ErrorKind::NotFound => Ok(Conf::default()),
-                _ => Err(Error::UnhandledIo(err.to_string())),
-            },
-            Ok(file) => Ok(crate::json::from_str::<Conf>(file.as_str()).map_err(Error::Malformed)?),
-        }
-    }
-
-    /// Save the conf into the conf file. Normalize the conf before saving it
-    pub fn save<R: Runtime>(&mut self, app: &AppHandle<R>) -> Result<(), Error> {
-        let conf_path = app.path().app_conf_file();
-
-        self.normalize();
-
-        let json = crate::json::serialize_pretty(self).map_err(Error::SerializeConf)?;
-
-        fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))
-    }
-
-    pub fn get_profile_in_use_mut(&mut self) -> Result<&mut Profile, Error> {
-        self.profiles
-            .iter_mut()
-            .find(|p| p.id == self.profile_in_use)
-            .ok_or(Error::GetProfileInUse)
-    }
-
-    pub fn normalize(&mut self) {
-        self.opacity = self.opacity.clamp(0.0, 0.98);
+    match file {
+        Err(err) => match err.kind() {
+            std::io::ErrorKind::NotFound => Ok(Conf::default()),
+            _ => Err(Error::UnhandledIo(err.to_string())),
+        },
+        Ok(file) => Ok(crate::json::from_str::<Conf>(file.as_str()).map_err(Error::Malformed)?),
     }
 }
+
+pub fn save_conf<R: Runtime>(conf: &mut Conf, app: &AppHandle<R>) -> Result<(), Error> {
+    let conf_path = app.path().app_conf_file();
+
+    normalize_conf(conf);
+
+    let json = crate::json::serialize_pretty(conf).map_err(Error::SerializeConf)?;
+
+    fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))
+}
+
+fn get_conf_profile_in_use_mut(conf: &mut Conf) -> Result<&mut Profile, Error> {
+    conf.profiles
+        .iter_mut()
+        .find(|p| p.id == conf.profile_in_use)
+        .ok_or(Error::GetProfileInUse)
+}
+
+fn normalize_conf(conf: &mut Conf) {
+    conf.opacity = conf.opacity.clamp(0.0, 0.98);
+}
+
+// Implementations
 
 impl Default for ConfStep {
     fn default() -> Self {
@@ -229,6 +232,7 @@ impl Default for Conf {
             auto_pilots: vec![],
             notes: vec![],
             opacity: 0.98,
+            auto_open_guides: true,
         }
     }
 }
@@ -244,9 +248,10 @@ impl Default for Profile {
     }
 }
 
-/// Ensure that the conf file exists, if not, create it with default values
-pub fn ensure(app: &AppHandle) -> Result<(), Error> {
-    let resolver = app.path();
+// Public Functions
+
+pub fn ensure_conf_file(app_handle: &AppHandle) -> Result<(), Error> {
+    let resolver = app_handle.path();
     let conf_dir = resolver
         .app_config_dir()
         .map_err(|err| Error::ConfDir(err.to_string()))?;
@@ -264,11 +269,13 @@ pub fn ensure(app: &AppHandle) -> Result<(), Error> {
 
         let default_conf = &mut Conf::default();
 
-        default_conf.save(app)?;
+        save_conf(default_conf, app_handle)?;
     }
 
     Ok(())
 }
+
+// TauRPC API
 
 #[taurpc::procedures(path = "conf", export_to = "../src/ipc/bindings.ts")]
 pub trait ConfApi {
@@ -290,11 +297,11 @@ pub struct ConfApiImpl;
 #[taurpc::resolvers]
 impl ConfApi for ConfApiImpl {
     async fn get<R: Runtime>(self, app: AppHandle<R>) -> Result<Conf, Error> {
-        Conf::get(&app)
+        get_conf(&app)
     }
 
     async fn set<R: Runtime>(self, conf: Conf, app: AppHandle<R>) -> Result<(), Error> {
-        conf.clone().borrow_mut().save(&app)
+        save_conf(conf.clone().borrow_mut(), &app)
     }
 
     async fn toggle_guide_checkbox<R: Runtime>(
@@ -308,34 +315,33 @@ impl ConfApi for ConfApiImpl {
             "[Conf] toggle_guide_checkbox: guide_id: {}, step_index: {}, checkbox_index: {}",
             guide_id, step_index, checkbox_index
         );
-        let conf = &mut Conf::get(&app)?;
-        let profile = conf.get_profile_in_use_mut()?;
-        let progress = profile.get_progress_mut(guide_id);
+        let conf = &mut get_conf(&app)?;
+        let profile = get_conf_profile_in_use_mut(conf)?;
+        let progress = get_profile_progress_mut(profile, guide_id);
 
         let step = match progress.steps.get_mut(&step_index) {
             Some(step) => {
-                step.toggle_checkbox(checkbox_index);
+                toggle_conf_step_checkbox(step, checkbox_index);
 
                 step.clone()
             }
             None => {
                 let mut step = ConfStep::default();
-                step.toggle_checkbox(checkbox_index);
+                toggle_conf_step_checkbox(&mut step, checkbox_index);
 
                 step
             }
         };
 
-        progress.add_or_update_step(step, step_index);
+        add_or_update_progress_step(progress, step, step_index);
 
-        conf.save(&app)?;
+        save_conf(conf, &app)?;
 
         Ok(checkbox_index)
     }
 
     async fn reset<R: Runtime>(self, app: AppHandle<R>, window: Window<R>) -> Result<(), Error> {
-        Conf::default()
-            .save(&app)
+        save_conf(&mut Conf::default(), &app)
             .map_err(|e| Error::ResetConf(Box::new(e)))?;
 
         let webview = window

@@ -52,8 +52,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                     match state {
                         ShortcutState::Pressed => {
                             if shortcut == &reset_conf_shortcut {
-                                Conf::default()
-                                    .save(app)
+                                crate::conf::save_conf(&mut Conf::default(), app)
                                     .expect("[Shortcut] failed to reset conf");
                                 info!("[Shortcut] conf reset triggered");
 
