@@ -1,4 +1,4 @@
-use crate::conf::{Conf, Error as ConfError};
+use crate::conf::Error as ConfError;
 use crate::oauth;
 use log::{debug, error, info, warn};
 use regex::Regex;
@@ -54,7 +54,7 @@ fn get_guide_current_step<R: tauri::Runtime>(
     app: &AppHandle<R>,
     guide_id: u32,
 ) -> Result<Option<u32>, Error> {
-    let conf = Conf::get(app)?;
+    let conf = crate::conf::get_conf(app)?;
 
     let profile = conf
         .profiles
