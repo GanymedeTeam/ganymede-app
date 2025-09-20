@@ -521,6 +521,316 @@ fn read_recent_guides(recent_guides_path: &PathBuf) -> Result<RecentGuides, Erro
     }
 }
 
+fn fetch_guides_from_server<R: Runtime>(
+    app_handle: &AppHandle<R>,
+    status: Option<Status>,
+) -> impl std::future::Future<Output = Result<Vec<Guide>, Error>> + Send {
+    let app_handle = app_handle.clone();
+    async move {
+        info!("[Guides] get_guides_from_server, status: {:?}", status);
+
+        sentry::add_breadcrumb(sentry::Breadcrumb {
+            ty: "sentry.transaction".into(),
+            message: Some("Get guides from server".into()),
+            data: {
+                let mut map = sentry::protocol::Map::new();
+
+                if let Some(status) = status.clone() {
+                    map.insert("status".into(), status.to_string().into());
+                } else {
+                    map.insert("status".into(), "all".into());
+                }
+
+                map
+            },
+            ..Default::default()
+        });
+
+        let http_client = app_handle.state::<reqwest::Client>();
+
+        let url = if let Some(status) = status {
+            format!("{}/v2/guides?status={}", GANYMEDE_API, status.to_str())
+        } else {
+            format!("{}/v2/guides", GANYMEDE_API)
+        };
+
+        let res = http_client
+            .get(url)
+            .send()
+            .await
+            .map_err(|err| Error::RequestGuides(err.to_string()))?;
+
+        let text = res
+            .text()
+            .await
+            .map_err(|err| Error::RequestGuidesContent(err.to_string()))?;
+
+        crate::json::from_str::<Vec<Guide>>(text.as_str()).map_err(Error::GuidesMalformed)
+    }
+}
+
+fn download_and_save_guide<R: Runtime>(
+    app: &AppHandle<R>,
+    guide_id: u32,
+    folder: String,
+) -> impl std::future::Future<Output = Result<Guides, Error>> + Send {
+    let app = app.clone();
+    async move {
+        info!("[Guides] download_guide_from_server");
+        sentry::add_breadcrumb(sentry::Breadcrumb {
+            ty: "sentry.transaction".into(),
+            message: Some("Download guide from server".into()),
+            data: {
+                let mut map = sentry::protocol::Map::new();
+
+                map.insert("guide_id".into(), guide_id.into());
+                map.insert("folder".into(), folder.clone().into());
+
+                map
+            },
+            ..Default::default()
+        });
+
+        let mut guides = get_guides_from_handle(&app, folder.clone())?;
+
+        download_guide_by_id(&app, &mut guides, guide_id, folder).await?;
+
+        write_guides(&guides, &app)?;
+
+        Ok(guides)
+    }
+}
+
+fn open_system_guides_folder<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
+    let resolver = app.app_handle().path();
+    let guides_dir = resolver.app_guides_dir();
+
+    app.opener()
+        .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
+        .map_err(|err| Error::Opener(err.to_string()))
+}
+
+fn generate_guide_summary<R: Runtime>(
+    app_handle: &AppHandle<R>,
+    guide_id: u32,
+) -> impl std::future::Future<Output = Result<Summary, Error>> + Send {
+    let app_handle = app_handle.clone();
+    async move {
+        let start = std::time::Instant::now();
+        info!("[Guides] get_guide_summary: {}", guide_id);
+
+        sentry::add_breadcrumb(sentry::Breadcrumb {
+            ty: "sentry.transaction".into(),
+            message: Some("Get guide summary".into()),
+            data: {
+                let mut map = sentry::protocol::Map::new();
+
+                map.insert("guide_id".into(), guide_id.into());
+
+                map
+            },
+            ..Default::default()
+        });
+
+        let guides = get_guides_from_handle(&app_handle, "".to_string())?;
+        let guide = guides.guides.iter().find(|g| g.id == guide_id);
+
+        match guide {
+            Some(guide) => {
+                let mut quests: Vec<QuestSummary> = vec![];
+
+                for (step_index, step) in guide.steps.iter().enumerate() {
+                    let document = scraper::Html::parse_document(&step.web_text);
+
+                    let quest_selector =
+                        scraper::Selector::parse("[data-type='quest-block']").unwrap();
+
+                    for element in document.select(&quest_selector) {
+                        let quest_name = element.value().attr("questname");
+                        let status = element.value().attr("status");
+                        if let (Some(name), Some(status)) = (quest_name, status) {
+                            let summary_quest_status = match status {
+                                "setup" => SummaryQuestStatus::Setup(step_index as u32 + 1),
+                                "start" => SummaryQuestStatus::Started(step_index as u32 + 1),
+                                "in_progress" => {
+                                    SummaryQuestStatus::InProgress(step_index as u32 + 1)
+                                }
+                                "end" => SummaryQuestStatus::Completed(step_index as u32 + 1),
+                                _ => continue,
+                            };
+
+                            if let Some(quest) = quests.iter_mut().find(|q| q.name == name) {
+                                let in_vec_status =
+                                    quest.statuses.iter().any(|s| s == &summary_quest_status);
+
+                                if !in_vec_status {
+                                    quest.statuses.push(summary_quest_status);
+                                }
+                            } else {
+                                let mut statuses = vec![];
+                                statuses.push(summary_quest_status);
+                                quests.push(QuestSummary {
+                                    name: name.to_string(),
+                                    statuses,
+                                });
+                            }
+                        }
+                    }
+                }
+
+                let duration = start.elapsed();
+
+                for quest in &mut quests {
+                    quest.statuses.sort_by(|a, b| {
+                        let a_value = match a {
+                            SummaryQuestStatus::Setup(v)
+                            | SummaryQuestStatus::Started(v)
+                            | SummaryQuestStatus::InProgress(v)
+                            | SummaryQuestStatus::Completed(v) => v,
+                        };
+                        let b_value = match b {
+                            SummaryQuestStatus::Setup(v)
+                            | SummaryQuestStatus::Started(v)
+                            | SummaryQuestStatus::InProgress(v)
+                            | SummaryQuestStatus::Completed(v) => v,
+                        };
+                        a_value.cmp(&b_value)
+                    });
+
+                    debug!("[Guides] quest: {:?}", quest);
+                }
+
+                let summary = Summary { quests };
+
+                info!("[Guides] get_guide_summary: {} in {:?}", guide_id, duration);
+
+                Ok(summary)
+            }
+            None => Err(Error::GetGuideInSystem(guide_id)),
+        }
+    }
+}
+
+fn update_all_guides_batch<R: Runtime>(
+    app_handle: &AppHandle<R>,
+) -> impl std::future::Future<Output = Result<HashMap<u32, UpdateAllAtOnceResult>, Error>> + Send {
+    let app_handle = app_handle.clone();
+    async move {
+        info!("[Guides] update_all_at_once");
+
+        let mut guides = get_guides_from_handle(&app_handle, "".to_string())?;
+        let mut results = HashMap::new();
+
+        for guide in guides.guides.clone() {
+            if let Some(folder) = &guide.folder {
+                let result = download_guide_by_id(
+                    &app_handle,
+                    &mut guides,
+                    guide.id,
+                    folder.to_str().unwrap().to_string(),
+                )
+                .await;
+
+                match result {
+                    Ok(_) => {
+                        results.insert(guide.id, UpdateAllAtOnceResult::Success);
+                    }
+                    Err(err) => {
+                        results.insert(guide.id, UpdateAllAtOnceResult::Failure(err.to_string()));
+                    }
+                }
+            }
+        }
+
+        write_guides(&guides, &app_handle)?;
+
+        Ok(results)
+    }
+}
+
+fn check_guides_need_update<R: Runtime>(
+    app_handle: &AppHandle<R>,
+) -> impl std::future::Future<Output = Result<bool, Error>> + Send {
+    let app_handle = app_handle.clone();
+    async move {
+        info!("[Guides] has_guides_not_updated");
+
+        let guides_in_server = fetch_guides_from_server(&app_handle, None).await?;
+
+        let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?;
+
+        for guide in guides_in_server {
+            if let Some(guide_in_system) = guides_in_system.guides.iter().find(|g| g.id == guide.id)
+            {
+                if guide.updated_at != guide_in_system.updated_at {
+                    return Ok(true);
+                }
+            }
+        }
+
+        Ok(false)
+    }
+}
+
+fn delete_guides_and_folders<R: Runtime>(
+    app_handle: &AppHandle<R>,
+    guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
+) -> Result<(), Error> {
+    info!(
+        "[Guides] delete_guides_from_system: {:?}",
+        guides_or_folders_to_delete
+    );
+
+    let guides_dir = app_handle.path().app_guides_dir();
+
+    for guide_or_folder_to_delete in guides_or_folders_to_delete {
+        let mut path = guides_dir.clone();
+
+        match guide_or_folder_to_delete {
+            GuideOrFolderToDelete::Guide { id, folder } => {
+                if let Some(folder) = folder {
+                    path = path.join(folder);
+                }
+
+                path = path.join(format!("{}.json", id));
+            }
+            GuideOrFolderToDelete::Folder { folder } => {
+                path = path.join(folder);
+            }
+        }
+
+        info!("[Guides] deleting the following path: {:?}", path);
+
+        if path.exists() {
+            if path.is_dir() {
+                fs::remove_dir_all(path)
+                    .map_err(|err| Error::DeleteGuideFolderInSystem(err.to_string()))?;
+            } else {
+                fs::remove_file(path)
+                    .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
+            }
+        }
+    }
+
+    Ok(())
+}
+
+fn check_guide_exists<R: Runtime>(
+    app_handle: &AppHandle<R>,
+    guide_id: u32,
+) -> impl std::future::Future<Output = Result<bool, Error>> + Send {
+    let app_handle = app_handle.clone();
+    async move {
+        debug!("[Guides] Checking if guide {} exists", guide_id);
+
+        let guides = get_guides_from_handle(&app_handle, "".to_string())?;
+        let exists = guides.guides.iter().any(|g| g.id == guide_id);
+
+        debug!("[Guides] Guide {} exists: {}", guide_id, exists);
+        Ok(exists)
+    }
+}
+
 // ================================================================================================
 // TauRPC API Trait & Implementation
 // ================================================================================================
@@ -629,45 +939,7 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle<R>,
         status: Option<Status>,
     ) -> Result<Vec<Guide>, Error> {
-        info!("[Guides] get_guides_from_server, status: {:?}", status);
-
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Get guides from server".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
-
-                if let Some(status) = status.clone() {
-                    map.insert("status".into(), status.to_string().into());
-                } else {
-                    map.insert("status".into(), "all".into());
-                }
-
-                map
-            },
-            ..Default::default()
-        });
-
-        let http_client = app_handle.state::<reqwest::Client>();
-
-        let url = if let Some(status) = status {
-            format!("{}/v2/guides?status={}", GANYMEDE_API, status.to_str())
-        } else {
-            format!("{}/v2/guides", GANYMEDE_API)
-        };
-
-        let res = http_client
-            .get(url)
-            .send()
-            .await
-            .map_err(|err| Error::RequestGuides(err.to_string()))?;
-
-        let text = res
-            .text()
-            .await
-            .map_err(|err| Error::RequestGuidesContent(err.to_string()))?;
-
-        crate::json::from_str::<Vec<Guide>>(text.as_str()).map_err(Error::GuidesMalformed)
+        fetch_guides_from_server(&app_handle, status).await
     }
 
     async fn download_guide_from_server<R: Runtime>(
@@ -676,37 +948,11 @@ impl GuidesApi for GuidesApiImpl {
         guide_id: u32,
         folder: String,
     ) -> Result<Guides, Error> {
-        info!("[Guides] download_guide_from_server");
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Download guide from server".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
-
-                map.insert("guide_id".into(), guide_id.into());
-                map.insert("folder".into(), folder.clone().into());
-
-                map
-            },
-            ..Default::default()
-        });
-
-        let mut guides = get_guides_from_handle(&app, folder.clone())?;
-
-        download_guide_by_id(&app, &mut guides, guide_id, folder).await?;
-
-        write_guides(&guides, &app)?;
-
-        Ok(guides)
+        download_and_save_guide(&app, guide_id, folder).await
     }
 
     async fn open_guides_folder<R: Runtime>(self, app: AppHandle<R>) -> Result<(), Error> {
-        let resolver = app.app_handle().path();
-        let guides_dir = resolver.app_guides_dir();
-
-        app.opener()
-            .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
-            .map_err(|err| Error::Opener(err.to_string()))
+        open_system_guides_folder(&app)
     }
 
     async fn get_guide_summary<R: Runtime>(
@@ -714,158 +960,21 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<Summary, Error> {
-        let start = std::time::Instant::now();
-        info!("[Guides] get_guide_summary: {}", guide_id);
-
-        sentry::add_breadcrumb(sentry::Breadcrumb {
-            ty: "sentry.transaction".into(),
-            message: Some("Get guide summary".into()),
-            data: {
-                let mut map = sentry::protocol::Map::new();
-
-                map.insert("guide_id".into(), guide_id.into());
-
-                map
-            },
-            ..Default::default()
-        });
-
-        let guides = self.get_flat_guides(app_handle, "".into()).await?;
-        let guide = guides.iter().find(|g| g.id == guide_id);
-
-        match guide {
-            Some(guide) => {
-                // parse the guide html content and extract all quests
-                let mut quests: Vec<QuestSummary> = vec![];
-
-                for (step_index, step) in guide.steps.iter().enumerate() {
-                    let document = scraper::Html::parse_document(&step.web_text);
-
-                    let quest_selector =
-                        scraper::Selector::parse("[data-type='quest-block']").unwrap();
-
-                    for element in document.select(&quest_selector) {
-                        let quest_name = element.value().attr("questname");
-                        let status = element.value().attr("status");
-                        if let (Some(name), Some(status)) = (quest_name, status) {
-                            let summary_quest_status = match status {
-                                "setup" => SummaryQuestStatus::Setup(step_index as u32 + 1),
-                                "start" => SummaryQuestStatus::Started(step_index as u32 + 1),
-                                "in_progress" => {
-                                    SummaryQuestStatus::InProgress(step_index as u32 + 1)
-                                }
-                                "end" => SummaryQuestStatus::Completed(step_index as u32 + 1),
-                                _ => continue,
-                            };
-
-                            if let Some(quest) = quests.iter_mut().find(|q| q.name == name) {
-                                let in_vec_status =
-                                    quest.statuses.iter().any(|s| s == &summary_quest_status);
-
-                                if !in_vec_status {
-                                    quest.statuses.push(summary_quest_status);
-                                }
-                            } else {
-                                let mut statuses = vec![];
-                                statuses.push(summary_quest_status);
-                                quests.push(QuestSummary {
-                                    name: name.to_string(),
-                                    statuses,
-                                });
-                            }
-                        }
-                    }
-                }
-
-                let duration = start.elapsed();
-
-                for quest in &mut quests {
-                    quest.statuses.sort_by(|a, b| {
-                        let a_value = match a {
-                            SummaryQuestStatus::Setup(v)
-                            | SummaryQuestStatus::Started(v)
-                            | SummaryQuestStatus::InProgress(v)
-                            | SummaryQuestStatus::Completed(v) => v,
-                        };
-                        let b_value = match b {
-                            SummaryQuestStatus::Setup(v)
-                            | SummaryQuestStatus::Started(v)
-                            | SummaryQuestStatus::InProgress(v)
-                            | SummaryQuestStatus::Completed(v) => v,
-                        };
-                        a_value.cmp(&b_value)
-                    });
-
-                    debug!("[Guides] quest: {:?}", quest);
-                }
-
-                let summary = Summary { quests };
-
-                info!("[Guides] get_guide_summary: {} in {:?}", guide_id, duration);
-
-                Ok(summary)
-            }
-            None => Err(Error::GetGuideInSystem(guide_id)),
-        }
+        generate_guide_summary(&app_handle, guide_id).await
     }
 
     async fn update_all_at_once<R: Runtime>(
         self,
         app_handle: AppHandle<R>,
     ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
-        info!("[Guides] update_all_at_once");
-
-        let mut guides = get_guides_from_handle(&app_handle, "".to_string())?;
-        let mut results = HashMap::new();
-
-        for guide in guides.guides.clone() {
-            if let Some(folder) = &guide.folder {
-                let result = download_guide_by_id(
-                    &app_handle,
-                    &mut guides,
-                    guide.id,
-                    folder.to_str().unwrap().to_string(),
-                )
-                .await;
-
-                match result {
-                    Ok(_) => {
-                        results.insert(guide.id, UpdateAllAtOnceResult::Success);
-                    }
-                    Err(err) => {
-                        results.insert(guide.id, UpdateAllAtOnceResult::Failure(err.to_string()));
-                    }
-                }
-            }
-        }
-
-        write_guides(&guides, &app_handle)?;
-
-        Ok(results)
+        update_all_guides_batch(&app_handle).await
     }
 
     async fn has_guides_not_updated<R: Runtime>(
         self,
         app_handle: AppHandle<R>,
     ) -> Result<bool, Error> {
-        info!("[Guides] has_guides_not_updated");
-
-        let guides_in_server = self
-            .get_guides_from_server(app_handle.clone(), None)
-            .await?;
-
-        let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?;
-
-        for guide in guides_in_server {
-            if let Some(guide_in_system) = guides_in_system.guides.iter().find(|g| g.id == guide.id)
-            {
-                if guide.updated_at != guide_in_system.updated_at {
-                    return Ok(true);
-                }
-            }
-        }
-
-        Ok(false)
+        check_guides_need_update(&app_handle).await
     }
 
     async fn delete_guides_from_system<R: Runtime>(
@@ -873,43 +982,7 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle<R>,
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error> {
-        info!(
-            "[Guides] delete_guides_from_system: {:?}",
-            guides_or_folders_to_delete
-        );
-
-        let guides_dir = app_handle.path().app_guides_dir();
-
-        for guide_or_folder_to_delete in guides_or_folders_to_delete {
-            let mut path = guides_dir.clone();
-
-            match guide_or_folder_to_delete {
-                GuideOrFolderToDelete::Guide { id, folder } => {
-                    if let Some(folder) = folder {
-                        path = path.join(folder);
-                    }
-
-                    path = path.join(format!("{}.json", id));
-                }
-                GuideOrFolderToDelete::Folder { folder } => {
-                    path = path.join(folder);
-                }
-            }
-
-            info!("[Guides] deleting the following path: {:?}", path);
-
-            if path.exists() {
-                if path.is_dir() {
-                    fs::remove_dir_all(path)
-                        .map_err(|err| Error::DeleteGuideFolderInSystem(err.to_string()))?;
-                } else {
-                    fs::remove_file(path)
-                        .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
-                }
-            }
-        }
-
-        Ok(())
+        delete_guides_and_folders(&app_handle, guides_or_folders_to_delete)
     }
 
     async fn guide_exists<R: Runtime>(
@@ -917,13 +990,7 @@ impl GuidesApi for GuidesApiImpl {
         app_handle: AppHandle<R>,
         guide_id: u32,
     ) -> Result<bool, Error> {
-        debug!("[Guides] Checking if guide {} exists", guide_id);
-
-        let guides = self.get_flat_guides(app_handle, "".into()).await?;
-        let exists = guides.iter().any(|g| g.id == guide_id);
-
-        debug!("[Guides] Guide {} exists: {}", guide_id, exists);
-        Ok(exists)
+        check_guide_exists(&app_handle, guide_id).await
     }
 
     async fn register_guide_open<R: Runtime>(
