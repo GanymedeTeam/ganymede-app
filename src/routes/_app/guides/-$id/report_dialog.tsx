@@ -60,7 +60,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
             <BugIcon />
           </Button>
         </AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="p-3 sm:p-6">
           <AlertDialogTitle>
             <Trans>Envoyer un rapport</Trans>
           </AlertDialogTitle>
@@ -132,7 +132,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                     <AlertDialogTrigger asChild>
                       <Button disabled={content.trim().length === 0 || sendReport.isPending}>
                         {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
-                        <Trans>Mon guide est à jour, envoyer le message</Trans>
+                        <Trans>Envoyer le message</Trans>
                       </Button>
                     </AlertDialogTrigger>
                   </AlertDialogAction>
@@ -147,7 +147,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <ScrollArea className="-my-1 prose-sm h-full" type="auto">
-                      <p className="py-2">
+                      <p className="break-all py-2">
                         {formRef.current &&
                           (new FormData(formRef.current).get('content') as string)
                             .trim()
@@ -172,7 +172,7 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                           disabled={content.trim().length === 0 || sendReport.isPending}
                         >
                           {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
-                          <Trans>Je confirme que mon guide est à jour.</Trans>
+                          <Trans>Mon guide est à jour</Trans>
                         </Button>
                       </AlertDialogAction>
                     </AlertDialogFooter>
