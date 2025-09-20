@@ -123,12 +123,12 @@ impl OAuthApi for OAuthApiImpl {
 }
 
 fn generate_pkce_challenge() -> (String, String) {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     // RFC 7636 compliant alphabet: [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
     let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
     let code_verifier: String = (0..128)
         .map(|_| {
-            let idx = rng.gen_range(0..alphabet.len());
+            let idx = rng.random_range(0..alphabet.len());
             alphabet.chars().nth(idx).unwrap()
         })
         .collect();

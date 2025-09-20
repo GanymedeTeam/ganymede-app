@@ -34,14 +34,6 @@ pub enum Error {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct AlmanaxName {
-    en: String,
-    es: String,
-    fr: String,
-    pt: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 pub struct AlmanaxDesc {
     en: String,
     es: String,
