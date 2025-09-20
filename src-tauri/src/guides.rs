@@ -450,7 +450,7 @@ fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> R
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+    let mut recent_guides_list = read_recent_guides_file(&recent_guides_path)?;
 
     if !recent_guides_list.contains(&guide_id) {
         recent_guides_list.insert(0, guide_id); // Add to the start of the list
@@ -458,7 +458,7 @@ fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> R
             recent_guides_list.pop(); // Keep only the last 6 entries
         }
 
-        write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+        write_recent_guides_file(&recent_guides_path, &recent_guides_list)?;
     }
 
     Ok(())
@@ -469,11 +469,11 @@ fn register_guide_close<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> 
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    let mut recent_guides_list = read_recent_guides(&recent_guides_path)?;
+    let mut recent_guides_list = read_recent_guides_file(&recent_guides_path)?;
 
     recent_guides_list.retain(|&id| id != guide_id);
 
-    write_recent_guides(&recent_guides_path, &recent_guides_list)?;
+    write_recent_guides_file(&recent_guides_path, &recent_guides_list)?;
 
     Ok(())
 }
@@ -483,10 +483,16 @@ fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<RecentGuide
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    read_recent_guides(&recent_guides_path)
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path)?;
+    let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?.guides;
+
+    // remove any guide IDs that are no longer in the system since the last session
+    recent_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
+
+    Ok(recent_guides)
 }
 
-fn write_recent_guides(
+fn write_recent_guides_file(
     recent_guides_path: &PathBuf,
     recent_guides: &RecentGuides,
 ) -> Result<(), Error> {
@@ -504,7 +510,7 @@ fn write_recent_guides(
     Ok(())
 }
 
-fn read_recent_guides(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
+fn read_recent_guides_file(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
     if recent_guides_path.exists() {
         debug!("[Guides] reading recent guides file",);
 
