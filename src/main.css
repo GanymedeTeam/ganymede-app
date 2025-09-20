@@ -327,6 +327,13 @@
         );
       }
     }
+
+    input:is([type="button"], [type="submit"], [type="reset"]),
+    input[type="file"]::file-selector-button,
+    button[data-href] {
+      text-align: left;
+      word-break: break-all;
+    }
   }
 }
 
