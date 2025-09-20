@@ -61,7 +61,7 @@ msgstr "Apariencia"
 msgid "Attention"
 msgstr "Atención"
 
-#: src/components/error_component.tsx:62
+#: src/components/error_component.tsx:103
 msgid "Attention !"
 msgstr "¡Atención!"
 
@@ -107,14 +107,9 @@ msgstr "Mapa"
 msgid "Catégories"
 msgstr "Categorías"
 
-#: src/components/error_component.tsx:88
-msgid "Cause non retrouvée."
-msgstr "Causa no encontrada."
-
-#: src/components/error_component.tsx:80
-#: src/components/error_component.tsx:111
-msgid "Causée par :"
-msgstr "Causada por:"
+#: src/components/error_component.tsx:31
+msgid "Causée par"
+msgstr "Causado por"
 
 #. placeholder {0}: sendReport.error.status
 #: src/routes/_app/guides/-$id/report_dialog.tsx:112
@@ -129,6 +124,16 @@ msgstr "Algunos guías no se han actualizado"
 #: src/routes/_app/index.tsx:43
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "¡Esta herramienta tiene como objetivo asistirte durante toda tu aventura en <0>Dofus</0>!"
+
+#. placeholder {0}: match[1]
+#: src/lib/error_formatter.tsx:294
+msgid "Champ inconnu : {0}"
+msgstr "Campo desconocido: {0}"
+
+#. placeholder {0}: match[1]
+#: src/lib/error_formatter.tsx:283
+msgid "Champ manquant : {0}"
+msgstr "Campo que falta: {0}"
 
 #: src/components/title_bar.tsx:133
 msgid "Chasse au trésor"
@@ -180,9 +185,29 @@ msgstr "Haz clic para abrir en el navegador"
 msgid "Confirmer l'envoi du rapport"
 msgstr "Confirmar el envío del informe"
 
+#: src/lib/error_formatter.tsx:689
+msgid "Contenu de l'almanax invalide"
+msgstr "Contenido del almanaque inválido"
+
+#: src/lib/error_formatter.tsx:705
+msgid "Contenu de l'objet invalide"
+msgstr "Contenido del objeto inválido"
+
+#: src/lib/error_formatter.tsx:449
+msgid "Contenu de la liste des guides invalide"
+msgstr "Contenido de la lista de guías inválido"
+
 #: src/routes/_app/notes.create.tsx:82
 msgid "Contenu de la note.{linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu."
 msgstr "Contenido de la nota.{linesBreak}Desde el menú anterior, una vez creada, puedo modificarla haciendo clic sobre ella o copiar su contenido."
+
+#: src/lib/error_formatter.tsx:739
+msgid "Contenu de la quête invalide"
+msgstr "Contenido de la misión inválido"
+
+#: src/lib/error_formatter.tsx:433
+msgid "Contenu du guide invalide"
+msgstr "Contenido de la guía inválido"
 
 #: src/components/deep_link_guide_download_dialog.tsx:67
 msgid "Continuer"
@@ -256,17 +281,29 @@ msgstr "Describe el problema encontrado. El paso y la guía se incluirán autom�
 msgid "Des mises à jour sont disponibles"
 msgstr "Actualizaciones disponibles"
 
-#: src/components/error_component.tsx:74
-msgid "Détails"
-msgstr "Detalles"
-
 #: src/routes/_app/index.tsx:65
 msgid "Discord de Ganymède"
 msgstr "Discord de Ganymede"
 
+#: src/lib/error_formatter.tsx:664
+msgid "Données d'almanax malformées"
+msgstr "Datos del almanaque mal formados"
+
+#: src/lib/error_formatter.tsx:673
+msgid "Données d'objet malformées"
+msgstr "Datos del objeto mal formados"
+
+#: src/lib/error_formatter.tsx:748
+msgid "Données de quête malformées"
+msgstr "Datos de la misión mal formados"
+
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:91
 msgid "Dossier des guides téléchargés rafraichi"
 msgstr "Carpeta de guías descargadas actualizada"
+
+#: src/lib/error_formatter.tsx:559
+msgid "Échec de l'échange de tokens"
+msgstr "Error en el intercambio de tokens"
 
 #: src/routes/_app/notes.create.tsx:38
 msgid "Éditer une note"
@@ -284,9 +321,173 @@ msgstr "En progreso..."
 msgid "Enregistrer la note"
 msgstr "Guardar la nota"
 
+#: src/routes/_app/guides/-$id/report_dialog.tsx:135
+msgid "Envoyer le message"
+msgstr "Enviar mensaje"
+
 #: src/routes/_app/guides/-$id/report_dialog.tsx:65
 msgid "Envoyer un rapport"
 msgstr "Enviar un informe"
+
+#: src/lib/error_formatter.tsx:663
+#: src/lib/error_formatter.tsx:672
+#: src/lib/error_formatter.tsx:680
+#: src/lib/error_formatter.tsx:688
+#: src/lib/error_formatter.tsx:696
+#: src/lib/error_formatter.tsx:704
+#: src/lib/error_formatter.tsx:720
+msgid "Erreur d'almanax"
+msgstr "Error del almanaque"
+
+#: src/lib/error_formatter.tsx:721
+msgid "Erreur d'almanax inconnue"
+msgstr "Error del almanaque desconocido"
+
+#: src/lib/error_formatter.tsx:522
+#: src/lib/error_formatter.tsx:530
+#: src/lib/error_formatter.tsx:538
+#: src/lib/error_formatter.tsx:546
+#: src/lib/error_formatter.tsx:558
+#: src/lib/error_formatter.tsx:566
+#: src/lib/error_formatter.tsx:573
+msgid "Erreur d'authentification"
+msgstr "Error de autenticación"
+
+#: src/lib/error_formatter.tsx:574
+msgid "Erreur d'authentification inconnue"
+msgstr "Error de autenticación desconocido"
+
+#: src/lib/error_formatter.tsx:791
+#: src/lib/error_formatter.tsx:799
+#: src/lib/error_formatter.tsx:807
+msgid "Erreur d'image"
+msgstr "Error de imagen"
+
+#: src/lib/error_formatter.tsx:808
+msgid "Erreur d'image inconnue"
+msgstr "Error de imagen desconocido"
+
+#: src/lib/error_formatter.tsx:210
+#: src/lib/error_formatter.tsx:218
+#: src/lib/error_formatter.tsx:226
+#: src/lib/error_formatter.tsx:235
+#: src/lib/error_formatter.tsx:243
+#: src/lib/error_formatter.tsx:252
+#: src/lib/error_formatter.tsx:261
+#: src/lib/error_formatter.tsx:267
+msgid "Erreur de configuration"
+msgstr "Error de configuración"
+
+#: src/lib/error_formatter.tsx:268
+msgid "Erreur de configuration inconnue"
+msgstr "Error de configuración desconocido"
+
+#: src/lib/error_formatter.tsx:310
+msgid "Erreur de format JSON"
+msgstr "Error de formato JSON"
+
+#: src/lib/error_formatter.tsx:333
+#: src/lib/error_formatter.tsx:341
+#: src/lib/error_formatter.tsx:349
+#: src/lib/error_formatter.tsx:357
+#: src/lib/error_formatter.tsx:366
+#: src/lib/error_formatter.tsx:374
+#: src/lib/error_formatter.tsx:383
+#: src/lib/error_formatter.tsx:392
+#: src/lib/error_formatter.tsx:400
+#: src/lib/error_formatter.tsx:408
+#: src/lib/error_formatter.tsx:416
+#: src/lib/error_formatter.tsx:424
+#: src/lib/error_formatter.tsx:432
+#: src/lib/error_formatter.tsx:440
+#: src/lib/error_formatter.tsx:448
+#: src/lib/error_formatter.tsx:457
+#: src/lib/error_formatter.tsx:466
+#: src/lib/error_formatter.tsx:474
+#: src/lib/error_formatter.tsx:482
+#: src/lib/error_formatter.tsx:490
+#: src/lib/error_formatter.tsx:498
+#: src/lib/error_formatter.tsx:506
+#: src/lib/error_formatter.tsx:513
+msgid "Erreur de guides"
+msgstr "Error de guías"
+
+#: src/lib/error_formatter.tsx:514
+msgid "Erreur de guides inconnue"
+msgstr "Error de guías desconocido"
+
+#: src/lib/error_formatter.tsx:765
+#: src/lib/error_formatter.tsx:773
+#: src/lib/error_formatter.tsx:781
+msgid "Erreur de mise à jour"
+msgstr "Error de actualización"
+
+#: src/lib/error_formatter.tsx:782
+msgid "Erreur de mise à jour inconnue"
+msgstr "Error de actualización desconocido"
+
+#: src/lib/error_formatter.tsx:612
+#: src/lib/error_formatter.tsx:620
+#: src/lib/error_formatter.tsx:627
+msgid "Erreur de notifications"
+msgstr "Error de notificaciones"
+
+#: src/lib/error_formatter.tsx:628
+msgid "Erreur de notifications inconnue"
+msgstr "Error de notificaciones desconocido"
+
+#: src/lib/error_formatter.tsx:730
+#: src/lib/error_formatter.tsx:738
+#: src/lib/error_formatter.tsx:747
+#: src/lib/error_formatter.tsx:755
+msgid "Erreur de quête"
+msgstr "Error de misión"
+
+#: src/lib/error_formatter.tsx:756
+msgid "Erreur de quête inconnue"
+msgstr "Error de misión desconocido"
+
+#: src/lib/error_formatter.tsx:636
+#: src/lib/error_formatter.tsx:645
+#: src/lib/error_formatter.tsx:652
+msgid "Erreur de rapport"
+msgstr "Error de informe"
+
+#: src/lib/error_formatter.tsx:653
+msgid "Erreur de rapport inconnue"
+msgstr "Error de informe desconocido"
+
+#: src/lib/error_formatter.tsx:817
+#: src/lib/error_formatter.tsx:825
+#: src/lib/error_formatter.tsx:833
+#: src/lib/error_formatter.tsx:841
+msgid "Erreur de version"
+msgstr "Error de versión"
+
+#: src/lib/error_formatter.tsx:842
+msgid "Erreur de version inconnue"
+msgstr "Error de versión desconocido"
+
+#: src/lib/error_formatter.tsx:646
+msgid "Erreur HTTP {code}"
+msgstr "Error HTTP {code}"
+
+#: src/lib/error_formatter.tsx:32
+msgid "Erreur inconnue"
+msgstr "Error desconocido"
+
+#: src/lib/error_formatter.tsx:282
+#: src/lib/error_formatter.tsx:293
+#: src/lib/error_formatter.tsx:302
+#: src/lib/error_formatter.tsx:309
+#: src/lib/error_formatter.tsx:317
+#: src/lib/error_formatter.tsx:324
+msgid "Erreur JSON"
+msgstr "Error JSON"
+
+#: src/lib/error_formatter.tsx:325
+msgid "Erreur JSON inconnue"
+msgstr "Error JSON desconocido"
 
 #. placeholder {0}: index + 1
 #: src/routes/_app/guides/-$id/guide_page.tsx:122
@@ -313,6 +514,25 @@ msgstr "Error al actualizar las guías descargadas"
 msgid "Erreur lors du téléchargement du guide"
 msgstr "Error al descargar la guía"
 
+#: src/lib/error_formatter.tsx:637
+msgid "Erreur serveur lors de l'envoi du rapport"
+msgstr "Error del servidor al enviar el informe"
+
+#: src/lib/error_formatter.tsx:90
+msgid "Erreur système"
+msgstr "Error del sistema"
+
+#: src/lib/error_formatter.tsx:582
+#: src/lib/error_formatter.tsx:589
+#: src/lib/error_formatter.tsx:596
+#: src/lib/error_formatter.tsx:603
+msgid "Erreur utilisateur"
+msgstr "Error de usuario"
+
+#: src/lib/error_formatter.tsx:604
+msgid "Erreur utilisateur inconnue"
+msgstr "Error de usuario desconocido"
+
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:39
 msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
 msgstr "¿Está seguro de que desea eliminar este perfil? Esta acción es irreversible."
@@ -322,9 +542,21 @@ msgstr "¿Está seguro de que desea eliminar este perfil? Esta acción es irreve
 msgid "Fermer"
 msgstr "Cerrar"
 
+#: src/lib/error_formatter.tsx:211
+msgid "Fichier de configuration malformé"
+msgstr "Archivo de configuración mal formado"
+
+#: src/lib/error_formatter.tsx:375
+msgid "Fichier des guides récents malformé"
+msgstr "Archivo de guías recientes mal formado"
+
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:203
 msgid "Fin"
 msgstr "Fin"
+
+#: src/lib/error_formatter.tsx:303
+msgid "Format de données incorrect"
+msgstr "Formato de datos incorrecto"
 
 #: src/routes/_app/index.tsx:89
 msgid "Ganymède - Non affilié à Ankama Games"
@@ -337,6 +569,18 @@ msgstr "General"
 #: src/routes/_app/settings.tsx:199
 msgid "Grande"
 msgstr "Grande"
+
+#: src/lib/error_formatter.tsx:458
+msgid "Guide avec étapes malformé"
+msgstr "Guía con pasos mal formada"
+
+#: src/lib/error_formatter.tsx:475
+msgid "Guide introuvable dans le système"
+msgstr "Guía no encontrada en el sistema"
+
+#: src/lib/error_formatter.tsx:367
+msgid "Guide malformé"
+msgstr "Guía mal formada"
 
 #: src/hooks/use_deep_link_guide_handler.ts:93
 msgid "Guide téléchargé avec succès"
@@ -398,27 +642,159 @@ msgstr "Puede ser un problema de conexión o un error del servidor."
 msgid "Il semblerait que la mise à jour ait eu un problème."
 msgstr "Parece que la actualización ha tenido un problema."
 
+#: src/lib/error_formatter.tsx:227
+msgid "Impossible d'accéder au dossier de configuration"
+msgstr "No se puede acceder a la carpeta de configuración"
+
+#: src/lib/error_formatter.tsx:774
+msgid "Impossible d'obtenir le système de mise à jour"
+msgstr "No se puede obtener el sistema de actualización"
+
+#: src/lib/error_formatter.tsx:499
+msgid "Impossible d'ouvrir le dossier"
+msgstr "No se puede abrir la carpeta"
+
+#: src/lib/error_formatter.tsx:523
+msgid "Impossible d'ouvrir le navigateur"
+msgstr "No se puede abrir el navegador"
+
+#: src/lib/error_formatter.tsx:539
+msgid "Impossible de charger l'authentification"
+msgstr "No se puede cargar la autenticación"
+
+#: src/lib/error_formatter.tsx:800
+msgid "Impossible de convertir l'image"
+msgstr "No se puede convertir la imagen"
+
+#: src/lib/error_formatter.tsx:219
+msgid "Impossible de créer le dossier de configuration"
+msgstr "No se puede crear la carpeta de configuración"
+
+#: src/lib/error_formatter.tsx:401
+msgid "Impossible de créer le dossier des guides"
+msgstr "No se puede crear el directorio de guías"
+
+#: src/lib/error_formatter.tsx:342
+msgid "Impossible de lire le dossier des guides"
+msgstr "No se puede leer el directorio de guías"
+
+#: src/lib/error_formatter.tsx:334
+msgid "Impossible de lire le dossier des guides (glob)"
+msgstr "No se puede leer el directorio de guías (glob)"
+
+#: src/lib/error_formatter.tsx:358
+msgid "Impossible de lire le fichier des guides récents"
+msgstr "No se puede leer el archivo de guías recientes"
+
+#: src/lib/error_formatter.tsx:350
+msgid "Impossible de lire le fichier guide"
+msgstr "No se puede leer el archivo de guía"
+
+#: src/lib/error_formatter.tsx:547
+msgid "Impossible de nettoyer l'authentification"
+msgstr "No se puede limpiar la autenticación"
+
+#: src/lib/error_formatter.tsx:681
+msgid "Impossible de récupérer l'almanax"
+msgstr "No se puede recuperar el almanaque"
+
+#: src/lib/error_formatter.tsx:697
+msgid "Impossible de récupérer l'objet"
+msgstr "No se puede recuperar el objeto"
+
+#: src/lib/error_formatter.tsx:441
+msgid "Impossible de récupérer la liste des guides"
+msgstr "No se puede recuperar la lista de guías"
+
+#: src/lib/error_formatter.tsx:731
+msgid "Impossible de récupérer la quête"
+msgstr "No se puede recuperar la misión"
+
+#: src/lib/error_formatter.tsx:262
+msgid "Impossible de récupérer le profil actuel"
+msgstr "No se puede recuperar el perfil actual"
+
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:149
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "No se pudo recuperar el resumen de la guía."
+
+#: src/lib/error_formatter.tsx:597
+msgid "Impossible de récupérer les informations utilisateur"
+msgstr "No se puede recuperar la información del usuario"
+
+#: src/lib/error_formatter.tsx:613
+msgid "Impossible de récupérer les notifications"
+msgstr "No se pueden recuperar las notificaciones"
+
+#: src/lib/error_formatter.tsx:253
+msgid "Impossible de réinitialiser la configuration"
+msgstr "No se puede restablecer la configuración"
+
+#: src/lib/error_formatter.tsx:531
+msgid "Impossible de sauvegarder l'authentification"
+msgstr "No se puede guardar la autenticación"
+
+#: src/lib/error_formatter.tsx:236
+#: src/lib/error_formatter.tsx:244
+msgid "Impossible de sauvegarder la configuration"
+msgstr "No se puede guardar la configuración"
+
+#: src/lib/error_formatter.tsx:417
+msgid "Impossible de sauvegarder le fichier des guides récents"
+msgstr "No se puede guardar el archivo de guías recientes"
+
+#: src/lib/error_formatter.tsx:409
+msgid "Impossible de sauvegarder le guide"
+msgstr "No se puede guardar la guía"
+
+#: src/lib/error_formatter.tsx:393
+msgid "Impossible de sérialiser le fichier des guides récents"
+msgstr "No se puede serializar el archivo de guías recientes"
+
+#: src/lib/error_formatter.tsx:384
+msgid "Impossible de sérialiser le guide"
+msgstr "No se puede serializar la guía"
+
+#: src/lib/error_formatter.tsx:318
+msgid "Impossible de sérialiser les données"
+msgstr "No se pueden serializar los datos"
+
+#: src/lib/error_formatter.tsx:491
+msgid "Impossible de supprimer le dossier guide"
+msgstr "No se puede eliminar la carpeta de la guía"
+
+#: src/lib/error_formatter.tsx:483
+msgid "Impossible de supprimer le fichier guide"
+msgstr "No se puede eliminar el archivo de la guía"
+
+#: src/lib/error_formatter.tsx:792
+msgid "Impossible de télécharger l'image"
+msgstr "No se puede descargar la imagen"
+
+#: src/lib/error_formatter.tsx:425
+msgid "Impossible de télécharger le guide"
+msgstr "No se puede descargar la guía"
 
 #: src/routes/_app.tsx:27
 msgid "Impossible de vérifier la mise à jour de l'application."
 msgstr "No se pudo comprobar la actualización de la aplicación."
 
+#: src/lib/error_formatter.tsx:818
+msgid "Impossible de vérifier la version sur GitHub"
+msgstr "No se puede verificar la versión en GitHub"
+
+#: src/lib/error_formatter.tsx:766
+msgid "Impossible de vérifier les mises à jour"
+msgstr "No se pueden verificar las actualizaciones"
+
 #. placeholder {0}: info.componentStack
-#: src/components/error_component.tsx:94
-#: src/components/error_component.tsx:126
+#: src/components/error_component.tsx:37
 msgid "Informations supplémentaires : {0}"
 msgstr "Información adicional: {0}"
 
 #: src/routes/_app/downloads/$status.tsx:192
 msgid "J'ai compris"
 msgstr "Entendido"
-
-#: src/routes/_app/guides/-$id/report_dialog.tsx:175
-msgid "Je confirme que mon guide est à jour."
-msgstr "Confirmo que mi guía está actualizada."
 
 #: src/components/select_lang.tsx:10
 msgid "Langue"
@@ -464,6 +840,10 @@ msgstr "Guías compartidas por la comunidad"
 msgid "lien masqué"
 msgstr "enlace oculto"
 
+#: src/lib/error_formatter.tsx:467
+msgid "Liste des guides malformée"
+msgstr "Lista de guías mal formada"
+
 #: src/components/notification_alert_dialog.tsx:165
 msgid "Marquer comme lu"
 msgstr "Marcar como leído"
@@ -496,9 +876,13 @@ msgstr "Actualización completada. La aplicación se reiniciará."
 msgid "Modifier la note"
 msgstr "Modificar la nota"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:135
-msgid "Mon guide est à jour, envoyer le message"
-msgstr "Mi guía está actualizada, enviar el mensaje"
+#: src/routes/_app/guides/-$id/report_dialog.tsx:175
+msgid "Mon guide est à jour"
+msgstr "Mi guía está actualizada"
+
+#: src/lib/error_formatter.tsx:507
+msgid "Motif de recherche invalide"
+msgstr "Patrón de búsqueda inválido"
 
 #: src/routes/_app/auto-pilot.tsx:29
 #: src/routes/_app/auto-pilot.tsx:117
@@ -523,7 +907,7 @@ msgstr "Notas"
 msgid "Opacité"
 msgstr "Opacidad"
 
-#: src/components/error_component.tsx:52
+#: src/components/error_component.tsx:92
 msgid "ou le bouton suivant"
 msgstr "o el botón siguiente"
 
@@ -550,7 +934,7 @@ msgid "Plus d'options"
 msgstr "Más opciones"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:47
+#: src/components/error_component.tsx:85
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Para restablecer la configuración, ejecute el atajo de teclado: <0>{0}</0>"
 
@@ -612,9 +996,21 @@ msgstr "Buscar una misión"
 msgid "Réduire"
 msgstr "Minimizar"
 
-#: src/components/error_component.tsx:56
+#: src/components/error_component.tsx:97
 msgid "Réinitialiser"
 msgstr "Restablecer"
+
+#: src/lib/error_formatter.tsx:621
+msgid "Réponse API invalide"
+msgstr "Respuesta de API inválida"
+
+#: src/lib/error_formatter.tsx:567
+msgid "Réponse de token invalide"
+msgstr "Respuesta de token inválida"
+
+#: src/lib/error_formatter.tsx:826
+msgid "Réponse GitHub malformée"
+msgstr "Respuesta de GitHub mal formada"
 
 #: src/components/title_bar.tsx:87
 #: src/routes/_app/oauth/waiting.tsx:58
@@ -686,6 +1082,10 @@ msgstr "Descargar la guía"
 msgid "Télécharger un guide"
 msgstr "Descargar una guía"
 
+#: src/lib/error_formatter.tsx:583
+msgid "Tokens d'authentification introuvables"
+msgstr "Tokens de autenticación no encontrados"
+
 #: src/routes/_app/settings.tsx:202
 msgid "Très grande"
 msgstr "Extra grande"
@@ -698,7 +1098,7 @@ msgstr "Extra pequeña"
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymede"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:77
 msgid "Une erreur est survenue"
 msgstr "Ha ocurrido un error"
 
@@ -706,20 +1106,32 @@ msgstr "Ha ocurrido un error"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Ocurrió un error durante el cierre de sesión"
 
-#: src/components/error_component.tsx:43
-msgid "Une erreur est survenue lors de la récupération de la configuration."
-msgstr "Ha ocurrido un error al recuperar la configuración."
+#: src/components/error_component.tsx:75
+msgid "Une erreur est survenue lors de la récupération de la configuration"
+msgstr "Ha ocurrido un error al recuperar la configuración"
 
 #. placeholder {0}: user.error.message
 #: src/routes/_app/oauth/waiting.tsx:36
 msgid "Une erreur est survenue lors de la récupération de vos informations utilisateur : {0}"
 msgstr "Ocurrió un error al recuperar su información de usuario: {0}"
 
+#: src/lib/error_formatter.tsx:91
+msgid "Une erreur inattendue s'est produite"
+msgstr "Ha ocurrido un error inesperado"
+
+#: src/lib/error_formatter.tsx:590
+msgid "Utilisateur non connecté"
+msgstr "Usuario no conectado"
+
+#: src/lib/error_formatter.tsx:834
+msgid "Version invalide"
+msgstr "Versión inválida"
+
 #: src/routes/_app/guides/-$id/report_dialog.tsx:121
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Tu mensaje nos ha sido enviado. ¡Que disfrutes del juego!"
 
-#: src/components/error_component.tsx:65
+#: src/components/error_component.tsx:106
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Tu progreso en las guías será restablecido. Las guías descargadas seguirán disponibles."
 

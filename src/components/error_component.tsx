@@ -1,16 +1,46 @@
 import { Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
 import { ErrorComponentProps, useLocation } from '@tanstack/react-router'
-import { TriangleAlertIcon } from 'lucide-react'
+import { FileCogIcon, TriangleAlertIcon } from 'lucide-react'
 import { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx'
 import { ConfLang } from '@/ipc/bindings.ts'
 import { GetConfError } from '@/ipc/conf.ts'
+import { formatErrorCause } from '@/lib/error_formatter.tsx'
 import { useResetConf } from '@/mutations/reset_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
+import { Page } from '@/routes/-page.tsx'
 import { PageScrollableContent } from './page_scrollable_content.tsx'
 import { SelectLangLabel, SelectLangSelect } from './select_lang.tsx'
 import { Alert, AlertDescription, AlertTitle } from './ui/alert.tsx'
 import { Button } from './ui/button.tsx'
+
+interface ErrorDisplayProps {
+  error: Error
+  info?: { componentStack?: string }
+}
+
+function ErrorDisplay({ error, info }: ErrorDisplayProps) {
+  return (
+    <Alert variant="destructive">
+      <TriangleAlertIcon className="size-4" />
+      <AlertTitle className="text-base">{error.message}</AlertTitle>
+      <AlertDescription className="flex flex-col gap-2">
+        {error.cause != null && (
+          <span>
+            <Trans>Causée par</Trans>
+            <pre className="whitespace-break-spaces">{formatErrorCause(error.cause)}</pre>
+          </span>
+        )}
+        {info?.componentStack && (
+          <p>
+            <Trans>Informations supplémentaires : {info.componentStack}</Trans>
+          </p>
+        )}
+      </AlertDescription>
+    </Alert>
+  )
+}
 
 export function ErrorComponent({ error, info }: ErrorComponentProps) {
   const location = useLocation()
@@ -24,112 +54,72 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
   }
 
   return (
-    <PageScrollableContent className="container flex h-app-without-header flex-col gap-4 px-4 py-2">
-      {(conf.isError && conf.error instanceof GetConfError) || location.pathname.includes('/settings') ? (
-        <section>
-          <SelectLangLabel htmlFor="select-lang" />
-          <SelectLangSelect
-            id="select-lang"
-            value={lang}
-            onValueChange={(value) => {
-              setLang(value as ConfLang)
-            }}
-          />
-        </section>
-      ) : null}
-      {conf.isError && conf.error instanceof GetConfError ? (
-        <>
-          <p>
-            <Trans>Une erreur est survenue lors de la récupération de la configuration.</Trans>
-          </p>
-
-          <p>
-            <Trans>
-              Pour réinitialiser la configuration, exécuter le raccourci clavier :{' '}
-              <strong className="whitespace-nowrap italic">{isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'}</strong>
-            </Trans>
-            <br />
-            <Trans>ou le bouton suivant</Trans>
-          </p>
-
-          <Button onClick={onClickResetConf} size="lg">
-            <Trans>Réinitialiser</Trans>
-          </Button>
-
-          <Alert variant="destructive">
-            <TriangleAlertIcon className="size-4" />
-            <AlertTitle>
-              <Trans>Attention !</Trans>
-            </AlertTitle>
-            <AlertDescription>
-              <Trans>
-                Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents.
-              </Trans>
-            </AlertDescription>
-          </Alert>
-
-          <Alert variant="destructive">
-            <TriangleAlertIcon className="size-4" />
-            <AlertTitle>
-              <Trans>Détails</Trans>
-            </AlertTitle>
-            <AlertDescription>
-              <pre className="whitespace-break-spaces">{error.message}</pre>
-              {error.cause != null && (
-                <span>
-                  <Trans>Causée par :</Trans>
-                  <pre className="whitespace-break-spaces">
-                    {typeof error.cause === 'object' &&
-                    'message' in error.cause &&
-                    typeof error.cause.message === 'string'
-                      ? error.cause.message
-                      : typeof error.cause === 'string'
-                        ? error.cause
-                        : error.cause?.toString() || <Trans>Cause non retrouvée.</Trans>}
-                  </pre>
-                </span>
+    <Page title={`Erreur`} className="[&_[data-slot=page-title]]:top-0">
+      <PageScrollableContent className="flex h-app-without-header flex-col gap-4 px-4 py-2">
+        {(conf.isError && conf.error instanceof GetConfError) || location.pathname.includes('/settings') ? (
+          <section>
+            <SelectLangLabel htmlFor="select-lang" />
+            <SelectLangSelect
+              id="select-lang"
+              value={lang}
+              onValueChange={(value) => {
+                setLang(value as ConfLang)
+              }}
+            />
+          </section>
+        ) : null}
+        <Card>
+          <CardHeader className="xs:pb-3">
+            <CardTitle className="text-lg xs:text-lg">
+              {conf.isError && conf.error instanceof GetConfError ? (
+                <Trans>Une erreur est survenue lors de la récupération de la configuration</Trans>
+              ) : (
+                <Trans>Une erreur est survenue</Trans>
               )}
-              {info?.componentStack && (
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4 xs:pt-3">
+            {conf.isError && conf.error instanceof GetConfError ? (
+              <>
                 <p>
-                  <Trans>Informations supplémentaires : {info.componentStack}</Trans>
+                  <Trans>
+                    Pour réinitialiser la configuration, exécuter le raccourci clavier :{' '}
+                    <strong className="whitespace-nowrap italic">
+                      {isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'}
+                    </strong>
+                  </Trans>
+                  <br />
+                  <Trans>ou le bouton suivant</Trans>
                 </p>
-              )}
-            </AlertDescription>
-          </Alert>
-        </>
-      ) : (
-        <>
-          <Alert variant="destructive">
-            <TriangleAlertIcon className="size-4" />
-            <AlertTitle>
-              <Trans>Une erreur est survenue</Trans>
-            </AlertTitle>
-            <AlertDescription className="flex flex-col gap-2">
-              <pre className="whitespace-break-spaces">{error.message}</pre>
-              {error.cause != null && (
-                <span>
-                  <Trans>Causée par :</Trans>
-                  <pre className="whitespace-break-spaces">
-                    {typeof error.cause === 'object' &&
-                      'message' in error.cause &&
-                      typeof error.cause.message === 'string' &&
-                      error.cause.message}
-                    {typeof error.cause === 'string' && error.cause}
-                    {((typeof error.cause === 'object' && !('message' in error.cause)) ||
-                      (typeof error.cause !== 'string' && typeof error.cause !== 'object')) &&
-                      JSON.stringify(error.cause, Object.getOwnPropertyNames(error.cause), 2)}
-                  </pre>
-                </span>
-              )}
-              {info?.componentStack && (
-                <p>
-                  <Trans>Informations supplémentaires : {info.componentStack}</Trans>
-                </p>
-              )}
-            </AlertDescription>
-          </Alert>
-        </>
-      )}
-    </PageScrollableContent>
+
+                <Button onClick={onClickResetConf} size="lg" variant="destructive">
+                  <FileCogIcon />
+                  <Trans>Réinitialiser</Trans>
+                </Button>
+
+                <Alert variant="destructive">
+                  <TriangleAlertIcon className="size-4" />
+                  <AlertTitle>
+                    <Trans>Attention !</Trans>
+                  </AlertTitle>
+                  <AlertDescription>
+                    <Trans>
+                      Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours
+                      présents.
+                    </Trans>
+                  </AlertDescription>
+                </Alert>
+
+                <ErrorDisplay error={error} info={info} />
+              </>
+            ) : (
+              <>
+                <ErrorDisplay error={error} info={info} />
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </PageScrollableContent>
+    </Page>
   )
 }

@@ -146,7 +146,8 @@ fn get_profile_progress_mut(profile: &mut Profile, guide_id: u32) -> &mut Progre
 
     profile.progresses.push(create_progress(guide_id));
 
-    profile.progresses
+    profile
+        .progresses
         .last_mut()
         .expect("[Conf] the element has just been added, it should exist.")
 }
@@ -341,8 +342,7 @@ impl ConfApi for ConfApiImpl {
     }
 
     async fn reset<R: Runtime>(self, app: AppHandle<R>, window: Window<R>) -> Result<(), Error> {
-        save_conf(&mut Conf::default(), &app)
-            .map_err(|e| Error::ResetConf(Box::new(e)))?;
+        save_conf(&mut Conf::default(), &app).map_err(|e| Error::ResetConf(Box::new(e)))?;
 
         let webview = window
             .get_webview_window("main")

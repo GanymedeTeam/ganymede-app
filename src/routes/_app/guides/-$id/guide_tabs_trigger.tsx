@@ -1,4 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
+import { debug } from '@tauri-apps/plugin-log'
 import { XIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { TabsTrigger } from '@/components/ui/tabs.tsx'
@@ -8,7 +9,6 @@ import { useTabs } from '@/hooks/use_tabs.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { getStepOr } from '@/lib/progress.ts'
 import { useRegisterGuideClose } from '@/mutations/register_guide_close.mutation.ts'
-import { debug } from '@tauri-apps/plugin-log'
 
 export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: number }) {
   const guide = useGuideOrUndefined(id)
