@@ -14,7 +14,7 @@ use tauri_plugin_http::reqwest;
 use tauri_plugin_opener::OpenerExt;
 use uuid::Uuid;
 
-pub const CLIENT_ID: &str = "9fdb12cc-3e45-4ae2-aa70-25eb569dbecd";
+pub const CLIENT_ID: &str = env!("GANYMEDE_CLIENT_ID");
 const REDIRECT_URI: &str = "ganymede://oauth/callback";
 
 // Stockage global en mémoire pour les états OAuth
@@ -100,7 +100,7 @@ impl OAuthApi for OAuthApiImpl {
             .open_url(&auth_url, None::<String>)
             .map_err(|e| Error::OpenBrowser(e.to_string()))?;
 
-        info!(
+        debug!(
             "[OAuth] OAuth flow started successfully with state ID: {}",
             state_id
         );
