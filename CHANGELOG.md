@@ -1,5 +1,12 @@
 # ganymede-app
 
+## 1.14.1
+
+### Patch Changes
+
+- c6abb47: Améliorations diverses
+- f6b4c28: L'Almanax devrait toujours renvoyer le bon objet désormais.
+
 ## 1.14.0
 
 ### Minor Changes
