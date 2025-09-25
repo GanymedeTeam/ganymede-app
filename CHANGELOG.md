@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.14.2
+
+### Patch Changes
+
+- c285461: Fix au niveau du déploiement automatique
+
 ## 1.14.1
 
 ### Patch Changes
