@@ -66,45 +66,56 @@ pub struct QuestNeed {
     pub generated: QuestGenerated,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct QuestGenerated {
     pub dungeons: Vec<u32>,
     pub items: Vec<u32>,
     pub quantities: Vec<u32>,
 }
 
-impl QuestData {
-    pub fn level_max(&self) -> i32 {
-        self.data[0].steps[0].rewards[0].level_max
+impl QuestGenerated {
+    pub fn items(&self) -> Vec<u32> {
+        self.items.clone()
     }
 
-    pub fn kamas_ratio(&self) -> f32 {
-        self.data[0].steps[0].rewards[0].kamas_ratio
-    }
-
-    pub fn kamas_scale_with_player_level(&self) -> bool {
-        self.data[0].steps[0].rewards[0].kamas_scale_with_player_level
-    }
-
-    pub fn optimal_level(&self) -> u32 {
-        self.data[0].steps[0].optimal_level
-    }
-
-    pub fn duration(&self) -> f32 {
-        self.data[0].steps[0].duration
-    }
-
-    pub fn experience_ratio(&self) -> f32 {
-        self.data[0].steps[0].rewards[0].experience_ratio
+    pub fn quantities(&self) -> Vec<u32> {
+        self.quantities.clone()
     }
 }
 
-pub async fn get_quest_data(id: u32, http_client: &reqwest::Client) -> Result<QuestData, Error> {
+impl Quest {
+    pub fn needs(&self) -> QuestGenerated {
+        self.steps[0].objectives[0].need.generated.clone()
+    }
+
+    pub fn level_max(&self) -> i32 {
+        self.steps[0].rewards[0].level_max
+    }
+
+    pub fn kamas_ratio(&self) -> f32 {
+        self.steps[0].rewards[0].kamas_ratio
+    }
+
+    pub fn kamas_scale_with_player_level(&self) -> bool {
+        self.steps[0].rewards[0].kamas_scale_with_player_level
+    }
+
+    pub fn optimal_level(&self) -> u32 {
+        self.steps[0].optimal_level
+    }
+
+    pub fn duration(&self) -> f32 {
+        self.steps[0].duration
+    }
+
+    pub fn experience_ratio(&self) -> f32 {
+        self.steps[0].rewards[0].experience_ratio
+    }
+}
+
+pub async fn get_quest(id: &u32, http_client: &reqwest::Client) -> Result<Quest, Error> {
     let res = http_client
-        .get(format!(
-            "{}/quests?startCriterion[$regex]=Ad={}",
-            DOFUSDB_API, id
-        ))
+        .get(format!("{}/quests/{}", DOFUSDB_API, id))
         .send()
         .await
         .map_err(|err| Error::RequestQuest(err.to_string()))?;
@@ -114,5 +125,5 @@ pub async fn get_quest_data(id: u32, http_client: &reqwest::Client) -> Result<Qu
         .await
         .map_err(|err| Error::RequestQuestContent(err.to_string()))?;
 
-    crate::json::from_str::<QuestData>(text.as_str()).map_err(Error::DofusDbQuestMalformed)
+    crate::json::from_str::<Quest>(text.as_str()).map_err(Error::DofusDbQuestMalformed)
 }

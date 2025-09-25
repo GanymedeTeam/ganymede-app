@@ -163,8 +163,8 @@ fn toggle_conf_step_checkbox(step: &mut ConfStep, checkbox_index: u32) {
     }
 }
 
-pub fn get_conf<R: Runtime>(app: &AppHandle<R>) -> Result<Conf, Error> {
-    let conf_path = app.path().app_conf_file();
+pub fn get_conf<R: Runtime>(app_handle: &AppHandle<R>) -> Result<Conf, Error> {
+    let conf_path = app_handle.path().app_conf_file();
 
     let file = fs::read_to_string(conf_path);
 

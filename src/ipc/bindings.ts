@@ -6,7 +6,7 @@ import { createTauRPCProxy as createProxy, type InferCommandOutput } from 'taurp
 type TAURI_CHANNEL<T> = (response: T) => void
 
 
-export type AlmanaxError = { DofusDbAlmanaxMalformed: JsonError } | { DofusDbItemMalformed: JsonError } | { RequestAlmanax: string } | { RequestAlmanaxContent: string } | { RequestItem: string } | { RequestItemContent: string } | { Conf: ConfError } | { Quest: QuestError }
+export type AlmanaxError = { DofusDbAlmanaxMalformed: JsonError } | "DofusDbNoAlmanaxQuestId" | "DofusDbNoAlmanaxQuestItem" | "DofusDbNoAlmanaxQuestItemQuantity" | { DofusDbItemMalformed: JsonError } | { RequestAlmanax: string } | { RequestAlmanaxContent: string } | { RequestItem: string } | { RequestItemContent: string } | { Conf: ConfError } | { Quest: QuestError }
 
 export type AlmanaxReward = { name: string; quantity: number; kamas: number; experience: number; bonus: string; img: string | null }
 

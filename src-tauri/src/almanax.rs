@@ -1,6 +1,6 @@
 use crate::api::DOFUSDB_API;
 use crate::item::Item;
-use crate::quest::get_quest_data;
+use crate::quest::get_quest;
 use chrono::prelude::*;
 use chrono_tz::Europe::Paris;
 use serde::{Deserialize, Serialize};
@@ -17,6 +17,12 @@ const REWARD_SCALE_CAP: f32 = 1.5;
 pub enum Error {
     #[error("failed to get almanax data from DofusDb")]
     DofusDbAlmanaxMalformed(#[from] crate::json::Error),
+    #[error("failed to get almanax quest id from DofusDb")]
+    DofusDbNoAlmanaxQuestId,
+    #[error("failed to get almanax quest item from DofusDb")]
+    DofusDbNoAlmanaxQuestItem,
+    #[error("failed to get almanax quest item quantity from DofusDb")]
+    DofusDbNoAlmanaxQuestItemQuantity,
     #[error("failed to get item data from DofusDb")]
     DofusDbItemMalformed(crate::json::Error),
     #[error("failed to request almanax data: {0}")]
@@ -45,10 +51,12 @@ pub struct AlmanaxDesc {
 pub struct Almanax {
     id: u32,
     desc: AlmanaxDesc,
+    #[serde(rename = "questIds")]
+    quest_ids: Vec<u32>,
 }
 
 impl Almanax {
-    pub fn description(&self, lang: ConfLang) -> &str {
+    pub fn description(&self, lang: &ConfLang) -> &str {
         match lang {
             ConfLang::En => self.desc.en.as_str(),
             ConfLang::Es => self.desc.es.as_str(),
@@ -155,7 +163,7 @@ pub async fn get_almanax_data(
     Ok(almanax)
 }
 
-pub async fn get_item_data(item_id: u32, http_client: &reqwest::Client) -> Result<Item, Error> {
+pub async fn get_item_data(item_id: &u32, http_client: &reqwest::Client) -> Result<Item, Error> {
     let res = http_client
         .get(format!("{}/items/{}", DOFUSDB_API, item_id))
         .send()
@@ -188,37 +196,40 @@ pub struct AlmanaxApiImpl;
 impl AlmanaxApi for AlmanaxApiImpl {
     async fn get<R: Runtime>(
         self,
-        app: AppHandle<R>,
+        app_handle: AppHandle<R>,
         level: u32,
         date: String,
     ) -> Result<AlmanaxReward, Error> {
-        let http_client = app.state::<reqwest::Client>();
+        let http_client = app_handle.state::<reqwest::Client>();
         let almanax = get_almanax_data(date, &http_client).await?;
-        let quest = get_quest_data(almanax.id, &http_client)
+        let almanax_quest_id = almanax
+            .quest_ids
+            .get(0)
+            .ok_or(Error::DofusDbNoAlmanaxQuestId)?;
+
+        let quest = get_quest(almanax_quest_id, &http_client)
             .await
             .map_err(Error::Quest)?;
-        let item_id = quest.data[0].steps[0].objectives[0].need.generated.items[0];
-        let quantity = quest.data[0].steps[0].objectives[0]
-            .need
-            .generated
-            .quantities[0];
+        let needs = quest.needs();
+        let item_id = &needs
+            .items()
+            .first()
+            .ok_or(Error::DofusDbNoAlmanaxQuestItem)?
+            .clone();
+        let quantity = needs
+            .quantities()
+            .first()
+            .ok_or(Error::DofusDbNoAlmanaxQuestItemQuantity)?
+            .clone();
         let item = get_item_data(item_id, &http_client).await?;
-        let conf = crate::conf::get_conf(&app).map_err(Error::Conf)?;
-
-        let name = match conf.lang {
-            crate::conf::ConfLang::En => item.name.en,
-            crate::conf::ConfLang::Es => item.name.es,
-            crate::conf::ConfLang::Fr => item.name.fr,
-            crate::conf::ConfLang::Pt => item.name.pt,
-        };
-
+        let conf = crate::conf::get_conf(&app_handle).map_err(Error::Conf)?;
+        let item_name = item.name(&conf.lang);
         let experience = get_experience_reward(
             level,
             quest.optimal_level(),
             quest.experience_ratio(),
             quest.duration(),
         );
-
         let kamas = get_kamas_reward(
             level,
             quest.level_max(),
@@ -227,11 +238,10 @@ impl AlmanaxApi for AlmanaxApiImpl {
             quest.duration(),
             quest.kamas_scale_with_player_level(),
         );
-
-        let bonus = almanax.description(conf.lang);
+        let bonus = almanax.description(&conf.lang);
 
         Ok(AlmanaxReward {
-            name,
+            name: item_name.to_string(),
             quantity,
             kamas,
             experience,
