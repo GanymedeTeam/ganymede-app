@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.14.4
+
+### Patch Changes
+
+- 6e893c5: Correction de l'affichage du texte d'attente de connexion à Ganymède sur petite fenêtre.
+
 ## 1.14.3
 
 ### Patch Changes
