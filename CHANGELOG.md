@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.14.3
+
+### Patch Changes
+
+- d3d2c0b: Mise à jour du CLIENT_ID
+
 ## 1.14.2
 
 ### Patch Changes
