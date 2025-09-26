@@ -56,7 +56,7 @@ function Waiting() {
 
   return (
     <Page title={t`Se connecter`}>
-      <div className="flex grow flex-col items-center justify-center gap-4">
+      <div className="flex grow flex-col items-center justify-center gap-4 px-4 text-center">
         <p>
           <Trans>Vous allez être redirigé vers la page de connexion de Ganymède.</Trans>
         </p>

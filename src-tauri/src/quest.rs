@@ -15,11 +15,6 @@ pub enum Error {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct QuestData {
-    pub data: Vec<Quest>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 pub struct Quest {
     pub id: u32,
     pub steps: Vec<QuestStep>,
