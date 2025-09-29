@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { BugIcon, LoaderCircleIcon, SendIcon } from 'lucide-react'
-import { FormEvent, Fragment, useRef, useState } from 'react'
+import { FormEvent, Fragment, useState } from 'react'
 import { ErrorDisplay } from '@/components/error_component.tsx'
 import {
   AlertDialog,

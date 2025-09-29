@@ -45,8 +45,8 @@ msgstr "Añadir"
 
 #: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/guides/-$id/report_dialog.tsx:128
-#: src/routes/_app/guides/-$id/report_dialog.tsx:166
+#: src/routes/_app/guides/-$id/report_dialog.tsx:121
+#: src/routes/_app/guides/-$id/report_dialog.tsx:158
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -110,11 +110,6 @@ msgstr "Categorías"
 #: src/components/error_component.tsx:31
 msgid "Causée par"
 msgstr "Causado por"
-
-#. placeholder {0}: sendReport.error.status
-#: src/routes/_app/guides/-$id/report_dialog.tsx:112
-msgid "Causée par: {0}"
-msgstr "Causado por: {0}"
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:137
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
@@ -181,7 +176,7 @@ msgstr "Haz clic para copiar el nombre del monstruo. Ctrl+clic para abrir en dof
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Haz clic para abrir en el navegador"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:143
+#: src/routes/_app/guides/-$id/report_dialog.tsx:136
 msgid "Confirmer l'envoi du rapport"
 msgstr "Confirmar el envío del informe"
 
@@ -273,7 +268,7 @@ msgstr "Inicio"
 msgid "Déconnecté"
 msgstr "Desconectado"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:92
+#: src/routes/_app/guides/-$id/report_dialog.tsx:87
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe el problema encontrado. El paso y la guía se incluirán automáticamente."
 
@@ -321,11 +316,11 @@ msgstr "En progreso..."
 msgid "Enregistrer la note"
 msgstr "Guardar la nota"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:135
+#: src/routes/_app/guides/-$id/report_dialog.tsx:128
 msgid "Envoyer le message"
 msgstr "Enviar mensaje"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:65
+#: src/routes/_app/guides/-$id/report_dialog.tsx:60
 msgid "Envoyer un rapport"
 msgstr "Enviar un informe"
 
@@ -538,6 +533,7 @@ msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréve
 msgstr "¿Está seguro de que desea eliminar este perfil? Esta acción es irreversible."
 
 #: src/components/title_bar.tsx:185
+#: src/routes/_app/guides/-$id/report_dialog.tsx:113
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
 msgstr "Cerrar"
@@ -876,7 +872,7 @@ msgstr "Actualización completada. La aplicación se reiniciará."
 msgid "Modifier la note"
 msgstr "Modificar la nota"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:175
+#: src/routes/_app/guides/-$id/report_dialog.tsx:167
 msgid "Mon guide est à jour"
 msgstr "Mi guía está actualizada"
 
@@ -946,7 +942,7 @@ msgstr "Preparación"
 msgid "Présentation"
 msgstr "Presentación"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:87
+#: src/routes/_app/guides/-$id/report_dialog.tsx:82
 msgid "Problème rencontré"
 msgstr "Problema encontrado"
 
@@ -975,7 +971,7 @@ msgstr "Actualizar la carpeta de guías descargadas"
 msgid "Rafraichissement des guides téléchargés"
 msgstr "Actualizando las guías descargadas"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:146
+#: src/routes/_app/guides/-$id/report_dialog.tsx:139
 msgid "Récapitulatif du message"
 msgstr "Resumen del mensaje"
 
@@ -1127,7 +1123,7 @@ msgstr "Usuario no conectado"
 msgid "Version invalide"
 msgstr "Versión inválida"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:121
+#: src/routes/_app/guides/-$id/report_dialog.tsx:110
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Tu mensaje nos ha sido enviado. ¡Que disfrutes del juego!"
 
@@ -1135,8 +1131,8 @@ msgstr "Tu mensaje nos ha sido enviado. ¡Que disfrutes del juego!"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Tu progreso en las guías será restablecido. Las guías descargadas seguirán disponibles."
 
+#: src/routes/_app/guides/-$id/report_dialog.tsx:67
 #: src/routes/_app/guides/-$id/report_dialog.tsx:72
-#: src/routes/_app/guides/-$id/report_dialog.tsx:77
 msgid "Votre pseudo"
 msgstr "Tu nombre de usuario"
 
