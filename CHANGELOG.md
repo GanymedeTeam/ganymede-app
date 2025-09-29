@@ -1,5 +1,11 @@
 # ganymede-app
 
+## 1.14.5
+
+### Patch Changes
+
+- ff0d41a: Rien de spécial :eyes:
+
 ## 1.14.4
 
 ### Patch Changes
