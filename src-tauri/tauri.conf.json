@@ -1,6 +1,6 @@
 {
   "productName": "Ganymede",
-  "version": "1.14.3",
+  "version": "1.14.4",
   "identifier": "com.ganymede.ganymede-app",
   "build": {
     "beforeDevCommand": "pnpm dev",
