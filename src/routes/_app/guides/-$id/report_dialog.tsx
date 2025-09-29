@@ -1,6 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { BugIcon, LoaderCircleIcon, SendIcon } from 'lucide-react'
 import { FormEvent, Fragment, useRef, useState } from 'react'
+import { ErrorDisplay } from '@/components/error_component.tsx'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,22 +18,16 @@ import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Textarea } from '@/components/ui/textarea.tsx'
-import { useReport } from '@/mutations/send_report.mutation.ts'
+import { useSendReport } from '@/mutations/send_report.mutation.ts'
 
 export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepIndex: number }) {
   const { t } = useLingui()
   const [username, setUsername] = useState('')
   const [content, setContent] = useState('')
-  const sendReport = useReport()
-  const formRef = useRef<HTMLFormElement>(null)
+  const sendReport = useSendReport()
 
   const handleSubmit = async (evt: FormEvent) => {
     evt.preventDefault()
-
-    const form = evt.target as HTMLFormElement
-    const formData = new FormData(form)
-    const username = (formData.get('username') as string)?.trim() ?? ''
-    const content = (formData.get('content') as string)?.trim() ?? ''
 
     await sendReport.mutateAsync({
       guide_id: guideId,
@@ -60,11 +55,11 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
             <BugIcon />
           </Button>
         </AlertDialogTrigger>
-        <AlertDialogContent className="p-3 sm:p-6">
+        <AlertDialogContent className="max-h-[calc(var(--spacing-app-without-header)-var(--spacing-titlebar)-1rem)] overflow-auto p-3 sm:p-6">
           <AlertDialogTitle>
             <Trans>Envoyer un rapport</Trans>
           </AlertDialogTitle>
-          <form ref={formRef} id="report-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <form id="report-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
             {!sendReport.isSuccess && (
               <>
                 <div>
@@ -104,22 +99,20 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
             )}
 
             {sendReport.isError && (
-              <div className="text-red-500">
-                <p>{sendReport.error.message}</p>
-                {sendReport.error.cause !== undefined && (
-                  <>
-                    <p>
-                      <Trans>Causée par: {sendReport.error.status}</Trans>
-                    </p>
-                  </>
-                )}
+              <div className="break-all">
+                <ErrorDisplay error={sendReport.error} />
               </div>
             )}
 
             {sendReport.isSuccess && (
-              <div className="rounded-lg bg-green-600 px-4 py-2 text-primary-foreground">
-                <Trans>Votre message nous a été transmis. Bon jeu !</Trans>
-              </div>
+              <>
+                <div className="rounded-lg bg-green-600 px-4 py-2 text-primary-foreground">
+                  <Trans>Votre message nous a été transmis. Bon jeu !</Trans>
+                </div>
+                <AlertDialogCancel>
+                  <Trans>Fermer</Trans>
+                </AlertDialogCancel>
+              </>
             )}
 
             {!sendReport.isSuccess && (
@@ -148,17 +141,16 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                     </AlertDialogHeader>
                     <ScrollArea className="-my-1 prose-sm h-full" type="auto">
                       <p className="break-all py-2">
-                        {formRef.current &&
-                          (new FormData(formRef.current).get('content') as string)
-                            .trim()
-                            .split('\n')
-                            .filter((line) => line.trim().length > 0)
-                            .map((line, index) => (
-                              <Fragment key={index}>
-                                {line}
-                                <br />
-                              </Fragment>
-                            ))}
+                        {content
+                          .trim()
+                          .split('\n')
+                          .filter((line) => line.trim().length > 0)
+                          .map((line, index) => (
+                            <Fragment key={index}>
+                              {line}
+                              <br />
+                            </Fragment>
+                          ))}
                       </p>
                     </ScrollArea>
                     <AlertDialogFooter>

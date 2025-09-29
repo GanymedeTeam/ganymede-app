@@ -20,7 +20,7 @@ interface ErrorDisplayProps {
   info?: { componentStack?: string }
 }
 
-function ErrorDisplay({ error, info }: ErrorDisplayProps) {
+export function ErrorDisplay({ error, info }: ErrorDisplayProps) {
   return (
     <Alert variant="destructive">
       <TriangleAlertIcon className="size-4" />
