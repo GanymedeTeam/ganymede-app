@@ -152,7 +152,7 @@ msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
 #: src/routes/_app/guides/index.tsx:70
-#: src/routes/_app/guides/index.tsx:215
+#: src/routes/_app/guides/index.tsx:205
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
@@ -614,7 +614,7 @@ msgstr "Guias"
 
 #. placeholder {0}: createPagePath(path)
 #: src/routes/_app/guides/index.tsx:70
-#: src/routes/_app/guides/index.tsx:215
+#: src/routes/_app/guides/index.tsx:205
 msgid "Guides {0}"
 msgstr "Guias {0}"
 
@@ -1001,7 +1001,7 @@ msgid "Récapitulatif du message"
 msgstr "Resumo da mensagem"
 
 #: src/routes/_app/downloads/$status.tsx:230
-#: src/routes/_app/guides/index.tsx:250
+#: src/routes/_app/guides/index.tsx:239
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
@@ -1099,7 +1099,7 @@ msgid "Télécharger le guide"
 msgstr "Baixar o guia"
 
 #: src/components/title_bar.tsx:107
-#: src/routes/_app/guides/index.tsx:321
+#: src/routes/_app/guides/index.tsx:283
 msgid "Télécharger un guide"
 msgstr "Transferir um guia"
 
@@ -1108,7 +1108,6 @@ msgid "Tokens d'authentification introuvables"
 msgstr "Tokens de autenticação não encontrados"
 
 #: src/routes/_app/downloads/$status.tsx:239
-#: src/routes/_app/guides/index.tsx:259
 msgid "Tous"
 msgstr "Todos"
 
