@@ -57,7 +57,7 @@ msgid "Apparence"
 msgstr "Appearance"
 
 #: src/components/deep_link_guide_download_dialog.tsx:38
-#: src/routes/_app/downloads/$status.tsx:186
+#: src/routes/_app/downloads/$status.tsx:198
 msgid "Attention"
 msgstr "Warning"
 
@@ -65,28 +65,28 @@ msgstr "Warning"
 msgid "Attention !"
 msgstr "Warning!"
 
-#: src/routes/_app/downloads/$status.tsx:259
+#: src/routes/_app/downloads/$status.tsx:139
 msgid "Aucun guide Dofus trouvé"
 msgstr "No Dofus guide found"
 
-#: src/routes/_app/downloads/$status.tsx:257
+#: src/routes/_app/downloads/$status.tsx:139
 msgid "Aucun guide Dofus trouvé avec {term}"
 msgstr "No Dofus guide found with {term}"
 
-#: src/routes/_app/downloads/$status.tsx:265
+#: src/routes/_app/downloads/$status.tsx:142
 msgid "Aucun guide Wakfu trouvé"
 msgstr "No Wakfu guide found"
 
-#: src/routes/_app/downloads/$status.tsx:263
+#: src/routes/_app/downloads/$status.tsx:142
 msgid "Aucun guide Wakfu trouvé avec {term}"
 msgstr "No Wakfu guide found with {term}"
 
-#: src/routes/_app/downloads/$status.tsx:207
-#: src/routes/_app/downloads/$status.tsx:253
+#: src/routes/_app/downloads/$status.tsx:135
+#: src/routes/_app/downloads/$status.tsx:219
 msgid "Aucun guides trouvé"
 msgstr "No guides found"
 
-#: src/routes/_app/downloads/$status.tsx:251
+#: src/routes/_app/downloads/$status.tsx:135
 msgid "Aucun guides trouvé avec {term}"
 msgstr "No guides found with {term}"
 
@@ -805,7 +805,7 @@ msgstr "Unable to check for updates"
 msgid "Informations supplémentaires : {0}"
 msgstr "More info: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:198
+#: src/routes/_app/downloads/$status.tsx:210
 msgid "J'ai compris"
 msgstr "I understand"
 
@@ -833,7 +833,7 @@ msgstr "The step number ({0}) has been copied to the clipboard."
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Guides created by the Ganymede team"
 
-#: src/routes/_app/downloads/$status.tsx:190
+#: src/routes/_app/downloads/$status.tsx:202
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Guides in this section have not been manually verified by the Ganymede team. <0/> Although the links to the sites are secure, please carefully check the guides <1>on our site</1> before downloading them."
 
@@ -992,7 +992,7 @@ msgstr "Refreshing downloaded guides"
 msgid "Récapitulatif du message"
 msgstr "Message summary"
 
-#: src/routes/_app/downloads/$status.tsx:218
+#: src/routes/_app/downloads/$status.tsx:230
 #: src/routes/_app/guides/index.tsx:250
 msgid "Rechercher un guide"
 msgstr "Search a guide"
@@ -1099,7 +1099,7 @@ msgstr "Download a guide"
 msgid "Tokens d'authentification introuvables"
 msgstr "Authentication tokens not found"
 
-#: src/routes/_app/downloads/$status.tsx:227
+#: src/routes/_app/downloads/$status.tsx:239
 #: src/routes/_app/guides/index.tsx:259
 msgid "Tous"
 msgstr "All"

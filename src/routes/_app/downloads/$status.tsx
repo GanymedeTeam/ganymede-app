@@ -130,6 +130,18 @@ function getPaginationRange(current: number, total: number, delta = 2) {
   return range
 }
 
+function getEmptyStateMessage(gameFilter: GameType | 'all', term: string) {
+  if (gameFilter === 'all') {
+    return term !== '' ? <Trans>Aucun guides trouvé avec {term}</Trans> : <Trans>Aucun guides trouvé</Trans>
+  }
+
+  if (gameFilter === 'dofus') {
+    return term !== '' ? <Trans>Aucun guide Dofus trouvé avec {term}</Trans> : <Trans>Aucun guide Dofus trouvé</Trans>
+  }
+
+  return term !== '' ? <Trans>Aucun guide Wakfu trouvé avec {term}</Trans> : <Trans>Aucun guide Wakfu trouvé</Trans>
+}
+
 function DownloadGuidePage() {
   const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
@@ -245,27 +257,7 @@ function DownloadGuidePage() {
               </div>
 
               {paginatedOrFilteredGuides.length === 0 && (
-                <p className="text-center">
-                  {gameFilter === 'all' ? (
-                    term !== '' ? (
-                      <Trans>Aucun guides trouvé avec {term}</Trans>
-                    ) : (
-                      <Trans>Aucun guides trouvé</Trans>
-                    )
-                  ) : gameFilter === 'dofus' ? (
-                    term !== '' ? (
-                      <Trans>Aucun guide Dofus trouvé avec {term}</Trans>
-                    ) : (
-                      <Trans>Aucun guide Dofus trouvé</Trans>
-                    )
-                  ) : (
-                    term !== '' ? (
-                      <Trans>Aucun guide Wakfu trouvé avec {term}</Trans>
-                    ) : (
-                      <Trans>Aucun guide Wakfu trouvé</Trans>
-                    )
-                  )}
-                </p>
+                <p className="text-center">{getEmptyStateMessage(gameFilter, term)}</p>
               )}
 
               {paginatedOrFilteredGuides.map((guide) => {
