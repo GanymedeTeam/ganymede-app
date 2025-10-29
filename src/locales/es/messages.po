@@ -57,7 +57,7 @@ msgid "Apparence"
 msgstr "Apariencia"
 
 #: src/components/deep_link_guide_download_dialog.tsx:38
-#: src/routes/_app/downloads/$status.tsx:180
+#: src/routes/_app/downloads/$status.tsx:186
 msgid "Attention"
 msgstr "Atención"
 
@@ -65,11 +65,28 @@ msgstr "Atención"
 msgid "Attention !"
 msgstr "¡Atención!"
 
-#: src/routes/_app/downloads/$status.tsx:201
+#: src/routes/_app/downloads/$status.tsx:259
+msgid "Aucun guide Dofus trouvé"
+msgstr "No se encontró ninguna guía de Dofus"
+
+#: src/routes/_app/downloads/$status.tsx:257
+msgid "Aucun guide Dofus trouvé avec {term}"
+msgstr "No se encontró ninguna guía de Dofus con {term}"
+
+#: src/routes/_app/downloads/$status.tsx:265
+msgid "Aucun guide Wakfu trouvé"
+msgstr "No se encontró ninguna guía de Wakfu"
+
+#: src/routes/_app/downloads/$status.tsx:263
+msgid "Aucun guide Wakfu trouvé avec {term}"
+msgstr "No se encontró ninguna guía de Wakfu con {term}"
+
+#: src/routes/_app/downloads/$status.tsx:207
+#: src/routes/_app/downloads/$status.tsx:253
 msgid "Aucun guides trouvé"
 msgstr "No se encontraron guías"
 
-#: src/routes/_app/downloads/$status.tsx:217
+#: src/routes/_app/downloads/$status.tsx:251
 msgid "Aucun guides trouvé avec {term}"
 msgstr "No se encontraron guías con {term}"
 
@@ -135,7 +152,7 @@ msgid "Chasse au trésor"
 msgstr "Búsqueda del tesoro"
 
 #: src/routes/_app/guides/index.tsx:70
-#: src/routes/_app/guides/index.tsx:205
+#: src/routes/_app/guides/index.tsx:215
 msgid "Choisissez un guide"
 msgstr "Elija una guía"
 
@@ -256,7 +273,7 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:154
+#: src/routes/_app/guides/-index/guide_item.tsx:157
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -583,36 +600,36 @@ msgid "Guide téléchargé avec succès"
 msgstr "Guía descargada con éxito"
 
 #: src/components/title_bar.tsx:101
-#: src/routes/_app/downloads/$status.tsx:100
+#: src/routes/_app/downloads/$status.tsx:102
 msgid "Guides"
 msgstr "Guías"
 
 #. placeholder {0}: createPagePath(path)
 #: src/routes/_app/guides/index.tsx:70
-#: src/routes/_app/guides/index.tsx:205
+#: src/routes/_app/guides/index.tsx:215
 msgid "Guides {0}"
 msgstr "Guías {0}"
 
-#: src/routes/_app/downloads/$status.tsx:98
+#: src/routes/_app/downloads/$status.tsx:100
 #: src/routes/_app/downloads/index.tsx:154
 msgid "Guides certifiés"
 msgstr "Guías certificadas"
 
-#: src/routes/_app/downloads/$status.tsx:94
+#: src/routes/_app/downloads/$status.tsx:96
 #: src/routes/_app/downloads/index.tsx:182
 msgid "Guides draft"
 msgstr "Borradores de guías"
 
-#: src/routes/_app/downloads/$status.tsx:96
+#: src/routes/_app/downloads/$status.tsx:98
 #: src/routes/_app/downloads/index.tsx:140
 msgid "Guides principaux"
 msgstr "Guías principales"
 
-#: src/routes/_app/downloads/$status.tsx:92
+#: src/routes/_app/downloads/$status.tsx:94
 msgid "Guides privés"
 msgstr "Guías privadas"
 
-#: src/routes/_app/downloads/$status.tsx:90
+#: src/routes/_app/downloads/$status.tsx:92
 #: src/routes/_app/downloads/index.tsx:168
 msgid "Guides publics"
 msgstr "Guías públicas"
@@ -626,7 +643,7 @@ msgstr "Guías eliminadas"
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:64
+#: src/routes/_app/guides/-index/guide_item.tsx:67
 msgid "id <0>{id}</0>"
 msgstr "id <0>{id}</0>"
 
@@ -788,7 +805,7 @@ msgstr "No se pueden verificar las actualizaciones"
 msgid "Informations supplémentaires : {0}"
 msgstr "Información adicional: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:192
+#: src/routes/_app/downloads/$status.tsx:198
 msgid "J'ai compris"
 msgstr "Entendido"
 
@@ -816,7 +833,7 @@ msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Guías creadas por el equipo de Ganymede"
 
-#: src/routes/_app/downloads/$status.tsx:184
+#: src/routes/_app/downloads/$status.tsx:190
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Las guías de esta sección no han sido verificadas manualmente por el equipo de Ganymede. <0/> Aunque los enlaces a los sitios son seguros, por favor, verifica cuidadosamente las guías <1>en nuestro sitio</1> antes de descargarlas."
 
@@ -975,8 +992,8 @@ msgstr "Actualizando las guías descargadas"
 msgid "Récapitulatif du message"
 msgstr "Resumen del mensaje"
 
-#: src/routes/_app/downloads/$status.tsx:212
-#: src/routes/_app/guides/index.tsx:239
+#: src/routes/_app/downloads/$status.tsx:218
+#: src/routes/_app/guides/index.tsx:250
 msgid "Rechercher un guide"
 msgstr "Buscar una guía"
 
@@ -1074,13 +1091,18 @@ msgid "Télécharger le guide"
 msgstr "Descargar la guía"
 
 #: src/components/title_bar.tsx:107
-#: src/routes/_app/guides/index.tsx:283
+#: src/routes/_app/guides/index.tsx:321
 msgid "Télécharger un guide"
 msgstr "Descargar una guía"
 
 #: src/lib/error_formatter.tsx:583
 msgid "Tokens d'authentification introuvables"
 msgstr "Tokens de autenticación no encontrados"
+
+#: src/routes/_app/downloads/$status.tsx:227
+#: src/routes/_app/guides/index.tsx:259
+msgid "Tous"
+msgstr "Todos"
 
 #: src/routes/_app/settings.tsx:202
 msgid "Très grande"

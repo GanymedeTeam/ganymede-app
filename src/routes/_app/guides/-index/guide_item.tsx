@@ -3,10 +3,11 @@ import { Link } from '@tanstack/react-router'
 import { BookIcon, ChevronRightIcon, FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
+import { GameIcon } from '@/components/game_icon.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card } from '@/components/ui/card.tsx'
-import { Guide, GuidesOrFolder } from '@/ipc/bindings.ts'
+import { GameType, Guide, GuidesOrFolder } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { cn } from '@/lib/utils.ts'
@@ -45,9 +46,10 @@ interface GuideMetadataProps {
   id: number
   lang: string
   node_image: string | null
+  gameType?: GameType
 }
 
-function GuideMetadata({ id, lang, node_image }: GuideMetadataProps) {
+function GuideMetadata({ id, lang, node_image, gameType = 'dofus' }: GuideMetadataProps) {
   return (
     <div className="flex min-w-9 flex-col items-center gap-0.5">
       {USE_GUIDE_IMAGE && (
@@ -59,6 +61,7 @@ function GuideMetadata({ id, lang, node_image }: GuideMetadataProps) {
           )}
         </div>
       )}
+      <GameIcon gameType={gameType} className="size-4" />
       <FlagPerLang lang={lang} />
       <span className="whitespace-nowrap text-xxs">
         <Trans>
@@ -102,7 +105,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
       asChild
     >
       <li>
-        <GuideMetadata id={guide.id} lang={guide.lang} node_image={guide.node_image} />
+        <GuideMetadata id={guide.id} lang={guide.lang} node_image={guide.node_image} gameType={guide.game_type} />
         <div className="flex grow flex-col gap-1">
           <h3 className="grow text-balance">{guide.name}</h3>
           <p className="inline-flex gap-1 self-end">
@@ -132,7 +135,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
     <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
-      <GuideMetadata id={guide.id} lang={guide.lang} node_image={guide.node_image} />
+      <GuideMetadata id={guide.id} lang={guide.lang} node_image={guide.node_image} gameType={guide.game_type} />
       <div className="flex grow flex-col gap-1">
         <h3 className="grow text-balance">{guide.name}</h3>
         <span className="mt-2 flex flex-wrap justify-end gap-1 whitespace-nowrap text-xxs">

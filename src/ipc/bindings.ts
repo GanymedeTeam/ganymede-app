@@ -28,7 +28,9 @@ export type Folder = { name: string }
 
 export type FontSize = "ExtraSmall" | "Small" | "Normal" | "Large" | "ExtraLarge"
 
-export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: GuideUser; user_id: number; description: string | null; web_description: string | null; node_image: string | null }
+export type GameType = "dofus" | "wakfu"
+
+export type Guide = { id: number; name: string; status: Status; likes: number; dislikes: number; downloads: number | null; created_at: string; deleted_at: string | null; updated_at: string | null; lang: GuideLang; game_type?: GameType; order: number; user: GuideUser; user_id: number; description: string | null; web_description: string | null; node_image: string | null }
 
 export type GuideLang = "en" | "fr" | "es" | "pt"
 
@@ -38,7 +40,7 @@ export type GuideStep = { name: string | null; map: string | null; pos_x: number
 
 export type GuideUser = { id: number; name: string; is_admin: number; is_certified: number }
 
-export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; order: number; user: GuideUser; web_description: string | null; node_image: string | null; steps: GuideStep[] }
+export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; game_type?: GameType; order: number; user: GuideUser; web_description: string | null; node_image: string | null; steps: GuideStep[] }
 
 export type Guides = { guides: GuideWithSteps[] }
 

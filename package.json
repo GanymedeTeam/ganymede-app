@@ -83,7 +83,7 @@
     "typescript": "^5.9.2",
     "vite": "^7.1.6"
   },
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.17.1",
   "pnpm": {
     "overrides": {
       "@types/react": "^19.0.8",

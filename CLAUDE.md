@@ -197,3 +197,4 @@ src/ipc/deep_link.ts               # Frontend IPC wrapper
 - Guide files are stored as `{id}.json` and can be in any subfolder
 - TauRPC automatically generates TypeScript bindings from Rust traits
 - **Parallelize the maximum of tasks. You can Update multiple files at once to be faster.**
+- Git: Changesets for this project must be in French.

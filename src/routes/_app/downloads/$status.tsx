@@ -17,6 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
+import { Button } from '@/components/ui/button.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
 import {
   Pagination,
@@ -27,6 +28,7 @@ import {
 } from '@/components/ui/pagination.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
+import { GameType } from '@/ipc/bindings.ts'
 import { getLang } from '@/lib/conf.ts'
 import { getGuideById } from '@/lib/guide.ts'
 import { getProgress } from '@/lib/progress.ts'
@@ -132,6 +134,7 @@ function DownloadGuidePage() {
   const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
   const [searchTerm, setSearchTerm] = useState(baseSearch ?? '')
+  const [gameFilter, setGameFilter] = useState<GameType | 'all'>('all')
   const page = Route.useSearch({ select: (s) => s.page })
   const status = Route.useParams({ select: (p) => p.status })
   const debouncedTerm = useDebounce(searchTerm, 300)
@@ -149,8 +152,11 @@ function DownloadGuidePage() {
 
   const term = searchTerm !== '' ? debouncedTerm : ''
 
+  const gameFilteredGuides =
+    gameFilter === 'all' ? guides.data : guides.data.filter((g) => (g.game_type ?? 'dofus') === gameFilter)
+
   const filteredGuides = rankList({
-    list: guides.data,
+    list: gameFilteredGuides,
     keys: [(guide) => guide.name, (guide) => guide.user.name],
     term: term,
     sortKeys: [(guide) => guide.order],
@@ -211,10 +217,54 @@ function DownloadGuidePage() {
                 autoCapitalize="off"
                 placeholder={t`Rechercher un guide`}
               />
+              <div className="flex gap-1.5">
+                <Button
+                  size="sm"
+                  variant={gameFilter === 'all' ? 'default' : 'outline'}
+                  onClick={() => setGameFilter('all')}
+                  className="flex-1"
+                >
+                  <Trans>Tous</Trans>
+                </Button>
+                <Button
+                  size="sm"
+                  variant={gameFilter === 'dofus' ? 'default' : 'outline'}
+                  onClick={() => setGameFilter('dofus')}
+                  className="flex-1"
+                >
+                  Dofus
+                </Button>
+                <Button
+                  size="sm"
+                  variant={gameFilter === 'wakfu' ? 'default' : 'outline'}
+                  onClick={() => setGameFilter('wakfu')}
+                  className="flex-1"
+                >
+                  Wakfu
+                </Button>
+              </div>
 
               {paginatedOrFilteredGuides.length === 0 && (
                 <p className="text-center">
-                  <Trans>Aucun guides trouvé avec {term}</Trans>
+                  {gameFilter === 'all' ? (
+                    term !== '' ? (
+                      <Trans>Aucun guides trouvé avec {term}</Trans>
+                    ) : (
+                      <Trans>Aucun guides trouvé</Trans>
+                    )
+                  ) : gameFilter === 'dofus' ? (
+                    term !== '' ? (
+                      <Trans>Aucun guide Dofus trouvé avec {term}</Trans>
+                    ) : (
+                      <Trans>Aucun guide Dofus trouvé</Trans>
+                    )
+                  ) : (
+                    term !== '' ? (
+                      <Trans>Aucun guide Wakfu trouvé avec {term}</Trans>
+                    ) : (
+                      <Trans>Aucun guide Wakfu trouvé</Trans>
+                    )
+                  )}
                 </p>
               )}
 
