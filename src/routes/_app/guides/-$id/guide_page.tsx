@@ -145,9 +145,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
                 }}
               />
               <div className="ml-auto flex">
-                {guide.game_type !== 'wakfu' && (
-                  <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />
-                )}
+                {guide.game_type !== 'wakfu' && <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />}
                 {(guide.status === 'gp' || guide.status === 'certified') && (
                   <ReportDialog guideId={guide.id} stepIndex={index} />
                 )}

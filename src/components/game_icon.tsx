@@ -48,12 +48,7 @@ function WakfuIcon(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <title>Wakfu</title>
-      <path
-        d="M12 2 L16 8 L22 10 L16 12 L12 18 L8 12 L2 10 L8 8 Z"
-        fill="#4A9FD8"
-        stroke="#2C5F8D"
-        strokeWidth="1.5"
-      />
+      <path d="M12 2 L16 8 L22 10 L16 12 L12 18 L8 12 L2 10 L8 8 Z" fill="#4A9FD8" stroke="#2C5F8D" strokeWidth="1.5" />
       <circle cx="12" cy="10" r="2.5" fill="#FFF" fillOpacity="0.4" />
     </svg>
   )

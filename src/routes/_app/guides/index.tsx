@@ -9,7 +9,7 @@ import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
-import { GameType, GuidesOrFolder } from '@/ipc/bindings.ts'
+import { GuidesOrFolder } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
 import { getStepOr } from '@/lib/progress.ts'
 import { rankList } from '@/lib/rank.ts'
@@ -96,7 +96,6 @@ function GuidesPage() {
   const [isSelect, setSelect] = useState(false)
   const [selectedItemsToDelete, setSelectedItemsToDelete] = useState([] as SelectedItem[])
   const [searchTerm, setSearchTerm] = useState('')
-  const [gameFilter, setGameFilter] = useState<GameType | 'all'>('all')
   const path = Route.useSearch({
     select: (search) => (search.path.startsWith('/') ? search.path.slice(1) : search.path),
   })
@@ -129,33 +128,24 @@ function GuidesPage() {
 
         return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
       })
-  const gameFilteredGuides =
-    gameFilter === 'all'
-      ? notDoneGuides
-      : notDoneGuides.filter((guide) => {
-          if (guide.type === 'folder') return true
-          return (guide.game_type ?? 'dofus') === gameFilter
-        })
   const filteredGuides =
     searchTerm !== ''
       ? rankList({
-          list: allGuidesInPath.data
-            .map((g) => {
-              const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
+          list: allGuidesInPath.data.map((g) => {
+            const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
 
-              return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
-                currentStep: number | null
-                type: 'guide'
-                folder: string | null
-              }
-            })
-            .filter((g) => gameFilter === 'all' || (g.game_type ?? 'dofus') === gameFilter),
+            return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
+              currentStep: number | null
+              type: 'guide'
+              folder: string | null
+            }
+          }),
           keys: [(guide) => guide.name],
           term: searchTerm,
           sortKeys: [(guide) => guide.order],
         })
       : rankList({
-          list: gameFilteredGuides,
+          list: notDoneGuides,
           keys: [(guide) => guide.name],
           term: searchTerm,
           sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
@@ -240,42 +230,14 @@ function GuidesPage() {
               onDeleteComplete={onDeleteComplete}
             />
           ) : (
-            <>
-              <ClearInput
-                value={searchTerm}
-                onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-                onValueChange={setSearchTerm}
-                autoComplete="off"
-                autoCorrect="off"
-                placeholder={t`Rechercher un guide`}
-              />
-              <div className="flex gap-1.5">
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'all' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('all')}
-                  className="flex-1"
-                >
-                  <Trans>Tous</Trans>
-                </Button>
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'dofus' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('dofus')}
-                  className="flex-1"
-                >
-                  Dofus
-                </Button>
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'wakfu' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('wakfu')}
-                  className="flex-1"
-                >
-                  Wakfu
-                </Button>
-              </div>
-            </>
+            <ClearInput
+              value={searchTerm}
+              onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+              onValueChange={setSearchTerm}
+              autoComplete="off"
+              autoCorrect="off"
+              placeholder={t`Rechercher un guide`}
+            />
           )}
 
           {filteredGuides.map((guide) => {
