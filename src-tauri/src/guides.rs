@@ -72,6 +72,14 @@ pub enum GuideLang {
     Pt,
 }
 
+#[derive(Debug, Default, Serialize, Deserialize, Clone, taurpc::specta::Type)]
+#[serde(rename_all = "lowercase")]
+pub enum GameType {
+    #[default]
+    Dofus,
+    Wakfu,
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
 #[serde(rename_all = "camelCase")]
 pub enum Status {
@@ -146,6 +154,8 @@ pub struct Guide {
     pub deleted_at: Option<String>,
     pub updated_at: Option<String>,
     pub lang: GuideLang,
+    #[serde(default)]
+    pub game_type: GameType,
     pub order: u32,
     pub user: User,
     pub user_id: u32,
@@ -166,6 +176,8 @@ pub struct GuideWithSteps {
     pub deleted_at: Option<String>,
     pub updated_at: Option<String>,
     pub lang: GuideLang,
+    #[serde(default)]
+    pub game_type: GameType,
     pub order: u32,
     pub user: User,
     pub web_description: Option<String>,

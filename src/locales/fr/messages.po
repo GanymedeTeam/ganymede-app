@@ -57,7 +57,7 @@ msgid "Apparence"
 msgstr "Apparence"
 
 #: src/components/deep_link_guide_download_dialog.tsx:38
-#: src/routes/_app/downloads/$status.tsx:180
+#: src/routes/_app/downloads/$status.tsx:198
 msgid "Attention"
 msgstr "Attention"
 
@@ -65,11 +65,28 @@ msgstr "Attention"
 msgid "Attention !"
 msgstr "Attention !"
 
-#: src/routes/_app/downloads/$status.tsx:201
+#: src/routes/_app/downloads/$status.tsx:139
+msgid "Aucun guide Dofus trouvé"
+msgstr "Aucun guide Dofus trouvé"
+
+#: src/routes/_app/downloads/$status.tsx:139
+msgid "Aucun guide Dofus trouvé avec {term}"
+msgstr "Aucun guide Dofus trouvé avec {term}"
+
+#: src/routes/_app/downloads/$status.tsx:142
+msgid "Aucun guide Wakfu trouvé"
+msgstr "Aucun guide Wakfu trouvé"
+
+#: src/routes/_app/downloads/$status.tsx:142
+msgid "Aucun guide Wakfu trouvé avec {term}"
+msgstr "Aucun guide Wakfu trouvé avec {term}"
+
+#: src/routes/_app/downloads/$status.tsx:135
+#: src/routes/_app/downloads/$status.tsx:219
 msgid "Aucun guides trouvé"
 msgstr "Aucun guides trouvé"
 
-#: src/routes/_app/downloads/$status.tsx:217
+#: src/routes/_app/downloads/$status.tsx:135
 msgid "Aucun guides trouvé avec {term}"
 msgstr "Aucun guides trouvé avec {term}"
 
@@ -139,40 +156,48 @@ msgstr "Chasse au trésor"
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
-#: src/components/editor_html_parsing.tsx:278
+#: src/components/editor_html_parsing.tsx:291
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:279
+#: src/components/editor_html_parsing.tsx:295
+msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
+msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
+
+#: src/components/editor_html_parsing.tsx:292
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:286
+#: src/components/editor_html_parsing.tsx:296
+msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
+msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
+
+#: src/components/editor_html_parsing.tsx:303
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:287
+#: src/components/editor_html_parsing.tsx:304
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:274
+#: src/components/editor_html_parsing.tsx:287
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:275
+#: src/components/editor_html_parsing.tsx:288
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:282
+#: src/components/editor_html_parsing.tsx:299
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:283
+#: src/components/editor_html_parsing.tsx:300
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:355
-#: src/components/editor_html_parsing.tsx:391
+#: src/components/editor_html_parsing.tsx:372
+#: src/components/editor_html_parsing.tsx:408
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
@@ -256,7 +281,7 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:154
+#: src/routes/_app/guides/-index/guide_item.tsx:157
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -583,7 +608,7 @@ msgid "Guide téléchargé avec succès"
 msgstr "Guide téléchargé avec succès"
 
 #: src/components/title_bar.tsx:101
-#: src/routes/_app/downloads/$status.tsx:100
+#: src/routes/_app/downloads/$status.tsx:102
 msgid "Guides"
 msgstr "Guides"
 
@@ -593,26 +618,26 @@ msgstr "Guides"
 msgid "Guides {0}"
 msgstr "Guides {0}"
 
-#: src/routes/_app/downloads/$status.tsx:98
+#: src/routes/_app/downloads/$status.tsx:100
 #: src/routes/_app/downloads/index.tsx:154
 msgid "Guides certifiés"
 msgstr "Guides certifiés"
 
-#: src/routes/_app/downloads/$status.tsx:94
+#: src/routes/_app/downloads/$status.tsx:96
 #: src/routes/_app/downloads/index.tsx:182
 msgid "Guides draft"
 msgstr "Guides draft"
 
-#: src/routes/_app/downloads/$status.tsx:96
+#: src/routes/_app/downloads/$status.tsx:98
 #: src/routes/_app/downloads/index.tsx:140
 msgid "Guides principaux"
 msgstr "Guides principaux"
 
-#: src/routes/_app/downloads/$status.tsx:92
+#: src/routes/_app/downloads/$status.tsx:94
 msgid "Guides privés"
 msgstr "Guides privés"
 
-#: src/routes/_app/downloads/$status.tsx:90
+#: src/routes/_app/downloads/$status.tsx:92
 #: src/routes/_app/downloads/index.tsx:168
 msgid "Guides publics"
 msgstr "Guides publics"
@@ -626,7 +651,7 @@ msgstr "Guides supprimés"
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:64
+#: src/routes/_app/guides/-index/guide_item.tsx:67
 msgid "id <0>{id}</0>"
 msgstr "id <0>{id}</0>"
 
@@ -788,7 +813,7 @@ msgstr "Impossible de vérifier les mises à jour"
 msgid "Informations supplémentaires : {0}"
 msgstr "Informations supplémentaires : {0}"
 
-#: src/routes/_app/downloads/$status.tsx:192
+#: src/routes/_app/downloads/$status.tsx:210
 msgid "J'ai compris"
 msgstr "J'ai compris"
 
@@ -816,7 +841,7 @@ msgstr "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Les guides créés par l'équipe Ganymède"
 
-#: src/routes/_app/downloads/$status.tsx:184
+#: src/routes/_app/downloads/$status.tsx:202
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 
@@ -975,7 +1000,7 @@ msgstr "Rafraichissement des guides téléchargés"
 msgid "Récapitulatif du message"
 msgstr "Récapitulatif du message"
 
-#: src/routes/_app/downloads/$status.tsx:212
+#: src/routes/_app/downloads/$status.tsx:230
 #: src/routes/_app/guides/index.tsx:239
 msgid "Rechercher un guide"
 msgstr "Rechercher un guide"
@@ -1081,6 +1106,10 @@ msgstr "Télécharger un guide"
 #: src/lib/error_formatter.tsx:583
 msgid "Tokens d'authentification introuvables"
 msgstr "Tokens d'authentification introuvables"
+
+#: src/routes/_app/downloads/$status.tsx:239
+msgid "Tous"
+msgstr "Tous"
 
 #: src/routes/_app/settings.tsx:202
 msgid "Très grande"
