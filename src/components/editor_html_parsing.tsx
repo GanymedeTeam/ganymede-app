@@ -237,7 +237,8 @@ export function EditorHtmlParsing({
           (domNode.attribs.type === 'monster' ||
             domNode.attribs.type === 'quest' ||
             domNode.attribs.type === 'item' ||
-            domNode.attribs.type === 'dungeon')
+            domNode.attribs.type === 'dungeon' ||
+            domNode.attribs.type === 'wakfu-item')
         ) {
           const name = domNode.attribs.name ?? ''
           const { class: nodeClassName, ...restAttribs } = domNode.attribs
@@ -250,21 +251,33 @@ export function EditorHtmlParsing({
                 className="group contents cursor-pointer"
                 disabled={disabled}
                 onClick={async (evt) => {
-                  const dofusDbId = domNode.attribs.dofusdbid
                   const resourceType = domNode.attribs.type
 
-                  // open in browser, alt + click for DPLN and ctrl/cmd + click for DofusDB
-                  if (evt.altKey) {
-                    const urlToOpen = getDofusPourLesNoobsUrl(dofusDbId, resourceType)
-                    if (urlToOpen) {
-                      openUrlInBrowser.mutate(urlToOpen)
+                  // Wakfu items
+                  if (resourceType === 'wakfu-item') {
+                    const wakfuId = domNode.attribs.wakfuid
+                    if ((isMacOs ? evt.metaKey : evt.ctrlKey) && wakfuId) {
+                      openUrlInBrowser.mutate(`https://db.methodwakfu.com/items/${wakfuId}`)
+                    } else {
+                      await writeText(name)
                     }
-                  } else if ((isMacOs ? evt.metaKey : evt.ctrlKey) && currentGuide) {
-                    openUrlInBrowser.mutate(
-                      `https://dofusdb.fr/${currentGuide.lang}/database/${resourceType === 'item' ? 'object' : resourceType}/${dofusDbId}`,
-                    )
                   } else {
-                    await writeText(name)
+                    // Dofus items
+                    const dofusDbId = domNode.attribs.dofusdbid
+
+                    // open in browser, alt + click for DPLN and ctrl/cmd + click for DofusDB
+                    if (evt.altKey) {
+                      const urlToOpen = getDofusPourLesNoobsUrl(dofusDbId, resourceType)
+                      if (urlToOpen) {
+                        openUrlInBrowser.mutate(urlToOpen)
+                      }
+                    } else if ((isMacOs ? evt.metaKey : evt.ctrlKey) && currentGuide) {
+                      openUrlInBrowser.mutate(
+                        `https://dofusdb.fr/${currentGuide.lang}/database/${resourceType === 'item' ? 'object' : resourceType}/${dofusDbId}`,
+                      )
+                    } else {
+                      await writeText(name)
+                    }
                   }
                 }}
                 title={(() => {
@@ -277,6 +290,10 @@ export function EditorHtmlParsing({
                       return isMacOs
                         ? t`Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb`
                         : t`Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb`
+                    case 'wakfu-item':
+                      return isMacOs
+                        ? t`Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu`
+                        : t`Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu`
                     case 'monster':
                       return isMacOs
                         ? t`Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb`

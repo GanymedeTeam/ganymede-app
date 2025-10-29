@@ -207,6 +207,7 @@
   .tag-dungeon,
   .tag-monster,
   .tag-item,
+  .tag-wakfu-item,
   .guide-step {
     display: inline-flex;
     align-items: baseline;
@@ -229,6 +230,10 @@
     color: #db9542;
   }
 
+  .tag-wakfu-item {
+    color: #41b6c4;
+  }
+
   .guide-step {
     text-decoration: underline;
     color: #8e7cc3;
@@ -236,6 +241,7 @@
 
   .tag-monster img,
   .tag-item img,
+  .tag-wakfu-item img,
   .tag-dungeon img,
   .tag-quest img,
   .guide-step img {
