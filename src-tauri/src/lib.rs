@@ -6,12 +6,14 @@ use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
 use crate::first_start::handle_first_start_setup;
 use crate::guides::{GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
+use crate::image_viewer::{ImageViewerApi, ImageViewerApiImpl};
 use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::handle_shortcuts;
 use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::user::{UserApi, UserApiImpl};
+use crate::window_manager::WindowManager;
 use log::{error, info, LevelFilter};
 use report::{ReportApi, ReportApiImpl};
 use tauri::Manager;
@@ -30,6 +32,7 @@ mod event;
 mod first_start;
 mod guides;
 mod image;
+mod image_viewer;
 mod item;
 mod json;
 mod notifications;
@@ -41,6 +44,7 @@ mod shortcut;
 mod tauri_api_ext;
 mod update;
 mod user;
+mod window_manager;
 
 #[cfg(dev)]
 const LOG_TARGETS: [Target; 2] = [
@@ -146,6 +150,7 @@ pub fn run() {
         .merge(ApiImpl.into_handler())
         .merge(SecurityApiImpl.into_handler())
         .merge(ImageApiImpl.into_handler())
+        .merge(ImageViewerApiImpl.into_handler())
         .merge(UpdateApiImpl.into_handler())
         .merge(ConfApiImpl.into_handler())
         .merge(ReportApiImpl.into_handler())
@@ -169,6 +174,7 @@ pub fn run() {
             .unwrap();
 
         app.manage(http_client.clone());
+        app.manage(WindowManager::new());
 
         #[cfg(not(debug_assertions))]
         add_breadcrumb(Breadcrumb {

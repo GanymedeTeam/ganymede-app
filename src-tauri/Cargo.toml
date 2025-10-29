@@ -45,6 +45,7 @@ base64 = "0.22.1"
 sha2 = "0.10.8"
 rand = "0.9.2"
 urlencoding = "2"
+md5 = "0.7"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-window-state = "2"
