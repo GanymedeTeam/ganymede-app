@@ -114,16 +114,22 @@ pub fn run() {
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_window_state::Builder::new().build())
-        .plugin(
-            tauri_plugin_log::Builder::new()
+        .plugin({
+            let log_builder = tauri_plugin_log::Builder::new()
                 .clear_targets()
                 .targets(LOG_TARGETS)
                 .level(level_filter)
                 .max_file_size(524_288)
                 .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepOne)
-                .level_for("tauri", LevelFilter::Info)
-                .build(),
-        );
+                .level_for("tauri", LevelFilter::Info);
+
+            #[cfg(dev)]
+            let log_builder = log_builder
+                .level_for("html5ever", LevelFilter::Off)
+                .level_for("selectors", LevelFilter::Off);
+
+            log_builder.build()
+        });
 
     #[cfg(not(debug_assertions))]
     let app = app.plugin(init_with_no_injection(&sentry_client));
