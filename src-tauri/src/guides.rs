@@ -712,6 +712,7 @@ fn generate_guide_summary<R: Runtime>(
 
                 let duration = start.elapsed();
 
+                // Sort statuses within each quest by step number
                 for quest in &mut quests {
                     quest.statuses.sort_by(|a, b| {
                         let a_value = match a {
@@ -731,6 +732,39 @@ fn generate_guide_summary<R: Runtime>(
 
                     debug!("[Guides] quest: {:?}", quest);
                 }
+
+                // Sort quests by their first non-setup status
+                quests.sort_by(|a, b| {
+                    let get_first_non_setup_step = |quest: &QuestSummary| -> Option<u32> {
+                        quest.statuses.iter().find_map(|s| match s {
+                            SummaryQuestStatus::Started(v)
+                            | SummaryQuestStatus::InProgress(v)
+                            | SummaryQuestStatus::Completed(v) => Some(*v),
+                            SummaryQuestStatus::Setup(_) => None,
+                        })
+                    };
+
+                    let a_step = get_first_non_setup_step(a);
+                    let b_step = get_first_non_setup_step(b);
+
+                    match (a_step, b_step) {
+                        (Some(a_val), Some(b_val)) => a_val.cmp(&b_val),
+                        (Some(_), None) => std::cmp::Ordering::Less,  // Non-setup before setup-only
+                        (None, Some(_)) => std::cmp::Ordering::Greater,
+                        (None, None) => {
+                            // Both setup-only: compare first status step
+                            let a_val = match a.statuses.first() {
+                                Some(SummaryQuestStatus::Setup(v)) => v,
+                                _ => unreachable!(),
+                            };
+                            let b_val = match b.statuses.first() {
+                                Some(SummaryQuestStatus::Setup(v)) => v,
+                                _ => unreachable!(),
+                            };
+                            a_val.cmp(b_val)
+                        }
+                    }
+                });
 
                 let summary = Summary { quests };
 
