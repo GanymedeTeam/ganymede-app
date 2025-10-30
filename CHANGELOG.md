@@ -1,5 +1,17 @@
 # ganymede-app
 
+## 1.15.0
+
+### Minor Changes
+
+- 9cb4dce: Ajout du support de Wakfu avec filtres par jeu et icônes.
+- 7b3c7d0: Ajout de la visualisation d'images dans des fenêtres séparées avec gestion d'erreurs et fallback navigateur.
+
+### Patch Changes
+
+- 5ad2f5e: Les quêtes du sommaire sont désormais triées par ordre d'apparition réel, en ignorant les étapes de préparation.
+- 5ad2f5e: comteharebourg.com est désormais autorisé dans les guides.
+
 ## 1.14.5
 
 ### Patch Changes
