@@ -23,7 +23,7 @@ msgid "{children}"
 msgstr "{children}"
 
 #. placeholder {0}: currentIndex + 1
-#: src/components/notification_alert_dialog.tsx:146
+#: src/components/notification_alert_dialog.tsx:155
 msgid "{totalNotifications, plural, one {Message de l'équipe} other {Messages de l'équipe {0}/{totalNotifications}}}"
 msgstr "{totalNotifications, plural, one {Mensaje del equipo} other {Mensajes del equipo {0}/{totalNotifications}}}"
 
@@ -31,7 +31,7 @@ msgstr "{totalNotifications, plural, one {Mensaje del equipo} other {Mensajes de
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Encontrarás las notas de versión en nuestro Discord <1>#changelog</1></0>"
 
-#: src/components/title_bar.tsx:95
+#: src/components/title_bar.tsx:98
 msgid "Accueil"
 msgstr "Inicio"
 
@@ -106,7 +106,7 @@ msgstr "No hay misiones que coincidan con tu búsqueda."
 msgid "Aujourd'hui"
 msgstr "Hoy"
 
-#: src/components/title_bar.tsx:114
+#: src/components/title_bar.tsx:117
 #: src/routes/_app/auto-pilot.tsx:24
 #: src/routes/_app/auto-pilot.tsx:48
 msgid "Autopilotage"
@@ -116,7 +116,7 @@ msgstr "Piloto automático"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "¡Bienvenido a <0>GÁNYMEDE</0>!"
 
-#: src/components/title_bar.tsx:127
+#: src/components/title_bar.tsx:130
 msgid "Carte"
 msgstr "Mapa"
 
@@ -147,7 +147,7 @@ msgstr "Campo desconocido: {0}"
 msgid "Champ manquant : {0}"
 msgstr "Campo que falta: {0}"
 
-#: src/components/title_bar.tsx:133
+#: src/components/title_bar.tsx:136
 msgid "Chasse au trésor"
 msgstr "Búsqueda del tesoro"
 
@@ -156,50 +156,53 @@ msgstr "Búsqueda del tesoro"
 msgid "Choisissez un guide"
 msgstr "Elija una guía"
 
-#: src/components/editor_html_parsing.tsx:291
+#: src/components/editor_html_parsing.tsx:293
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del objeto. ⌘+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:295
+#: src/components/editor_html_parsing.tsx:297
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Haz clic para copiar el nombre del objeto. ⌘+clic para abrir en MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:292
+#: src/components/editor_html_parsing.tsx:294
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del objeto. Ctrl+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:296
+#: src/components/editor_html_parsing.tsx:298
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Haz clic para copiar el nombre del objeto. Ctrl+clic para abrir en MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:303
+#: src/components/editor_html_parsing.tsx:305
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Haz clic para copiar el nombre de la misión. ⌘+clic para abrir en dofusdb. ⌥+clic para abrir en DPLN"
 
-#: src/components/editor_html_parsing.tsx:304
+#: src/components/editor_html_parsing.tsx:306
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Haz clic para copiar el nombre de la misión. Ctrl+clic para abrir en dofusdb. Alt+clic para abrir en DPLN"
 
-#: src/components/editor_html_parsing.tsx:287
+#: src/components/editor_html_parsing.tsx:289
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del calabozo. ⌘+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:288
+#: src/components/editor_html_parsing.tsx:290
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del calabozo. Ctrl+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:299
+#: src/components/editor_html_parsing.tsx:301
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del monstruo. ⌘+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:300
+#: src/components/editor_html_parsing.tsx:302
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del monstruo. Ctrl+clic para abrir en dofusdb"
 
-#: src/components/editor_html_parsing.tsx:372
-#: src/components/editor_html_parsing.tsx:408
+#: src/components/editor_html_parsing.tsx:413
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Haz clic para abrir en el navegador"
+
+#: src/components/editor_html_parsing.tsx:377
+msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
+msgstr "Haz clic para abrir en una ventana nueva"
 
 #: src/routes/_app/guides/-$id/report_dialog.tsx:136
 msgid "Confirmer l'envoi du rapport"
@@ -289,7 +292,7 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Inicio"
 
-#: src/components/title_bar.tsx:64
+#: src/components/title_bar.tsx:67
 msgid "Déconnecté"
 msgstr "Desconectado"
 
@@ -333,7 +336,7 @@ msgstr "Editar una nota"
 msgid "En cours"
 msgstr "En progreso"
 
-#: src/components/notification_alert_dialog.tsx:162
+#: src/components/notification_alert_dialog.tsx:171
 msgid "En cours..."
 msgstr "En progreso..."
 
@@ -557,7 +560,7 @@ msgstr "Error de usuario desconocido"
 msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
 msgstr "¿Está seguro de que desea eliminar este perfil? Esta acción es irreversible."
 
-#: src/components/title_bar.tsx:185
+#: src/components/title_bar.tsx:188
 #: src/routes/_app/guides/-$id/report_dialog.tsx:113
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
@@ -607,7 +610,7 @@ msgstr "Guía mal formada"
 msgid "Guide téléchargé avec succès"
 msgstr "Guía descargada con éxito"
 
-#: src/components/title_bar.tsx:101
+#: src/components/title_bar.tsx:104
 #: src/routes/_app/downloads/$status.tsx:102
 msgid "Guides"
 msgstr "Guías"
@@ -857,7 +860,7 @@ msgstr "Guías en proceso de escritura"
 msgid "Les guides partagés par la communauté"
 msgstr "Guías compartidas por la comunidad"
 
-#: src/components/editor_html_parsing.tsx:63
+#: src/components/editor_html_parsing.tsx:65
 msgid "lien masqué"
 msgstr "enlace oculto"
 
@@ -865,7 +868,7 @@ msgstr "enlace oculto"
 msgid "Liste des guides malformée"
 msgstr "Lista de guías mal formada"
 
-#: src/components/notification_alert_dialog.tsx:165
+#: src/components/notification_alert_dialog.tsx:174
 msgid "Marquer comme lu"
 msgstr "Marcar como leído"
 
@@ -918,7 +921,7 @@ msgstr "Nombre de la nota"
 msgid "Normale"
 msgstr "Normal"
 
-#: src/components/title_bar.tsx:120
+#: src/components/title_bar.tsx:123
 #: src/routes/_app/notes.index.tsx:24
 #: src/routes/_app/notes.index.tsx:50
 msgid "Notes"
@@ -940,7 +943,7 @@ msgstr "Abrir la carpeta de guías descargadas"
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Abrir guías al inicio"
 
-#: src/components/title_bar.tsx:163
+#: src/components/title_bar.tsx:166
 #: src/routes/_app/settings.tsx:44
 #: src/routes/_app/settings.tsx:99
 msgid "Paramètres"
@@ -1013,7 +1016,7 @@ msgstr "Buscar un perfil..."
 msgid "Rechercher une quête"
 msgstr "Buscar una misión"
 
-#: src/components/title_bar.tsx:175
+#: src/components/title_bar.tsx:178
 msgid "Réduire"
 msgstr "Minimizar"
 
@@ -1033,12 +1036,12 @@ msgstr "Respuesta de token inválida"
 msgid "Réponse GitHub malformée"
 msgstr "Respuesta de GitHub mal formada"
 
-#: src/components/title_bar.tsx:87
+#: src/components/title_bar.tsx:90
 #: src/routes/_app/oauth/waiting.tsx:58
 msgid "Se connecter"
 msgstr "Iniciar sesión"
 
-#: src/components/title_bar.tsx:74
+#: src/components/title_bar.tsx:77
 msgid "Se déconnecter"
 msgstr "Cerrar sesión"
 
@@ -1054,7 +1057,7 @@ msgstr "Sitio oficial"
 msgid "Sommaire"
 msgstr "Resumen"
 
-#: src/components/title_bar.tsx:142
+#: src/components/title_bar.tsx:145
 msgid "Supporter Ganymède"
 msgstr "Apoyar a Ganymède"
 
@@ -1098,7 +1101,7 @@ msgstr "Descargar la versión {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Descargar la guía"
 
-#: src/components/title_bar.tsx:107
+#: src/components/title_bar.tsx:110
 #: src/routes/_app/guides/index.tsx:283
 msgid "Télécharger un guide"
 msgstr "Descargar una guía"
@@ -1127,7 +1130,7 @@ msgstr "Twitter de Ganymede"
 msgid "Une erreur est survenue"
 msgstr "Ha ocurrido un error"
 
-#: src/components/title_bar.tsx:68
+#: src/components/title_bar.tsx:71
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Ocurrió un error durante el cierre de sesión"
 

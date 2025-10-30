@@ -117,7 +117,10 @@ pub fn run() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_http::init())
-        .plugin(tauri_plugin_window_state::Builder::new().build())
+        .plugin(tauri_plugin_window_state::Builder::new().with_filter(|label| {
+            // only keep main window state
+            label == "main"
+        }).build())
         .plugin({
             let log_builder = tauri_plugin_log::Builder::new()
                 .clear_targets()

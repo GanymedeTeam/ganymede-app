@@ -2,11 +2,10 @@ use std::collections::HashMap;
 use std::sync::Mutex;
 
 use log::{debug, info, warn};
-use tauri::{AppHandle, Manager, PhysicalPosition, PhysicalSize, Runtime, WebviewUrl, WebviewWindowBuilder};
+use tauri::{AppHandle, LogicalSize, LogicalPosition, Manager, Runtime, WebviewUrl, WebviewWindowBuilder};
 
 pub struct WindowMetadata {
     pub label: String,
-    pub image_url: String,
 }
 
 pub struct WindowManager {
@@ -23,18 +22,22 @@ impl WindowManager {
     pub fn get_main_window_geometry<R: Runtime>(
         &self,
         app: &AppHandle<R>,
-    ) -> Result<(PhysicalPosition<i32>, PhysicalSize<u32>), String> {
+    ) -> Result<(LogicalPosition<f64>, LogicalSize<f64>), String> {
         let main_window = app
             .get_webview_window("main")
             .ok_or_else(|| "Main window not found".to_string())?;
 
+        let factor = main_window.scale_factor().map_err(|e| format!("Failed to get scale factor: {}", e))?;
+
         let position = main_window
             .outer_position()
             .map_err(|e| format!("Failed to get main window position: {}", e))?;
+        let position = position.to_logical::<f64>(factor);
 
         let size = main_window
-            .outer_size()
+            .inner_size()
             .map_err(|e| format!("Failed to get main window size: {}", e))?;
+        let size = size.to_logical::<f64>(factor);
 
         Ok((position, size))
     }
@@ -45,13 +48,13 @@ impl WindowManager {
         label: String,
         image_url: String,
         title: Option<String>,
-        position: PhysicalPosition<i32>,
-        size: PhysicalSize<u32>,
+        position: LogicalPosition<f64>,
+        size: LogicalSize<f64>,
     ) -> Result<(), String> {
         let encoded_url = urlencoding::encode(&image_url);
         let encoded_title = title.as_ref().map(|t| urlencoding::encode(t));
 
-        let mut url = format!("/?image={}", encoded_url);
+        let mut url = format!("/image-viewer?image={}", encoded_url);
         if let Some(t) = encoded_title {
             url.push_str(&format!("&title={}", t));
         }
@@ -61,8 +64,8 @@ impl WindowManager {
 
         let window = WebviewWindowBuilder::new(app, &label, WebviewUrl::App(url.into()))
             .title(title.unwrap_or_else(|| "Image Viewer".to_string()))
-            .inner_size(size.width as f64, size.height as f64)
-            .position(position.x as f64, position.y as f64)
+            .inner_size(size.width, size.height)
+            .position(position.x + 15f64, position.y + 15f64)
             .resizable(true)
             .always_on_top(true)
             .decorations(false)
@@ -128,7 +131,6 @@ impl WindowManager {
                 url_hash,
                 WindowMetadata {
                     label: label.clone(),
-                    image_url,
                 },
             );
         }
@@ -140,12 +142,6 @@ impl WindowManager {
         let mut windows = self.windows.lock().unwrap();
         windows.retain(|_, metadata| metadata.label != label);
         debug!("Cleaned up window metadata for: {}", label);
-    }
-
-    pub fn window_exists(&self, image_url: &str) -> bool {
-        let url_hash = format!("{:x}", md5::compute(image_url));
-        let windows = self.windows.lock().unwrap();
-        windows.contains_key(&url_hash)
     }
 }
 

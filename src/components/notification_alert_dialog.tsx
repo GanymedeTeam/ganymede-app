@@ -1,11 +1,12 @@
 import { Plural, Trans } from '@lingui/react/macro'
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { error } from '@tauri-apps/plugin-log'
 import dayjs from 'dayjs'
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
 import 'dayjs/locale/es'
 import 'dayjs/locale/pt'
+import { useLocation } from '@tanstack/react-router'
 import { EyeIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { EditorHtmlParsing } from '@/components/editor_html_parsing.tsx'
@@ -20,6 +21,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import type { Notification } from '@/ipc/bindings.ts'
 import { getLang } from '@/lib/conf.ts'
+import { isInImageViewerPath } from '@/lib/image_viewer.ts'
 import { useMarkNotificationViewed } from '@/mutations/mark_notification_viewed.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { unviewedNotificationsQuery } from '@/queries/notifications.query.ts'
@@ -57,9 +59,16 @@ export function NotificationAlertDialog() {
   const [isOpen, setIsOpen] = useState(false)
   const [totalNotifications, setTotalNotifications] = useState(0)
   const [allNotifications, setAllNotifications] = useState<Notification[]>([])
+  const location = useLocation()
 
-  const unviewedNotifications = useQuery(unviewedNotificationsQuery)
-  const conf = useSuspenseQuery(confQuery)
+  const unviewedNotifications = useQuery({
+    ...unviewedNotificationsQuery,
+    enabled: !isInImageViewerPath(location.pathname),
+  })
+  const conf = useQuery({
+    ...confQuery,
+    enabled: !isInImageViewerPath(location.pathname),
+  })
   const markAsViewed = useMarkNotificationViewed()
   const { count, start } = useTimer(2)
 
@@ -131,7 +140,7 @@ export function NotificationAlertDialog() {
     }
   }
 
-  if (!isOpen || !currentNotification) {
+  if (!isOpen || !currentNotification || !conf.data) {
     return null
   }
 

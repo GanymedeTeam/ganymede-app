@@ -1,12 +1,13 @@
 import { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
+import { createRootRouteWithContext, Outlet, useLocation } from '@tanstack/react-router'
 import { error } from '@tauri-apps/plugin-log'
-import { useEffect, useMemo } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { DeepLinkGuideDownloadDialog } from '@/components/deep_link_guide_download_dialog.tsx'
 import { NotificationAlertDialog } from '@/components/notification_alert_dialog.tsx'
 import { TitleBar } from '@/components/title_bar.tsx'
 import { Toaster } from '@/components/ui/sonner.tsx'
 import { taurpc } from '@/ipc/ipc.ts'
+import { isInImageViewerPath } from '@/lib/image_viewer.ts'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -15,34 +16,26 @@ export const Route = createRootRouteWithContext<{
 })
 
 function Root() {
-  const isImageViewer = useMemo(() => {
-    return new URLSearchParams(window.location.search).has('image')
-  }, [])
+  const location = useLocation()
+  const isImageViewer = useRef(isInImageViewerPath(location.pathname)) // only check on first mount
 
   useEffect(() => {
-    if (!isImageViewer) {
+    if (!isImageViewer.current) {
       taurpc.base.startup().catch((err) => {
         error(`Error sending startup message: ${err}`)
       })
     }
-  }, [isImageViewer])
-
-  if (isImageViewer) {
-    return (
-      <>
-        <Toaster />
-        <Outlet />
-      </>
-    )
-  }
+  }, [])
 
   return (
     <>
       <TitleBar />
       <Toaster />
       <Outlet />
-      <DeepLinkGuideDownloadDialog />
-      <NotificationAlertDialog />
+      <Suspense>
+        <DeepLinkGuideDownloadDialog />
+        <NotificationAlertDialog />
+      </Suspense>
     </>
   )
 }

@@ -18,6 +18,7 @@ import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download_guide_from_server.mutation.ts'
+import { useOpenImageViewer } from '@/mutations/open_image_viewer.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { useToggleGuideCheckbox } from '@/mutations/toggle_guide_checkbox.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -41,6 +42,7 @@ export function EditorHtmlParsing({
   const whiteList = useSuspenseQuery(whiteListQuery)
   const downloadGuide = useDownloadGuideFromServer()
   const openUrlInBrowser = useOpenUrlInBrowser()
+  const openImageViewer = useOpenImageViewer()
   const { t } = useLingui()
   const guides = useSuspenseQuery(guidesQuery())
   const profile = useProfile()
@@ -350,7 +352,7 @@ export function EditorHtmlParsing({
         // #region img
         if (domNode.name === 'img') {
           const {
-            attribs: { className: domClassName, ...attribs },
+            attribs: { class: domClassName, ...attribs },
           } = domNode
 
           const imgSrc = attribs.src ?? ''
@@ -365,11 +367,14 @@ export function EditorHtmlParsing({
               {...attribs}
               onClick={() => {
                 if (clickable) {
-                  openUrlInBrowser.mutate(imgSrc)
+                  openImageViewer.mutate({
+                    imageUrl: imgSrc,
+                    title: attribs.alt ?? attribs.title,
+                  })
                 }
               }}
               draggable={false}
-              title={clickable ? t`Cliquez pour ouvrir dans le navigateur` : undefined}
+              title={clickable ? t`Cliquez pour ouvrir dans une nouvelle fenêtre` : undefined}
               role="button"
               className={cn(
                 'inline-flex select-none',
