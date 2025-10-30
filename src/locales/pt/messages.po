@@ -156,51 +156,51 @@ msgstr "Caça ao tesouro"
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
-#: src/components/editor_html_parsing.tsx:293
+#: src/components/editor_html_parsing.tsx:294
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:297
+#: src/components/editor_html_parsing.tsx:298
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:294
+#: src/components/editor_html_parsing.tsx:295
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:298
+#: src/components/editor_html_parsing.tsx:299
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:305
+#: src/components/editor_html_parsing.tsx:306
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. ⌘+clique para abrir no dofusdb. ⌥+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:306
+#: src/components/editor_html_parsing.tsx:307
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb. Alt+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:289
+#: src/components/editor_html_parsing.tsx:290
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:290
+#: src/components/editor_html_parsing.tsx:291
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:301
+#: src/components/editor_html_parsing.tsx:302
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:302
+#: src/components/editor_html_parsing.tsx:303
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:413
+#: src/components/editor_html_parsing.tsx:422
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
-#: src/components/editor_html_parsing.tsx:377
+#: src/components/editor_html_parsing.tsx:386
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Clique para abrir numa janela nova"
 
@@ -674,6 +674,10 @@ msgstr "Não é possível aceder à pasta de configuração"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Não é possível obter o sistema de actualização"
 
+#: src/components/editor_html_parsing.tsx:378
+msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
+msgstr "Não é possível abrir a janela, abrindo no navegador"
+
 #: src/lib/error_formatter.tsx:499
 msgid "Impossible d'ouvrir le dossier"
 msgstr "Não é possível abrir a pasta"
@@ -860,7 +864,7 @@ msgstr "Guias em processo de escrita"
 msgid "Les guides partagés par la communauté"
 msgstr "Guias partilhados pela comunidade"
 
-#: src/components/editor_html_parsing.tsx:65
+#: src/components/editor_html_parsing.tsx:66
 msgid "lien masqué"
 msgstr "link oculto"
 

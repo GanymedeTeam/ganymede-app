@@ -5,6 +5,7 @@ import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
 import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
 import { Fragment, type ReactNode } from 'react'
+import { toast } from 'sonner'
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { DownloadImage } from '@/components/download_image.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
@@ -367,10 +368,18 @@ export function EditorHtmlParsing({
               {...attribs}
               onClick={() => {
                 if (clickable) {
-                  openImageViewer.mutate({
-                    imageUrl: imgSrc,
-                    title: attribs.alt ?? attribs.title,
-                  })
+                  openImageViewer.mutate(
+                    {
+                      imageUrl: imgSrc,
+                      title: attribs.alt ?? attribs.title,
+                    },
+                    {
+                      onError: () => {
+                        toast.error(t`Impossible d'ouvrir la fenêtre, ouverture dans le navigateur`)
+                        openUrlInBrowser.mutate(imgSrc)
+                      },
+                    },
+                  )
                 }
               }}
               draggable={false}
