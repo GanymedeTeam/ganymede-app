@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { useIsBodyLockedFromDialog } from '@/hooks/use_is_body_locked_from_dialog.ts'
+import { isInImageViewerPath } from '@/lib/image_viewer.ts'
 import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
@@ -45,10 +46,12 @@ export function TitleBar() {
   const cleanAuthTokens = useCleanAuthTokens()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
+  const isImageViewer = isInImageViewerPath(location.pathname)
+  const title = location.search.title || 'Ganymède'
 
   return (
     <div className="sticky top-0 z-60 flex h-titlebar items-center bg-primary text-primary-foreground">
-      {!linksAreDisabled && (
+      {!linksAreDisabled && !isImageViewer && (
         <DropdownMenu>
           <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>
             <MenuIcon className="size-4" />
@@ -145,11 +148,11 @@ export function TitleBar() {
         </DropdownMenu>
       )}
       <p className="center-absolute cursor-default select-none text-center font-semibold text-sm sm:text-base">
-        Ganymède
+        {title}
       </p>
       <p data-tauri-drag-region="" className="relative z-10 size-full grow" />
       <div className="flex justify-end">
-        {!linksAreDisabled && (
+        {!linksAreDisabled && !isImageViewer && (
           <Link
             to="/settings"
             search={{
