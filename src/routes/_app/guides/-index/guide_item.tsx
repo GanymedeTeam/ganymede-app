@@ -61,7 +61,7 @@ function GuideMetadata({ id, lang, node_image, gameType = 'dofus' }: GuideMetada
           )}
         </div>
       )}
-      <GameIcon gameType={gameType} className="size-4" />
+      <GameIcon gameType={gameType} />
       <FlagPerLang lang={lang} />
       <span className="whitespace-nowrap text-xxs">
         <Trans>
