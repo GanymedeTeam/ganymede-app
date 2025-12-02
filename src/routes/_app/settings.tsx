@@ -9,15 +9,18 @@ import { z } from 'zod'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { SelectLangLabel, SelectLangSelect } from '@/components/select_lang.tsx'
+import { ShortcutInput } from '@/components/shortcut_input.tsx'
 import { Button } from '@/components/ui/button.tsx'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.tsx'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx'
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { ConfLang, FontSize } from '@/ipc/bindings.ts'
+import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
+import { useReregisterShortcuts } from '@/mutations/reregister_shortcuts.mutation.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
@@ -51,11 +54,18 @@ export const Route = createFileRoute('/_app/settings')({
   pendingMs: 200,
 })
 
-function SettingCard({ title, id, children }: PropsWithChildren<{ title: ReactNode; id: string }>) {
+function SettingCard({
+  title,
+  description,
+  id,
+  className,
+  children,
+}: PropsWithChildren<{ title: ReactNode; description?: ReactNode; id: string; className?: string }>) {
   return (
-    <Card className="flex flex-col gap-2 text-sm">
+    <Card className={cn('flex flex-col gap-2 text-sm', className)}>
       <CardHeader className="xs:pb-2">
         <CardTitle>{title}</CardTitle>
+        {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent id={id} className="flex flex-col gap-4 xs:pt-2">
         {children}
@@ -78,6 +88,7 @@ function Settings() {
   const newId = useNewId()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
+  const reregisterShortcuts = useReregisterShortcuts()
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
 
@@ -213,6 +224,101 @@ function Settings() {
                     ...conf.data,
                     lang: value as ConfLang,
                   })
+                }}
+              />
+            </SettingCardSection>
+          </SettingCard>
+          <SettingCard
+            id="section-shortcuts"
+            className="slot-[card-content]:pt-0 slot-[card-description]:text-xs"
+            title={<Trans>Raccourcis clavier</Trans>}
+            description={
+              <Trans>
+                Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenaline, Nvidia App, etc.) ne
+                peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications.
+              </Trans>
+            }
+          >
+            <SettingCardSection id="section-shortcuts-inputs">
+              <ShortcutInput
+                id="reset-conf"
+                label={t`Réinitialiser la configuration`}
+                description={t`Efface tous vos profils et paramètres (pas les guides)`}
+                value={conf.data.shortcuts?.resetConf}
+                onChange={async (value) => {
+                  try {
+                    await setConf.mutateAsync({
+                      ...conf.data,
+                      shortcuts: {
+                        ...conf.data.shortcuts,
+                        resetConf: value,
+                      },
+                    })
+                    await reregisterShortcuts.mutateAsync()
+                    toast.success(t`Raccourci mis à jour`)
+                  } catch {
+                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
+                  }
+                }}
+              />
+              <ShortcutInput
+                id="go-next-step"
+                label={t`Étape suivante`}
+                value={conf.data.shortcuts?.goNextStep}
+                onChange={async (value) => {
+                  try {
+                    await setConf.mutateAsync({
+                      ...conf.data,
+                      shortcuts: {
+                        ...conf.data.shortcuts,
+                        goNextStep: value,
+                      },
+                    })
+                    await reregisterShortcuts.mutateAsync()
+                    toast.success(t`Raccourci mis à jour`)
+                  } catch {
+                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
+                  }
+                }}
+              />
+              <ShortcutInput
+                id="go-previous-step"
+                label={t`Étape précédente`}
+                value={conf.data.shortcuts?.goPreviousStep}
+                onChange={async (value) => {
+                  try {
+                    await setConf.mutateAsync({
+                      ...conf.data,
+                      shortcuts: {
+                        ...conf.data.shortcuts,
+                        goPreviousStep: value,
+                      },
+                    })
+                    await reregisterShortcuts.mutateAsync()
+                    toast.success(t`Raccourci mis à jour`)
+                  } catch {
+                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
+                  }
+                }}
+              />
+              <ShortcutInput
+                id="copy-current-step"
+                label={t`Copier l'étape actuelle`}
+                value={conf.data.shortcuts?.copyCurrentStep}
+                onChange={async (value) => {
+                  try {
+                    await setConf.mutateAsync({
+                      ...conf.data,
+                      shortcuts: {
+                        ...conf.data.shortcuts,
+                        copyCurrentStep: value,
+                      },
+                    })
+                    await reregisterShortcuts.mutateAsync()
+                    toast.success(t`Raccourci mis à jour`)
+                  } catch {
+                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
+                  }
                 }}
               />
             </SettingCardSection>
