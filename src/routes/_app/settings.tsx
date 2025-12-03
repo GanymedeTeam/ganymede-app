@@ -234,7 +234,7 @@ function Settings() {
             title={<Trans>Raccourcis clavier</Trans>}
             description={
               <Trans>
-                Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenaline, Nvidia App, etc.) ne
+                Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne
                 peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications.
               </Trans>
             }

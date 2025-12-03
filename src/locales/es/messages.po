@@ -957,8 +957,8 @@ msgid "Normale"
 msgstr "Normal"
 
 #: src/routes/_app/settings.tsx:236
-msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenaline, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
-msgstr "Nota: Los atajos ya utilizados por otras aplicaciones (AMD Adrenaline, Nvidia App, etc.) no se pueden registrar. Elimínelos primero en esas aplicaciones."
+msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
+msgstr "Nota: Los atajos ya utilizados por otras aplicaciones (AMD Adrenalin, Nvidia App, etc.) no se pueden registrar. Elimínelos primero en esas aplicaciones."
 
 #: src/components/title_bar.tsx:123
 #: src/routes/_app/notes.index.tsx:24
