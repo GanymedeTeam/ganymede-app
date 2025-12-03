@@ -1,4 +1,4 @@
-Your task is to help the user to generate a commit message and commit the changes using git.
+Your task is to help the user to generate a commit message and commit the changes using git. The commit message should be in english.
 
 ## Guidelines
 
