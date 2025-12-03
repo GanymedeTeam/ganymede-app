@@ -29,7 +29,7 @@ function parseKeyEvent(evt: KeyboardEvent<HTMLInputElement>): { shortcut: string
   const key = evt.key
   let hasActualKey = false
 
-  if (key !== 'Control' && key !== 'Alt' && key !== 'Shift' && key !== 'Meta') {
+  if (key !== 'Control' && key !== 'Alt' && key !== 'Shift' && key !== 'Meta' && key !== 'AltGraph') {
     hasActualKey = true
     if (key.length === 1) {
       parts.push(key.toUpperCase())
@@ -40,9 +40,11 @@ function parseKeyEvent(evt: KeyboardEvent<HTMLInputElement>): { shortcut: string
     }
   }
 
+  const hasModifiers = parts.length > 1 && hasActualKey
+
   return {
     shortcut: parts.join('+'),
-    isComplete: hasActualKey && parts.length >= 2,
+    isComplete: hasActualKey && (hasModifiers || parts.length === 1),
   }
 }
 

@@ -262,26 +262,6 @@ function Settings() {
                 }}
               />
               <ShortcutInput
-                id="go-next-step"
-                label={t`Étape suivante`}
-                value={conf.data.shortcuts?.goNextStep}
-                onChange={async (value) => {
-                  try {
-                    await setConf.mutateAsync({
-                      ...conf.data,
-                      shortcuts: {
-                        ...conf.data.shortcuts,
-                        goNextStep: value,
-                      },
-                    })
-                    await reregisterShortcuts.mutateAsync()
-                    toast.success(t`Raccourci mis à jour`)
-                  } catch {
-                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
-                  }
-                }}
-              />
-              <ShortcutInput
                 id="go-previous-step"
                 label={t`Étape précédente`}
                 value={conf.data.shortcuts?.goPreviousStep}
@@ -292,6 +272,26 @@ function Settings() {
                       shortcuts: {
                         ...conf.data.shortcuts,
                         goPreviousStep: value,
+                      },
+                    })
+                    await reregisterShortcuts.mutateAsync()
+                    toast.success(t`Raccourci mis à jour`)
+                  } catch {
+                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
+                  }
+                }}
+              />
+              <ShortcutInput
+                id="go-next-step"
+                label={t`Étape suivante`}
+                value={conf.data.shortcuts?.goNextStep}
+                onChange={async (value) => {
+                  try {
+                    await setConf.mutateAsync({
+                      ...conf.data,
+                      shortcuts: {
+                        ...conf.data.shortcuts,
+                        goNextStep: value,
                       },
                     })
                     await reregisterShortcuts.mutateAsync()
