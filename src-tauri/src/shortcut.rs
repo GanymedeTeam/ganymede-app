@@ -1,12 +1,16 @@
 use log::{error, info};
 use serde::Serialize;
 use std::str::FromStr;
-use tauri::{App, AppHandle, Emitter, Manager, Runtime, Wry};
+use std::sync::{Arc, Mutex};
+use tauri::{App, AppHandle, Emitter, Manager, Runtime, State, Wry};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutState};
 
-use crate::conf::{get_conf, Conf};
+use crate::conf::{get_conf, Conf, Shortcuts};
 use crate::event::Event;
 use crate::guides::GuidesEventTrigger;
+
+#[derive(Clone)]
+pub struct ShortcutsCache(Arc<Mutex<Shortcuts>>);
 
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
 #[specta(rename = "ShortcutError")]
@@ -34,6 +38,9 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
         .map_err(|e| Error::ParseShortcut(e.to_string()))?;
     let copy_current_step_shortcut = Shortcut::from_str(&conf.shortcuts.copy_current_step)
         .map_err(|e| Error::ParseShortcut(e.to_string()))?;
+
+    let cache = ShortcutsCache(Arc::new(Mutex::new(conf.shortcuts.clone())));
+    app.manage(cache.clone());
 
     app.handle()
         .plugin(
@@ -71,15 +78,10 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
 
                     match state {
                         ShortcutState::Pressed => {
-                            let current_conf = match get_conf(&app_handle) {
-                                Ok(conf) => conf,
-                                Err(e) => {
-                                    error!("[Shortcut] failed to get conf: {:?}", e);
-                                    return;
-                                }
-                            };
+                            let cache: State<ShortcutsCache> = app_handle.state();
+                            let cached_shortcuts = cache.0.lock().unwrap();
 
-                            let reset_conf_sc = match Shortcut::from_str(&current_conf.shortcuts.reset_conf) {
+                            let reset_conf_sc = match Shortcut::from_str(&cached_shortcuts.reset_conf) {
                                 Ok(sc) => sc,
                                 Err(e) => {
                                     error!("[Shortcut] failed to parse reset_conf: {:?}", e);
@@ -87,7 +89,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                 }
                             };
 
-                            let go_next_step_sc = match Shortcut::from_str(&current_conf.shortcuts.go_next_step) {
+                            let go_next_step_sc = match Shortcut::from_str(&cached_shortcuts.go_next_step) {
                                 Ok(sc) => sc,
                                 Err(e) => {
                                     error!("[Shortcut] failed to parse go_next_step: {:?}", e);
@@ -95,7 +97,7 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                 }
                             };
 
-                            let go_previous_step_sc = match Shortcut::from_str(&current_conf.shortcuts.go_previous_step) {
+                            let go_previous_step_sc = match Shortcut::from_str(&cached_shortcuts.go_previous_step) {
                                 Ok(sc) => sc,
                                 Err(e) => {
                                     error!("[Shortcut] failed to parse go_previous_step: {:?}", e);
@@ -103,13 +105,15 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                 }
                             };
 
-                            let copy_current_step_sc = match Shortcut::from_str(&current_conf.shortcuts.copy_current_step) {
+                            let copy_current_step_sc = match Shortcut::from_str(&cached_shortcuts.copy_current_step) {
                                 Ok(sc) => sc,
                                 Err(e) => {
                                     error!("[Shortcut] failed to parse copy_current_step: {:?}", e);
                                     return;
                                 }
                             };
+
+                            drop(cached_shortcuts);
 
                             if shortcut == &reset_conf_sc {
                                 crate::conf::save_conf(&mut Conf::default(), &app_handle)
@@ -213,6 +217,12 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
 
 pub fn reregister_shortcuts<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
     let conf = get_conf(app)?;
+
+    let cache: State<ShortcutsCache> = app.state();
+    {
+        let mut cached_shortcuts = cache.0.lock().unwrap();
+        *cached_shortcuts = conf.shortcuts.clone();
+    }
 
     let shortcuts = vec![
         Shortcut::from_str(&conf.shortcuts.reset_conf)

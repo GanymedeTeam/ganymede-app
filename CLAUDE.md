@@ -23,7 +23,7 @@ This project uses pnpm. Use pnpm instead of npm.
 **Build:**
 - `pnpm tauri build` - Production build
 - `pnpm tauri build --debug` - Debug build with debugging info
-- `pnpm tauri build` - to test compilation
+- `pnpm tauri build` - to test compilation, do not use `cargo check` directly
 
 **Linting/Formatting:**
 - Uses Biome (configured in `biome.jsonc`)

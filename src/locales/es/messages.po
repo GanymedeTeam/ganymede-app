@@ -56,7 +56,7 @@ msgstr "Cancelar"
 msgid "Apparence"
 msgstr "Apariencia"
 
-#: src/components/shortcut_input.tsx:76
+#: src/components/shortcut_input.tsx:78
 msgid "Appuyez sur les touches..."
 msgstr "Presiona las teclas..."
 
@@ -200,7 +200,7 @@ msgstr "Haz clic para copiar el nombre del monstruo. ⌘+clic para abrir en dofu
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Haz clic para copiar el nombre del monstruo. Ctrl+clic para abrir en dofusdb"
 
-#: src/components/shortcut_input.tsx:76
+#: src/components/shortcut_input.tsx:78
 msgid "Cliquez pour enregistrer"
 msgstr "Haz clic para grabar"
 
@@ -579,11 +579,11 @@ msgstr "Error de usuario"
 msgid "Erreur utilisateur inconnue"
 msgstr "Error de usuario desconocido"
 
-#: src/routes/_app/settings.tsx:286
+#: src/routes/_app/settings.tsx:266
 msgid "Étape précédente"
 msgstr "Paso anterior"
 
-#: src/routes/_app/settings.tsx:266
+#: src/routes/_app/settings.tsx:286
 msgid "Étape suivante"
 msgstr "Paso siguiente"
 
