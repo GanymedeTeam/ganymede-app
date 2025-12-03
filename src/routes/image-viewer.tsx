@@ -33,7 +33,7 @@ function ImageViewerPage() {
         className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl transition-transform duration-300 hover:scale-[1.02]"
       />
       {title && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-lg bg-black/70 px-4 py-2 text-sm text-white backdrop-blur-sm">
+        <div className="-translate-x-1/2 absolute bottom-8 left-1/2 rounded-lg bg-black/70 px-4 py-2 text-sm text-white backdrop-blur-sm">
           {title}
         </div>
       )}

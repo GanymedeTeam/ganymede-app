@@ -18,6 +18,22 @@ const fn default_auto_open_guides() -> bool {
     true
 }
 
+fn default_reset_conf_shortcut() -> String {
+    "Alt+Shift+P".to_string()
+}
+
+fn default_go_next_step_shortcut() -> String {
+    "CommandOrControl+Shift+E".to_string()
+}
+
+fn default_go_previous_step_shortcut() -> String {
+    "CommandOrControl+Shift+A".to_string()
+}
+
+fn default_copy_current_step_shortcut() -> String {
+    "CommandOrControl+Shift+C".to_string()
+}
+
 // Enums
 
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
@@ -59,6 +75,20 @@ pub enum FontSize {
 }
 
 // Structs
+
+#[derive(Debug)]
+#[taurpc::ipc_type]
+#[serde(rename_all = "camelCase")]
+pub struct Shortcuts {
+    #[serde(default = "default_reset_conf_shortcut")]
+    pub reset_conf: String,
+    #[serde(default = "default_go_next_step_shortcut")]
+    pub go_next_step: String,
+    #[serde(default = "default_go_previous_step_shortcut")]
+    pub go_previous_step: String,
+    #[serde(default = "default_copy_current_step_shortcut")]
+    pub copy_current_step: String,
+}
 
 #[derive(Debug)]
 #[taurpc::ipc_type]
@@ -116,6 +146,8 @@ pub struct Conf {
     pub opacity: f32,
     #[serde(default = "default_auto_open_guides")]
     pub auto_open_guides: bool,
+    #[serde(default)]
+    pub shortcuts: Shortcuts,
 }
 
 // Functions
@@ -200,6 +232,17 @@ fn normalize_conf(conf: &mut Conf) {
 
 // Implementations
 
+impl Default for Shortcuts {
+    fn default() -> Self {
+        Shortcuts {
+            reset_conf: default_reset_conf_shortcut(),
+            go_next_step: default_go_next_step_shortcut(),
+            go_previous_step: default_go_previous_step_shortcut(),
+            copy_current_step: default_copy_current_step_shortcut(),
+        }
+    }
+}
+
 impl Default for ConfStep {
     fn default() -> Self {
         ConfStep { checkboxes: vec![] }
@@ -234,6 +277,7 @@ impl Default for Conf {
             notes: vec![],
             opacity: 0.98,
             auto_open_guides: true,
+            shortcuts: Shortcuts::default(),
         }
     }
 }

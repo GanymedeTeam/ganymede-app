@@ -10,7 +10,7 @@ use crate::image_viewer::{ImageViewerApi, ImageViewerApiImpl};
 use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
-use crate::shortcut::handle_shortcuts;
+use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
 use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::user::{UserApi, UserApiImpl};
 use crate::window_manager::WindowManager;
@@ -160,7 +160,8 @@ pub fn run() {
         .merge(DeepLinkApiImpl.into_handler())
         .merge(NotificationApiImpl.into_handler())
         .merge(OAuthApiImpl.into_handler())
-        .merge(UserApiImpl.into_handler());
+        .merge(UserApiImpl.into_handler())
+        .merge(ShortcutsApiImpl.into_handler());
 
     #[cfg(not(debug_assertions))]
     add_breadcrumb(Breadcrumb {
