@@ -219,6 +219,19 @@ pub fn save_conf<R: Runtime>(conf: &mut Conf, app: &AppHandle<R>) -> Result<(), 
     fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))
 }
 
+pub fn backup_conf<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
+    let conf_path = app.path().app_conf_file();
+    let backup_path = app.path().app_conf_backup_file();
+
+    if conf_path.exists() {
+        fs::copy(&conf_path, &backup_path)
+            .map_err(|err| Error::SaveConf(format!("backup failed: {}", err)))?;
+        info!("[Conf] backup created at {:?}", backup_path);
+    }
+
+    Ok(())
+}
+
 fn get_conf_profile_in_use_mut(conf: &mut Conf) -> Result<&mut Profile, Error> {
     conf.profiles
         .iter_mut()

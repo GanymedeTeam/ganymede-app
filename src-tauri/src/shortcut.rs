@@ -5,7 +5,7 @@ use std::sync::{Arc, Mutex};
 use tauri::{App, AppHandle, Emitter, Manager, Runtime, State, Wry};
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, Shortcut, ShortcutState};
 
-use crate::conf::{get_conf, Conf, Shortcuts};
+use crate::conf::{backup_conf, get_conf, save_conf, Conf, Shortcuts};
 use crate::event::Event;
 use crate::guides::GuidesEventTrigger;
 
@@ -119,7 +119,9 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                                 };
 
                             if shortcut == &reset_conf_sc {
-                                crate::conf::save_conf(&mut Conf::default(), &app_handle)
+                                backup_conf(&app_handle)
+                                    .expect("[Shortcut] failed to backup conf");
+                                save_conf(&mut Conf::default(), &app_handle)
                                     .expect("[Shortcut] failed to reset conf");
                                 info!("[Shortcut] conf reset triggered");
 
