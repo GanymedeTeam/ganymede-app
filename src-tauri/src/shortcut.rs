@@ -27,17 +27,22 @@ pub enum Error {
     Unregister(String),
 }
 
+fn parse_shortcut_or_default(value: &str, default: &str) -> Result<Shortcut, Error> {
+    Shortcut::from_str(value)
+        .or_else(|e| {
+            error!("[Shortcut] invalid shortcut '{}': {:?}, using default '{}'", value, e, default);
+            Shortcut::from_str(default)
+        })
+        .map_err(|e| Error::ParseShortcut(format!("failed to parse default '{}': {}", default, e)))
+}
+
 pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
     let conf = get_conf(&app.handle())?;
 
-    let reset_conf_shortcut = Shortcut::from_str(&conf.shortcuts.reset_conf)
-        .map_err(|e| Error::ParseShortcut(e.to_string()))?;
-    let go_next_step_shortcut = Shortcut::from_str(&conf.shortcuts.go_next_step)
-        .map_err(|e| Error::ParseShortcut(e.to_string()))?;
-    let go_previous_step_shortcut = Shortcut::from_str(&conf.shortcuts.go_previous_step)
-        .map_err(|e| Error::ParseShortcut(e.to_string()))?;
-    let copy_current_step_shortcut = Shortcut::from_str(&conf.shortcuts.copy_current_step)
-        .map_err(|e| Error::ParseShortcut(e.to_string()))?;
+    let reset_conf_shortcut = parse_shortcut_or_default(&conf.shortcuts.reset_conf, "Alt+Shift+P")?;
+    let go_next_step_shortcut = parse_shortcut_or_default(&conf.shortcuts.go_next_step, "CommandOrControl+Shift+E")?;
+    let go_previous_step_shortcut = parse_shortcut_or_default(&conf.shortcuts.go_previous_step, "CommandOrControl+Shift+A")?;
+    let copy_current_step_shortcut = parse_shortcut_or_default(&conf.shortcuts.copy_current_step, "CommandOrControl+Shift+C")?;
 
     let cache = ShortcutsCache(Arc::new(Mutex::new(conf.shortcuts.clone())));
     app.manage(cache.clone());
@@ -81,39 +86,37 @@ pub fn handle_shortcuts(app: &App) -> Result<(), Error> {
                             let cache: State<ShortcutsCache> = app_handle.state();
                             let cached_shortcuts = cache.0.lock().unwrap();
 
-                            let reset_conf_sc = match Shortcut::from_str(&cached_shortcuts.reset_conf) {
-                                Ok(sc) => sc,
-                                Err(e) => {
-                                    error!("[Shortcut] failed to parse reset_conf: {:?}", e);
-                                    return;
-                                }
-                            };
-
-                            let go_next_step_sc = match Shortcut::from_str(&cached_shortcuts.go_next_step) {
-                                Ok(sc) => sc,
-                                Err(e) => {
-                                    error!("[Shortcut] failed to parse go_next_step: {:?}", e);
-                                    return;
-                                }
-                            };
-
-                            let go_previous_step_sc = match Shortcut::from_str(&cached_shortcuts.go_previous_step) {
-                                Ok(sc) => sc,
-                                Err(e) => {
-                                    error!("[Shortcut] failed to parse go_previous_step: {:?}", e);
-                                    return;
-                                }
-                            };
-
-                            let copy_current_step_sc = match Shortcut::from_str(&cached_shortcuts.copy_current_step) {
-                                Ok(sc) => sc,
-                                Err(e) => {
-                                    error!("[Shortcut] failed to parse copy_current_step: {:?}", e);
-                                    return;
-                                }
-                            };
+                            let reset_conf_sc = Shortcut::from_str(&cached_shortcuts.reset_conf)
+                                .or_else(|e| {
+                                    error!("[Shortcut] invalid reset_conf: {:?}, using default", e);
+                                    Shortcut::from_str("Alt+Shift+P")
+                                });
+                            let go_next_step_sc = Shortcut::from_str(&cached_shortcuts.go_next_step)
+                                .or_else(|e| {
+                                    error!("[Shortcut] invalid go_next_step: {:?}, using default", e);
+                                    Shortcut::from_str("CommandOrControl+Shift+E")
+                                });
+                            let go_previous_step_sc = Shortcut::from_str(&cached_shortcuts.go_previous_step)
+                                .or_else(|e| {
+                                    error!("[Shortcut] invalid go_previous_step: {:?}, using default", e);
+                                    Shortcut::from_str("CommandOrControl+Shift+A")
+                                });
+                            let copy_current_step_sc = Shortcut::from_str(&cached_shortcuts.copy_current_step)
+                                .or_else(|e| {
+                                    error!("[Shortcut] invalid copy_current_step: {:?}, using default", e);
+                                    Shortcut::from_str("CommandOrControl+Shift+C")
+                                });
 
                             drop(cached_shortcuts);
+
+                            let (reset_conf_sc, go_next_step_sc, go_previous_step_sc, copy_current_step_sc) =
+                                match (reset_conf_sc, go_next_step_sc, go_previous_step_sc, copy_current_step_sc) {
+                                    (Ok(r), Ok(n), Ok(p), Ok(c)) => (r, n, p, c),
+                                    _ => {
+                                        error!("[Shortcut] failed to parse shortcuts, skipping event");
+                                        return;
+                                    }
+                                };
 
                             if shortcut == &reset_conf_sc {
                                 crate::conf::save_conf(&mut Conf::default(), &app_handle)
@@ -225,14 +228,10 @@ pub fn reregister_shortcuts<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error>
     }
 
     let shortcuts = vec![
-        Shortcut::from_str(&conf.shortcuts.reset_conf)
-            .map_err(|e| Error::ParseShortcut(e.to_string()))?,
-        Shortcut::from_str(&conf.shortcuts.go_next_step)
-            .map_err(|e| Error::ParseShortcut(e.to_string()))?,
-        Shortcut::from_str(&conf.shortcuts.go_previous_step)
-            .map_err(|e| Error::ParseShortcut(e.to_string()))?,
-        Shortcut::from_str(&conf.shortcuts.copy_current_step)
-            .map_err(|e| Error::ParseShortcut(e.to_string()))?,
+        parse_shortcut_or_default(&conf.shortcuts.reset_conf, "Alt+Shift+P")?,
+        parse_shortcut_or_default(&conf.shortcuts.go_next_step, "CommandOrControl+Shift+E")?,
+        parse_shortcut_or_default(&conf.shortcuts.go_previous_step, "CommandOrControl+Shift+A")?,
+        parse_shortcut_or_default(&conf.shortcuts.copy_current_step, "CommandOrControl+Shift+C")?,
     ];
 
     app.global_shortcut()
