@@ -249,7 +249,7 @@ msgid "Copie d'autopilote"
 msgstr "Copie d'autopilote"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:123
+#: src/routes/_app/guides/-$id/guide_page.tsx:138
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copie du numéro de l'étape ({0})..."
 
@@ -529,7 +529,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Erreur JSON inconnue"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:122
+#: src/routes/_app/guides/-$id/guide_page.tsx:137
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erreur lors de la copie du numéro de l'étape ({0})."
 
@@ -578,6 +578,18 @@ msgstr "Erreur utilisateur"
 #: src/lib/error_formatter.tsx:604
 msgid "Erreur utilisateur inconnue"
 msgstr "Erreur utilisateur inconnue"
+
+#: src/components/step_progress.tsx:189
+#~ msgid "Étape"
+#~ msgstr "Étape"
+
+#: src/components/step_progress.tsx:104
+#~ msgid "Étape {0}"
+#~ msgstr "Étape {0}"
+
+#: src/components/step_progress/step_progress.tsx:92
+msgid "Étape {current}"
+msgstr "Étape {current}"
 
 #: src/routes/_app/settings.tsx:266
 msgid "Étape précédente"
@@ -871,7 +883,7 @@ msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'éta
 msgstr "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:121
+#: src/routes/_app/guides/-$id/guide_page.tsx:134
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 
