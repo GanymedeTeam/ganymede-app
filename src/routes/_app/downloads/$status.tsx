@@ -179,10 +179,10 @@ function DownloadGuidePage() {
     term !== ''
       ? filteredGuides
       : paginate({
-          page,
-          itemsPerPage,
-          items: filteredGuides,
-        })
+        page,
+        itemsPerPage,
+        items: filteredGuides,
+      })
 
   const hasPagination = term === '' && guides.data.length !== 0 && guides.data.length > itemsPerPage
   const intl = new Intl.NumberFormat(getLang(conf.data.lang).toLowerCase(), {})
@@ -192,7 +192,7 @@ function DownloadGuidePage() {
   return (
     <Page key={`download-${status}`} title={title} backButton={<BackButtonLink to="/downloads" />}>
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
-        <AlertDialogContent className="data-[state=open]:fade-in-100">
+        <AlertDialogContent className="data-[state=open]:fade-in-100 bg-surface-page">
           <AlertDialogHeader>
             <AlertDialogTitle>
               <Trans>Attention</Trans>
@@ -212,7 +212,7 @@ function DownloadGuidePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <PageScrollableContent hasBottomBar={hasPagination} className="p-2" ref={scrollableRef}>
+      <PageScrollableContent hasBottomBar={hasPagination} className="px-2" ref={scrollableRef}>
         <div className="flex grow flex-col text-xs sm:text-sm">
           {guides.data.length === 0 ? (
             <p className="text-center">
@@ -220,40 +220,42 @@ function DownloadGuidePage() {
             </p>
           ) : (
             <div className="flex flex-col gap-2">
-              <ClearInput
-                value={searchTerm}
-                onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-                onValueChange={setSearchTerm}
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                placeholder={t`Rechercher un guide`}
-              />
-              <div className="flex gap-1.5">
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'all' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('all')}
-                  className="flex-1"
-                >
-                  <Trans>Tous</Trans>
-                </Button>
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'dofus' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('dofus')}
-                  className="flex-1"
-                >
-                  Dofus
-                </Button>
-                <Button
-                  size="sm"
-                  variant={gameFilter === 'wakfu' ? 'default' : 'outline'}
-                  onClick={() => setGameFilter('wakfu')}
-                  className="flex-1"
-                >
-                  Wakfu
-                </Button>
+              <div className="sticky top-0 z-50 flex flex-col gap-2 py-2 backdrop-blur-sm -mx-2 px-2">
+                <ClearInput
+                  value={searchTerm}
+                  onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+                  onValueChange={setSearchTerm}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  placeholder={t`Rechercher un guide`}
+                />
+                <div className="flex gap-1.5">
+                  <Button
+                    size="sm"
+                    variant={gameFilter === 'all' ? 'default' : 'outline'}
+                    onClick={() => setGameFilter('all')}
+                    className="flex-1"
+                  >
+                    <Trans>Tous</Trans>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={gameFilter === 'dofus' ? 'default' : 'outline'}
+                    onClick={() => setGameFilter('dofus')}
+                    className="flex-1"
+                  >
+                    Dofus
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={gameFilter === 'wakfu' ? 'default' : 'outline'}
+                    onClick={() => setGameFilter('wakfu')}
+                    className="flex-1"
+                  >
+                    Wakfu
+                  </Button>
+                </div>
               </div>
 
               {paginatedOrFilteredGuides.length === 0 && (

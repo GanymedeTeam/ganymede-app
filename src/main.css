@@ -24,6 +24,25 @@
   animation: pulse-success 0.35s ease-out;
 }
 
+@keyframes pulse-accent {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--color-accent-DEFAULT, #e7c272);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@utility animate-pulse-accent {
+  animation: pulse-accent 0.35s ease-out;
+}
+
 @theme {
   --color-border: hsl(217.2 32.6% 17.5%);
   --color-background: hsl(236 21% 11%);
@@ -38,12 +57,12 @@
   --color-secondary-foreground: hsl(210 40% 98%);
   --color-muted: hsl(217.2 32.6% 17.5%);
   --color-muted-foreground: hsl(215 20.2% 65.1%);
-  --color-accent: hsl(217.2 32.6% 17.5%);
-  --color-accent-foreground: hsl(210 40% 98%);
+  --color-accent: var(--color-accent-DEFAULT, #e7c272);
+  --color-accent-foreground: var(--color-surface-page, #1D2730);
   --color-destructive: hsl(0 62.8% 30.6%);
   --color-destructive-foreground: hsl(210 40% 98%);
   --color-input: hsl(217.2 32.6% 97.5%);
-  --color-ring: hsl(246 15% 42%);
+  --color-ring: var(--color-accent-DEFAULT);
   --color-chart-1: hsl(220 70% 50%);
   --color-chart-2: hsl(160 60% 45%);
   --color-chart-3: hsl(30 80% 55%);
@@ -61,7 +80,157 @@
   --breakpoint-xs: 320px;
   --spacing-titlebar: 30px;
   --spacing-app-without-header: calc(100vh - var(--spacing-titlebar));
+
+  /* Theme: Surfaces */
+  --color-surface-page: #1D2730;
+  --color-surface-card: #21303C;
+  --color-surface-inset: #3E4650;
+
+  /* Theme: Borders */
+  --color-border-muted: #3a4a5a;
+  --color-border-inset: #121F2A;
+
+  /* Theme: Semantic */
+  --color-success: #6ABC65;
+
+  /* Theme: Accent (Gold) */
+  --color-accent-light: #fceaa8;
+  --color-accent-DEFAULT: #e7c272;
+  --color-accent-dark: #D7B363;
 }
+
+/* Theme: Standard (Violet) */
+[data-theme="standard"] {
+  --color-surface-page: #1A1A24;
+  --color-surface-card: #22222E;
+  --color-surface-inset: #2D2D3D;
+  --color-border-muted: #3D3D52;
+  --color-border-inset: #14141C;
+  --color-accent-light: #9A99B8;
+  --color-accent-DEFAULT: #77769D;
+  --color-accent-dark: #5E5D82;
+}
+
+/* Theme: Bonta (Bleu) */
+[data-theme="bonta"] {
+  --color-surface-page: #141C28;
+  --color-surface-card: #1A2433;
+  --color-surface-inset: #243044;
+  --color-border-muted: #3A4D6A;
+  --color-border-inset: #0E141C;
+  --color-accent-light: #8AADD4;
+  --color-accent-DEFAULT: #607FB3;
+  --color-accent-dark: #4A6591;
+}
+
+/* Theme: Brakmar (Rouge) */
+[data-theme="brakmar"] {
+  --color-surface-page: #1E1418;
+  --color-surface-card: #281A1F;
+  --color-surface-inset: #36242B;
+  --color-border-muted: #4D343D;
+  --color-border-inset: #160E12;
+  --color-accent-light: #C46A78;
+  --color-accent-DEFAULT: #A23D4E;
+  --color-accent-dark: #82313F;
+}
+
+/* Theme: Tribute (Gris) */
+[data-theme="tribute"] {
+  --color-surface-page: #1A1A1A;
+  --color-surface-card: #222222;
+  --color-surface-inset: #2E2E2E;
+  --color-border-muted: #444444;
+  --color-border-inset: #141414;
+  --color-accent-light: #9E9E9C;
+  --color-accent-DEFAULT: #7C7D7B;
+  --color-accent-dark: #606160;
+}
+
+/* Theme: Gold and Steel (Bronze) */
+[data-theme="gold-steel"] {
+  --color-surface-page: #1C1814;
+  --color-surface-card: #251F1A;
+  --color-surface-inset: #322922;
+  --color-border-muted: #4A3E34;
+  --color-border-inset: #14120E;
+  --color-accent-light: #C9A47D;
+  --color-accent-DEFAULT: #AA7C54;
+  --color-accent-dark: #886344;
+}
+
+/* Theme: Belladone (Mauve) */
+[data-theme="belladone"] {
+  --color-surface-page: #1A181C;
+  --color-surface-card: #231F26;
+  --color-surface-inset: #2F2A33;
+  --color-border-muted: #453E4A;
+  --color-border-inset: #141216;
+  --color-accent-light: #AD9DBB;
+  --color-accent-DEFAULT: #8D7B9C;
+  --color-accent-dark: #71627D;
+}
+
+/* Theme: Unicorn (Rose) */
+[data-theme="unicorn"] {
+  --color-surface-page: #1C161C;
+  --color-surface-card: #261D26;
+  --color-surface-inset: #342834;
+  --color-border-muted: #4C3A4C;
+  --color-border-inset: #140F14;
+  --color-accent-light: #B68AB6;
+  --color-accent-DEFAULT: #976097;
+  --color-accent-dark: #794D79;
+}
+
+/* Theme: Emerald Mine (Cyan) */
+[data-theme="emerald"] {
+  --color-surface-page: #14191A;
+  --color-surface-card: #1A2223;
+  --color-surface-inset: #242E30;
+  --color-border-muted: #384648;
+  --color-border-inset: #0E1314;
+  --color-accent-light: #8CB4B7;
+  --color-accent-DEFAULT: #5F8D91;
+  --color-accent-dark: #4C7174;
+}
+
+/* Theme: Sufokia (Turquoise) */
+[data-theme="sufokia"] {
+  --color-surface-page: #121A1A;
+  --color-surface-card: #182323;
+  --color-surface-inset: #222F30;
+  --color-border-muted: #364748;
+  --color-border-inset: #0C1414;
+  --color-accent-light: #7AADAE;
+  --color-accent-DEFAULT: #498384;
+  --color-accent-dark: #3A696A;
+}
+
+/* Theme: Pandala (Vert) */
+[data-theme="pandala"] {
+  --color-surface-page: #171A14;
+  --color-surface-card: #1E221A;
+  --color-surface-inset: #2A2F24;
+  --color-border-muted: #404838;
+  --color-border-inset: #10120E;
+  --color-accent-light: #9DB679;
+  --color-accent-DEFAULT: #76944F;
+  --color-accent-dark: #5E7640;
+}
+
+/* Theme: Wabbit (Orange) */
+[data-theme="wabbit"] {
+  --color-surface-page: #1E1614;
+  --color-surface-card: #281D1A;
+  --color-surface-inset: #362824;
+  --color-border-muted: #4D3A34;
+  --color-border-inset: #160F0E;
+  --color-accent-light: #D8907A;
+  --color-accent-DEFAULT: #C46647;
+  --color-accent-dark: #9D5239;
+}
+
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -133,7 +302,7 @@
   body {
     font-feature-settings: "rlig" 1, "calt" 1;
     overflow: hidden;
-    background: hsl(var(--background) / clamp(0, var(--opacity), 0.98));
+    background: color-mix(in srgb, var(--color-surface-page) calc(var(--opacity) * 100%), transparent);
     color: var(--color-foreground);
   }
 

@@ -64,7 +64,7 @@ export function SelectionToolbar({ selectedItems, onCancel, onDeleteComplete }: 
   }
 
   return (
-    <div className="sticky top-0 z-10 flex gap-2 bg-background py-0">
+    <div className="sticky top-0 z-10 flex gap-2 py-2 backdrop-blur-sm -mx-2 px-2">
       <DeleteGuidesDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
@@ -75,7 +75,7 @@ export function SelectionToolbar({ selectedItems, onCancel, onDeleteComplete }: 
           <Trans>Supprimer</Trans>
         </Button>
       </DeleteGuidesDialog>
-      <Button className="w-full" onClick={onCancel}>
+      <Button className="w-full" onClick={onCancel} variant="outline">
         <Trans>Annuler</Trans>
       </Button>
     </div>

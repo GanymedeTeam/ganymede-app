@@ -11,7 +11,7 @@ function ClearInput({ className, onValueChange, value, type, ref, ...props }: Cl
   return (
     <div className="relative z-0 flex w-full">
       <Input
-        className={cn('peer bg-primary/80', className)}
+        className={cn('peer bg-surface-card border-border-muted', className)}
         type={type}
         {...props}
         value={value}

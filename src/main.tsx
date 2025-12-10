@@ -70,6 +70,12 @@ queryClient
   .then(async (conf) => {
     window.document.documentElement.style.setProperty('--opacity', `${conf.opacity.toFixed(2)}`)
 
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('ganymede-theme')
+    if (savedTheme && savedTheme !== 'default') {
+      document.documentElement.setAttribute('data-theme', savedTheme)
+    }
+
     await dynamicActiveLocale(getLang(conf.lang).toLowerCase())
   })
   .catch((err) => {

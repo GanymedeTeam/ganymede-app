@@ -9,7 +9,7 @@ function TabsList({ className, ref, ...props }: React.ComponentPropsWithRef<type
   return (
     <TabsPrimitive.List
       ref={ref}
-      className={cn('flex h-7.5 w-full bg-primary-800 text-primary-foreground-800 sm:h-9 sm:px-1', className)}
+      className={cn('flex h-7.5 w-full bg-surface-card text-primary-foreground-800 sm:h-9 sm:px-1', className)}
       {...props}
     />
   )

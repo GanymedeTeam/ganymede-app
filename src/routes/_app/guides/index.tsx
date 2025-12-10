@@ -1,7 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { DownloadCloudIcon, MenuIcon } from 'lucide-react'
+import { MenuIcon } from 'lucide-react'
+import addGuideImage from '@/assets/add-guide.png'
 import { useState } from 'react'
 import { z } from 'zod'
 import { GenericLoader } from '@/components/generic_loader.tsx'
@@ -123,33 +124,33 @@ function GuidesPage() {
   const notDoneGuides = conf.data.showDoneGuides
     ? guidesWithCurrentProgression
     : // Filter out guides that are done (all steps are completed in the profile)
-      guidesWithCurrentProgression.filter((guide) => {
-        if (guide.type === 'folder') return true
+    guidesWithCurrentProgression.filter((guide) => {
+      if (guide.type === 'folder') return true
 
-        return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
-      })
+      return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
+    })
   const filteredGuides =
     searchTerm !== ''
       ? rankList({
-          list: allGuidesInPath.data.map((g) => {
-            const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
+        list: allGuidesInPath.data.map((g) => {
+          const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
 
-            return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
-              currentStep: number | null
-              type: 'guide'
-              folder: string | null
-            }
-          }),
-          keys: [(guide) => guide.name],
-          term: searchTerm,
-          sortKeys: [(guide) => guide.order],
-        })
+          return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
+            currentStep: number | null
+            type: 'guide'
+            folder: string | null
+          }
+        }),
+        keys: [(guide) => guide.name],
+        term: searchTerm,
+        sortKeys: [(guide) => guide.order],
+      })
       : rankList({
-          list: notDoneGuides,
-          keys: [(guide) => guide.name],
-          term: searchTerm,
-          sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
-        })
+        list: notDoneGuides,
+        keys: [(guide) => guide.name],
+        term: searchTerm,
+        sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
+      })
 
   const onEnterSelectMode = () => {
     setSelect(true)
@@ -202,7 +203,7 @@ function GuidesPage() {
     <Page
       key="guide-page"
       className="slot-[page-title-text]:whitespace-nowrap"
-      title={comesFromGuide ? t`Choisissez un guide` : t`Guides ${createPagePath(path)}`}
+      title={comesFromGuide ? t`Choisissez un guide` : t`Mes guides ${createPagePath(path)}`}
       backButton={
         path !== '' ? (
           <BackButtonLink
@@ -221,7 +222,7 @@ function GuidesPage() {
       }
       actions={<ActionsToolbar path={path} onEnterSelectMode={onEnterSelectMode} isSelectMode={isSelect} />}
     >
-      <PageScrollableContent className="p-2">
+      <PageScrollableContent className="px-2">
         <div className="flex flex-col gap-2">
           {isSelect ? (
             <SelectionToolbar
@@ -230,14 +231,17 @@ function GuidesPage() {
               onDeleteComplete={onDeleteComplete}
             />
           ) : (
-            <ClearInput
-              value={searchTerm}
-              onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-              onValueChange={setSearchTerm}
-              autoComplete="off"
-              autoCorrect="off"
-              placeholder={t`Rechercher un guide`}
-            />
+            <div className="sticky top-0 z-50 py-2 backdrop-blur-sm -mx-2 px-2">
+              <ClearInput
+                value={searchTerm}
+                onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+                onValueChange={setSearchTerm}
+                autoComplete="off"
+                autoCorrect="off"
+                placeholder={t`Rechercher un guide`}
+                className="bg-surface-card border border-border-muted rounded-xl h-10 px-4 text-sm placeholder:text-muted-foreground/70"
+              />
+            </div>
           )}
 
           {filteredGuides.map((guide) => {
@@ -277,10 +281,45 @@ function GuidesPage() {
               to="/downloads/$status"
               params={{ status: 'gp' }}
               search={{ page: 1 }}
-              className="flex flex-col items-center justify-center gap-2 rounded-xl border border-muted-foreground border-dashed px-2 py-3 text-muted-foreground"
+              className="flex gap-3 p-3 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]"
             >
-              <DownloadCloudIcon />
-              <Trans>Télécharger un guide</Trans>
+              {/* Image */}
+              <div className="relative flex shrink-0 items-center justify-center">
+                <img src={addGuideImage} alt="Parcourir le catalogue" className="size-14 rounded-lg object-cover" />
+              </div>
+
+              {/* Content */}
+              <div className="flex grow flex-col gap-1 justify-center min-w-0">
+                <h3 className="font-semibold text-sm leading-tight">
+                  <Trans>Parcourir le catalogue</Trans>
+                </h3>
+                <p className="text-xs text-muted-foreground leading-tight">
+                  <Trans>Découvrez et ajoutez de nouveaux guides à votre liste.</Trans>
+                </p>
+              </div>
+
+              <div className="flex items-center pl-1">
+                <svg width="0" height="0" className="absolute">
+                  <defs>
+                    <linearGradient id="goldGradientCatalog" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#fceaa8ff" />
+                      <stop offset="50%" stopColor="#e7c272ff" />
+                      <stop offset="100%" stopColor="#D7B363" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-7"
+                  fill="none"
+                  stroke="url(#goldGradientCatalog)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </div>
             </Link>
           )}
         </div>

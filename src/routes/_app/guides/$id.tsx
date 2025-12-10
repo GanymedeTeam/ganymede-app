@@ -1,12 +1,14 @@
+import { Trans } from "@lingui/react/macro";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { debug } from "@tauri-apps/plugin-log";
-import { PlusIcon } from "lucide-react";
+import { LayoutListIcon, PlusIcon } from "lucide-react";
 import { z } from "zod";
 import { PageContent } from "@/components/page_content.tsx";
 import { PageTitle, PageTitleText } from "@/components/page_title.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs.tsx";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip.tsx";
 import { useProfile } from "@/hooks/use_profile.ts";
 import { useTabs } from "@/hooks/use_tabs.ts";
 import { registerGuideOpen } from "@/ipc/guides.ts";
@@ -119,7 +121,7 @@ function GuideIdPage() {
           });
         }}
       >
-        <div className="flex w-full bg-primary-800 text-primary-foreground-800">
+        <div className="flex w-full bg-surface-card text-primary-foreground-800">
           <TabsList
             className="group h-10 flex-1 overflow-x-auto pl-0 scrollbar-hide"
             data-multiple={tabs.length > 1 ? "true" : "false"}
@@ -132,23 +134,60 @@ function GuideIdPage() {
               />
             ))}
           </TabsList>
-          <Button
-            size="icon"
-            className="ml-1 mr-1 min-h-6 min-w-6 shrink-0 self-center"
-            variant="secondary"
-            asChild
-          >
-            <Link
-              to="/guides"
-              search={{
-                path: "",
-                from: params.id,
-              }}
-              draggable={false}
-            >
-              <PlusIcon />
-            </Link>
-          </Button>
+
+          <div className="flex items-center gap-1 px-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon"
+                    className="ml-1 min-h-6 min-w-6 shrink-0 self-center"
+                    variant="secondary"
+                    asChild
+                  >
+                    <Link
+                      to="/guides"
+                      search={{
+                        path: "",
+                      }}
+                      draggable={false}
+                    >
+                      <LayoutListIcon />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <Trans>Liste des guides</Trans>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon"
+                    className="mr-1 min-h-6 min-w-6 shrink-0 self-center"
+                    variant="secondary"
+                    asChild
+                  >
+                    <Link
+                      to="/guides"
+                      search={{
+                        path: "",
+                        from: params.id,
+                      }}
+                      draggable={false}
+                    >
+                      <PlusIcon />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <Trans>Ouvrir un guide</Trans>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
         {tabs.map((guide) => (
           <TabsContent

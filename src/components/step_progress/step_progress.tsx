@@ -94,11 +94,11 @@ export function StepProgress({
           description={t`Précédent`}
         >
           <Button
-            size="icon-sm"
+            size="icon"
             variant="ghost"
             onClick={onPrevious}
             disabled={currentIndex === 0}
-            className="size-5 shrink-0 opacity-60 hover:opacity-100"
+            className="size-6 shrink-0 opacity-60 hover:opacity-100"
           >
             <ChevronLeftIcon className="size-3!" />
           </Button>
@@ -109,7 +109,7 @@ export function StepProgress({
             <TooltipTrigger asChild>
               <div
                 className={cn(
-                  "relative flex h-5 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-secondary/50 touch-none",
+                  "relative flex h-5 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-[6px] bg-secondary/80 border border-[#121F2A] touch-none",
                   isPulsing && "animate-pulse-success"
                 )}
                 onPointerDown={handlePointerDown}
@@ -118,7 +118,7 @@ export function StepProgress({
               >
                 <div
                   className={cn(
-                    "absolute inset-y-0 left-0 bg-emerald-500/80",
+                    "absolute inset-y-0 left-0 bg-[#6ABC65]/80",
                     // Disable transition during scrubbing for instant feedback
                     scrubbingIndex === null && "transition-all duration-300"
                   )}
@@ -149,11 +149,8 @@ export function StepProgress({
           }
           disabled={currentIndex === maxIndex && !onExit}
           className={cn(
-            "fixed right-5 bottom-3 z-50 size-12 rounded-full bg-emerald-600 shadow-lg hover:bg-emerald-500",
-            // Change background color when it's the exit button to differentiate?
-            // Keeping emerald for now as requested just "check icon change"
-            currentIndex === maxIndex && onExit && "bg-emerald-600 hover:bg-emerald-500",
-            isPulsing && "animate-pulse-success"
+            "fixed right-5 bottom-3 z-50 size-12 rounded-full bg-gradient-to-br from-accent-light via-accent to-accent-dark shadow-lg opacity-90 hover:opacity-100 text-accent-foreground",
+            isPulsing && "animate-pulse-accent"
           )}
         >
           {currentIndex === maxIndex && onExit ? (

@@ -14,7 +14,7 @@ function Card({
     <Comp
       ref={ref}
       data-slot="card"
-      className={cn('rounded-xl border bg-card text-card-foreground shadow-sm', className)}
+      className={cn('rounded-xl border border-border-muted bg-surface-card text-card-foreground shadow-sm', className)}
       {...props}
     />
   )

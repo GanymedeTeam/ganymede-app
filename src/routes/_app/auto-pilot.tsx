@@ -26,8 +26,8 @@ export const Route = createFileRoute('/_app/auto-pilot')({
           <GenericLoader />
 
           <BottomBar>
-            <Input placeholder={t`Nom`} name="name" className="bg-secondary placeholder:italic" disabled />
-            <Input placeholder="2,-30" name="position" className="bg-secondary placeholder:italic" disabled />
+            <Input placeholder={t`Nom`} name="name" className="placeholder:italic" disabled />
+            <Input placeholder="2,-30" name="position" className="placeholder:italic" disabled />
             <Button type="button" size="icon" className="min-w-6 sm:min-w-9" variant="secondary" disabled>
               <PlusIcon />
             </Button>
@@ -101,12 +101,12 @@ function AutoPilotPage() {
                 ...conf.data,
                 autoPilots: pilot
                   ? conf.data.autoPilots.map((autoPilot) => {
-                      if (autoPilot.name === name) {
-                        return { name, position }
-                      }
+                    if (autoPilot.name === name) {
+                      return { name, position }
+                    }
 
-                      return autoPilot
-                    })
+                    return autoPilot
+                  })
                   : [...conf.data.autoPilots, { name, position }],
               })
 
@@ -116,7 +116,7 @@ function AutoPilotPage() {
             <Input
               placeholder={t`Nom`}
               name="name"
-              className="bg-secondary placeholder:italic"
+              className="placeholder:italic"
               required
               minLength={2}
               maxLength={20}
@@ -124,7 +124,7 @@ function AutoPilotPage() {
             <Input
               placeholder="2,-30"
               name="position"
-              className="bg-secondary placeholder:italic"
+              className="placeholder:italic"
               pattern="\[?-?\d+,-?\d+\]?"
               required
               maxLength={11}

@@ -10,6 +10,7 @@ import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { SelectLangLabel, SelectLangSelect } from '@/components/select_lang.tsx'
 import { ShortcutInput } from '@/components/shortcut_input.tsx'
+import { ThemeSelector } from '@/components/theme_selector.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx'
 import { Input } from '@/components/ui/input.tsx'
@@ -226,6 +227,9 @@ function Settings() {
                   })
                 }}
               />
+            </SettingCardSection>
+            <SettingCardSection id="section-theme">
+              <ThemeSelector />
             </SettingCardSection>
           </SettingCard>
           <SettingCard

@@ -1,8 +1,9 @@
 import { useNavigate } from "@tanstack/react-router";
 import { debug } from "@tauri-apps/plugin-log";
-import { BookIcon, XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 import { useEffect } from "react";
 import { DownloadImage } from "@/components/download_image.tsx";
+import { GameIcon } from "@/components/game_icon.tsx";
 import { TabsTrigger } from "@/components/ui/tabs.tsx";
 import {
   Tooltip,
@@ -49,8 +50,8 @@ export function GuideTabsTrigger({
       className="size-8 shrink-0 rounded object-cover"
     />
   ) : (
-    <div className="size-8 shrink-0 rounded text-primary-foreground flex items-center justify-center">
-      <BookIcon className="size-4" />
+    <div className="shrink-0 rounded text-primary-foreground flex items-center justify-center">
+      <GameIcon gameType={guide.game_type ?? 'dofus'} className="size-10" />
     </div>
   );
 
@@ -68,8 +69,8 @@ export function GuideTabsTrigger({
               className={cn(
                 "relative flex items-center gap-1.5 px-3 py-1 font-medium text-xs xs:text-sm transition-all cursor-pointer whitespace-nowrap sm:px-3 md:px-4",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-background text-foreground/75 hover:bg-background/80"
+                  ? "bg-surface-page text-foreground shadow-sm"
+                  : "bg-surface-card text-foreground/75 hover:bg-surface-page/50"
               )}
             >
               <TabsTrigger
@@ -81,7 +82,7 @@ export function GuideTabsTrigger({
               {/* Progress bar */}
               <div className="absolute bottom-0 left-0 h-0.5 w-full bg-black/20">
                 <div
-                  className="h-full bg-emerald-500 transition-all duration-300"
+                  className="h-full bg-success transition-all duration-300"
                   style={{ width: `${Math.min(progressPercent, 100)}%` }}
                 />
               </div>

@@ -142,17 +142,21 @@ export function GuidePage({
     navigate({ to: "/guides", search: { path: "" } });
   };
 
+  // Use theme-aware background color with opacity via CSS color-mix
+  const bgColor = `color-mix(in srgb, var(--color-surface-page) ${conf.data.opacity * 100}%, transparent)`;
+
   return (
     <div
       ref={scrollableRef}
       className="scroller mt-[40px] flex h-[calc(100vh-var(--spacing-titlebar)-40px-40px)] flex-col overflow-x-hidden overflow-y-scroll pb-2"
+      style={{ backgroundColor: bgColor }}
     >
-      <header className="fixed inset-x-0 top-[70px] z-10 bg-primary-800 sm:top-[66px]">
+      <header className="fixed inset-x-0 top-[70px] z-10 sm:top-[66px]" style={{ backgroundColor: bgColor }}>
         <div className="flex h-10 items-center p-1">
           {step && (
             <>
               {/* Left Side - Fixed width to maintain center balance */}
-              <div className="flex w-18 shrink-0 items-center justify-start pl-2">
+              <div className="flex w-16 shrink-0 items-center justify-start pl-2">
                 {step.map !== null && step.map.toLowerCase() !== "nomap" && (
                   <Position pos_x={step.pos_x} pos_y={step.pos_y} />
                 )}
