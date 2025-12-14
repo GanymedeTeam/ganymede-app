@@ -83,10 +83,10 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
 
   const filteredQuests = summary.isSuccess
     ? rankList({
-      list: summary.data.quests,
-      keys: [(quest) => quest.name],
-      term: searchTerm,
-    })
+        list: summary.data.quests,
+        keys: [(quest) => quest.name],
+        term: searchTerm,
+      })
     : []
 
   if (!guide) {
@@ -193,7 +193,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
                                     onChangeStep(step - 1)
                                     setOpen(false)
                                   }}
-                                  className="bg-[#4a4535] hover:bg-[#5a5545] text-foreground data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
+                                  className="bg-[#4a4535] text-foreground hover:bg-[#5a5545] data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
                                   data-status={statusText}
                                 >
                                   {step}

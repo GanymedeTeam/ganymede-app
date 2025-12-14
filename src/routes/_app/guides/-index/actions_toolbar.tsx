@@ -4,13 +4,13 @@ import {
   FolderOpenIcon,
   FolderSyncIcon,
   ImportIcon,
+  Loader2Icon,
   MenuIcon,
   ServerCrashIcon,
   SquareMousePointerIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { Loader2Icon } from 'lucide-react'
 import { Button } from '@/components/ui/button.tsx'
 import {
   DropdownMenu,
@@ -145,7 +145,11 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
                 )}
                 disabled={updateAllAtOnce.isPending || guides.isFetching}
               >
-                {updateAllAtOnce.isPending ? <Loader2Icon className="size-4 animate-spin" /> : <ImportIcon className="size-4" />}
+                {updateAllAtOnce.isPending ? (
+                  <Loader2Icon className="size-4 animate-spin" />
+                ) : (
+                  <ImportIcon className="size-4" />
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent align="center" side="bottom">
@@ -180,7 +184,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div >
+      </div>
     </>
   )
 }

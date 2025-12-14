@@ -2,9 +2,9 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { MenuIcon } from 'lucide-react'
-import addGuideImage from '@/assets/add-guide.png'
 import { useState } from 'react'
 import { z } from 'zod'
+import addGuideImage from '@/assets/add-guide.png'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Button } from '@/components/ui/button.tsx'
@@ -124,33 +124,33 @@ function GuidesPage() {
   const notDoneGuides = conf.data.showDoneGuides
     ? guidesWithCurrentProgression
     : // Filter out guides that are done (all steps are completed in the profile)
-    guidesWithCurrentProgression.filter((guide) => {
-      if (guide.type === 'folder') return true
+      guidesWithCurrentProgression.filter((guide) => {
+        if (guide.type === 'folder') return true
 
-      return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
-    })
+        return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
+      })
   const filteredGuides =
     searchTerm !== ''
       ? rankList({
-        list: allGuidesInPath.data.map((g) => {
-          const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
+          list: allGuidesInPath.data.map((g) => {
+            const currentStep = profile.progresses.find((progress) => progress.id === g.id)?.currentStep ?? null
 
-          return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
-            currentStep: number | null
-            type: 'guide'
-            folder: string | null
-          }
-        }),
-        keys: [(guide) => guide.name],
-        term: searchTerm,
-        sortKeys: [(guide) => guide.order],
-      })
+            return { ...g, currentStep, type: 'guide' } as Omit<Extract<GuidesOrFolder, { type: 'guide' }>, 'type'> & {
+              currentStep: number | null
+              type: 'guide'
+              folder: string | null
+            }
+          }),
+          keys: [(guide) => guide.name],
+          term: searchTerm,
+          sortKeys: [(guide) => guide.order],
+        })
       : rankList({
-        list: notDoneGuides,
-        keys: [(guide) => guide.name],
-        term: searchTerm,
-        sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
-      })
+          list: notDoneGuides,
+          keys: [(guide) => guide.name],
+          term: searchTerm,
+          sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
+        })
 
   const onEnterSelectMode = () => {
     setSelect(true)
@@ -231,7 +231,7 @@ function GuidesPage() {
               onDeleteComplete={onDeleteComplete}
             />
           ) : (
-            <div className="sticky top-0 z-50 py-2 backdrop-blur-sm -mx-2 px-2">
+            <div className="-mx-2 sticky top-0 z-50 px-2 py-2 backdrop-blur-sm">
               <ClearInput
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
@@ -239,7 +239,7 @@ function GuidesPage() {
                 autoComplete="off"
                 autoCorrect="off"
                 placeholder={t`Rechercher un guide`}
-                className="bg-surface-card border border-border-muted rounded-xl h-10 px-4 text-sm placeholder:text-muted-foreground/70"
+                className="h-10 rounded-xl border border-border-muted bg-surface-card px-4 text-sm placeholder:text-muted-foreground/70"
               />
             </div>
           )}
@@ -281,7 +281,7 @@ function GuidesPage() {
               to="/downloads/$status"
               params={{ status: 'gp' }}
               search={{ page: 1 }}
-              className="flex gap-3 p-3 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]"
+              className="flex gap-3 rounded-xl border border-border-muted bg-surface-card p-3 shadow-[0_5px_14px_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70"
             >
               {/* Image */}
               <div className="relative flex shrink-0 items-center justify-center">
@@ -289,11 +289,11 @@ function GuidesPage() {
               </div>
 
               {/* Content */}
-              <div className="flex grow flex-col gap-1 justify-center min-w-0">
+              <div className="flex min-w-0 grow flex-col justify-center gap-1">
                 <h3 className="font-semibold text-sm leading-tight">
                   <Trans>Parcourir le catalogue</Trans>
                 </h3>
-                <p className="hidden sm:block text-xs text-muted-foreground leading-tight">
+                <p className="hidden text-muted-foreground text-xs leading-tight sm:block">
                   <Trans>Découvrez et ajoutez de nouveaux guides à votre liste.</Trans>
                 </p>
               </div>

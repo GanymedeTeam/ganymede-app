@@ -40,7 +40,8 @@ interface ServerGuideItemProps {
 type GuideItemProps = LocalGuideItemProps | ServerGuideItemProps
 
 // Shared styles
-const CARD_STYLES = 'flex gap-2 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]'
+const CARD_STYLES =
+  'flex gap-2 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]'
 
 // Single SVG gradient definition - rendered once, reused via url(#goldGradient)
 function GoldGradientDefs() {
@@ -108,7 +109,11 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
     <Card
       key={guide.id}
       aria-selected={isSelected}
-      className={cn(CARD_STYLES, 'aria-selected:bg-surface-inset aria-selected:border-accent', isSelectMode && 'cursor-pointer **:cursor-pointer')}
+      className={cn(
+        CARD_STYLES,
+        'aria-selected:border-accent aria-selected:bg-surface-inset',
+        isSelectMode && 'cursor-pointer **:cursor-pointer',
+      )}
       onClick={(evt) => {
         if (isSelectMode) {
           evt.preventDefault()
@@ -121,35 +126,38 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
       <li>
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
-        <div className="flex grow flex-col gap-1.5 justify-center min-w-0">
+        <div className="flex min-w-0 grow flex-col justify-center gap-1.5">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 className="font-semibold text-sm leading-tight line-clamp-2 w-full cursor-default">{guide.name}</h3>
+                <h3 className="line-clamp-2 w-full cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-[250px]">
                 {guide.name}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="flex items-center gap-2 w-full">
+          <div className="flex w-full items-center gap-2">
             {/* Mobile: percentage badge with progress */}
-            <div className="xs:hidden relative h-4 min-w-[48px] w-full flex items-center justify-center overflow-hidden rounded-md bg-surface-inset border border-border-inset">
+            <div className="relative flex xs:hidden h-4 w-full min-w-[48px] items-center justify-center overflow-hidden rounded-md border border-border-inset bg-surface-inset">
               <div
                 className={cn('absolute inset-y-0 left-0', isFinished ? 'bg-success' : 'bg-success/80')}
                 style={{ width: `${percentage}%` }}
               />
-              <span className="relative z-10 font-medium text-white text-xs px-1.5 drop-shadow-md select-none">
+              <span className="relative z-10 select-none px-1.5 font-medium text-white text-xs drop-shadow-md">
                 {percentage}%
               </span>
             </div>
             {/* Larger screens: full progress bar */}
-            <div className="hidden xs:flex relative h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] bg-surface-inset border border-border-inset">
+            <div className="relative xs:flex hidden h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] border border-border-inset bg-surface-inset">
               <div
-                className={cn('absolute inset-y-0 left-0 transition-all duration-300', isFinished ? 'bg-success' : 'bg-success/80')}
+                className={cn(
+                  'absolute inset-y-0 left-0 transition-all duration-300',
+                  isFinished ? 'bg-success' : 'bg-success/80',
+                )}
                 style={{ width: `${percentage}%` }}
               />
-              <span className="relative z-10 font-medium text-white text-xs drop-shadow-md select-none">
+              <span className="relative z-10 select-none font-medium text-white text-xs drop-shadow-md">
                 {isFinished ? '100% - Terminé' : `${percentage}% - (${step}/${totalSteps})`}
               </span>
             </div>
@@ -182,11 +190,22 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
                   </svg>
                 </TooltipTrigger>
                 <TooltipContent side="bottom">
-                  {isFinished ? <Trans>Terminé</Trans> : percentage > 0 ? <Trans>En cours</Trans> : <Trans>Non commencé</Trans>}
+                  {isFinished ? (
+                    <Trans>Terminé</Trans>
+                  ) : percentage > 0 ? (
+                    <Trans>En cours</Trans>
+                  ) : (
+                    <Trans>Non commencé</Trans>
+                  )}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <Link to="/guides/$id" params={{ id: guide.id }} search={{ step: currentStepIndex }} className="flex items-center">
+            <Link
+              to="/guides/$id"
+              params={{ id: guide.id }}
+              search={{ step: currentStepIndex }}
+              className="flex items-center"
+            >
               <GoldChevron />
             </Link>
           </div>
@@ -199,12 +218,12 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
     <Card key={guide.id} className={cn(CARD_STYLES, 'relative')}>
-      <div className="xs:hidden grid grid-cols-[auto_1fr] gap-2 w-full">
+      <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
-        <div className="flex flex-col gap-1 min-w-0 pr-16">
-          <h3 className="font-semibold text-sm leading-tight line-clamp-2">{guide.name}</h3>
-          <div className="flex items-center gap-2 text-xxs text-muted-foreground flex-wrap">
+        <div className="flex min-w-0 flex-col gap-1 pr-16">
+          <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
+          <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
             <span className="flex items-center gap-1">
               {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
               <FileDownIcon className="size-3" />
@@ -241,21 +260,21 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
         </div>
       </div>
 
-      <div className="hidden xs:flex xs:items-center xs:gap-3 w-full">
+      <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
-        <div className="flex grow flex-col gap-1 justify-center min-w-0">
+        <div className="flex min-w-0 grow flex-col justify-center gap-1">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 className="font-semibold text-sm leading-tight line-clamp-2 cursor-default">{guide.name}</h3>
+                <h3 className="line-clamp-2 cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-[250px]">
                 {guide.name}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="flex items-center gap-3 text-xxs text-muted-foreground">
+          <div className="flex items-center gap-3 text-muted-foreground text-xxs">
             <span className="flex items-center gap-1">
               {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
               <FileDownIcon className="size-3" />
@@ -294,4 +313,3 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
     </Card>
   )
 }
-

@@ -101,12 +101,12 @@ function AutoPilotPage() {
                 ...conf.data,
                 autoPilots: pilot
                   ? conf.data.autoPilots.map((autoPilot) => {
-                    if (autoPilot.name === name) {
-                      return { name, position }
-                    }
+                      if (autoPilot.name === name) {
+                        return { name, position }
+                      }
 
-                    return autoPilot
-                  })
+                      return autoPilot
+                    })
                   : [...conf.data.autoPilots, { name, position }],
               })
 

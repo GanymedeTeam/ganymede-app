@@ -58,7 +58,7 @@
   --color-muted: hsl(217.2 32.6% 17.5%);
   --color-muted-foreground: hsl(215 20.2% 65.1%);
   --color-accent: var(--color-accent-DEFAULT, #e7c272);
-  --color-accent-foreground: var(--color-surface-page, #1D2730);
+  --color-accent-foreground: var(--color-surface-page, #1d2730);
   --color-destructive: hsl(0 62.8% 30.6%);
   --color-destructive-foreground: hsl(210 40% 98%);
   --color-input: hsl(217.2 32.6% 97.5%);
@@ -82,155 +82,154 @@
   --spacing-app-without-header: calc(100vh - var(--spacing-titlebar));
 
   /* Theme: Surfaces */
-  --color-surface-page: #1D2730;
-  --color-surface-card: #21303C;
-  --color-surface-inset: #3E4650;
+  --color-surface-page: #1d2730;
+  --color-surface-card: #21303c;
+  --color-surface-inset: #3e4650;
 
   /* Theme: Borders */
   --color-border-muted: #3a4a5a;
-  --color-border-inset: #121F2A;
+  --color-border-inset: #121f2a;
 
   /* Theme: Semantic */
-  --color-success: #6ABC65;
+  --color-success: #6abc65;
 
   /* Theme: Accent (Gold) */
   --color-accent-light: #fceaa8;
   --color-accent-DEFAULT: #e7c272;
-  --color-accent-dark: #D7B363;
+  --color-accent-dark: #d7b363;
 }
 
 /* Theme: Standard (Violet) */
 [data-theme="standard"] {
-  --color-surface-page: #1A1A24;
-  --color-surface-card: #22222E;
-  --color-surface-inset: #2D2D3D;
-  --color-border-muted: #3D3D52;
-  --color-border-inset: #14141C;
-  --color-accent-light: #9A99B8;
-  --color-accent-DEFAULT: #77769D;
-  --color-accent-dark: #5E5D82;
+  --color-surface-page: #1a1a24;
+  --color-surface-card: #22222e;
+  --color-surface-inset: #2d2d3d;
+  --color-border-muted: #3d3d52;
+  --color-border-inset: #14141c;
+  --color-accent-light: #9a99b8;
+  --color-accent-DEFAULT: #77769d;
+  --color-accent-dark: #5e5d82;
 }
 
 /* Theme: Bonta (Bleu) */
 [data-theme="bonta"] {
-  --color-surface-page: #141C28;
-  --color-surface-card: #1A2433;
+  --color-surface-page: #141c28;
+  --color-surface-card: #1a2433;
   --color-surface-inset: #243044;
-  --color-border-muted: #3A4D6A;
-  --color-border-inset: #0E141C;
-  --color-accent-light: #8AADD4;
-  --color-accent-DEFAULT: #607FB3;
-  --color-accent-dark: #4A6591;
+  --color-border-muted: #3a4d6a;
+  --color-border-inset: #0e141c;
+  --color-accent-light: #8aadd4;
+  --color-accent-DEFAULT: #607fb3;
+  --color-accent-dark: #4a6591;
 }
 
 /* Theme: Brakmar (Rouge) */
 [data-theme="brakmar"] {
-  --color-surface-page: #1E1418;
-  --color-surface-card: #281A1F;
-  --color-surface-inset: #36242B;
-  --color-border-muted: #4D343D;
-  --color-border-inset: #160E12;
-  --color-accent-light: #C46A78;
-  --color-accent-DEFAULT: #A23D4E;
-  --color-accent-dark: #82313F;
+  --color-surface-page: #1e1418;
+  --color-surface-card: #281a1f;
+  --color-surface-inset: #36242b;
+  --color-border-muted: #4d343d;
+  --color-border-inset: #160e12;
+  --color-accent-light: #c46a78;
+  --color-accent-DEFAULT: #a23d4e;
+  --color-accent-dark: #82313f;
 }
 
 /* Theme: Tribute (Gris) */
 [data-theme="tribute"] {
-  --color-surface-page: #1A1A1A;
+  --color-surface-page: #1a1a1a;
   --color-surface-card: #222222;
-  --color-surface-inset: #2E2E2E;
+  --color-surface-inset: #2e2e2e;
   --color-border-muted: #444444;
   --color-border-inset: #141414;
-  --color-accent-light: #9E9E9C;
-  --color-accent-DEFAULT: #7C7D7B;
+  --color-accent-light: #9e9e9c;
+  --color-accent-DEFAULT: #7c7d7b;
   --color-accent-dark: #606160;
 }
 
 /* Theme: Gold and Steel (Bronze) */
 [data-theme="gold-steel"] {
-  --color-surface-page: #1C1814;
-  --color-surface-card: #251F1A;
+  --color-surface-page: #1c1814;
+  --color-surface-card: #251f1a;
   --color-surface-inset: #322922;
-  --color-border-muted: #4A3E34;
-  --color-border-inset: #14120E;
-  --color-accent-light: #C9A47D;
-  --color-accent-DEFAULT: #AA7C54;
+  --color-border-muted: #4a3e34;
+  --color-border-inset: #14120e;
+  --color-accent-light: #c9a47d;
+  --color-accent-DEFAULT: #aa7c54;
   --color-accent-dark: #886344;
 }
 
 /* Theme: Belladone (Mauve) */
 [data-theme="belladone"] {
-  --color-surface-page: #1A181C;
-  --color-surface-card: #231F26;
-  --color-surface-inset: #2F2A33;
-  --color-border-muted: #453E4A;
+  --color-surface-page: #1a181c;
+  --color-surface-card: #231f26;
+  --color-surface-inset: #2f2a33;
+  --color-border-muted: #453e4a;
   --color-border-inset: #141216;
-  --color-accent-light: #AD9DBB;
-  --color-accent-DEFAULT: #8D7B9C;
-  --color-accent-dark: #71627D;
+  --color-accent-light: #ad9dbb;
+  --color-accent-DEFAULT: #8d7b9c;
+  --color-accent-dark: #71627d;
 }
 
 /* Theme: Unicorn (Rose) */
 [data-theme="unicorn"] {
-  --color-surface-page: #1C161C;
-  --color-surface-card: #261D26;
+  --color-surface-page: #1c161c;
+  --color-surface-card: #261d26;
   --color-surface-inset: #342834;
-  --color-border-muted: #4C3A4C;
-  --color-border-inset: #140F14;
-  --color-accent-light: #B68AB6;
+  --color-border-muted: #4c3a4c;
+  --color-border-inset: #140f14;
+  --color-accent-light: #b68ab6;
   --color-accent-DEFAULT: #976097;
-  --color-accent-dark: #794D79;
+  --color-accent-dark: #794d79;
 }
 
 /* Theme: Emerald Mine (Cyan) */
 [data-theme="emerald"] {
-  --color-surface-page: #14191A;
-  --color-surface-card: #1A2223;
-  --color-surface-inset: #242E30;
+  --color-surface-page: #14191a;
+  --color-surface-card: #1a2223;
+  --color-surface-inset: #242e30;
   --color-border-muted: #384648;
-  --color-border-inset: #0E1314;
-  --color-accent-light: #8CB4B7;
-  --color-accent-DEFAULT: #5F8D91;
-  --color-accent-dark: #4C7174;
+  --color-border-inset: #0e1314;
+  --color-accent-light: #8cb4b7;
+  --color-accent-DEFAULT: #5f8d91;
+  --color-accent-dark: #4c7174;
 }
 
 /* Theme: Sufokia (Turquoise) */
 [data-theme="sufokia"] {
-  --color-surface-page: #121A1A;
+  --color-surface-page: #121a1a;
   --color-surface-card: #182323;
-  --color-surface-inset: #222F30;
+  --color-surface-inset: #222f30;
   --color-border-muted: #364748;
-  --color-border-inset: #0C1414;
-  --color-accent-light: #7AADAE;
+  --color-border-inset: #0c1414;
+  --color-accent-light: #7aadae;
   --color-accent-DEFAULT: #498384;
-  --color-accent-dark: #3A696A;
+  --color-accent-dark: #3a696a;
 }
 
 /* Theme: Pandala (Vert) */
 [data-theme="pandala"] {
-  --color-surface-page: #171A14;
-  --color-surface-card: #1E221A;
-  --color-surface-inset: #2A2F24;
+  --color-surface-page: #171a14;
+  --color-surface-card: #1e221a;
+  --color-surface-inset: #2a2f24;
   --color-border-muted: #404838;
-  --color-border-inset: #10120E;
-  --color-accent-light: #9DB679;
-  --color-accent-DEFAULT: #76944F;
-  --color-accent-dark: #5E7640;
+  --color-border-inset: #10120e;
+  --color-accent-light: #9db679;
+  --color-accent-DEFAULT: #76944f;
+  --color-accent-dark: #5e7640;
 }
 
 /* Theme: Wabbit (Orange) */
 [data-theme="wabbit"] {
-  --color-surface-page: #1E1614;
-  --color-surface-card: #281D1A;
+  --color-surface-page: #1e1614;
+  --color-surface-card: #281d1a;
   --color-surface-inset: #362824;
-  --color-border-muted: #4D3A34;
-  --color-border-inset: #160F0E;
-  --color-accent-light: #D8907A;
-  --color-accent-DEFAULT: #C46647;
-  --color-accent-dark: #9D5239;
+  --color-border-muted: #4d3a34;
+  --color-border-inset: #160f0e;
+  --color-accent-light: #d8907a;
+  --color-accent-DEFAULT: #c46647;
+  --color-accent-dark: #9d5239;
 }
-
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -272,9 +271,9 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 
-  @variant: : -webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
-  };
+  }
 }
 
 @variant has-value (:not(&[value=""]), &:not([value]));
@@ -286,7 +285,8 @@
 @layer base {
   :root {
     --background: 236 21% 11%;
-    --font-sans: "Lexend", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    --font-sans:
+      "Lexend", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
       "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
       "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
       "Noto Color Emoji";
@@ -300,27 +300,15 @@
   }
 
   body {
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
     overflow: hidden;
     background: color-mix(in srgb, var(--color-surface-page) calc(var(--opacity) * 100%), transparent);
     color: var(--color-foreground);
   }
 
-  :where(
-      *:not(
-          :is(
-              input,
-              textarea,
-              select,
-              a,
-              button,
-              .select-text,
-              code,
-              button *,
-              a *
-            )
-        )
-    ) {
+  :where(*:not(:is(input, textarea, select, a, button, .select-text, code, button *, a *))) {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
@@ -536,12 +524,7 @@
       @variant hover {
         background-color: color-mix(
           in oklab,
-          var(--color-primary-800)
-            clamp(
-              20%,
-              calc(var(--final-opacity-80) * 100%),
-              var(--opacity-percentage)
-            ),
+          var(--color-primary-800) clamp(20%, calc(var(--final-opacity-80) * 100%), var(--opacity-percentage)),
           transparent
         );
       }

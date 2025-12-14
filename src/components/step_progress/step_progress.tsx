@@ -1,18 +1,13 @@
-import { useLingui } from "@lingui/react/macro";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button.tsx";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip.tsx";
-import { useWebviewEvent } from "@/hooks/use_webview_event";
-import { cn } from "@/lib/utils.ts";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { confQuery } from "@/queries/conf.query";
-import { ShortcutTooltip } from "@/components/shortcut_tooltip";
+import { useLingui } from '@lingui/react/macro'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { useState } from 'react'
+import { ShortcutTooltip } from '@/components/shortcut_tooltip'
+import { Button } from '@/components/ui/button.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { useWebviewEvent } from '@/hooks/use_webview_event'
+import { cn } from '@/lib/utils.ts'
+import { confQuery } from '@/queries/conf.query'
 
 export function StepProgress({
   currentIndex,
@@ -21,62 +16,57 @@ export function StepProgress({
   onNext,
   onChangeStep,
 }: {
-  currentIndex: number;
-  maxIndex: number;
-  onPrevious: () => Promise<boolean>;
-  onNext: () => Promise<boolean>;
-  onChangeStep: (index: number) => Promise<void>;
+  currentIndex: number
+  maxIndex: number
+  onPrevious: () => Promise<boolean>
+  onNext: () => Promise<boolean>
+  onChangeStep: (index: number) => Promise<void>
 }) {
-  const { t } = useLingui();
-  const { data: conf } = useSuspenseQuery(confQuery);
-  const [scrubbingIndex, setScrubbingIndex] = useState<number | null>(null);
-  const total = maxIndex + 1;
-  const displayIndex = scrubbingIndex !== null ? scrubbingIndex : currentIndex;
-  const current = displayIndex + 1;
+  const { t } = useLingui()
+  const { data: conf } = useSuspenseQuery(confQuery)
+  const [scrubbingIndex, setScrubbingIndex] = useState<number | null>(null)
+  const total = maxIndex + 1
+  const displayIndex = scrubbingIndex !== null ? scrubbingIndex : currentIndex
+  const current = displayIndex + 1
 
   const calculateIndex = (clientX: number, rect: DOMRect) => {
-    const percent = (clientX - rect.left) / rect.width;
-    const index = Math.floor(percent * total - 1);
-    return Math.max(0, Math.min(maxIndex, index));
-  };
+    const percent = (clientX - rect.left) / rect.width
+    const index = Math.floor(percent * total - 1)
+    return Math.max(0, Math.min(maxIndex, index))
+  }
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    const rect = e.currentTarget.getBoundingClientRect();
-    setScrubbingIndex(calculateIndex(e.clientX, rect));
-  };
+    e.currentTarget.setPointerCapture(e.pointerId)
+    const rect = e.currentTarget.getBoundingClientRect()
+    setScrubbingIndex(calculateIndex(e.clientX, rect))
+  }
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setScrubbingIndex(calculateIndex(e.clientX, rect));
+      const rect = e.currentTarget.getBoundingClientRect()
+      setScrubbingIndex(calculateIndex(e.clientX, rect))
     }
-  };
+  }
 
   const handlePointerUp = async (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
+    e.currentTarget.releasePointerCapture(e.pointerId)
 
-    const indexToSet = scrubbingIndex;
+    const indexToSet = scrubbingIndex
 
     if (indexToSet !== null) {
       if (indexToSet !== currentIndex) {
-        await onChangeStep(indexToSet);
+        await onChangeStep(indexToSet)
       }
-      setScrubbingIndex((current) => (current === indexToSet ? null : current));
+      setScrubbingIndex((current) => (current === indexToSet ? null : current))
     }
-  };
+  }
 
-  useWebviewEvent("go-to-previous-guide-step", () => void onPrevious(), [
-    currentIndex,
-  ]);
-  useWebviewEvent("go-to-next-guide-step", () => void onNext(), [currentIndex]);
+  useWebviewEvent('go-to-previous-guide-step', () => void onPrevious(), [currentIndex])
+  useWebviewEvent('go-to-next-guide-step', () => void onNext(), [currentIndex])
 
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
-      <ShortcutTooltip
-        shortcut={conf.shortcuts?.goPreviousStep}
-        description={t`Précédent`}
-      >
+      <ShortcutTooltip shortcut={conf.shortcuts?.goPreviousStep} description={t`Précédent`}>
         <Button
           size="icon"
           variant="ghost"
@@ -93,7 +83,7 @@ export function StepProgress({
           <TooltipTrigger asChild>
             <div
               className={cn(
-                "relative flex h-5 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-[6px] bg-secondary/80 border border-[#121F2A] touch-none"
+                'relative flex h-5 min-w-0 flex-1 cursor-pointer touch-none items-center justify-center overflow-hidden rounded-[6px] border border-[#121F2A] bg-secondary/80',
               )}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
@@ -101,13 +91,13 @@ export function StepProgress({
             >
               <div
                 className={cn(
-                  "absolute inset-y-0 left-0 bg-[#6ABC65]/80",
+                  'absolute inset-y-0 left-0 bg-[#6ABC65]/80',
                   // Disable transition during scrubbing for instant feedback
-                  scrubbingIndex === null && "transition-all duration-300"
+                  scrubbingIndex === null && 'transition-all duration-300',
                 )}
                 style={{ width: `${(current / total) * 100}%` }}
               />
-              <span className="relative z-10 font-medium text-white text-xs drop-shadow select-none">
+              <span className="relative z-10 select-none font-medium text-white text-xs drop-shadow">
                 {current}/{total}
               </span>
             </div>
@@ -118,10 +108,7 @@ export function StepProgress({
         </Tooltip>
       </TooltipProvider>
 
-      <ShortcutTooltip
-        shortcut={conf.shortcuts?.goNextStep}
-        description={t`Suivant`}
-      >
+      <ShortcutTooltip shortcut={conf.shortcuts?.goNextStep} description={t`Suivant`}>
         <Button
           size="icon"
           variant="ghost"
@@ -133,5 +120,5 @@ export function StepProgress({
         </Button>
       </ShortcutTooltip>
     </div>
-  );
+  )
 }

@@ -7,7 +7,7 @@ import { taurpc } from '@/ipc/ipc.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { cn } from '@/lib/utils.ts'
 
-class FetchImageError extends Error { }
+class FetchImageError extends Error {}
 
 export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'srcset'> & {}) {
   const enabled = !!src && src.startsWith('http') && (src.includes('dofusdb.fr') || src.includes(GANYMEDE_HOST))

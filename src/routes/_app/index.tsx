@@ -1,23 +1,23 @@
-import { useLingui } from '@lingui/react/macro';
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
-import { AlmanaxCard } from '@/components/almanax_card.tsx';
-import { HomeFooter } from '@/components/home_footer.tsx';
-import { PageScrollableContent } from '@/components/page_scrollable_content.tsx';
-import { PageTitleExtra } from '@/components/page_title.tsx';
-import { WelcomeCard } from '@/components/welcome_card.tsx';
-import { isProductionQuery } from '@/queries/is_production.query.ts';
-import { versionQuery } from '@/queries/version.query.ts';
-import { Page } from '@/routes/-page.tsx';
+import { useLingui } from '@lingui/react/macro'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { AlmanaxCard } from '@/components/almanax_card.tsx'
+import { HomeFooter } from '@/components/home_footer.tsx'
+import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
+import { PageTitleExtra } from '@/components/page_title.tsx'
+import { WelcomeCard } from '@/components/welcome_card.tsx'
+import { isProductionQuery } from '@/queries/is_production.query.ts'
+import { versionQuery } from '@/queries/version.query.ts'
+import { Page } from '@/routes/-page.tsx'
 
 export const Route = createFileRoute('/_app/')({
   component: Index,
-});
+})
 
 function Index() {
-  const version = useQuery(versionQuery);
-  const { t } = useLingui();
-  const isProduction = useSuspenseQuery(isProductionQuery);
+  const version = useQuery(versionQuery)
+  const { t } = useLingui()
+  const isProduction = useSuspenseQuery(isProductionQuery)
 
   return (
     <Page
@@ -37,5 +37,5 @@ function Index() {
         </div>
       </PageScrollableContent>
     </Page>
-  );
+  )
 }

@@ -10,9 +10,7 @@ export function Position({ pos_x, pos_y }: { pos_x: number; pos_y: number }) {
 
   const onClick = async () => {
     await copyPosition(pos_x, pos_y, conf.data.autoTravelCopy)
-    const content = conf.data.autoTravelCopy
-      ? `/travel ${pos_x},${pos_y}`
-      : `[${pos_x},${pos_y}]`
+    const content = conf.data.autoTravelCopy ? `/travel ${pos_x},${pos_y}` : `[${pos_x},${pos_y}]`
     toast(t`${content} copié`)
   }
 
@@ -26,4 +24,3 @@ export function Position({ pos_x, pos_y }: { pos_x: number; pos_y: number }) {
     </button>
   )
 }
-

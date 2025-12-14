@@ -1,8 +1,8 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { type ConfTheme } from '@/ipc/bindings.ts';
-import { useSetConf } from '@/mutations/set_conf.mutation.ts';
-import { confQuery } from '@/queries/conf.query.ts';
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { type ConfTheme } from '@/ipc/bindings.ts'
+import { useSetConf } from '@/mutations/set_conf.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 
 export const THEMES: { id: ConfTheme; name: string; accent: string; surface: string }[] = [
   { id: 'Default', name: 'Défaut', accent: '#e7c272', surface: '#1D2730' },
@@ -17,34 +17,42 @@ export const THEMES: { id: ConfTheme; name: string; accent: string; surface: str
   { id: 'Sufokia', name: 'Sufokia', accent: '#498384', surface: '#121A1A' },
   { id: 'Pandala', name: 'Pandala', accent: '#76944F', surface: '#171A14' },
   { id: 'Wabbit', name: 'Wabbit', accent: '#C46647', surface: '#1E1614' },
-];
+]
 
 const themeToDataAttr: Record<ConfTheme, string> = {
-  Default: '', Standard: 'standard', Bonta: 'bonta', Brakmar: 'brakmar',
-  Tribute: 'tribute', GoldSteel: 'gold-steel', Belladone: 'belladone',
-  Unicorn: 'unicorn', Emerald: 'emerald', Sufokia: 'sufokia',
-  Pandala: 'pandala', Wabbit: 'wabbit',
-};
+  Default: '',
+  Standard: 'standard',
+  Bonta: 'bonta',
+  Brakmar: 'brakmar',
+  Tribute: 'tribute',
+  GoldSteel: 'gold-steel',
+  Belladone: 'belladone',
+  Unicorn: 'unicorn',
+  Emerald: 'emerald',
+  Sufokia: 'sufokia',
+  Pandala: 'pandala',
+  Wabbit: 'wabbit',
+}
 
 export function applyTheme(theme: ConfTheme | undefined) {
-  const attr = themeToDataAttr[theme ?? 'Default'];
+  const attr = themeToDataAttr[theme ?? 'Default']
   if (attr) {
-    document.documentElement.setAttribute('data-theme', attr);
+    document.documentElement.setAttribute('data-theme', attr)
   } else {
-    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.removeAttribute('data-theme')
   }
 }
 
 export function useTheme() {
-  const conf = useSuspenseQuery(confQuery);
-  const setConf = useSetConf();
-  const theme = conf.data.theme ?? 'Default';
+  const conf = useSuspenseQuery(confQuery)
+  const setConf = useSetConf()
+  const theme = conf.data.theme ?? 'Default'
 
-  useEffect(() => applyTheme(theme), [theme]);
+  useEffect(() => applyTheme(theme), [theme])
 
   return {
     theme,
     setTheme: (t: ConfTheme) => setConf.mutate({ ...conf.data, theme: t }),
     themes: THEMES,
-  };
+  }
 }
