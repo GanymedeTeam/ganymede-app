@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && lingui extract && vite build",
     "tauri": "tauri",
-
+    "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
     "changeset:version": "changeset version && node scripts/changeset-update-versions.js",
     "format": "biome check --unsafe --fix"
@@ -81,6 +81,7 @@
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.3",
     "babel-plugin-macros": "^3.1.0",
+    "dotenv-cli": "^11.0.0",
     "tailwindcss": "4.1.13",
     "typescript": "^5.9.2",
     "vite": "^7.1.6"

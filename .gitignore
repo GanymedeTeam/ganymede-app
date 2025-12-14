@@ -28,5 +28,4 @@ dist-ssr
 
 .claude/settings.local.json
 .agent/rules/readme.md
-.env
 .vscode/settings.json
