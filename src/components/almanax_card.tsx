@@ -167,7 +167,7 @@ export function AlmanaxCard() {
                                 </CopyOnClick>
 
                                 {/* XP & Kamas */}
-                                <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
                                     <div className="flex items-center gap-1.5">
                                         <img src={xpIcon} className="h-3.5 select-none" draggable={false} alt="XP" />
                                         <span>{almanax.data.experience.toLocaleString()}</span>
