@@ -50,7 +50,7 @@ export function ThemeSelector() {
     return (
         <div className="flex flex-col gap-2">
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full group">
+                <CollapsibleTrigger className="flex items-center justify-between w-full group cursor-pointer">
                     <p className="font-medium text-xs leading-none"><Trans>Thème</Trans></p>
                     <div className="flex items-center gap-2">
                         <span className="text-xs text-muted-foreground">{current.name}</span>

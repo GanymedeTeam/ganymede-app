@@ -154,7 +154,7 @@ export function GuidePage({
           {step && (
             <>
               {/* Left Side - Fixed width to maintain center balance */}
-              <div className="flex w-16 shrink-0 items-center justify-start pl-2">
+              <div className="flex w-16 shrink-0 items-center justify-start pl-1">
                 {step.map !== null && step.map.toLowerCase() !== "nomap" && (
                   <Position pos_x={step.pos_x} pos_y={step.pos_y} />
                 )}
@@ -175,7 +175,7 @@ export function GuidePage({
               </div>
 
               {/* Right Side - Fixed width to maintain center balance */}
-              <div className="flex w-18 shrink-0 items-center justify-end pr-2 gap-1">
+              <div className="flex w-14 shrink-0 items-center justify-end pr-1 gap-1">
                 {guide.game_type !== "wakfu" && (
                   <SummaryDialog
                     guideId={guide.id}

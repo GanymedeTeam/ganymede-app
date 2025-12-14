@@ -73,7 +73,7 @@ export function Profiles() {
           setOpenProfileDeleteDialog(open)
         }}
       />
-      <PopoverContent className="p-0">
+      <PopoverContent className="w-[calc(100vw-2rem)] max-w-sm p-0">
         <Command
           filter={(value, search) => {
             const profileInList = getProfileById(profiles, value)

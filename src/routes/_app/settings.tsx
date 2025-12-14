@@ -112,7 +112,7 @@ function Settings() {
       backButton={<BackButtonLink from={Route.fullPath} to={from} state={state} hash={hash} search={search} />}
     >
       <PageScrollableContent className="py-2">
-        <div className="container flex max-w-lg flex-col gap-4 px-4 py-2">
+        <div className="container flex max-w-lg flex-col gap-4 px-2 py-2">
           <SettingCard title={<Trans>Général</Trans>} id="section-general">
             <SettingCardSection id="section-auto-open-guides">
               <div className="flex items-center justify-between gap-2">
