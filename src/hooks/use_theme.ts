@@ -1,159 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { type ConfTheme } from '@/ipc/bindings.ts';
+import { useSetConf } from '@/mutations/set_conf.mutation.ts';
+import { confQuery } from '@/queries/conf.query.ts';
 
-export type ThemeId = 'default' | 'standard' | 'bonta' | 'brakmar' | 'tribute' | 'gold-steel' | 'belladone' | 'unicorn' | 'emerald' | 'sufokia' | 'pandala' | 'wabbit';
-
-export interface ThemeConfig {
-  id: ThemeId;
-  name: string;
-  colors: {
-    surfacePage: string;
-    surfaceCard: string;
-    accent: string;
-  };
-}
-
-export const THEMES: ThemeConfig[] = [
-  {
-    id: 'default',
-    name: 'Défaut',
-    colors: {
-      surfacePage: '#1D2730',
-      surfaceCard: '#21303C',
-      accent: '#e7c272',
-    },
-  },
-  {
-    id: 'standard',
-    name: 'Standard',
-    colors: {
-      surfacePage: '#1A1A24',
-      surfaceCard: '#22222E',
-      accent: '#77769D',
-    },
-  },
-  {
-    id: 'bonta',
-    name: 'Bonta',
-    colors: {
-      surfacePage: '#141C28',
-      surfaceCard: '#1A2433',
-      accent: '#607FB3',
-    },
-  },
-  {
-    id: 'brakmar',
-    name: 'Brakmar',
-    colors: {
-      surfacePage: '#1E1418',
-      surfaceCard: '#281A1F',
-      accent: '#A23D4E',
-    },
-  },
-  {
-    id: 'tribute',
-    name: 'Tribute',
-    colors: {
-      surfacePage: '#1A1A1A',
-      surfaceCard: '#222222',
-      accent: '#7C7D7B',
-    },
-  },
-  {
-    id: 'gold-steel',
-    name: 'Gold & Steel',
-    colors: {
-      surfacePage: '#1C1814',
-      surfaceCard: '#251F1A',
-      accent: '#AA7C54',
-    },
-  },
-  {
-    id: 'belladone',
-    name: 'Belladone',
-    colors: {
-      surfacePage: '#1A181C',
-      surfaceCard: '#231F26',
-      accent: '#8D7B9C',
-    },
-  },
-  {
-    id: 'unicorn',
-    name: 'Unicorn',
-    colors: {
-      surfacePage: '#1C161C',
-      surfaceCard: '#261D26',
-      accent: '#976097',
-    },
-  },
-  {
-    id: 'emerald',
-    name: 'Emerald Mine',
-    colors: {
-      surfacePage: '#14191A',
-      surfaceCard: '#1A2223',
-      accent: '#5F8D91',
-    },
-  },
-  {
-    id: 'sufokia',
-    name: 'Sufokia',
-    colors: {
-      surfacePage: '#121A1A',
-      surfaceCard: '#182323',
-      accent: '#498384',
-    },
-  },
-  {
-    id: 'pandala',
-    name: 'Pandala',
-    colors: {
-      surfacePage: '#171A14',
-      surfaceCard: '#1E221A',
-      accent: '#76944F',
-    },
-  },
-  {
-    id: 'wabbit',
-    name: 'Wabbit',
-    colors: {
-      surfacePage: '#1E1614',
-      surfaceCard: '#281D1A',
-      accent: '#C46647',
-    },
-  },
+export const THEMES: { id: ConfTheme; name: string; accent: string; surface: string }[] = [
+  { id: 'Default', name: 'Défaut', accent: '#e7c272', surface: '#1D2730' },
+  { id: 'Standard', name: 'Standard', accent: '#77769D', surface: '#1A1A24' },
+  { id: 'Bonta', name: 'Bonta', accent: '#607FB3', surface: '#141C28' },
+  { id: 'Brakmar', name: 'Brakmar', accent: '#A23D4E', surface: '#1E1418' },
+  { id: 'Tribute', name: 'Tribute', accent: '#7C7D7B', surface: '#1A1A1A' },
+  { id: 'GoldSteel', name: 'Gold & Steel', accent: '#AA7C54', surface: '#1C1814' },
+  { id: 'Belladone', name: 'Belladone', accent: '#8D7B9C', surface: '#1A181C' },
+  { id: 'Unicorn', name: 'Unicorn', accent: '#976097', surface: '#1C161C' },
+  { id: 'Emerald', name: 'Emerald Mine', accent: '#5F8D91', surface: '#14191A' },
+  { id: 'Sufokia', name: 'Sufokia', accent: '#498384', surface: '#121A1A' },
+  { id: 'Pandala', name: 'Pandala', accent: '#76944F', surface: '#171A14' },
+  { id: 'Wabbit', name: 'Wabbit', accent: '#C46647', surface: '#1E1614' },
 ];
 
-const STORAGE_KEY = 'ganymede-theme';
+const themeToDataAttr: Record<ConfTheme, string> = {
+  Default: '', Standard: 'standard', Bonta: 'bonta', Brakmar: 'brakmar',
+  Tribute: 'tribute', GoldSteel: 'gold-steel', Belladone: 'belladone',
+  Unicorn: 'unicorn', Emerald: 'emerald', Sufokia: 'sufokia',
+  Pandala: 'pandala', Wabbit: 'wabbit',
+};
 
-function getStoredTheme(): ThemeId {
-  if (typeof window === 'undefined') return 'default';
-  return (localStorage.getItem(STORAGE_KEY) as ThemeId) || 'default';
-}
-
-function applyTheme(themeId: ThemeId) {
-  if (themeId === 'default') {
-    document.documentElement.removeAttribute('data-theme');
+export function applyTheme(theme: ConfTheme | undefined) {
+  const attr = themeToDataAttr[theme ?? 'Default'];
+  if (attr) {
+    document.documentElement.setAttribute('data-theme', attr);
   } else {
-    document.documentElement.setAttribute('data-theme', themeId);
+    document.documentElement.removeAttribute('data-theme');
   }
 }
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<ThemeId>(getStoredTheme);
+  const conf = useSuspenseQuery(confQuery);
+  const setConf = useSetConf();
+  const theme = conf.data.theme ?? 'Default';
 
-  useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+  useEffect(() => applyTheme(theme), [theme]);
 
-  // Apply theme on mount
-  useEffect(() => {
-    applyTheme(getStoredTheme());
-  }, []);
-
-  const setTheme = (themeId: ThemeId) => {
-    localStorage.setItem(STORAGE_KEY, themeId);
-    setThemeState(themeId);
+  return {
+    theme,
+    setTheme: (t: ConfTheme) => setConf.mutate({ ...conf.data, theme: t }),
+    themes: THEMES,
   };
-
-  return { theme, setTheme, themes: THEMES };
 }

@@ -11,6 +11,7 @@ import { attachConsole, error } from '@tauri-apps/plugin-log'
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
+import { applyTheme } from '@/hooks/use_theme.ts'
 import { getLang } from '@/lib/conf.ts'
 import { sentry, setupSentry } from '@/lib/sentry.ts'
 import { whiteListQuery } from '@/queries/white_list.query.ts'
@@ -69,13 +70,7 @@ queryClient
   .ensureQueryData(confQuery)
   .then(async (conf) => {
     window.document.documentElement.style.setProperty('--opacity', `${conf.opacity.toFixed(2)}`)
-
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('ganymede-theme')
-    if (savedTheme && savedTheme !== 'default') {
-      document.documentElement.setAttribute('data-theme', savedTheme)
-    }
-
+    applyTheme(conf.theme)
     await dynamicActiveLocale(getLang(conf.lang).toLowerCase())
   })
   .catch((err) => {
