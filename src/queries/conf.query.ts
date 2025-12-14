@@ -13,4 +13,5 @@ export const confQuery = queryOptions<Conf, GetConfError>({
 
     return conf.value
   },
+  staleTime: Infinity,
 })
