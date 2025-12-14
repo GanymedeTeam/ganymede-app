@@ -96,7 +96,7 @@ function CategoryCard({ status, icon, title, description, variant }: CategoryCar
         <h3 className="font-semibold text-sm leading-tight">
           {title}
         </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed">
+        <p className="hidden xs:block text-xs text-muted-foreground leading-relaxed">
           {description}
         </p>
       </div>
