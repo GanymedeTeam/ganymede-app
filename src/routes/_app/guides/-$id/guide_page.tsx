@@ -4,7 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { ChangeStep } from "@/components/step_progress/change_step.tsx";
+import { StepProgress } from "@/components/step_progress/step_progress.tsx";
 import { GuideFrame } from "@/components/guide_frame.tsx";
 import { Position } from "@/components/position.tsx";
 import { useGuide } from "@/hooks/use_guide.ts";
@@ -162,15 +162,13 @@ export function GuidePage({
 
               {/* Center - Progress Bar */}
               <div className="flex flex-1 items-center justify-center">
-                <ChangeStep
+                <StepProgress
                   key={`${guide.id}-${index}`}
                   currentIndex={index}
                   maxIndex={stepMax}
                   onPrevious={onClickPrevious}
                   onNext={onClickNext}
-                  setCurrentIndex={async (currentIndex) => {
-                    return changeStep(currentIndex);
-                  }}
+                  onChangeStep={changeStep}
                 />
               </div>
 
