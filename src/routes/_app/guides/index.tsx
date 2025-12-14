@@ -293,7 +293,7 @@ function GuidesPage() {
                 <h3 className="font-semibold text-sm leading-tight">
                   <Trans>Parcourir le catalogue</Trans>
                 </h3>
-                <p className="text-xs text-muted-foreground leading-tight">
+                <p className="hidden sm:block text-xs text-muted-foreground leading-tight">
                   <Trans>Découvrez et ajoutez de nouveaux guides à votre liste.</Trans>
                 </p>
               </div>

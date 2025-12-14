@@ -66,7 +66,7 @@ function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; ga
       ) : (
         <GameIcon gameType={gameType ?? 'dofus'} className="size-14" />
       )}
-      <div className="absolute xs:-top-1 top-2 -left-0">
+      <div className="absolute top-0.5 left-0.5">
         <FlagPerLang lang={lang} className="size-4" />
       </div>
     </div>

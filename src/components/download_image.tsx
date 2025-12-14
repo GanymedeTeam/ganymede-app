@@ -7,7 +7,7 @@ import { taurpc } from '@/ipc/ipc.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { cn } from '@/lib/utils.ts'
 
-class FetchImageError extends Error {}
+class FetchImageError extends Error { }
 
 export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'srcset'> & {}) {
   const enabled = !!src && src.startsWith('http') && (src.includes('dofusdb.fr') || src.includes(GANYMEDE_HOST))
@@ -24,9 +24,8 @@ export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'sr
 
       if (data.isErr()) throw data.error
 
-      const binary = String.fromCharCode(...new Uint8Array(data.value))
-
-      return btoa(binary)
+      const blob = new Blob([new Uint8Array(data.value)])
+      return URL.createObjectURL(blob)
     },
     enabled,
     staleTime: Infinity,
@@ -51,5 +50,5 @@ export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'sr
     return <img alt="" src={src} referrerPolicy="same-origin" {...props} />
   }
 
-  return <img alt="" src={`data:image/png;base64,${image.data}`} referrerPolicy="same-origin" {...props} />
+  return <img alt="" src={image.data} referrerPolicy="same-origin" {...props} />
 }
