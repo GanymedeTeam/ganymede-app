@@ -1,9 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 import { getFlatGuides, getGuides } from '@/ipc/guides.ts'
 
-// 5 minutes ? à tester
-const GUIDES_STALE_TIME = 1000 * 60 * 5
-
 export function guidesQuery(folder = '') {
   return queryOptions({
     queryKey: ['conf', 'guides', folder],
@@ -16,7 +13,6 @@ export function guidesQuery(folder = '') {
 
       return guides.value
     },
-    staleTime: GUIDES_STALE_TIME,
   })
 }
 
@@ -32,6 +28,5 @@ export function guidesInFolderQuery(folder?: string) {
 
       return guides.value
     },
-    staleTime: GUIDES_STALE_TIME,
   })
 }

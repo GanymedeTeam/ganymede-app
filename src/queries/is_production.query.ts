@@ -12,5 +12,4 @@ export const isProductionQuery = queryOptions({
 
     return res.value
   },
-  staleTime: Infinity,
 })
