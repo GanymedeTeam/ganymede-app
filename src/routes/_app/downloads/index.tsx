@@ -26,7 +26,7 @@ const iconContainerVariants = cva('rounded-xl p-2.5', {
   },
 });
 
-const iconVariants = cva('size-5', {
+const iconVariants = cva('size-6', {
   variants: {
     variant: {
       gp: 'text-blue-400',

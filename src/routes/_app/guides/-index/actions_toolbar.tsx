@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { GenericLoader } from '@/components/generic_loader.tsx'
+import { Loader2Icon } from 'lucide-react'
 import { Button } from '@/components/ui/button.tsx'
 import {
   DropdownMenu,
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { useInterval } from '@/hooks/use_interval.ts'
+
 import { cn } from '@/lib/utils.ts'
 import { useOpenGuidesFolder } from '@/mutations/open_guides_folder.mutation.ts'
 import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
@@ -40,26 +40,17 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
   const guides = useSuspenseQuery(guidesInFolderQuery(path))
   const hasSomeGuideNotUpdated = useQuery(hasGuidesNotUpdatedQuery)
   const openGuidesFolder = useOpenGuidesFolder()
-  const interval = useInterval()
   const updateAllAtOnce = useUpdateAllAtOnce({
-    onMutate: () => {
-      interval.start()
-
-      // disable user interactions
-      document.body.style.pointerEvents = 'none'
-      document.body.setAttribute('aria-busy', 'true')
-      document.body.setAttribute('data-scroll-locked', '1')
+    onSuccess: (data) => {
+      const hasErrors = Object.values(data).some((v) => v !== null)
+      if (hasErrors) {
+        toast.warning(t`Mise à jour terminée avec des erreurs`)
+      } else {
+        toast.success(t`Tous les guides ont été mis à jour`)
+      }
     },
-    onSettled: () => {
-      interval.stop()
-      setTimeout(() => {
-        interval.reset()
-      }, 100)
-
-      // re-enable user interactions
-      document.body.removeAttribute('aria-busy')
-      document.body.removeAttribute('data-scroll-locked')
-      document.body.style.removeProperty('pointer-events')
+    onError: () => {
+      toast.error(t`Erreur lors de la mise à jour des guides`)
     },
   })
 
@@ -115,20 +106,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
 
   return (
     <>
-      {updateAllAtOnce.isPending && (
-        <div className="fixed inset-0 top-7.5 z-10 flex flex-col items-center justify-center bg-accent/75">
-          <div className="flex items-center">
-            <div className="flex items-center gap-2 p-2">
-              <span>
-                <Trans>Mise à jour de vos guides...</Trans>
-              </span>
-            </div>
-          </div>
-          <span className="text-3xl">{interval.value.toFixed(1)}s</span>
-        </div>
-      )}
       <div className="flex w-full items-center justify-end gap-1 text-sm">
-        {guides.isFetched && guides.isFetching && <GenericLoader className="size-4" />}
         {updateAllAtOnceGotError && (
           <GuideUpdateAllResultDialog result={updateAllAtOnce.data}>
             <Button
@@ -167,7 +145,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
                 )}
                 disabled={updateAllAtOnce.isPending || guides.isFetching}
               >
-                <ImportIcon className="size-4" />
+                {updateAllAtOnce.isPending ? <Loader2Icon className="size-4 animate-spin" /> : <ImportIcon className="size-4" />}
               </Button>
             </TooltipTrigger>
             <TooltipContent align="center" side="bottom">
@@ -202,7 +180,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </div >
     </>
   )
 }

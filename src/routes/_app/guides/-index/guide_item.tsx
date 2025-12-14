@@ -40,7 +40,7 @@ interface ServerGuideItemProps {
 type GuideItemProps = LocalGuideItemProps | ServerGuideItemProps
 
 // Shared styles
-const CARD_STYLES = 'flex gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]'
+const CARD_STYLES = 'flex gap-2 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]'
 
 // Single SVG gradient definition - rendered once, reused via url(#goldGradient)
 function GoldGradientDefs() {
@@ -62,9 +62,9 @@ function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; ga
   return (
     <div className="relative flex shrink-0 items-center justify-center">
       {nodeImage ? (
-        <DownloadImage src={nodeImage} className="size-14 rounded-lg object-cover" />
+        <DownloadImage src={nodeImage} className="size-12 xs:size-14 rounded-lg object-cover" />
       ) : (
-        <GameIcon gameType={gameType ?? 'dofus'} className="size-14" />
+        <GameIcon gameType={gameType ?? 'dofus'} className="size-12 xs:size-14" />
       )}
       <div className="absolute -top-1 -left-0">
         <FlagPerLang lang={lang} className="size-3 xs:size-4" />
@@ -122,9 +122,29 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
         <div className="flex grow flex-col gap-1.5 justify-center min-w-0">
-          <h3 className="font-semibold text-sm leading-tight line-clamp-2">{guide.name}</h3>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <h3 className="font-semibold text-sm leading-tight line-clamp-2 w-full cursor-default">{guide.name}</h3>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-[250px]">
+                {guide.name}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="flex items-center gap-2 w-full">
-            <div className="relative flex h-4 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] bg-surface-inset border border-border-inset">
+            {/* Mobile: percentage badge with progress */}
+            <div className="xs:hidden relative h-4 min-w-[48px] w-full flex items-center justify-center overflow-hidden rounded-md bg-surface-inset border border-border-inset">
+              <div
+                className={cn('absolute inset-y-0 left-0', isFinished ? 'bg-success' : 'bg-success/80')}
+                style={{ width: `${percentage}%` }}
+              />
+              <span className="relative z-10 font-medium text-white text-xs px-1.5 drop-shadow-md select-none">
+                {percentage}%
+              </span>
+            </div>
+            {/* Larger screens: full progress bar */}
+            <div className="hidden xs:flex relative h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] bg-surface-inset border border-border-inset">
               <div
                 className={cn('absolute inset-y-0 left-0 transition-all duration-300', isFinished ? 'bg-success' : 'bg-success/80')}
                 style={{ width: `${percentage}%` }}
@@ -182,7 +202,16 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
       <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
       <div className="flex grow flex-col gap-1 justify-center min-w-0">
-        <h3 className="font-semibold text-sm leading-tight line-clamp-2">{guide.name}</h3>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <h3 className="font-semibold text-sm leading-tight line-clamp-2 cursor-default">{guide.name}</h3>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-[250px]">
+              {guide.name}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <div className="flex items-center gap-3 text-xxs text-muted-foreground">
           <span className="flex items-center gap-1">
             {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}

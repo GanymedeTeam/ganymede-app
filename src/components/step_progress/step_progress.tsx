@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { BookCheckIcon, CheckIcon, ChevronLeftIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -20,32 +20,19 @@ export function StepProgress({
   onPrevious,
   onNext,
   onChangeStep,
-  onExit,
 }: {
   currentIndex: number;
   maxIndex: number;
   onPrevious: () => Promise<boolean>;
   onNext: () => Promise<boolean>;
   onChangeStep: (index: number) => Promise<void>;
-  onExit?: () => void;
 }) {
   const { t } = useLingui();
   const { data: conf } = useSuspenseQuery(confQuery);
-  const [isPulsing, setIsPulsing] = useState(false);
   const [scrubbingIndex, setScrubbingIndex] = useState<number | null>(null);
   const total = maxIndex + 1;
   const displayIndex = scrubbingIndex !== null ? scrubbingIndex : currentIndex;
   const current = displayIndex + 1;
-
-  const handleValidate = async () => {
-    setIsPulsing(true);
-    if (currentIndex === maxIndex && onExit) {
-      onExit();
-    } else {
-      await onNext();
-    }
-    setTimeout(() => setIsPulsing(false), 400);
-  };
 
   const calculateIndex = (clientX: number, rect: DOMRect) => {
     const percent = (clientX - rect.left) / rect.width;
@@ -82,84 +69,69 @@ export function StepProgress({
   useWebviewEvent("go-to-previous-guide-step", () => void onPrevious(), [
     currentIndex,
   ]);
-  useWebviewEvent("go-to-next-guide-step", () => void handleValidate(), [
-    currentIndex,
-  ]);
+  useWebviewEvent("go-to-next-guide-step", () => void onNext(), [currentIndex]);
 
   return (
-    <>
-      <div className="flex min-w-0 flex-1 items-center gap-1">
-        <ShortcutTooltip
-          shortcut={conf.shortcuts?.goPreviousStep}
-          description={t`Précédent`}
+    <div className="flex min-w-0 flex-1 items-center gap-1">
+      <ShortcutTooltip
+        shortcut={conf.shortcuts?.goPreviousStep}
+        description={t`Précédent`}
+      >
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={onPrevious}
+          disabled={currentIndex === 0}
+          className="size-6 shrink-0 opacity-60 hover:opacity-100"
         >
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={onPrevious}
-            disabled={currentIndex === 0}
-            className="size-6 shrink-0 opacity-60 hover:opacity-100"
-          >
-            <ChevronLeftIcon className="size-3!" />
-          </Button>
-        </ShortcutTooltip>
+          <ChevronLeftIcon className="size-3!" />
+        </Button>
+      </ShortcutTooltip>
 
-        <TooltipProvider>
-          <Tooltip open={scrubbingIndex !== null ? true : undefined}>
-            <TooltipTrigger asChild>
+      <TooltipProvider>
+        <Tooltip open={scrubbingIndex !== null ? true : undefined}>
+          <TooltipTrigger asChild>
+            <div
+              className={cn(
+                "relative flex h-5 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-[6px] bg-secondary/80 border border-[#121F2A] touch-none"
+              )}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+            >
               <div
                 className={cn(
-                  "relative flex h-5 min-w-0 flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-[6px] bg-secondary/80 border border-[#121F2A] touch-none",
-                  isPulsing && "animate-pulse-success"
+                  "absolute inset-y-0 left-0 bg-[#6ABC65]/80",
+                  // Disable transition during scrubbing for instant feedback
+                  scrubbingIndex === null && "transition-all duration-300"
                 )}
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-              >
-                <div
-                  className={cn(
-                    "absolute inset-y-0 left-0 bg-[#6ABC65]/80",
-                    // Disable transition during scrubbing for instant feedback
-                    scrubbingIndex === null && "transition-all duration-300"
-                  )}
-                  style={{ width: `${(current / total) * 100}%` }}
-                />
-                <span className="relative z-10 font-medium text-white text-xs drop-shadow select-none">
-                  {current}/{total}
-                </span>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="top" className="px-2 py-1 text-xs">
-              {t`Étape ${current}`}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
+                style={{ width: `${(current / total) * 100}%` }}
+              />
+              <span className="relative z-10 font-medium text-white text-xs drop-shadow select-none">
+                {current}/{total}
+              </span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent side="top" className="px-2 py-1 text-xs">
+            {t`Étape ${current}`}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       <ShortcutTooltip
         shortcut={conf.shortcuts?.goNextStep}
-        description={
-          currentIndex === maxIndex && onExit ? t`Retour aux guides` : t`Valider`
-        }
+        description={t`Suivant`}
       >
         <Button
-          size="default"
-          onClick={
-            currentIndex === maxIndex && onExit ? onExit : handleValidate
-          }
-          disabled={currentIndex === maxIndex && !onExit}
-          className={cn(
-            "fixed right-5 bottom-3 z-50 size-12 rounded-full bg-gradient-to-br from-accent-light via-accent to-accent-dark shadow-lg opacity-90 hover:opacity-100 text-accent-foreground",
-            isPulsing && "animate-pulse-accent"
-          )}
+          size="icon"
+          variant="ghost"
+          onClick={onNext}
+          disabled={currentIndex === maxIndex}
+          className="size-6 shrink-0 opacity-60 hover:opacity-100"
         >
-          {currentIndex === maxIndex && onExit ? (
-            <BookCheckIcon className="size-5!" />
-          ) : (
-            <CheckIcon className="size-5!" />
-          )}
+          <ChevronRightIcon className="size-3!" />
         </Button>
       </ShortcutTooltip>
-    </>
+    </div>
   );
 }

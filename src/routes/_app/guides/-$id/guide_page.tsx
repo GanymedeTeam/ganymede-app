@@ -138,9 +138,7 @@ export function GuidePage({
       .unwrap();
   });
 
-  const handleExit = () => {
-    navigate({ to: "/guides", search: { path: "" } });
-  };
+
 
   // Use theme-aware background color with opacity via CSS color-mix
   const bgColor = `color-mix(in srgb, var(--color-surface-page) ${conf.data.opacity * 100}%, transparent)`;
@@ -173,7 +171,6 @@ export function GuidePage({
                   setCurrentIndex={async (currentIndex) => {
                     return changeStep(currentIndex);
                   }}
-                  onExit={handleExit}
                 />
               </div>
 

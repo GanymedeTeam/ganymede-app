@@ -6,14 +6,12 @@ export function ChangeStep({
   onPrevious,
   onNext,
   setCurrentIndex,
-  onExit,
 }: {
   currentIndex: number;
   maxIndex: number;
   onPrevious: () => Promise<boolean>;
   onNext: () => Promise<boolean>;
   setCurrentIndex: (index: number) => Promise<void>;
-  onExit?: () => void;
 }) {
   return (
     <StepProgress
@@ -22,7 +20,7 @@ export function ChangeStep({
       onPrevious={onPrevious}
       onNext={onNext}
       onChangeStep={setCurrentIndex}
-      onExit={onExit}
     />
   );
 }
+
