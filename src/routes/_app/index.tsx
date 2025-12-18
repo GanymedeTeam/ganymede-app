@@ -11,6 +11,10 @@ import { versionQuery } from '@/queries/version.query.ts'
 import { Page } from '@/routes/-page.tsx'
 
 export const Route = createFileRoute('/_app/')({
+  beforeLoad: async ({ context: { queryClient } }) => {
+    // Preload data to avoid suspend/flicker on navigation
+    await queryClient.ensureQueryData(isProductionQuery)
+  },
   component: Index,
 })
 
