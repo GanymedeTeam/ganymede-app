@@ -27,5 +27,5 @@ dist-ssr
 # Claude
 
 .claude/settings.local.json
-.agent/rules/readme.md
 .vscode/settings.json
+.agent/rules/rules.md
