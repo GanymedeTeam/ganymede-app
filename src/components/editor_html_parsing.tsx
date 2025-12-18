@@ -84,6 +84,8 @@ export function EditorHtmlParsing({
                   className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
                   onClick={async () => {
                     await copyPosition(Number.parseInt(posX, 10), Number.parseInt(posY, 10), conf.data.autoTravelCopy)
+                    const content = conf.data.autoTravelCopy ? `/travel ${posX},${posY}` : `[${posX},${posY}]`
+                    toast(t`${content} copié`)
                   }}
                   disabled={disabled}
                   title={conf.data.autoTravelCopy ? 'Copier la commande autopilote' : 'Copier la position'}
