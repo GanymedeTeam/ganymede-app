@@ -1,11 +1,12 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
-import { openUrl } from '@tauri-apps/plugin-opener'
 import { ExternalLinkIcon } from 'lucide-react'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
+import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 
 export function WelcomeCard() {
   const { t } = useLingui()
+  const openUrlInBrowser = useOpenUrlInBrowser()
 
   return (
     <div className="flex flex-col gap-3 rounded-xl border border-border-muted bg-surface-card p-4 shadow-[0_5px_14px_rgba(0,0,0,0.5)]">
@@ -49,7 +50,7 @@ export function WelcomeCard() {
         </Link>
         <button
           type="button"
-          onClick={() => openUrl(`https://${GANYMEDE_HOST}/guides`)}
+          onClick={() => openUrlInBrowser.mutate(`https://${GANYMEDE_HOST}/guides`)}
           className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-accent-light via-accent to-accent-dark px-4 py-2.5 font-semibold text-accent-foreground text-sm transition-opacity hover:opacity-90"
           title={t`Accéder au site officiel`}
         >

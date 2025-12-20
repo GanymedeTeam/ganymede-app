@@ -36,12 +36,6 @@
     "sentry:default",
     "log:default",
     "opener:allow-open-path",
-    {
-      "identifier": "opener:allow-open-url",
-      "allow": [
-        { "url": "https://*" }
-      ]
-    },
     "deep-link:default"
   ]
 }

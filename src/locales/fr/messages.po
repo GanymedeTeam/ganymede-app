@@ -18,9 +18,10 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Étape} other {Étapes}}"
 
-#: src/routes/_app/downloads/index.tsx:89
-msgid "{children}"
-msgstr "{children}"
+#: src/components/editor_html_parsing.tsx:88
+#: src/components/position.tsx:14
+msgid "{content} copié"
+msgstr "{content} copié"
 
 #. placeholder {0}: currentIndex + 1
 #: src/components/notification_alert_dialog.tsx:155
@@ -30,6 +31,10 @@ msgstr "{totalNotifications, plural, one {Message de l'équipe} other {Messages 
 #: src/routes/app-old-version.tsx:86
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
+
+#: src/components/welcome_card.tsx:55
+msgid "Accéder au site officiel"
+msgstr "Accéder au site officiel"
 
 #: src/components/title_bar.tsx:98
 msgid "Accueil"
@@ -106,6 +111,7 @@ msgstr "Aucune quête dans ce guide."
 msgid "Aucune quête ne correspond à votre recherche."
 msgstr "Aucune quête ne correspond à votre recherche."
 
+#: src/components/almanax_card.tsx:81
 #: src/components/almanax_frame.tsx:59
 msgid "Aujourd'hui"
 msgstr "Aujourd'hui"
@@ -116,7 +122,7 @@ msgstr "Aujourd'hui"
 msgid "Autopilotage"
 msgstr "Autopilotage"
 
-#: src/routes/_app/index.tsx:38
+#: src/components/welcome_card.tsx:24
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bienvenue sur <0>GANYMÈDE</0> !"
 
@@ -124,7 +130,7 @@ msgstr "Bienvenue sur <0>GANYMÈDE</0> !"
 msgid "Carte"
 msgstr "Carte"
 
-#: src/routes/_app/downloads/index.tsx:129
+#: src/routes/_app/downloads/index.tsx:110
 msgid "Catégories"
 msgstr "Catégories"
 
@@ -132,12 +138,12 @@ msgstr "Catégories"
 msgid "Causée par"
 msgstr "Causée par"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:137
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:115
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
 msgid "Certains guides n'ont pas été mis à jour"
 msgstr "Certains guides n'ont pas été mis à jour"
 
-#: src/routes/_app/index.tsx:43
+#: src/components/welcome_card.tsx:29
 msgid "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 msgstr "Cet outil a pour but de vous assister tout au long de votre aventure sur <0>Dofus</0> !"
 
@@ -156,47 +162,47 @@ msgid "Chasse au trésor"
 msgstr "Chasse au trésor"
 
 #: src/routes/_app/guides/index.tsx:71
-#: src/routes/_app/guides/index.tsx:209
+#: src/routes/_app/guides/index.tsx:206
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
-#: src/components/editor_html_parsing.tsx:294
+#: src/components/editor_html_parsing.tsx:296
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:298
+#: src/components/editor_html_parsing.tsx:300
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:295
+#: src/components/editor_html_parsing.tsx:297
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:299
+#: src/components/editor_html_parsing.tsx:301
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:306
+#: src/components/editor_html_parsing.tsx:308
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:307
+#: src/components/editor_html_parsing.tsx:309
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:290
+#: src/components/editor_html_parsing.tsx:292
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:291
+#: src/components/editor_html_parsing.tsx:293
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:302
+#: src/components/editor_html_parsing.tsx:304
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:303
+#: src/components/editor_html_parsing.tsx:305
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
@@ -204,13 +210,17 @@ msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb
 msgid "Cliquez pour enregistrer"
 msgstr "Cliquez pour enregistrer"
 
-#: src/components/editor_html_parsing.tsx:422
+#: src/components/editor_html_parsing.tsx:424
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
-#: src/components/editor_html_parsing.tsx:386
+#: src/components/editor_html_parsing.tsx:388
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Cliquez pour ouvrir dans une nouvelle fenêtre"
+
+#: src/components/welcome_card.tsx:18
+msgid "Companion Dofus"
+msgstr "Companion Dofus"
 
 #: src/routes/_app/guides/-$id/report_dialog.tsx:136
 msgid "Confirmer l'envoi du rapport"
@@ -249,7 +259,7 @@ msgid "Copie d'autopilote"
 msgstr "Copie d'autopilote"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:136
+#: src/routes/_app/guides/-$id/guide_page.tsx:122
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copie du numéro de l'étape ({0})..."
 
@@ -261,7 +271,7 @@ msgstr "Copier : {title}"
 msgid "Copier l'étape actuelle"
 msgstr "Copier l'étape actuelle"
 
-#: src/components/position.tsx:23
+#: src/components/position.tsx:21
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la commande autopilote"
 msgstr "Copier la commande autopilote"
@@ -270,7 +280,7 @@ msgstr "Copier la commande autopilote"
 msgid "Copier la note"
 msgstr "Copier la note"
 
-#: src/components/position.tsx:23
+#: src/components/position.tsx:21
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la position"
 msgstr "Copier la position"
@@ -278,6 +288,10 @@ msgstr "Copier la position"
 #: src/routes/_app/settings.tsx:376
 msgid "Créer"
 msgstr "Créer"
+
+#: src/components/welcome_card.tsx:57
+msgid "Créer un guide"
+msgstr "Créer un guide"
 
 #: src/routes/_app/settings.tsx:338
 msgid "Créer un profil"
@@ -291,12 +305,13 @@ msgstr "Créer une note"
 msgid "Créer une nouvelle note"
 msgstr "Créer une nouvelle note"
 
-#: src/routes/_app/index.tsx:54
+#: src/components/welcome_card.tsx:38
 msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 msgstr "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:241
+#: src/routes/_app/guides/-index/guide_item.tsx:252
+#: src/routes/_app/guides/-index/guide_item.tsx:303
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -308,7 +323,7 @@ msgstr "Début"
 msgid "Déconnecté"
 msgstr "Déconnecté"
 
-#: src/routes/_app/guides/index.tsx:298
+#: src/routes/_app/guides/index.tsx:297
 msgid "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgstr "Découvrez et ajoutez de nouveaux guides à votre liste."
 
@@ -316,11 +331,11 @@ msgstr "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:174
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:156
 msgid "Des mises à jour sont disponibles"
 msgstr "Des mises à jour sont disponibles"
 
-#: src/routes/_app/index.tsx:65
+#: src/components/home_footer.tsx:13
 msgid "Discord de Ganymède"
 msgstr "Discord de Ganymède"
 
@@ -336,7 +351,7 @@ msgstr "Données d'objet malformées"
 msgid "Données de quête malformées"
 msgstr "Données de quête malformées"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:91
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:82
 msgid "Dossier des guides téléchargés rafraichi"
 msgstr "Dossier des guides téléchargés rafraichi"
 
@@ -353,7 +368,7 @@ msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Efface tous vos profils et paramètres (pas les guides)"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:205
-#: src/routes/_app/guides/-index/guide_item.tsx:192
+#: src/routes/_app/guides/-index/guide_item.tsx:207
 msgid "En cours"
 msgstr "En cours"
 
@@ -534,13 +549,17 @@ msgid "Erreur JSON inconnue"
 msgstr "Erreur JSON inconnue"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:135
+#: src/routes/_app/guides/-$id/guide_page.tsx:121
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erreur lors de la copie du numéro de l'étape ({0})."
 
 #: src/routes/_app/settings.tsx:369
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
+
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:53
+msgid "Erreur lors de la mise à jour des guides"
+msgstr "Erreur lors de la mise à jour des guides"
 
 #: src/routes/_app/settings.tsx:264
 #: src/routes/_app/settings.tsx:284
@@ -557,7 +576,7 @@ msgstr "Erreur lors de la suppression des guides"
 msgid "Erreur lors de la vérification du guide"
 msgstr "Erreur lors de la vérification du guide"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:92
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:83
 msgid "Erreur lors du rafraichissement des guides téléchargés"
 msgstr "Erreur lors du rafraichissement des guides téléchargés"
 
@@ -584,15 +603,7 @@ msgstr "Erreur utilisateur"
 msgid "Erreur utilisateur inconnue"
 msgstr "Erreur utilisateur inconnue"
 
-#: src/components/step_progress.tsx:189
-#~ msgid "Étape"
-#~ msgstr "Étape"
-
-#: src/components/step_progress.tsx:104
-#~ msgid "Étape {0}"
-#~ msgstr "Étape {0}"
-
-#: src/components/step_progress/step_progress.tsx:133
+#: src/components/step_progress/step_progress.tsx:106
 msgid "Étape {current}"
 msgstr "Étape {current}"
 
@@ -630,7 +641,7 @@ msgstr "Fin"
 msgid "Format de données incorrect"
 msgstr "Format de données incorrect"
 
-#: src/routes/_app/index.tsx:89
+#: src/components/home_footer.tsx:34
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Non affilié à Ankama Games"
 
@@ -669,17 +680,17 @@ msgid "Guides {0}"
 msgstr "Guides {0}"
 
 #: src/routes/_app/downloads/$status.tsx:100
-#: src/routes/_app/downloads/index.tsx:154
+#: src/routes/_app/downloads/index.tsx:125
 msgid "Guides certifiés"
 msgstr "Guides certifiés"
 
 #: src/routes/_app/downloads/$status.tsx:96
-#: src/routes/_app/downloads/index.tsx:182
+#: src/routes/_app/downloads/index.tsx:141
 msgid "Guides draft"
 msgstr "Guides draft"
 
 #: src/routes/_app/downloads/$status.tsx:98
-#: src/routes/_app/downloads/index.tsx:140
+#: src/routes/_app/downloads/index.tsx:117
 msgid "Guides principaux"
 msgstr "Guides principaux"
 
@@ -688,7 +699,7 @@ msgid "Guides privés"
 msgstr "Guides privés"
 
 #: src/routes/_app/downloads/$status.tsx:92
-#: src/routes/_app/downloads/index.tsx:168
+#: src/routes/_app/downloads/index.tsx:133
 msgid "Guides publics"
 msgstr "Guides publics"
 
@@ -700,10 +711,6 @@ msgstr "Guides supprimés"
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:89
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
-
-#: src/routes/_app/guides/-index/guide_item.tsx:68
-msgid "id <0>{id}</0>"
-msgstr "id <0>{id}</0>"
 
 #: src/routes/_app.tsx:28
 msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
@@ -721,7 +728,7 @@ msgstr "Impossible d'accéder au dossier de configuration"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Impossible d'obtenir le système de mise à jour"
 
-#: src/components/editor_html_parsing.tsx:378
+#: src/components/editor_html_parsing.tsx:380
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 
@@ -887,11 +894,11 @@ msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'éta
 msgstr "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:133
+#: src/routes/_app/guides/-$id/guide_page.tsx:120
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 
-#: src/routes/_app/downloads/index.tsx:143
+#: src/routes/_app/downloads/index.tsx:118
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Les guides créés par l'équipe Ganymède"
 
@@ -899,15 +906,15 @@ msgstr "Les guides créés par l'équipe Ganymède"
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 
-#: src/routes/_app/downloads/index.tsx:157
+#: src/routes/_app/downloads/index.tsx:126
 msgid "Les guides de la communauté, validés par l'équipe Ganymède"
 msgstr "Les guides de la communauté, validés par l'équipe Ganymède"
 
-#: src/routes/_app/downloads/index.tsx:185
+#: src/routes/_app/downloads/index.tsx:142
 msgid "Les guides en cours d'écriture"
 msgstr "Les guides en cours d'écriture"
 
-#: src/routes/_app/downloads/index.tsx:171
+#: src/routes/_app/downloads/index.tsx:134
 msgid "Les guides partagés par la communauté"
 msgstr "Les guides partagés par la communauté"
 
@@ -915,7 +922,7 @@ msgstr "Les guides partagés par la communauté"
 msgid "lien masqué"
 msgstr "lien masqué"
 
-#: src/routes/_app/guides/$id.tsx:160
+#: src/routes/_app/guides/$id.tsx:142
 msgid "Liste des guides"
 msgstr "Liste des guides"
 
@@ -928,7 +935,7 @@ msgid "Marquer comme lu"
 msgstr "Marquer comme lu"
 
 #. placeholder {0}: createPagePath(path)
-#: src/routes/_app/guides/index.tsx:209
+#: src/routes/_app/guides/index.tsx:206
 msgid "Mes guides {0}"
 msgstr "Mes guides {0}"
 
@@ -936,13 +943,9 @@ msgstr "Mes guides {0}"
 msgid "Mettre à jour le guide"
 msgstr "Mettre à jour le guide"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:163
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:141
 msgid "Mettre à jour tous les guides"
 msgstr "Mettre à jour tous les guides"
-
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:123
-msgid "Mise à jour de vos guides..."
-msgstr "Mise à jour de vos guides..."
 
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:51
 msgid "Mise à jour des guides"
@@ -951,6 +954,10 @@ msgstr "Mise à jour des guides"
 #: src/routes/app-old-version.tsx:99
 msgid "Mise à jour en cours."
 msgstr "Mise à jour en cours."
+
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:47
+msgid "Mise à jour terminée avec des erreurs"
+msgstr "Mise à jour terminée avec des erreurs"
 
 #: src/routes/app-old-version.tsx:105
 msgid "Mise à jour terminée. L'application va redémarrer."
@@ -977,7 +984,7 @@ msgstr "Nom"
 msgid "Nom de la note"
 msgstr "Nom de la note"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:192
+#: src/routes/_app/guides/-index/guide_item.tsx:209
 msgid "Non commencé"
 msgstr "Non commencé"
 
@@ -1003,7 +1010,7 @@ msgstr "Opacité"
 msgid "ou le bouton suivant"
 msgstr "ou le bouton suivant"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:197
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:179
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Ouvrir le dossier des guides téléchargés"
 
@@ -1011,7 +1018,7 @@ msgstr "Ouvrir le dossier des guides téléchargés"
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Ouvrir les guides à l'ouverture"
 
-#: src/routes/_app/guides/$id.tsx:186
+#: src/routes/_app/guides/$id.tsx:163
 msgid "Ouvrir un guide"
 msgstr "Ouvrir un guide"
 
@@ -1021,7 +1028,7 @@ msgstr "Ouvrir un guide"
 msgid "Paramètres"
 msgstr "Paramètres"
 
-#: src/routes/_app/guides/index.tsx:295
+#: src/routes/_app/guides/index.tsx:294
 msgid "Parcourir le catalogue"
 msgstr "Parcourir le catalogue"
 
@@ -1029,7 +1036,7 @@ msgstr "Parcourir le catalogue"
 msgid "Petite"
 msgstr "Petite"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:184
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:166
 msgid "Plus d'options"
 msgstr "Plus d'options"
 
@@ -1038,7 +1045,7 @@ msgstr "Plus d'options"
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 
-#: src/components/step_progress/step_progress.tsx:94
+#: src/components/step_progress/step_progress.tsx:69
 msgid "Précédent"
 msgstr "Précédent"
 
@@ -1046,7 +1053,7 @@ msgstr "Précédent"
 msgid "Préparation"
 msgstr "Préparation"
 
-#: src/routes/_app/index.tsx:26
+#: src/routes/_app/index.tsx:28
 msgid "Présentation"
 msgstr "Présentation"
 
@@ -1082,11 +1089,11 @@ msgstr "Raccourci mis à jour"
 msgid "Raccourcis clavier"
 msgstr "Raccourcis clavier"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:201
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:183
 msgid "Rafraichir le dossier des guides téléchargés"
 msgstr "Rafraichir le dossier des guides téléchargés"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:93
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:84
 msgid "Rafraichissement des guides téléchargés"
 msgstr "Rafraichissement des guides téléchargés"
 
@@ -1094,8 +1101,8 @@ msgstr "Rafraichissement des guides téléchargés"
 msgid "Récapitulatif du message"
 msgstr "Récapitulatif du message"
 
-#: src/routes/_app/downloads/$status.tsx:230
-#: src/routes/_app/guides/index.tsx:243
+#: src/routes/_app/downloads/$status.tsx:231
+#: src/routes/_app/guides/index.tsx:241
 msgid "Rechercher un guide"
 msgstr "Rechercher un guide"
 
@@ -1131,10 +1138,6 @@ msgstr "Réponse de token invalide"
 msgid "Réponse GitHub malformée"
 msgstr "Réponse GitHub malformée"
 
-#: src/components/step_progress/step_progress.tsx:142
-msgid "Retour aux guides"
-msgstr "Retour aux guides"
-
 #: src/components/title_bar.tsx:90
 #: src/routes/_app/oauth/waiting.tsx:58
 msgid "Se connecter"
@@ -1144,17 +1147,21 @@ msgstr "Se connecter"
 msgid "Se déconnecter"
 msgstr "Se déconnecter"
 
-#: src/routes/_app/guides/-index/actions_toolbar.tsx:193
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:175
 msgid "Sélectionner"
 msgstr "Sélectionner"
 
-#: src/routes/_app/index.tsx:83
+#: src/components/home_footer.tsx:15
 msgid "Site officiel"
 msgstr "Site officiel"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:108
 msgid "Sommaire"
 msgstr "Sommaire"
+
+#: src/components/step_progress/step_progress.tsx:111
+msgid "Suivant"
+msgstr "Suivant"
 
 #: src/components/title_bar.tsx:145
 msgid "Supporter Ganymède"
@@ -1204,11 +1211,11 @@ msgstr "Télécharger le guide"
 msgid "Télécharger un guide"
 msgstr "Télécharger un guide"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:192
+#: src/routes/_app/guides/-index/guide_item.tsx:205
 msgid "Terminé"
 msgstr "Terminé"
 
-#: src/components/theme_selector.tsx:79
+#: src/components/theme_selector.tsx:64
 msgid "Thème"
 msgstr "Thème"
 
@@ -1216,9 +1223,13 @@ msgstr "Thème"
 msgid "Tokens d'authentification introuvables"
 msgstr "Tokens d'authentification introuvables"
 
-#: src/routes/_app/downloads/$status.tsx:239
+#: src/routes/_app/downloads/$status.tsx:240
 msgid "Tous"
 msgstr "Tous"
+
+#: src/routes/_app/guides/-index/actions_toolbar.tsx:49
+msgid "Tous les guides ont été mis à jour"
+msgstr "Tous les guides ont été mis à jour"
 
 #: src/routes/_app/settings.tsx:214
 msgid "Très grande"
@@ -1228,7 +1239,7 @@ msgstr "Très grande"
 msgid "Très petite"
 msgstr "Très petite"
 
-#: src/routes/_app/index.tsx:74
+#: src/components/home_footer.tsx:14
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymède"
 
@@ -1257,13 +1268,13 @@ msgstr "Une erreur inattendue s'est produite"
 msgid "Utilisateur non connecté"
 msgstr "Utilisateur non connecté"
 
-#: src/components/step_progress/step_progress.tsx:142
-msgid "Valider"
-msgstr "Valider"
-
 #: src/lib/error_formatter.tsx:834
 msgid "Version invalide"
 msgstr "Version invalide"
+
+#: src/components/welcome_card.tsx:49
+msgid "Voir les guides"
+msgstr "Voir les guides"
 
 #: src/routes/_app/guides/-$id/report_dialog.tsx:110
 msgid "Votre message nous a été transmis. Bon jeu !"
@@ -1291,7 +1302,7 @@ msgstr "Vous êtes maintenant connecté en tant que \"{0}\"."
 msgid "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."
 msgstr "Vous ne disposez pas de la dernière version de <0>Ganymède</0>."
 
-#: src/routes/_app/index.tsx:49
+#: src/components/welcome_card.tsx:35
 msgid "Vous pouvez créer, utiliser et partager des guides vous permettant d'optimiser votre aventure."
 msgstr "Vous pouvez créer, utiliser et partager des guides vous permettant d'optimiser votre aventure."
 

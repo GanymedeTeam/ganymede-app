@@ -16,7 +16,7 @@ export function PageScrollableContent({
     <div
       ref={ref}
       className={cn(
-        'scroller flex flex-col overflow-x-hidden overflow-y-scroll pb-2',
+        'scroller flex flex-col overflow-x-hidden overflow-y-scroll pb-3',
         hasTitleBar &&
           !hasBottomBar &&
           'mt-[36px] h-[calc(100vh-var(--spacing-titlebar)-36px-36px)] sm:h-[calc(100vh-var(--spacing-titlebar)-36px-40px)]',

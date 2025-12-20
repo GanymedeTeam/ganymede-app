@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
+import { cva } from 'class-variance-authority'
 import { FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
@@ -15,7 +16,7 @@ import { cn } from '@/lib/utils.ts'
 type GuideWithFolder = Extract<GuidesOrFolder, { type: 'guide' }> & Pick<GuideWithStepsWithFolder, 'folder'>
 type LocalGuide = GuideWithFolder & { currentStep: number | null }
 
-interface LocalGuideItemProps {
+type LocalGuideItemProps = {
   variant: 'local'
   guide: LocalGuide
   isSelected: boolean
@@ -26,7 +27,7 @@ interface LocalGuideItemProps {
   currentStep?: never
 }
 
-interface ServerGuideItemProps {
+type ServerGuideItemProps = {
   variant: 'server'
   guide: Guide
   intl: Intl.NumberFormat
@@ -38,10 +39,6 @@ interface ServerGuideItemProps {
 }
 
 type GuideItemProps = LocalGuideItemProps | ServerGuideItemProps
-
-// Shared styles
-const CARD_STYLES =
-  'flex gap-2 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_5px_14px_rgba(0,0,0,0.5)]'
 
 // Single SVG gradient definition - rendered once, reused via url(#goldGradient)
 function GoldGradientDefs() {
@@ -91,6 +88,21 @@ function GoldChevron({ className }: { className?: string }) {
   )
 }
 
+const guideItemVariants = cva(
+  'flex gap-3 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_0.3125rem_0.875rem_rgba(0,0,0,0.5)]',
+  {
+    variants: {
+      variant: {
+        local: 'aria-selected:border-accent aria-selected:bg-surface-inset',
+        server: 'relative',
+      },
+    },
+    defaultVariants: {
+      variant: 'local',
+    },
+  },
+)
+
 export function GuideItem(props: GuideItemProps) {
   if (props.variant === 'local') {
     return <LocalGuideItem {...props} />
@@ -109,11 +121,10 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
     <Card
       key={guide.id}
       aria-selected={isSelected}
-      className={cn(
-        CARD_STYLES,
-        'aria-selected:border-accent aria-selected:bg-surface-inset',
-        isSelectMode && 'cursor-pointer **:cursor-pointer',
-      )}
+      className={guideItemVariants({
+        variant: 'local',
+        className: cn(isSelected && 'cursor-pointer **:cursor-pointer'),
+      })}
       onClick={(evt) => {
         if (isSelectMode) {
           evt.preventDefault()
@@ -217,7 +228,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
-    <Card key={guide.id} className={cn(CARD_STYLES, 'relative')}>
+    <Card key={guide.id} className={guideItemVariants({ variant: 'server' })}>
       <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 
