@@ -55,22 +55,6 @@ function GoldGradientDefs() {
   )
 }
 
-// Shared icon + flag component
-function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; gameType?: GameType; lang: string }) {
-  return (
-    <div className="relative flex shrink-0 items-center justify-center">
-      {nodeImage ? (
-        <DownloadImage src={nodeImage} className="size-14 rounded-lg object-cover" />
-      ) : (
-        <GameIcon gameType={gameType ?? 'dofus'} className="size-14" />
-      )}
-      <div className="absolute top-0.5 left-0.5">
-        <FlagPerLang lang={lang} className="size-4" />
-      </div>
-    </div>
-  )
-}
-
 // Gold chevron icon
 function GoldChevron({ className }: { className?: string }) {
   return (
@@ -85,6 +69,22 @@ function GoldChevron({ className }: { className?: string }) {
     >
       <path d="m9 18 6-6-6-6" />
     </svg>
+  )
+}
+
+// Shared icon + flag component
+function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; gameType?: GameType; lang: string }) {
+  return (
+    <div className="relative flex shrink-0 items-center justify-center">
+      {nodeImage ? (
+        <DownloadImage src={nodeImage} className="size-14 rounded-lg object-cover" />
+      ) : (
+        <GameIcon gameType={gameType ?? 'dofus'} className="size-14" />
+      )}
+      <div className="absolute top-0.5 left-0.5">
+        <FlagPerLang lang={lang} className="size-4" />
+      </div>
+    </div>
   )
 }
 
@@ -229,9 +229,9 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
     <Card key={guide.id} className={guideItemVariants({ variant: 'server' })}>
+      {/* Mobile Layout */}
       <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
-
         <div className="flex min-w-0 flex-col gap-1 pr-16">
           <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
           <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
@@ -255,7 +255,6 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
             {guide.user.is_certified === 1 && <VerifiedIcon className="size-4 shrink-0 text-orange-300" />}
           </p>
         </div>
-
         <div className="absolute top-2 right-2 flex items-center gap-1">
           <GoldGradientDefs />
           <GuideDownloadButton guide={guide} />
@@ -271,6 +270,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
         </div>
       </div>
 
+      {/* Larger screens */}
       <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
 

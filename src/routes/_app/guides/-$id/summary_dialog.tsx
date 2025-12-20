@@ -159,7 +159,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
               {filteredQuests.map((quest) => (
                 <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
                   <div className="flex items-center gap-1">
-                    <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} className="size-6" />
+                    <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} alt="Quest" className="size-6" />
                     <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
                   </div>
                   <span className="flex flex-col gap-1">
