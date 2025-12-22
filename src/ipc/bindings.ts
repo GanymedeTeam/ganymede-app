@@ -46,7 +46,7 @@ export type GuideWithSteps = { id: number; name: string; description: string | n
 
 export type Guides = { guides: GuideWithSteps[] }
 
-export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
+export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { GuideNotFound: number } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
 
 export type GuidesOrFolder = ({ type: "guide" } & GuideWithSteps) | ({ type: "folder" } & Folder)
 

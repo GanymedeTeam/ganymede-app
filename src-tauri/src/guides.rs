@@ -1,6 +1,6 @@
 use std::{collections::HashMap, fmt, fs, path::PathBuf, vec};
 
-use log::{debug, info};
+use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
@@ -14,7 +14,7 @@ pub const DEFAULT_GUIDE_ID: u32 = 1074;
 // Enums
 // ================================================================================================
 
-#[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
+#[derive(Debug, Clone, Serialize, thiserror::Error, taurpc::specta::Type)]
 #[specta(rename = "GuidesError")]
 pub enum Error {
     #[error("cannot parse glob pattern: {0}")]
@@ -27,6 +27,8 @@ pub enum Error {
     ReadRecentGuidesFile(String),
     #[error("malformed guide: {0}")]
     GuideMalformed(#[from] crate::json::Error),
+    #[error("guide not found: {0}")]
+    GuideNotFound(u32),
     #[error("malformed recent guides file: {0}")]
     RecentGuidesFileMalformed(String),
     #[error("cannot serialize guide: {0}")]
@@ -217,6 +219,11 @@ pub struct QuestSummary {
 
 pub type RecentGuides = Vec<u32>;
 
+#[derive(Deserialize)]
+struct BatchGuideResponse {
+    data: Vec<GuideWithSteps>,
+}
+
 // ================================================================================================
 // Type Implementations
 // ================================================================================================
@@ -296,6 +303,63 @@ pub async fn get_guide_from_server(
     guide.folder = None;
 
     Ok(guide)
+}
+
+/// Fetch multiple guides from the server by their IDs in a single batch request
+pub async fn get_guides_from_server(
+    ids: Vec<u32>,
+    http_client: &reqwest::Client,
+) -> Vec<Result<GuideWithSteps, Error>> {
+    info!("[Guides] get_guides_from_server (batch): {:?}", ids);
+
+    let joined_ids = ids
+        .iter()
+        .map(|id| id.to_string())
+        .collect::<Vec<_>>()
+        .join(",");
+
+    let res = http_client
+        .get(format!("{}/v2/guides/batch?ids={}", GANYMEDE_API, joined_ids))
+        .send()
+        .await;
+
+    let response = match res {
+        Ok(response) => response,
+        Err(err) => {
+            let error = Error::RequestGuides(err.to_string());
+            return ids.iter().map(|_| Err(error.clone())).collect();
+        }
+    };
+
+    let text = match response.text().await {
+        Ok(text) => text,
+        Err(err) => {
+            let error = Error::RequestGuidesContent(err.to_string());
+            return ids.iter().map(|_| Err(error.clone())).collect();
+        }
+    };
+
+    let batch_response = match crate::json::from_str::<BatchGuideResponse>(text.as_str()) {
+        Ok(batch) => batch,
+        Err(err) => {
+            let error = Error::GuidesMalformed(err);
+            return ids.iter().map(|_| Err(error.clone())).collect();
+        }
+    };
+
+    let mut guides_map: HashMap<u32, GuideWithSteps> = HashMap::new();
+    for mut guide in batch_response.data {
+        guide.folder = None;
+        guides_map.insert(guide.id, guide);
+    }
+
+    ids.iter()
+        .map(|id| {
+            guides_map
+                .remove(id)
+                .ok_or_else(|| Error::GuideNotFound(*id))
+        })
+        .collect()
 }
 
 // ================================================================================================
@@ -434,6 +498,15 @@ fn add_or_replace_guide(guides: &mut Guides, guide: GuideWithSteps) -> Result<()
     Ok(())
 }
 
+fn add_or_replace_guides(guides: &mut Guides, new_guides: Vec<GuideWithSteps>) {
+    for guide in new_guides {
+        match guides.guides.iter().position(|g| g.id == guide.id) {
+            Some(index) => guides.guides[index] = guide,
+            None => guides.guides.push(guide),
+        }
+    }
+}
+
 /// Download a guide by its ID and save it into the specified folder
 async fn download_guide_by_id<R: Runtime>(
     app: &AppHandle<R>,
@@ -454,6 +527,47 @@ async fn download_guide_by_id<R: Runtime>(
     add_or_replace_guide(guides, guide)?;
 
     Ok(())
+}
+
+async fn download_guides_by_ids<R: Runtime>(
+    app: &AppHandle<R>,
+    guides: &mut Guides,
+    guide_ids: Vec<u32>,
+) -> Result<(), Vec<Error>> {
+    let http_client = app.state::<reqwest::Client>();
+    let results = get_guides_from_server(guide_ids, &http_client).await;
+
+    let mut downloaded_guides = vec![];
+    let mut errors = vec![];
+
+    for result in results {
+        match result {
+            Ok(mut guide) => {
+                if let Some(existing_guide) = guides.guides.iter().find(|g| g.id == guide.id) {
+                    guide.folder = existing_guide.folder.clone();
+                }
+
+                debug!(
+                    "[Guides] download_guides_by_ids: {} in {:?}",
+                    guide.id, guide.folder
+                );
+
+                downloaded_guides.push(guide);
+            }
+            Err(error) => {
+                warn!("[Guides] download_guides_by_ids error: {}", error);
+                errors.push(error);
+            }
+        }
+    }
+
+    add_or_replace_guides(guides, downloaded_guides);
+
+    if errors.is_empty() {
+        Ok(())
+    } else {
+        Err(errors)
+    }
 }
 
 fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
@@ -777,41 +891,56 @@ fn generate_guide_summary<R: Runtime>(
     }
 }
 
-fn update_all_guides_batch<R: Runtime>(
+async fn update_all_guides_batch<R: Runtime>(
     app_handle: &AppHandle<R>,
-) -> impl std::future::Future<Output = Result<HashMap<u32, UpdateAllAtOnceResult>, Error>> + Send {
-    let app_handle = app_handle.clone();
-    async move {
-        info!("[Guides] update_all_at_once");
+) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
+    info!("[Guides] update_all_at_once");
 
-        let mut guides = get_guides_from_handle(&app_handle, "".to_string())?;
-        let mut results = HashMap::new();
+    let mut guides = get_guides_from_handle(app_handle, "".to_string())?;
+    let guide_ids: Vec<u32> = guides.guides.iter().map(|g| g.id).collect();
 
-        for guide in guides.guides.clone() {
-            if let Some(folder) = &guide.folder {
-                let result = download_guide_by_id(
-                    &app_handle,
-                    &mut guides,
-                    guide.id,
-                    folder.to_str().unwrap().to_string(),
-                )
-                .await;
+    let result = download_guides_by_ids(app_handle, &mut guides, guide_ids.clone()).await;
 
-                match result {
-                    Ok(_) => {
-                        results.insert(guide.id, UpdateAllAtOnceResult::Success);
+    let mut results = HashMap::new();
+
+    match result {
+        Ok(()) => {
+            for id in guide_ids {
+                results.insert(id, UpdateAllAtOnceResult::Success);
+            }
+        }
+        Err(errors) => {
+            let mut error_ids: Vec<u32> = vec![];
+
+            for error in errors {
+                match error {
+                    Error::GuideNotFound(id) => {
+                        results.insert(id, UpdateAllAtOnceResult::Failure(error.to_string()));
+                        error_ids.push(id);
                     }
-                    Err(err) => {
-                        results.insert(guide.id, UpdateAllAtOnceResult::Failure(err.to_string()));
+                    _ => {
+                        for id in &guide_ids {
+                            if !error_ids.contains(id) {
+                                results
+                                    .entry(*id)
+                                    .or_insert(UpdateAllAtOnceResult::Failure(error.to_string()));
+                            }
+                        }
                     }
                 }
             }
+
+            for id in guide_ids {
+                if !results.contains_key(&id) {
+                    results.insert(id, UpdateAllAtOnceResult::Success);
+                }
+            }
         }
-
-        write_guides(&guides, &app_handle)?;
-
-        Ok(results)
     }
+
+    write_guides(&guides, app_handle)?;
+
+    Ok(results)
 }
 
 fn check_guides_need_update<R: Runtime>(
