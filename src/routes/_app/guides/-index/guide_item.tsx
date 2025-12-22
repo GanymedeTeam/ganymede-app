@@ -73,18 +73,35 @@ function GoldChevron({ className }: { className?: string }) {
 }
 
 // Shared icon + flag component
-function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; gameType?: GameType; lang: string }) {
+function GuideIcon({
+  id,
+  nodeImage,
+  gameType,
+  lang,
+}: {
+  id: number
+  nodeImage: string | null
+  gameType?: GameType
+  lang: string
+}) {
   return (
-    <div className="relative flex shrink-0 items-center justify-center">
-      {nodeImage ? (
-        <DownloadImage className="size-14 rounded-lg object-cover" src={nodeImage} />
-      ) : (
-        <GameIcon className="size-14" gameType={gameType ?? 'dofus'} />
-      )}
-      <div className="absolute top-0.5 left-0.5">
-        <FlagPerLang className="size-4" lang={lang} />
-      </div>
-    </div>
+    <TooltipProvider delayDuration={400}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="relative flex shrink-0 items-center justify-center">
+            {nodeImage ? (
+              <DownloadImage className="size-14 rounded-lg object-cover" src={nodeImage} />
+            ) : (
+              <GameIcon className="size-14" gameType={gameType ?? 'dofus'} />
+            )}
+            <div className="absolute top-0.5 left-0.5">
+              <FlagPerLang className="size-4" lang={lang} />
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>ID: {id}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 
@@ -135,7 +152,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
       }}
     >
       <li>
-        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
+        <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1.5">
           <TooltipProvider>
@@ -232,7 +249,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
       <GoldGradientDefs />
       {/* Mobile Layout */}
       <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
-        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
+        <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
         <div className="flex min-w-0 flex-col gap-1 pr-16">
           <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
           <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
@@ -272,7 +289,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
 
       {/* Larger screens */}
       <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
-        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
+        <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1">
           <TooltipProvider>
