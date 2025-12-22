@@ -76,7 +76,7 @@ function Pending() {
   const status = Route.useParams({ select: (p) => p.status })
 
   return (
-    <Page key={`download-${status}`} title={titleByStatus(status)} backButton={<BackButtonLink to="/downloads" />}>
+    <Page backButton={<BackButtonLink to="/downloads" />} key={`download-${status}`} title={titleByStatus(status)}>
       <PageScrollableContent className="flex items-center justify-center">
         <div className="flex grow items-center justify-center">
           <GenericLoader />
@@ -190,7 +190,7 @@ function DownloadGuidePage() {
   const pages = getPaginationRange(page, nextPages, 3)
 
   return (
-    <Page key={`download-${status}`} title={title} backButton={<BackButtonLink to="/downloads" />}>
+    <Page backButton={<BackButtonLink to="/downloads" />} key={`download-${status}`} title={title}>
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
         <AlertDialogContent className="data-[state=open]:fade-in-100 bg-surface-page">
           <AlertDialogHeader>
@@ -212,7 +212,7 @@ function DownloadGuidePage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <PageScrollableContent hasBottomBar={hasPagination} className="px-2" ref={scrollableRef}>
+      <PageScrollableContent className="px-2" hasBottomBar={hasPagination} ref={scrollableRef}>
         <div className="flex grow flex-col text-xs sm:text-sm">
           {guides.data.length === 0 ? (
             <p className="text-center">
@@ -222,36 +222,36 @@ function DownloadGuidePage() {
             <div className="flex flex-col gap-2">
               <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex flex-col gap-2 px-2 py-2 backdrop-blur-sm">
                 <ClearInput
-                  value={searchTerm}
-                  onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-                  onValueChange={setSearchTerm}
+                  autoCapitalize="off"
                   autoComplete="off"
                   autoCorrect="off"
-                  autoCapitalize="off"
+                  onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+                  onValueChange={setSearchTerm}
                   placeholder={t`Rechercher un guide`}
+                  value={searchTerm}
                 />
                 <div className="flex gap-1.5">
                   <Button
+                    className="flex-1"
+                    onClick={() => setGameFilter('all')}
                     size="sm"
                     variant={gameFilter === 'all' ? 'default' : 'outline'}
-                    onClick={() => setGameFilter('all')}
-                    className="flex-1"
                   >
                     <Trans>Tous</Trans>
                   </Button>
                   <Button
+                    className="flex-1"
+                    onClick={() => setGameFilter('dofus')}
                     size="sm"
                     variant={gameFilter === 'dofus' ? 'default' : 'outline'}
-                    onClick={() => setGameFilter('dofus')}
-                    className="flex-1"
                   >
                     Dofus
                   </Button>
                   <Button
+                    className="flex-1"
+                    onClick={() => setGameFilter('wakfu')}
                     size="sm"
                     variant={gameFilter === 'wakfu' ? 'default' : 'outline'}
-                    onClick={() => setGameFilter('wakfu')}
-                    className="flex-1"
                   >
                     Wakfu
                   </Button>
@@ -267,12 +267,12 @@ function DownloadGuidePage() {
 
                 return (
                   <GuideItem
-                    key={guide.id}
-                    variant="server"
+                    currentStep={getProgress(profile, guide.id)?.currentStep ?? 0}
                     guide={guide}
                     intl={intl}
                     isGuideDownloaded={!!isGuideDownloaded}
-                    currentStep={getProgress(profile, guide.id)?.currentStep ?? 0}
+                    key={guide.id}
+                    variant="server"
                   />
                 )
               })}
@@ -289,11 +289,11 @@ function DownloadGuidePage() {
                       <PaginationEllipsis />
                     ) : (
                       <PaginationLink
-                        size="icon"
                         from={Route.fullPath}
-                        to="."
                         params={{ status }}
                         search={{ page: paginationPage }}
+                        size="icon"
+                        to="."
                       >
                         {paginationPage}
                       </PaginationLink>

@@ -148,14 +148,14 @@ export function NotificationAlertDialog() {
   const locale = getLocale(getLang(conf.data.lang))
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog onOpenChange={setIsOpen} open={isOpen}>
       <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
         <AlertDialogHeader aria-describedby={undefined}>
           <AlertDialogTitle>
             <Plural
-              value={totalNotifications}
               one="Message de l'équipe"
               other={`Messages de l'équipe ${currentIndex + 1}/${totalNotifications}`}
+              value={totalNotifications}
             />
           </AlertDialogTitle>
           <p className="text-muted-foreground text-sm">
@@ -163,10 +163,10 @@ export function NotificationAlertDialog() {
           </p>
         </AlertDialogHeader>
         <ScrollArea className="h-full" type="auto">
-          <EditorHtmlParsing html={currentNotification.text} disabled={isDisabled} />
+          <EditorHtmlParsing disabled={isDisabled} html={currentNotification.text} />
         </ScrollArea>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={handleMarkAsRead} disabled={isDisabled} className="[&_svg]:size-4">
+          <AlertDialogAction className="[&_svg]:size-4" disabled={isDisabled} onClick={handleMarkAsRead}>
             {markAsViewed.isPending ? (
               <Trans>En cours...</Trans>
             ) : (

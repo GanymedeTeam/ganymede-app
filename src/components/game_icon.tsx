@@ -11,8 +11,8 @@ interface GameIconProps extends Omit<ComponentProps<'img'>, 'children'> {
 export function GameIcon({ gameType, className, ...props }: GameIconProps) {
   return (
     <img
-      src={gameType === 'wakfu' ? wakfuIconPng : dofusIconPng}
       className={cn('size-8', className)}
+      src={gameType === 'wakfu' ? wakfuIconPng : dofusIconPng}
       {...props}
       alt={gameType === 'wakfu' ? 'wakfu icon' : 'dofus icon'}
     />

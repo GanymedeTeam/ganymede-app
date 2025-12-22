@@ -14,7 +14,6 @@ export function PageScrollableContent({
 }) {
   return (
     <div
-      ref={ref}
       className={cn(
         'scroller flex flex-col overflow-x-hidden overflow-y-scroll pb-3',
         hasTitleBar &&
@@ -29,6 +28,7 @@ export function PageScrollableContent({
           'mt-[36px] mb-[38px] h-[calc(100vh-var(--spacing-titlebar)-30px-36px-38px)] sm:mb-[52px] sm:h-[calc(100vh-var(--spacing-titlebar)-36px-40px-52px)]',
         className,
       )}
+      ref={ref}
       {...props}
     >
       {children}

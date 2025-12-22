@@ -20,11 +20,11 @@ export function HomeFooter() {
       <div className="flex items-center justify-center gap-1">
         {socialLinks.map(({ icon: Icon, size, url, title }) => (
           <button
-            key={url}
-            type="button"
-            title={title}
-            onClick={() => openUrlInBrowser.mutate(url)}
             className="flex size-10 cursor-pointer items-center justify-center rounded-lg border border-border-muted bg-surface-card transition-colors hover:bg-surface-inset/70"
+            key={url}
+            onClick={() => openUrlInBrowser.mutate(url)}
+            title={title}
+            type="button"
           >
             <Icon className={`${size} text-accent`} />
           </button>

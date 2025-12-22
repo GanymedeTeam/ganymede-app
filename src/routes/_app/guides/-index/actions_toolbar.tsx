@@ -110,11 +110,11 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
         {updateAllAtOnceGotError && (
           <GuideUpdateAllResultDialog result={updateAllAtOnce.data}>
             <Button
-              size="icon-sm"
-              variant="destructive"
-              title={t`Certains guides n'ont pas été mis à jour`}
               className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
               disabled={updateAllAtOnce.isPending || guides.isFetching}
+              size="icon-sm"
+              title={t`Certains guides n'ont pas été mis à jour`}
+              variant="destructive"
             >
               <ServerCrashIcon className="size-4" />
             </Button>
@@ -122,7 +122,6 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
         )}
         <TooltipProvider disableHoverableContent>
           <Tooltip
-            open={isHasUpdateTooltipOpen}
             onOpenChange={(open) => {
               if (!hasGuidesNotUpdated) {
                 setHasUpdateTooltipOpen(false)
@@ -132,18 +131,19 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
 
               setHasUpdateTooltipOpen(open)
             }}
+            open={isHasUpdateTooltipOpen}
           >
             <TooltipTrigger asChild>
               <Button
-                size="icon-sm"
-                variant="secondary"
-                onClick={onUpdateAllAtOnce}
-                title={t`Mettre à jour tous les guides`}
                 className={cn(
                   'size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7',
                   hasGuidesNotUpdated && 'text-orange-400',
                 )}
                 disabled={updateAllAtOnce.isPending || guides.isFetching}
+                onClick={onUpdateAllAtOnce}
+                size="icon-sm"
+                title={t`Mettre à jour tous les guides`}
+                variant="secondary"
               >
                 {updateAllAtOnce.isPending ? (
                   <Loader2Icon className="size-4 animate-spin" />
@@ -161,10 +161,10 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              size="icon-sm"
-              variant="secondary"
-              title={t`Plus d'options`}
               className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
+              size="icon-sm"
+              title={t`Plus d'options`}
+              variant="secondary"
             >
               <MenuIcon className="size-4" />
             </Button>
@@ -178,7 +178,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
               <FolderOpenIcon className="size-4" />
               <Trans>Ouvrir le dossier des guides téléchargés</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onRefresh} disabled={isSelectMode}>
+            <DropdownMenuItem disabled={isSelectMode} onClick={onRefresh}>
               <FolderSyncIcon className="size-4" />
               <Trans>Rafraichir le dossier des guides téléchargés</Trans>
             </DropdownMenuItem>

@@ -23,17 +23,12 @@ export function FolderItem({ folder, path, isSelected, onSelect, isSelectMode, c
 
   return (
     <Card
-      key={folder.name}
       aria-selected={isSelected}
-      className={cn('flex items-center gap-2 p-2 xs:px-3 text-xxs xs:text-sm aria-selected:bg-accent sm:text-base')}
       asChild
+      className={cn('flex items-center gap-2 p-2 xs:px-3 text-xxs xs:text-sm aria-selected:bg-accent sm:text-base')}
+      key={folder.name}
     >
       <Link
-        to="/guides"
-        search={{
-          path: fullPath,
-          ...(comesFromGuideMode ? { from: comesFromGuide } : {}),
-        }}
         draggable={false}
         onClick={(evt) => {
           if (!isSelectMode) {
@@ -44,6 +39,11 @@ export function FolderItem({ folder, path, isSelected, onSelect, isSelectMode, c
           evt.stopPropagation()
           onSelect(fullPath)
         }}
+        search={{
+          path: fullPath,
+          ...(comesFromGuideMode ? { from: comesFromGuide } : {}),
+        }}
+        to="/guides"
       >
         <span className="grow">{folder.name}</span>
         <FolderIcon className="size-4 xs:size-6 focus-visible:bg-white" />

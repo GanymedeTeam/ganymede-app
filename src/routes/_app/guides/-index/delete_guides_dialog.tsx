@@ -40,7 +40,7 @@ export function DeleteGuidesDialog({
   children,
 }: DeleteGuidesDialogProps) {
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogTrigger asChild disabled={selectedItems.length === 0}>
         {children}
       </AlertDialogTrigger>
@@ -60,7 +60,7 @@ export function DeleteGuidesDialog({
             {selectedItems.map((guideOrFolder) => {
               if (guideOrFolder.type === 'folder') {
                 return (
-                  <Card key={guideOrFolder.folder} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+                  <Card className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" key={guideOrFolder.folder}>
                     <div className="flex min-w-9 flex-col items-center gap-0.5">
                       <FolderIcon />
                     </div>
@@ -74,12 +74,12 @@ export function DeleteGuidesDialog({
               const guide = guideOrFolder.guide
 
               return (
-                <Card key={guide.id} className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base">
+                <Card className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" key={guide.id}>
                   {USE_GUIDE_IMAGE && guide.node_image && (
                     <div className="flex flex-col items-center justify-center">
                       <DownloadImage
-                        src={guide.node_image}
                         className="size-8 xs:size-10 rounded object-cover sm:size-12"
+                        src={guide.node_image}
                       />
                     </div>
                   )}
@@ -103,7 +103,7 @@ export function DeleteGuidesDialog({
           <AlertDialogCancel className="mt-0 xs:h-9 xs:px-4 xs:text-sm">
             <Trans>Annuler</Trans>
           </AlertDialogCancel>
-          <Button variant="destructive" className="xs:h-9 xs:px-4 xs:text-sm" onClick={onConfirm}>
+          <Button className="xs:h-9 xs:px-4 xs:text-sm" onClick={onConfirm} variant="destructive">
             <Trans>Supprimer</Trans>
           </Button>
         </AlertDialogFooter>

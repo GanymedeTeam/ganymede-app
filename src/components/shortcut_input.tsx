@@ -55,7 +55,7 @@ export function ShortcutInput({ id, label, value, onChange, description }: Short
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <Label htmlFor={id} className="text-xs">
+        <Label className="text-xs" htmlFor={id}>
           {label}
         </Label>
         {description && (
@@ -72,16 +72,13 @@ export function ShortcutInput({ id, label, value, onChange, description }: Short
         )}
       </div>
       <Input
-        id={id}
-        value={recording ? '' : value || ''}
-        readOnly
-        placeholder={recording ? t`Appuyez sur les touches...` : t`Cliquez pour enregistrer`}
         className={recording ? 'cursor-text ring-2 ring-primary' : 'cursor-pointer'}
+        id={id}
+        onBlur={() => setRecording(false)}
         onClick={(evt) => {
           evt.currentTarget.focus()
         }}
         onFocus={() => setRecording(true)}
-        onBlur={() => setRecording(false)}
         onKeyDown={(evt) => {
           evt.preventDefault()
 
@@ -96,6 +93,9 @@ export function ShortcutInput({ id, label, value, onChange, description }: Short
             ;(evt.target as HTMLInputElement).blur()
           }
         }}
+        placeholder={recording ? t`Appuyez sur les touches...` : t`Cliquez pour enregistrer`}
+        readOnly
+        value={recording ? '' : value || ''}
       />
     </div>
   )

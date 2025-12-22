@@ -15,13 +15,13 @@ interface ThemePreviewProps {
 function ThemePreview({ theme, isSelected, onSelect }: ThemePreviewProps) {
   return (
     <button
-      type="button"
-      onClick={onSelect}
       className={cn(
         'relative flex w-full flex-col gap-1 rounded-lg border-2 p-1.5 transition-all',
         isSelected ? 'border-success ring-2 ring-success/30' : 'border-transparent hover:border-border-muted',
       )}
+      onClick={onSelect}
       style={{ backgroundColor: theme.surface }}
+      type="button"
     >
       <div className="flex w-full flex-col gap-0.5">
         <div
@@ -58,7 +58,7 @@ export function ThemeSelector() {
 
   return (
     <div className="flex flex-col gap-2">
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Collapsible onOpenChange={setIsOpen} open={isOpen}>
         <CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between">
           <p className="font-medium text-xs leading-none">
             <Trans>Thème</Trans>
@@ -77,7 +77,7 @@ export function ThemeSelector() {
         <CollapsibleContent className="pt-3">
           <div className="grid grid-cols-4 gap-1.5">
             {themes.map((t) => (
-              <ThemePreview key={t.id} theme={t} isSelected={theme === t.id} onSelect={() => setTheme(t.id)} />
+              <ThemePreview isSelected={theme === t.id} key={t.id} onSelect={() => setTheme(t.id)} theme={t} />
             ))}
           </div>
         </CollapsibleContent>

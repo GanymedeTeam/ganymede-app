@@ -10,10 +10,10 @@ export function CopyOnClick({ className, title, ...props }: SlotProps & { title:
       <Tooltip>
         <TooltipTrigger>
           <Slot
+            className={cn('cursor-pointer', className)}
             onClick={async () => {
               await writeText(title)
             }}
-            className={cn('cursor-pointer', className)}
             {...props}
           />
         </TooltipTrigger>

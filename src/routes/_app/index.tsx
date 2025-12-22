@@ -25,13 +25,13 @@ function Index() {
 
   return (
     <Page
-      title={t`Présentation`}
       actions={
         <PageTitleExtra className="grow text-right" hidden={!version.isSuccess}>
           v{version.data}
           {!isProduction.data && '-dev'}
         </PageTitleExtra>
       }
+      title={t`Présentation`}
     >
       <PageScrollableContent className="p-2">
         <div className="app-bg flex grow flex-col gap-3">

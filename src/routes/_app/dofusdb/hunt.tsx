@@ -10,9 +10,9 @@ export const Route = createFileRoute('/_app/dofusdb/hunt')({
 
     return (
       <iframe
-        src={`https://dofusdb.fr/${lang}/tools/treasure-hunt`}
-        className="size-full grow"
         allow="clipboard-write"
+        className="size-full grow"
+        src={`https://dofusdb.fr/${lang}/tools/treasure-hunt`}
       />
     )
   },

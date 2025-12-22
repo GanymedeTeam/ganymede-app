@@ -33,17 +33,17 @@ export function GuideDownloadButton({ guide }: { guide: Pick<Guide, 'id' | 'stat
   return (
     <>
       <Button
-        size="icon"
+        className="relative"
+        disabled={downloadGuideFromServer.isPending}
         onClick={async () => {
           await fromPromise(
             downloadGuideFromServer.mutateAsync({ guide, folder: guideInDownloads?.folder ?? '' }),
             (err) => err,
           )
         }}
-        disabled={downloadGuideFromServer.isPending}
-        className="relative"
-        variant={downloadGuideFromServer.isError ? 'destructive' : 'secondary'}
+        size="icon"
         title={isGuideNeedUpdate ? t`Mettre à jour le guide` : t`Télécharger le guide`}
+        variant={downloadGuideFromServer.isError ? 'destructive' : 'secondary'}
       >
         {showCheck && <CircleCheckIcon />}
         {downloadGuideFromServer.isPending && <LoaderIcon className="animate-[spin_2s_linear_infinite]" />}

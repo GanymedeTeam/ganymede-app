@@ -96,7 +96,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
             >
               <div>
                 <GuideNodeImage guide={guide} />
-                <span className="-translate-y-0.5 hidden truncate sm:inline">{guide.name}</span>
+                <span className="-translate-y-0.5 xs:inline hidden truncate">{guide.name}</span>
                 {/* Progress bar */}
                 <div className="absolute bottom-0 left-0 h-0.5 w-full">
                   <div className="size-full bg-black/20">

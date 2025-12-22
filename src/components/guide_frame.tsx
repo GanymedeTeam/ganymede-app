@@ -11,5 +11,5 @@ export function GuideFrame({
   guideId: number
   stepIndex: number
 }) {
-  return <EditorHtmlParsing html={html} guideId={guideId} stepIndex={stepIndex} className={className} />
+  return <EditorHtmlParsing className={className} guideId={guideId} html={html} stepIndex={stepIndex} />
 }

@@ -21,7 +21,6 @@ export function DeepLinkGuideDownloadDialog() {
 
   return (
     <AlertDialog
-      open={dialogOpen}
       onOpenChange={(open) => {
         if (isDownloading) {
           setDialogOpen(true)
@@ -31,6 +30,7 @@ export function DeepLinkGuideDownloadDialog() {
 
         setDialogOpen(open)
       }}
+      open={dialogOpen}
     >
       <AlertDialogContent>
         <AlertDialogHeader>

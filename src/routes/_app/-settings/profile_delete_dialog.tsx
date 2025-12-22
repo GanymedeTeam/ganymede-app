@@ -30,7 +30,7 @@ export function ProfileDeleteDialog<T extends string | null>({
   const profile = profileId ? getProfileById(conf.data.profiles, profileId) : undefined
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
+    <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent className="max-w-sm">
         <AlertDialogHeader>
           <AlertDialogTitle>{profile && <Trans>Profil "{profile.name}"</Trans>}</AlertDialogTitle>
@@ -42,7 +42,7 @@ export function ProfileDeleteDialog<T extends string | null>({
           <AlertDialogCancel>
             <Trans>Annuler</Trans>
           </AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={() => onDelete(profileId)}>
+          <AlertDialogAction onClick={() => onDelete(profileId)} variant="destructive">
             <Trans>Supprimer</Trans>
           </AlertDialogAction>
         </AlertDialogFooter>

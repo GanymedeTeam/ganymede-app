@@ -47,10 +47,10 @@ export function AlmanaxFrame() {
   return (
     <>
       <div className="flex gap-1">
-        <Button size="icon-sm" onClick={onPreviousDay} className="sticky top-1 z-11 self-start">
+        <Button className="sticky top-1 z-11 self-start" onClick={onPreviousDay} size="icon-sm">
           <ChevronLeftIcon />
         </Button>
-        <Button size="icon-sm" onClick={onNextDay} className="sticky top-1 z-11 self-start">
+        <Button className="sticky top-1 z-11 self-start" onClick={onNextDay} size="icon-sm">
           <ChevronRightIcon />
         </Button>
         <div className="sticky top-0 z-10 flex grow items-center gap-2 font-semibold text-blue-300">
@@ -67,9 +67,8 @@ export function AlmanaxFrame() {
               Lvl:{' '}
               <InvisibleInput
                 className="text-left"
-                min={1}
                 max={200}
-                value={almanaxLevel}
+                min={1}
                 onChange={setAlmanaxLevel}
                 onSubmit={(value) => {
                   if (value === '') {
@@ -97,6 +96,7 @@ export function AlmanaxFrame() {
                   })
                   setAlmanaxLevel(level.toString())
                 }}
+                value={almanaxLevel}
               />
             </span>
           </div>
@@ -110,8 +110,8 @@ export function AlmanaxFrame() {
               <div className="flex justify-center gap-2">
                 {almanax.data.img && (
                   <DownloadImage
-                    src={almanax.data.img}
                     className="mr-0 size-10 self-slot-[loader]:p-2 self-slot-[loader]:text-yellow-300"
+                    src={almanax.data.img}
                   />
                 )}
                 <div className="flex flex-col gap-2">
@@ -123,11 +123,11 @@ export function AlmanaxFrame() {
                   </CopyOnClick>
                   <div className="flex gap-4">
                     <div className="flex items-center justify-center gap-2 text-xs">
-                      <img src={xpIcon} className="h-3 select-none" draggable={false} />
+                      <img className="h-3 select-none" draggable={false} src={xpIcon} />
                       <span>{almanax.data.experience.toLocaleString()}</span>
                     </div>
                     <div className="flex items-center justify-center gap-2 text-xs">
-                      <img src={kamasIcon} className="h-3 select-none" draggable={false} />
+                      <img className="h-3 select-none" draggable={false} src={kamasIcon} />
                       <span>{almanax.data.kamas.toLocaleString()} </span>
                     </div>
                   </div>

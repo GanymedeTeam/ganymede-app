@@ -41,18 +41,18 @@ export function WelcomeCard() {
 
       <div className="flex flex-col gap-2">
         <Link
-          to="/downloads/$status"
+          className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-muted bg-surface-inset px-4 py-2.5 font-semibold text-foreground text-sm transition-colors hover:bg-surface-inset/70"
           params={{ status: 'gp' }}
           search={{ page: 1 }}
-          className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-border-muted bg-surface-inset px-4 py-2.5 font-semibold text-foreground text-sm transition-colors hover:bg-surface-inset/70"
+          to="/downloads/$status"
         >
           <Trans>Voir les guides</Trans>
         </Link>
         <button
-          type="button"
-          onClick={() => openUrlInBrowser.mutate(`https://${GANYMEDE_HOST}/guides`)}
           className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-accent-light via-accent to-accent-dark px-4 py-2.5 font-semibold text-accent-foreground text-sm transition-opacity hover:opacity-90"
+          onClick={() => openUrlInBrowser.mutate(`https://${GANYMEDE_HOST}/guides`)}
           title={t`Accéder au site officiel`}
+          type="button"
         >
           <Trans>Créer un guide</Trans>
           <ExternalLinkIcon className="size-4" />

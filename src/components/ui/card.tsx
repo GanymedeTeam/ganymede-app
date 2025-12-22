@@ -12,9 +12,9 @@ function Card({
 
   return (
     <Comp
-      ref={ref}
-      data-slot="card"
       className={cn('rounded-xl border border-border-muted bg-surface-card text-card-foreground shadow-sm', className)}
+      data-slot="card"
+      ref={ref}
       {...props}
     />
   )
@@ -22,16 +22,16 @@ function Card({
 
 function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
-    <div ref={ref} data-slot="card-header" className={cn('flex flex-col gap-y-1.5 p-3 xs:p-6', className)} {...props} />
+    <div className={cn('flex flex-col gap-y-1.5 p-3 xs:p-6', className)} data-slot="card-header" ref={ref} {...props} />
   )
 }
 
 function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
     <div
-      ref={ref}
-      data-slot="card-title"
       className={cn('text-sm xs:text-base leading-none tracking-tight', className)}
+      data-slot="card-title"
+      ref={ref}
       {...props}
     />
   )
@@ -47,9 +47,9 @@ function CardDescription({
 
   return (
     <Comp
-      ref={ref}
-      data-slot="card-description"
       className={cn('text-muted-foreground text-xs xs:text-sm', className)}
+      data-slot="card-description"
+      ref={ref}
       {...props}
     />
   )
@@ -58,9 +58,9 @@ function CardDescription({
 function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
     <div
-      ref={ref}
-      data-slot="card-content"
       className={cn('p-3 xs:p-6 pt-0 text-xs xs:text-base', className)}
+      data-slot="card-content"
+      ref={ref}
       {...props}
     />
   )
@@ -68,7 +68,7 @@ function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'
 
 function CardFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
-    <div ref={ref} data-slot="card-footer" className={cn('flex items-center p-3 xs:p-6 pt-0', className)} {...props} />
+    <div className={cn('flex items-center p-3 xs:p-6 pt-0', className)} data-slot="card-footer" ref={ref} {...props} />
   )
 }
 

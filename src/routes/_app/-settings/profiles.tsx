@@ -37,7 +37,6 @@ export function Profiles() {
 
   return (
     <Popover
-      open={open}
       onOpenChange={(open) => {
         setOpen(open)
 
@@ -45,16 +44,15 @@ export function Profiles() {
           setEditProfileNameId(null)
         }
       }}
+      open={open}
     >
       <PopoverTrigger asChild>
-        <Button role="combobox" aria-expanded={open} className={selectVariants()}>
+        <Button aria-expanded={open} className={selectVariants()} role="combobox">
           {currentProfile?.name ?? 'Select profile'}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <ProfileEditNameDialog
-        profileId={profileEditNameId}
-        open={openProfileEditNameDialog}
         onOpenChange={(open) => {
           if (!open) {
             setTimeout(() => {
@@ -64,10 +62,10 @@ export function Profiles() {
 
           setOpenProfileEditNameDialog(open)
         }}
+        open={openProfileEditNameDialog}
+        profileId={profileEditNameId}
       />
       <ProfileDeleteDialog
-        profileId={profileDeletionOpenId}
-        open={openProfileDeleteDialog}
         onDelete={async (profileId) => {
           const index = profiles.findIndex((p) => p.id === profileId)
           const nextProfileToUse =
@@ -94,6 +92,8 @@ export function Profiles() {
 
           setOpenProfileDeleteDialog(open)
         }}
+        open={openProfileDeleteDialog}
+        profileId={profileDeletionOpenId}
       />
       <PopoverContent className="w-[calc(100vw-2rem)] max-w-sm p-0">
         <Command
@@ -118,21 +118,19 @@ export function Profiles() {
               {profiles.map((profile) => {
                 return (
                   <CommandItem
+                    className="group/command-item"
                     key={profile.id}
-                    value={profile.id}
                     onSelect={(currentValue) => {
                       setConf.mutate({
                         ...conf.data,
                         profileInUse: currentValue,
                       })
                     }}
-                    className="group/command-item"
+                    value={profile.id}
                   >
                     <div className="flex w-full items-center gap-1">
                       <span>{profile.name}</span>
                       <Button
-                        size="icon-sm"
-                        variant="ghost"
                         className="invisible group-hover/command-item:visible"
                         onClick={(e) => {
                           e.preventDefault()
@@ -140,6 +138,8 @@ export function Profiles() {
                           setEditProfileNameId(profile.id)
                           setOpenProfileEditNameDialog(true)
                         }}
+                        size="icon-sm"
+                        variant="ghost"
                       >
                         <PenIcon />
                       </Button>
@@ -148,8 +148,6 @@ export function Profiles() {
                       className={cn('ml-2 size-4', currentProfile.id === profile.id ? 'opacity-100' : 'opacity-0')}
                     />
                     <Button
-                      size="icon-sm"
-                      variant="destructive"
                       disabled={profiles.length <= 1}
                       onClick={(evt) => {
                         evt.stopPropagation()
@@ -157,6 +155,8 @@ export function Profiles() {
                         setOpenProfileDeleteDialog(true)
                         setProfileDeletionOpenId(profile.id)
                       }}
+                      size="icon-sm"
+                      variant="destructive"
                     >
                       <TrashIcon />
                     </Button>

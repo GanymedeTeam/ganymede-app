@@ -68,17 +68,17 @@ function Pending() {
 
   return (
     <Page
-      title={comesFromGuide ? t`Choisissez un guide` : t`Guides ${createPagePath(path)}`}
-      key="guide-page"
-      className="slot-[page-title-text]:whitespace-nowrap"
-      backButton={path !== '' && <BackButtonLink to="/guides" search={{ path }} disabled />}
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
-          <Button size="icon-sm" variant="secondary" className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7">
+          <Button className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7" size="icon-sm" variant="secondary">
             <MenuIcon />
           </Button>
         </div>
       }
+      backButton={path !== '' && <BackButtonLink disabled search={{ path }} to="/guides" />}
+      className="slot-[page-title-text]:whitespace-nowrap"
+      key="guide-page"
+      title={comesFromGuide ? t`Choisissez un guide` : t`Guides ${createPagePath(path)}`}
     >
       <PageScrollableContent className="flex items-center justify-center">
         <div className="flex items-center justify-center">
@@ -201,45 +201,45 @@ function GuidesPage() {
 
   return (
     <Page
-      key="guide-page"
-      className="slot-[page-title-text]:whitespace-nowrap"
-      title={comesFromGuide ? t`Choisissez un guide` : t`Mes guides ${createPagePath(path)}`}
+      actions={<ActionsToolbar isSelectMode={isSelect} onEnterSelectMode={onEnterSelectMode} path={path} />}
       backButton={
         path !== '' ? (
           <BackButtonLink
-            to="/guides"
             search={{ path: pathsWithoutLast.join('/'), ...(comesFromGuide ? { from: comesFrom } : {}) }}
+            to="/guides"
           />
         ) : (
           comesFromGuide && (
             <BackButtonLink
-              to="/guides/$id"
               params={{ id: comesFrom }}
               search={{ step: getStepOr(profile, comesFrom, 0) }}
+              to="/guides/$id"
             />
           )
         )
       }
-      actions={<ActionsToolbar path={path} onEnterSelectMode={onEnterSelectMode} isSelectMode={isSelect} />}
+      className="slot-[page-title-text]:whitespace-nowrap"
+      key="guide-page"
+      title={comesFromGuide ? t`Choisissez un guide` : t`Mes guides ${createPagePath(path)}`}
     >
       <PageScrollableContent className="px-2">
         <div className="flex flex-col gap-2">
           {isSelect ? (
             <SelectionToolbar
-              selectedItems={selectedItemsToDelete}
               onCancel={onExitSelectMode}
               onDeleteComplete={onDeleteComplete}
+              selectedItems={selectedItemsToDelete}
             />
           ) : (
             <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 px-2 py-2 backdrop-blur-sm">
               <ClearInput
-                value={searchTerm}
-                onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-                onValueChange={setSearchTerm}
                 autoComplete="off"
                 autoCorrect="off"
-                placeholder={t`Rechercher un guide`}
                 className="h-10 rounded-xl border border-border-muted bg-surface-card px-4 text-sm placeholder:text-muted-foreground/70"
+                onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+                onValueChange={setSearchTerm}
+                placeholder={t`Rechercher un guide`}
+                value={searchTerm}
               />
             </div>
           )}
@@ -251,13 +251,13 @@ function GuidesPage() {
 
               return (
                 <FolderItem
-                  key={guide.name}
-                  folder={guide}
-                  path={path}
-                  isSelected={isThisFolderSelected}
-                  onSelect={onSelectFolder}
-                  isSelectMode={isSelect}
                   comesFromGuide={comesFrom}
+                  folder={guide}
+                  isSelected={isThisFolderSelected}
+                  isSelectMode={isSelect}
+                  key={guide.name}
+                  onSelect={onSelectFolder}
+                  path={path}
                 />
               )
             }
@@ -266,26 +266,26 @@ function GuidesPage() {
 
             return (
               <GuideItem
-                key={guide.id}
-                variant="local"
                 guide={guide}
                 isSelected={isThisGuideSelected}
-                onSelect={onSelectGuide}
                 isSelectMode={isSelect}
+                key={guide.id}
+                onSelect={onSelectGuide}
+                variant="local"
               />
             )
           })}
 
           {!isSelect && (
             <Link
-              to="/downloads/$status"
+              className="flex gap-3 rounded-xl border border-border-muted bg-surface-card p-3 shadow-[0_5px_14px_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70"
               params={{ status: 'gp' }}
               search={{ page: 1 }}
-              className="flex gap-3 rounded-xl border border-border-muted bg-surface-card p-3 shadow-[0_5px_14px_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70"
+              to="/downloads/$status"
             >
               {/* Image */}
               <div className="relative flex shrink-0 items-center justify-center">
-                <img src={addGuideImage} alt="Parcourir le catalogue" className="size-14 rounded-lg object-cover" />
+                <img alt="Parcourir le catalogue" className="size-14 rounded-lg object-cover" src={addGuideImage} />
               </div>
 
               {/* Content */}
@@ -299,9 +299,9 @@ function GuidesPage() {
               </div>
 
               <div className="flex items-center pl-1">
-                <svg width="0" height="0" className="absolute">
+                <svg className="absolute" height="0" width="0">
                   <defs>
-                    <linearGradient id="goldGradientCatalog" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <linearGradient id="goldGradientCatalog" x1="0%" x2="100%" y1="0%" y2="100%">
                       <stop offset="0%" stopColor="#fceaa8ff" />
                       <stop offset="50%" stopColor="#e7c272ff" />
                       <stop offset="100%" stopColor="#D7B363" />
@@ -309,13 +309,13 @@ function GuidesPage() {
                   </defs>
                 </svg>
                 <svg
-                  viewBox="0 0 24 24"
                   className="size-7"
                   fill="none"
                   stroke="url(#goldGradientCatalog)"
-                  strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  viewBox="0 0 24 24"
                 >
                   <path d="m9 18 6-6-6-6" />
                 </svg>

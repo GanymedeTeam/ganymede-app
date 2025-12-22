@@ -42,8 +42,8 @@ export function ProfileEditNameDialog<T extends string | null>({
   }, [profileId, profile?.name])
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="max-w-sm" asChild>
+    <AlertDialog onOpenChange={onOpenChange} open={open}>
+      <AlertDialogContent asChild className="max-w-sm">
         <form
           onSubmit={async (e) => {
             e.preventDefault()
@@ -80,14 +80,14 @@ export function ProfileEditNameDialog<T extends string | null>({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <Input
-            type="text"
-            name="profile-name"
-            value={newProfileName}
-            onChange={(e) => setNewProfileName(e.target.value)}
-            className="min-w-auto border-none bg-surface-card invalid:ring-2 invalid:ring-destructive focus:invalid:ring-destructive"
             autoFocus={!!profileId}
-            required
+            className="min-w-auto border-none bg-surface-card invalid:ring-2 invalid:ring-destructive focus:invalid:ring-destructive"
+            name="profile-name"
+            onChange={(e) => setNewProfileName(e.target.value)}
             pattern=".+"
+            required
+            type="text"
+            value={newProfileName}
           />
           <AlertDialogFooter>
             <AlertDialogCancel>

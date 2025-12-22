@@ -99,7 +99,6 @@ function GuideIdPage() {
   return (
     <PageContent key={`guide-step-${search.step}`}>
       <Tabs
-        value={params.id.toString()}
         onValueChange={(newTab) => {
           navigate({
             to: '/guides/$id',
@@ -111,6 +110,7 @@ function GuideIdPage() {
             },
           })
         }}
+        value={params.id.toString()}
       >
         <div className="flex w-full bg-surface-card text-primary-foreground-800">
           <TabsList
@@ -118,7 +118,7 @@ function GuideIdPage() {
             data-multiple={tabs.length > 1 ? 'true' : 'false'}
           >
             {tabs.map((guideId) => (
-              <GuideTabsTrigger key={guideId} id={guideId} currentId={params.id} />
+              <GuideTabsTrigger currentId={params.id} id={guideId} key={guideId} />
             ))}
           </TabsList>
 
@@ -126,13 +126,13 @@ function GuideIdPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="icon" className="min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
+                  <Button asChild className="min-h-6 min-w-6 shrink-0 self-center" size="icon" variant="secondary">
                     <Link
-                      to="/guides"
+                      draggable={false}
                       search={{
                         path: '',
                       }}
-                      draggable={false}
+                      to="/guides"
                     >
                       <LayoutListIcon />
                     </Link>
@@ -146,14 +146,14 @@ function GuideIdPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="icon" className="min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
+                  <Button asChild className="min-h-6 min-w-6 shrink-0 self-center" size="icon" variant="secondary">
                     <Link
-                      to="/guides"
+                      draggable={false}
                       search={{
                         path: '',
                         from: params.id,
                       }}
-                      draggable={false}
+                      to="/guides"
                     >
                       <PlusIcon />
                     </Link>

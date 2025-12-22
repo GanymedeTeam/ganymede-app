@@ -8,6 +8,6 @@ export const Route = createFileRoute('/_app/dofusdb/map')({
     const conf = useSuspenseQuery(confQuery)
     const lang = getLang(conf.data.lang).toLowerCase()
 
-    return <iframe src={`https://dofusdb.fr/${lang}/tools/map`} className="size-full grow" allow="clipboard-write" />
+    return <iframe allow="clipboard-write" className="size-full grow" src={`https://dofusdb.fr/${lang}/tools/map`} />
   },
 })

@@ -52,10 +52,10 @@ export function AlmanaxCard() {
       <div className="flex items-center justify-between gap-2">
         {/* Nav buttons */}
         <div className="flex items-center gap-1">
-          <Button size="icon-sm" variant="ghost" onClick={onPreviousDay} className="size-8 hover:bg-surface-inset/70">
+          <Button className="size-8 hover:bg-surface-inset/70" onClick={onPreviousDay} size="icon-sm" variant="ghost">
             <ChevronLeftIcon className="size-4" />
           </Button>
-          <Button size="icon-sm" variant="ghost" onClick={onNextDay} className="size-8 hover:bg-surface-inset/70">
+          <Button className="size-8 hover:bg-surface-inset/70" onClick={onNextDay} size="icon-sm" variant="ghost">
             <ChevronRightIcon className="size-4" />
           </Button>
         </div>
@@ -68,11 +68,11 @@ export function AlmanaxCard() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
+                className="size-8 hover:bg-surface-inset/70 disabled:opacity-30"
+                disabled={isToday}
+                onClick={onGoToday}
                 size="icon-sm"
                 variant="ghost"
-                onClick={onGoToday}
-                disabled={isToday}
-                className="size-8 hover:bg-surface-inset/70 disabled:opacity-30"
               >
                 <Undo2Icon className="size-4" />
               </Button>
@@ -90,9 +90,8 @@ export function AlmanaxCard() {
         <div className="flex cursor-text items-center rounded-md border border-border-muted bg-surface-inset px-2 py-1 transition-colors focus-within:border-accent hover:border-accent/50">
           <InvisibleInput
             className="w-8 text-left font-semibold text-foreground"
-            min={1}
             max={200}
-            value={almanaxLevel}
+            min={1}
             onChange={setAlmanaxLevel}
             onSubmit={(value) => {
               if (value === '') {
@@ -120,6 +119,7 @@ export function AlmanaxCard() {
               })
               setAlmanaxLevel(level.toString())
             }}
+            value={almanaxLevel}
           />
         </div>
       </div>
@@ -138,8 +138,8 @@ export function AlmanaxCard() {
             <div className="flex items-center gap-3">
               {almanax.data.img && (
                 <DownloadImage
-                  src={almanax.data.img}
                   className="size-12 rounded-lg bg-surface-inset self-slot-[loader]:p-2 self-slot-[loader]:text-accent"
+                  src={almanax.data.img}
                 />
               )}
               <div className="flex min-w-0 flex-col gap-1">
@@ -153,11 +153,11 @@ export function AlmanaxCard() {
                 {/* XP & Kamas */}
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground text-xs">
                   <div className="flex items-center gap-1.5">
-                    <img src={xpIcon} className="h-3.5 select-none" draggable={false} alt="XP" />
+                    <img alt="XP" className="h-3.5 select-none" draggable={false} src={xpIcon} />
                     <span>{almanax.data.experience.toLocaleString()}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <img src={kamasIcon} className="h-3.5 select-none" draggable={false} alt="Kamas" />
+                    <img alt="Kamas" className="h-3.5 select-none" draggable={false} src={kamasIcon} />
                     <span>{almanax.data.kamas.toLocaleString()}</span>
                   </div>
                 </div>

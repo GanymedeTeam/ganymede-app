@@ -77,11 +77,11 @@ function AppOldVersionPage() {
 
       {updateState === 'idle' && (
         <a
-          href={discordChannels[getLang(conf.data.lang)]}
-          draggable={false}
-          target="_blank"
-          rel="noreferrer noopener"
           className="group text-slate-300 leading-5"
+          draggable={false}
+          href={discordChannels[getLang(conf.data.lang)]}
+          rel="noreferrer noopener"
+          target="_blank"
         >
           <Trans>
             <span>
@@ -98,7 +98,7 @@ function AppOldVersionPage() {
           <p>
             <Trans>Mise à jour en cours.</Trans>
           </p>
-          <Progress value={progress} max={100} />
+          <Progress max={100} value={progress} />
         </>
       ) : updateState === 'finished' ? (
         <p>
@@ -106,12 +106,12 @@ function AppOldVersionPage() {
         </p>
       ) : (
         <Button
-          size="lg"
+          disabled={startUpdate.isPending || startUpdate.isSuccess}
           onClick={() => {
             setUpdateState('downloading')
             startUpdate.mutate()
           }}
-          disabled={startUpdate.isPending || startUpdate.isSuccess}
+          size="lg"
         >
           <Trans>Télécharger la version {toVersion}</Trans>
           {startUpdate.isError && <Trans>Il semblerait que la mise à jour ait eu un problème.</Trans>}

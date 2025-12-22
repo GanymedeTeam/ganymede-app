@@ -54,17 +54,17 @@ export function ErrorComponent({ error, info }: ErrorComponentProps) {
   }
 
   return (
-    <Page title={`Erreur`} className="slot-[page-title]:top-0">
+    <Page className="slot-[page-title]:top-0" title={`Erreur`}>
       <PageScrollableContent className="flex h-app-without-header flex-col gap-4 px-4 py-2">
         {(conf.isError && conf.error instanceof GetConfError) || location.pathname.includes('/settings') ? (
           <section>
             <SelectLangLabel htmlFor="select-lang" />
             <SelectLangSelect
               id="select-lang"
-              value={lang}
               onValueChange={(value) => {
                 setLang(value as ConfLang)
               }}
+              value={lang}
             />
           </section>
         ) : null}

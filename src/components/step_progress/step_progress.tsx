@@ -66,13 +66,13 @@ export function StepProgress({
 
   return (
     <div className="flex min-w-0 flex-1 items-center gap-1">
-      <ShortcutTooltip shortcut={conf.shortcuts?.goPreviousStep} description={t`Précédent`}>
+      <ShortcutTooltip description={t`Précédent`} shortcut={conf.shortcuts?.goPreviousStep}>
         <Button
+          className="size-6 shrink-0 opacity-60 hover:opacity-100"
+          disabled={currentIndex === 0}
+          onClick={onPrevious}
           size="icon"
           variant="ghost"
-          onClick={onPrevious}
-          disabled={currentIndex === 0}
-          className="size-6 shrink-0 opacity-60 hover:opacity-100"
         >
           <ChevronLeftIcon className="size-3!" />
         </Button>
@@ -102,19 +102,19 @@ export function StepProgress({
               </span>
             </div>
           </TooltipTrigger>
-          <TooltipContent side="top" className="px-2 py-1 text-xs">
+          <TooltipContent className="px-2 py-1 text-xs" side="top">
             {t`Étape ${current}`}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
-      <ShortcutTooltip shortcut={conf.shortcuts?.goNextStep} description={t`Suivant`}>
+      <ShortcutTooltip description={t`Suivant`} shortcut={conf.shortcuts?.goNextStep}>
         <Button
+          className="size-6 shrink-0 opacity-60 hover:opacity-100"
+          disabled={currentIndex === maxIndex}
+          onClick={onNext}
           size="icon"
           variant="ghost"
-          onClick={onNext}
-          disabled={currentIndex === maxIndex}
-          className="size-6 shrink-0 opacity-60 hover:opacity-100"
         >
           <ChevronRightIcon className="size-3!" />
         </Button>

@@ -44,9 +44,9 @@ const iconVariants = cva('size-6', {
 function GoldChevron() {
   return (
     <>
-      <svg width="0" height="0" className="absolute">
+      <svg className="absolute" height="0" width="0">
         <defs>
-          <linearGradient id="goldGradientChevron" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="goldGradientChevron" x1="0%" x2="100%" y1="0%" y2="100%">
             <stop offset="0%" stopColor="var(--color-accent-light, #fceaa8)" />
             <stop offset="50%" stopColor="var(--color-accent-DEFAULT, #e7c272)" />
             <stop offset="100%" stopColor="var(--color-accent-dark, #D7B363)" />
@@ -54,13 +54,13 @@ function GoldChevron() {
         </defs>
       </svg>
       <svg
-        viewBox="0 0 24 24"
         className="size-6"
         fill="none"
         stroke="url(#goldGradientChevron)"
-        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="2.5"
+        viewBox="0 0 24 24"
       >
         <path d="m9 18 6-6-6-6" />
       </svg>
@@ -78,11 +78,11 @@ interface CategoryCardProps extends VariantProps<typeof iconContainerVariants> {
 function CategoryCard({ status, icon, title, description, variant }: CategoryCardProps) {
   return (
     <Link
-      to="/downloads/$status"
-      params={{ status }}
-      search={{ page: 1 }}
       className="flex items-center gap-4 rounded-xl border border-border-muted bg-surface-card p-4 shadow-[0_5px_14px_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70"
       draggable={false}
+      params={{ status }}
+      search={{ page: 1 }}
+      to="/downloads/$status"
     >
       {/* Icon */}
       <div className={cn(iconContainerVariants({ variant }))}>
@@ -111,35 +111,35 @@ function DownloadIndex() {
       <PageScrollableContent className="p-3">
         <div className="flex flex-col gap-2">
           <CategoryCard
-            status="gp"
-            variant="gp"
-            icon={<BookOpenIcon />}
-            title={<Trans>Guides principaux</Trans>}
             description={<Trans>Les guides créés par l'équipe Ganymède</Trans>}
+            icon={<BookOpenIcon />}
+            status="gp"
+            title={<Trans>Guides principaux</Trans>}
+            variant="gp"
           />
 
           <CategoryCard
-            status="certified"
-            variant="certified"
-            icon={<TrophyIcon />}
-            title={<Trans>Guides certifiés</Trans>}
             description={<Trans>Les guides de la communauté, validés par l'équipe Ganymède</Trans>}
+            icon={<TrophyIcon />}
+            status="certified"
+            title={<Trans>Guides certifiés</Trans>}
+            variant="certified"
           />
 
           <CategoryCard
-            status="public"
-            variant="public"
-            icon={<GlobeIcon />}
-            title={<Trans>Guides publics</Trans>}
             description={<Trans>Les guides partagés par la communauté</Trans>}
+            icon={<GlobeIcon />}
+            status="public"
+            title={<Trans>Guides publics</Trans>}
+            variant="public"
           />
 
           <CategoryCard
-            status="draft"
-            variant="draft"
-            icon={<PenToolIcon />}
-            title={<Trans>Guides draft</Trans>}
             description={<Trans>Les guides en cours d'écriture</Trans>}
+            icon={<PenToolIcon />}
+            status="draft"
+            title={<Trans>Guides draft</Trans>}
+            variant="draft"
           />
         </div>
       </PageScrollableContent>

@@ -43,9 +43,9 @@ type GuideItemProps = LocalGuideItemProps | ServerGuideItemProps
 // Single SVG gradient definition - rendered once, reused via url(#goldGradient)
 function GoldGradientDefs() {
   return (
-    <svg width="0" height="0" className="absolute">
+    <svg className="absolute" height="0" width="0">
       <defs>
-        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="goldGradient" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="var(--color-accent-light, #fceaa8)" />
           <stop offset="50%" stopColor="var(--color-accent-DEFAULT, #e7c272)" />
           <stop offset="100%" stopColor="var(--color-accent-dark, #D7B363)" />
@@ -59,13 +59,13 @@ function GoldGradientDefs() {
 function GoldChevron({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 24 24"
       className={cn('size-7', className)}
       fill="none"
       stroke="url(#goldGradient)"
-      strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
     >
       <path d="m9 18 6-6-6-6" />
     </svg>
@@ -77,12 +77,12 @@ function GuideIcon({ nodeImage, gameType, lang }: { nodeImage: string | null; ga
   return (
     <div className="relative flex shrink-0 items-center justify-center">
       {nodeImage ? (
-        <DownloadImage src={nodeImage} className="size-14 rounded-lg object-cover" />
+        <DownloadImage className="size-14 rounded-lg object-cover" src={nodeImage} />
       ) : (
-        <GameIcon gameType={gameType ?? 'dofus'} className="size-14" />
+        <GameIcon className="size-14" gameType={gameType ?? 'dofus'} />
       )}
       <div className="absolute top-0.5 left-0.5">
-        <FlagPerLang lang={lang} className="size-4" />
+        <FlagPerLang className="size-4" lang={lang} />
       </div>
     </div>
   )
@@ -119,12 +119,13 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 
   return (
     <Card
-      key={guide.id}
       aria-selected={isSelected}
+      asChild
       className={guideItemVariants({
         variant: 'local',
         className: cn(isSelected && 'cursor-pointer **:cursor-pointer'),
       })}
+      key={guide.id}
       onClick={(evt) => {
         if (isSelectMode) {
           evt.preventDefault()
@@ -132,10 +133,9 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
           onSelect(guide)
         }
       }}
-      asChild
     >
       <li>
-        <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
+        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1.5">
           <TooltipProvider>
@@ -143,7 +143,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
               <TooltipTrigger asChild>
                 <h3 className="line-clamp-2 w-full cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
               </TooltipTrigger>
-              <TooltipContent side="top" className="max-w-[250px]">
+              <TooltipContent className="max-w-[250px]" side="top">
                 {guide.name}
               </TooltipContent>
             </Tooltip>
@@ -181,22 +181,22 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <svg viewBox="0 0 24 24" className="size-6 cursor-help" fill="none">
+                  <svg className="size-6 cursor-help" fill="none" viewBox="0 0 24 24">
                     <circle
                       cx="12"
                       cy="12"
+                      fill={isFinished ? 'url(#goldGradient)' : percentage === 0 ? '#6B7280' : 'none'}
                       r="10"
                       stroke={percentage > 0 ? 'url(#goldGradient)' : 'none'}
                       strokeWidth="2"
-                      fill={isFinished ? 'url(#goldGradient)' : percentage === 0 ? '#6B7280' : 'none'}
                     />
                     <path
                       d="M8 12.5L11 15.5L16.5 9"
+                      fill="none"
                       stroke={isFinished ? '#21303C' : percentage > 0 ? 'url(#goldGradient)' : '#3a3f47'}
-                      strokeWidth={isFinished ? '2.5' : '2'}
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      fill="none"
+                      strokeWidth={isFinished ? '2.5' : '2'}
                     />
                   </svg>
                 </TooltipTrigger>
@@ -212,10 +212,10 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
               </Tooltip>
             </TooltipProvider>
             <Link
-              to="/guides/$id"
+              className="flex items-center"
               params={{ id: guide.id }}
               search={{ step: currentStepIndex }}
-              className="flex items-center"
+              to="/guides/$id"
             >
               <GoldChevron />
             </Link>
@@ -228,11 +228,11 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
-    <Card key={guide.id} className={guideItemVariants({ variant: 'server' })}>
+    <Card className={guideItemVariants({ variant: 'server' })} key={guide.id}>
       <GoldGradientDefs />
       {/* Mobile Layout */}
       <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
-        <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
+        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
         <div className="flex min-w-0 flex-col gap-1 pr-16">
           <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
           <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
@@ -259,11 +259,11 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
         <div className="absolute top-2 right-2 flex items-center gap-1">
           <GuideDownloadButton guide={guide} />
           <Link
-            to="/guides/$id"
-            params={{ id: guide.id }}
-            search={{ step: currentStep }}
             className={cn('flex items-center', !isGuideDownloaded && 'pointer-events-none opacity-40')}
             draggable={false}
+            params={{ id: guide.id }}
+            search={{ step: currentStep }}
+            to="/guides/$id"
           >
             <GoldChevron />
           </Link>
@@ -272,7 +272,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
 
       {/* Larger screens */}
       <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
-        <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
+        <GuideIcon gameType={guide.game_type} lang={guide.lang} nodeImage={guide.node_image} />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1">
           <TooltipProvider>
@@ -280,7 +280,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
               <TooltipTrigger asChild>
                 <h3 className="line-clamp-2 cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
               </TooltipTrigger>
-              <TooltipContent side="top" className="max-w-[250px]">
+              <TooltipContent className="max-w-[250px]" side="top">
                 {guide.name}
               </TooltipContent>
             </Tooltip>
@@ -310,11 +310,11 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
         <div className="flex items-center gap-1 pl-1">
           <GuideDownloadButton guide={guide} />
           <Link
-            to="/guides/$id"
-            params={{ id: guide.id }}
-            search={{ step: currentStep }}
             className={cn('flex items-center', !isGuideDownloaded && 'pointer-events-none opacity-40')}
             draggable={false}
+            params={{ id: guide.id }}
+            search={{ step: currentStep }}
+            to="/guides/$id"
           >
             <GoldChevron />
           </Link>
