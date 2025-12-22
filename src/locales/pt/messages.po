@@ -14,12 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: quest.statuses.length
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:166
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:180
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
 #: src/components/editor_html_parsing.tsx:88
-#: src/components/position.tsx:14
+#: src/components/position.tsx:15
 msgid "{content} copié"
 msgstr "{content} copiado"
 
@@ -49,9 +49,10 @@ msgid "Ajouter"
 msgstr "Adicionar"
 
 #: src/components/deep_link_guide_download_dialog.tsx:60
-#: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/guides/-$id/report_dialog.tsx:121
-#: src/routes/_app/guides/-$id/report_dialog.tsx:158
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:43
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:94
+#: src/routes/_app/guides/-$id/report_dialog.tsx:131
+#: src/routes/_app/guides/-$id/report_dialog.tsx:168
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -99,15 +100,15 @@ msgstr "Nenhum guia encontrado"
 msgid "Aucun guides trouvé avec {term}"
 msgstr "Nenhum guia encontrado com {term}"
 
-#: src/routes/_app/-settings/profiles.tsx:93
+#: src/routes/_app/-settings/profiles.tsx:115
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:128
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:142
 msgid "Aucune quête dans ce guide."
 msgstr "Nenhuma missão neste guia."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:133
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:147
 msgid "Aucune quête ne correspond à votre recherche."
 msgstr "Nenhuma missão corresponde à sua pesquisa."
 
@@ -222,7 +223,7 @@ msgstr "Clique para abrir numa janela nova"
 msgid "Companion Dofus"
 msgstr "Companion Dofus"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:136
+#: src/routes/_app/guides/-$id/report_dialog.tsx:146
 msgid "Confirmer l'envoi du rapport"
 msgstr "Confirmar o envio do relatório"
 
@@ -271,7 +272,7 @@ msgstr "Copiar: {title}"
 msgid "Copier l'étape actuelle"
 msgstr "Copiar passo atual"
 
-#: src/components/position.tsx:21
+#: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la commande autopilote"
 msgstr "Copiar o comando do piloto automático"
@@ -280,7 +281,7 @@ msgstr "Copiar o comando do piloto automático"
 msgid "Copier la note"
 msgstr "Copiar a nota"
 
-#: src/components/position.tsx:21
+#: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la position"
 msgstr "Copiar a posição"
@@ -310,12 +311,12 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "Crie seus guias no site oficial e baixe os de outros usuários!"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:252
+#: src/routes/_app/guides/-index/guide_item.tsx:253
 #: src/routes/_app/guides/-index/guide_item.tsx:303
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:204
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:218
 msgid "Début"
 msgstr "Início"
 
@@ -327,7 +328,7 @@ msgstr "Desconectado"
 msgid "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgstr "Descubra e adicione novos guias à sua lista."
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:87
+#: src/routes/_app/guides/-$id/report_dialog.tsx:102
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
 
@@ -367,7 +368,7 @@ msgstr "Editar uma nota"
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos os perfis e definições (não os guias)"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:205
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:219
 #: src/routes/_app/guides/-index/guide_item.tsx:207
 msgid "En cours"
 msgstr "Em andamento"
@@ -380,11 +381,11 @@ msgstr "Em progresso..."
 msgid "Enregistrer la note"
 msgstr "Salvar a nota"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:128
+#: src/routes/_app/guides/-$id/report_dialog.tsx:138
 msgid "Envoyer le message"
 msgstr "Enviar mensagem"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:60
+#: src/routes/_app/guides/-$id/report_dialog.tsx:70
 msgid "Envoyer un rapport"
 msgstr "Enviar um relatório"
 
@@ -615,12 +616,8 @@ msgstr "Passo anterior"
 msgid "Étape suivante"
 msgstr "Passo seguinte"
 
-#: src/routes/_app/-settings/profile_delete_dialog.tsx:39
-msgid "Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible."
-msgstr "Tem a certeza de que pretende eliminar este perfil? Esta ação é irreversível."
-
 #: src/components/title_bar.tsx:188
-#: src/routes/_app/guides/-$id/report_dialog.tsx:113
+#: src/routes/_app/guides/-$id/report_dialog.tsx:123
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:75
 msgid "Fermer"
 msgstr "Fechar"
@@ -633,7 +630,7 @@ msgstr "Ficheiro de configuração mal formado"
 msgid "Fichier des guides récents malformé"
 msgstr "Ficheiro de guias recentes mal formado"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:203
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:217
 msgid "Fin"
 msgstr "Fim"
 
@@ -796,7 +793,7 @@ msgstr "Não é possível recuperar a missão"
 msgid "Impossible de récupérer le profil actuel"
 msgstr "Não é possível recuperar o perfil actual"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:149
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:163
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Não foi possível obter o resumo do guia."
 
@@ -893,6 +890,10 @@ msgstr "O guia #{pendingGuideId} não está transferido.<0/>Quer transferi-lo ag
 msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 msgstr "O guia será aberto na <0>etapa {0}</0>. <1/>Você estava na <2>etapa {1}</2> em seu perfil <3>\"{2}\"</3>."
 
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:53
+msgid "Le nom du profil ne peut pas être vide."
+msgstr "O nome do perfil não pode estar vazio."
+
 #. placeholder {0}: index + 1
 #: src/routes/_app/guides/-$id/guide_page.tsx:120
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
@@ -963,11 +964,15 @@ msgstr "Atualização concluída com erros"
 msgid "Mise à jour terminée. L'application va redémarrer."
 msgstr "Atualização concluída. A aplicação vai reiniciar."
 
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:97
+msgid "Modifier"
+msgstr "Modificar"
+
 #: src/routes/_app/notes.index.tsx:72
 msgid "Modifier la note"
 msgstr "Editar a nota"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:167
+#: src/routes/_app/guides/-$id/report_dialog.tsx:177
 msgid "Mon guide est à jour"
 msgstr "O meu guia está actualizado"
 
@@ -983,6 +988,10 @@ msgstr "Nome"
 #: src/routes/_app/notes.create.tsx:73
 msgid "Nom de la note"
 msgstr "Nome da nota"
+
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:71
+msgid "Nom du profil mis à jour avec succès."
+msgstr "Nome do perfil atualizado com sucesso."
 
 #: src/routes/_app/guides/-index/guide_item.tsx:209
 msgid "Non commencé"
@@ -1013,6 +1022,10 @@ msgstr "ou o botão seguinte"
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:179
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
+
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:108
+msgid "Ouvrir le sommaire"
+msgstr "Abrir resumo"
 
 #: src/routes/_app/settings.tsx:120
 msgid "Ouvrir les guides à l'ouverture"
@@ -1049,7 +1062,7 @@ msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}<
 msgid "Précédent"
 msgstr "Anterior"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:206
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:220
 msgid "Préparation"
 msgstr "Preparação"
 
@@ -1057,12 +1070,13 @@ msgstr "Preparação"
 msgid "Présentation"
 msgstr "Apresentação"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:82
+#: src/routes/_app/guides/-$id/report_dialog.tsx:92
 msgid "Problème rencontré"
 msgstr "Problema encontrado"
 
 #. placeholder {0}: profile.name
-#: src/routes/_app/-settings/profile_delete_dialog.tsx:37
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:36
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:77
 msgid "Profil \"{0}\""
 msgstr "Perfil \"{0}\""
 
@@ -1070,7 +1084,7 @@ msgstr "Perfil \"{0}\""
 msgid "Profil créé avec succès"
 msgstr "Perfil criado com sucesso"
 
-#: src/routes/_app/-settings/profiles.tsx:62
+#: src/routes/_app/-settings/profiles.tsx:84
 msgid "Profil supprimé avec succès"
 msgstr "Perfil eliminado com sucesso"
 
@@ -1097,7 +1111,11 @@ msgstr "Atualizar a pasta dos guias baixados"
 msgid "Rafraichissement des guides téléchargés"
 msgstr "A atualizar os guias transferidos"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:139
+#: src/routes/_app/guides/-$id/report_dialog.tsx:64
+msgid "Rapporter un problème"
+msgstr "Reportar um problema"
+
+#: src/routes/_app/guides/-$id/report_dialog.tsx:149
 msgid "Récapitulatif du message"
 msgstr "Resumo da mensagem"
 
@@ -1106,11 +1124,11 @@ msgstr "Resumo da mensagem"
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
-#: src/routes/_app/-settings/profiles.tsx:90
+#: src/routes/_app/-settings/profiles.tsx:112
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:122
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:136
 msgid "Rechercher une quête"
 msgstr "Pesquisar uma missão"
 
@@ -1155,7 +1173,7 @@ msgstr "Selecionar"
 msgid "Site officiel"
 msgstr "Site oficial"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:108
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:121
 msgid "Sommaire"
 msgstr "Resumo"
 
@@ -1175,7 +1193,11 @@ msgstr "A eliminar guias"
 msgid "Suppression des guides"
 msgstr "Eliminação de guias"
 
-#: src/routes/_app/-settings/profile_delete_dialog.tsx:48
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:38
+msgid "Suppression du profil. Cette action est irréversible."
+msgstr "Eliminação do perfil. Esta ação é irreversível."
+
+#: src/routes/_app/-settings/profile_delete_dialog.tsx:46
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:107
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:75
 msgid "Supprimer"
@@ -1243,6 +1265,10 @@ msgstr "Extra pequena"
 msgid "Twitter de Ganymède"
 msgstr "Twitter do Ganimedes"
 
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:61
+msgid "Un profil est déjà utilisé avec ce nom."
+msgstr "Já existe um perfil com este nome."
+
 #: src/components/error_component.tsx:77
 msgid "Une erreur est survenue"
 msgstr "Ocorreu um erro"
@@ -1276,7 +1302,7 @@ msgstr "Versão inválida"
 msgid "Voir les guides"
 msgstr "Ver os guias"
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:110
+#: src/routes/_app/guides/-$id/report_dialog.tsx:120
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 
@@ -1284,14 +1310,19 @@ msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 
-#: src/routes/_app/guides/-$id/report_dialog.tsx:67
-#: src/routes/_app/guides/-$id/report_dialog.tsx:72
+#: src/routes/_app/guides/-$id/report_dialog.tsx:77
+#: src/routes/_app/guides/-$id/report_dialog.tsx:86
 msgid "Votre pseudo"
 msgstr "O seu nome de utilizador"
 
 #: src/routes/_app/oauth/waiting.tsx:61
 msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "Será redirecionado para a página de início de sessão do Ganymède."
+
+#. placeholder {0}: profile?.name ?? ''
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:79
+msgid "Vous allez modifier le profil \"{0}\""
+msgstr "Vai modificar o perfil \"{0}\""
 
 #. placeholder {0}: user.data?.name ?? 'non trouvé'
 #: src/routes/_app/oauth/waiting.tsx:46
