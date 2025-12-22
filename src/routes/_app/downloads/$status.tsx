@@ -212,7 +212,7 @@ function LanguageFilterDropdown({
             <FilterIcon className="size-4" />
           </Button>
           {value !== 'all' && (
-            <Badge className="absolute -top-1 -right-1 size-4 cursor-pointer p-0 text-[9px]" variant="default">
+            <Badge className="-top-1 -right-1 absolute size-4 cursor-pointer p-0 text-[9px]" variant="default">
               {value.toUpperCase()}
             </Badge>
           )}
