@@ -3,6 +3,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
+import { CheckIcon, FilterIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { z } from 'zod'
 import { BottomBar } from '@/components/bottom_bar.tsx'
@@ -17,8 +18,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
+import { Badge } from '@/components/ui/badge.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown_menu.tsx'
 import {
   Pagination,
   PaginationContent,
@@ -28,7 +36,7 @@ import {
 } from '@/components/ui/pagination.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
-import { GameType } from '@/ipc/bindings.ts'
+import { GameType, GuideLang } from '@/ipc/bindings.ts'
 import { getLang } from '@/lib/conf.ts'
 import { getGuideById } from '@/lib/guide.ts'
 import { getProgress } from '@/lib/progress.ts'
@@ -130,16 +138,96 @@ function getPaginationRange(current: number, total: number, delta = 2) {
   return range
 }
 
-function getEmptyStateMessage(gameFilter: GameType | 'all', term: string) {
+function getEmptyStateMessage(gameFilter: GameType | 'all', langFilter: GuideLang | 'all', term: string) {
+  const langLabel = langFilter !== 'all' ? ` (${langFilter.toUpperCase()})` : ''
+
   if (gameFilter === 'all') {
-    return term !== '' ? <Trans>Aucun guides trouvé avec {term}</Trans> : <Trans>Aucun guides trouvé</Trans>
+    return term !== '' ? (
+      <Trans>
+        Aucun guides{langLabel} trouvé avec {term}
+      </Trans>
+    ) : (
+      <Trans>Aucun guides{langLabel} trouvé</Trans>
+    )
   }
 
   if (gameFilter === 'dofus') {
-    return term !== '' ? <Trans>Aucun guide Dofus trouvé avec {term}</Trans> : <Trans>Aucun guide Dofus trouvé</Trans>
+    return term !== '' ? (
+      <Trans>
+        Aucun guide Dofus{langLabel} trouvé avec {term}
+      </Trans>
+    ) : (
+      <Trans>Aucun guide Dofus{langLabel} trouvé</Trans>
+    )
   }
 
-  return term !== '' ? <Trans>Aucun guide Wakfu trouvé avec {term}</Trans> : <Trans>Aucun guide Wakfu trouvé</Trans>
+  return term !== '' ? (
+    <Trans>
+      Aucun guide Wakfu{langLabel} trouvé avec {term}
+    </Trans>
+  ) : (
+    <Trans>Aucun guide Wakfu{langLabel} trouvé</Trans>
+  )
+}
+
+function LanguageFilterDropdown({
+  value,
+  onChange,
+  availableLanguages,
+}: {
+  value: GuideLang | 'all'
+  onChange: (lang: GuideLang | 'all') => void
+  availableLanguages: GuideLang[]
+}) {
+  const { t } = useLingui()
+
+  function getLangLabel(lang: GuideLang | 'all'): string {
+    switch (lang) {
+      case 'all':
+        return 'Toutes'
+      case 'fr':
+        return 'FR'
+      case 'en':
+        return 'EN'
+      case 'es':
+        return 'ES'
+      case 'pt':
+        return 'PT'
+    }
+  }
+
+  const languageOptions: Array<{ lang: GuideLang | 'all'; label: string }> = [
+    { lang: 'all', label: getLangLabel('all') },
+    ...(availableLanguages.includes('fr') ? [{ lang: 'fr' as const, label: getLangLabel('fr') }] : []),
+    ...(availableLanguages.includes('en') ? [{ lang: 'en' as const, label: getLangLabel('en') }] : []),
+    ...(availableLanguages.includes('es') ? [{ lang: 'es' as const, label: getLangLabel('es') }] : []),
+    ...(availableLanguages.includes('pt') ? [{ lang: 'pt' as const, label: getLangLabel('pt') }] : []),
+  ]
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="relative">
+          <Button size="icon-sm" title={t`Filtrer par langue`} variant={value !== 'all' ? 'default' : 'secondary'}>
+            <FilterIcon className="size-4" />
+          </Button>
+          {value !== 'all' && (
+            <Badge className="absolute -top-1 -right-1 size-4 cursor-pointer p-0 text-[9px]" variant="default">
+              {value.toUpperCase()}
+            </Badge>
+          )}
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {languageOptions.map(({ lang, label }) => (
+          <DropdownMenuItem key={lang} onClick={() => onChange(lang)}>
+            <CheckIcon className={value === lang ? 'visible size-4' : 'invisible size-4'} />
+            {label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 function DownloadGuidePage() {
@@ -147,6 +235,7 @@ function DownloadGuidePage() {
   const baseSearch = Route.useSearch({ select: (s) => s.search })
   const [searchTerm, setSearchTerm] = useState(baseSearch ?? '')
   const [gameFilter, setGameFilter] = useState<GameType | 'all'>('all')
+  const [langFilter, setLangFilter] = useState<GuideLang | 'all'>('all')
   const page = Route.useSearch({ select: (s) => s.page })
   const status = Route.useParams({ select: (p) => p.status })
   const debouncedTerm = useDebounce(searchTerm, 300)
@@ -160,15 +249,21 @@ function DownloadGuidePage() {
   useScrollToTop(scrollableRef, [page, status])
 
   const title = titleByStatus(status)
-  const nextPages = Math.ceil(guides.data.length / itemsPerPage)
 
   const term = searchTerm !== '' ? debouncedTerm : ''
+
+  const availableLanguages = Array.from(new Set(guides.data.map((g) => g.lang)))
 
   const gameFilteredGuides =
     gameFilter === 'all' ? guides.data : guides.data.filter((g) => (g.game_type ?? 'dofus') === gameFilter)
 
+  const langAndGameFilteredGuides =
+    langFilter === 'all' ? gameFilteredGuides : gameFilteredGuides.filter((g) => g.lang === langFilter)
+
+  const nextPages = Math.ceil(langAndGameFilteredGuides.length / itemsPerPage)
+
   const filteredGuides = rankList({
-    list: gameFilteredGuides,
+    list: langAndGameFilteredGuides,
     keys: [(guide) => guide.name, (guide) => guide.user.name],
     term: term,
     sortKeys: [(guide) => guide.order],
@@ -190,7 +285,22 @@ function DownloadGuidePage() {
   const pages = getPaginationRange(page, nextPages, 3)
 
   return (
-    <Page backButton={<BackButtonLink to="/downloads" />} key={`download-${status}`} title={title}>
+    <Page
+      actions={
+        availableLanguages.length > 1 ? (
+          <div className="ml-auto">
+            <LanguageFilterDropdown
+              availableLanguages={availableLanguages}
+              onChange={setLangFilter}
+              value={langFilter}
+            />
+          </div>
+        ) : undefined
+      }
+      backButton={<BackButtonLink to="/downloads" />}
+      key={`download-${status}`}
+      title={title}
+    >
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
         <AlertDialogContent className="data-[state=open]:fade-in-100 bg-surface-page">
           <AlertDialogHeader>
@@ -259,7 +369,7 @@ function DownloadGuidePage() {
               </div>
 
               {paginatedOrFilteredGuides.length === 0 && (
-                <p className="text-center">{getEmptyStateMessage(gameFilter, term)}</p>
+                <p className="text-center">{getEmptyStateMessage(gameFilter, langFilter, term)}</p>
               )}
 
               {paginatedOrFilteredGuides.map((guide) => {
