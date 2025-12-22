@@ -107,14 +107,14 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                   </div>
                 </div>
                 <button
-                  className="sm:mask-gradient-to-left group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible sm:top-0 sm:bottom-0.5 sm:flex sm:h-[calc(100%-0.125rem)] sm:w-12 sm:items-center sm:justify-end sm:pr-2"
+                  className="xs:mask-gradient-to-left group/close invisible absolute top-0 xs:top-0 right-0 xs:bottom-0.5 z-0 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-12 cursor-pointer xs:items-center xs:justify-end bg-surface-page xs:pr-2 text-primary-foreground transition-none group-hover/tab:visible"
                   onClick={async (evt) => {
                     evt.stopPropagation()
 
                     await onCloseTab()
                   }}
                 >
-                  <XIcon className="size-4 rounded-full p-0.5 sm:group-hover/close:bg-surface-inset" />
+                  <XIcon className="size-4 rounded-full p-0.5 xs:group-hover/close:bg-surface-inset" />
                 </button>
               </div>
             </TabsTrigger>

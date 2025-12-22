@@ -174,7 +174,7 @@ pub fn run() {
         let http_client = reqwest::Client::builder()
             .user_agent("GANYMEDE_TAURI_APP")
             .build()
-            .map_err(|err| crate::api::Error::BuildClientBuilder(err.to_string()))
+            .map_err(|err| api::Error::BuildClientBuilder(err.to_string()))
             .unwrap();
 
         app.manage(http_client.clone());
@@ -187,19 +187,27 @@ pub fn run() {
             ..Default::default()
         });
 
-        if let Err(err) = crate::conf::ensure_conf_file(app.handle()) {
+        if let Err(err) = conf::ensure_conf_file(app.handle()) {
             error!("[Lib] failed to ensure conf: {:?}", err);
             #[cfg(not(debug_assertions))]
             capture_error(&err);
         }
 
-        if let Err(err) = crate::guides::ensure_guides_dir(app.handle()) {
+        if let Err(err) = guides::ensure_guides_dir(app.handle()) {
             error!("[Lib] failed to ensure guides: {:?}", err);
             #[cfg(not(debug_assertions))]
             capture_error(&err);
         }
 
         handle_first_start_setup(app.handle().clone());
+
+        // Update all guides at launch (non-blocking)
+        {
+            let handle = app.handle().clone();
+            tauri::async_runtime::spawn(async move {
+                guides::update_all_guides_at_launch(&handle).await;
+            });
+        }
 
         #[cfg(not(dev))]
         crate::analytics::increment_download_count(app.handle(), http_client);
@@ -230,7 +238,7 @@ pub fn run() {
                 for url in event.urls() {
                     info!("[Lib] Deep link received: {}", url);
 
-                    if let Err(err) = crate::deep_link::handle_deep_link_url(app_handle.clone(), url.as_str()) {
+                    if let Err(err) = deep_link::handle_deep_link_url(app_handle.clone(), url.as_str()) {
                         error!("[Lib] Failed to handle deep link URL immediately, storing for later: {:?}", err);
                         #[cfg(not(debug_assertions))]
                         capture_error(&err);

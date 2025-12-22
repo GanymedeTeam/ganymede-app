@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
-import { LayoutListIcon, PlusIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 import { z } from 'zod'
 import { PageContent } from '@/components/page_content.tsx'
 import { PageTitle, PageTitleText } from '@/components/page_title.tsx'
@@ -123,26 +123,6 @@ function GuideIdPage() {
           </TabsList>
 
           <div className="flex items-center gap-1 px-3">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button asChild className="min-h-6 min-w-6 shrink-0 self-center" size="icon" variant="secondary">
-                    <Link
-                      draggable={false}
-                      search={{
-                        path: '',
-                      }}
-                      to="/guides"
-                    >
-                      <LayoutListIcon />
-                    </Link>
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  <Trans>Liste des guides</Trans>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>

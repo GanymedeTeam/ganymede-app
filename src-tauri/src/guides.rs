@@ -280,6 +280,22 @@ pub async fn download_default_guide(app: &AppHandle) -> Result<Guides, Error> {
     Ok(guides)
 }
 
+/// Update all guides at app launch (non-blocking)
+pub async fn update_all_guides_at_launch(app: &AppHandle) {
+    info!("[Guides] update_all_guides_at_launch");
+
+    match update_all_guides_batch(app).await {
+        Ok(results) => {
+            let success_count = results.values().filter(|r| matches!(r, UpdateAllAtOnceResult::Success)).count();
+            let total_count = results.len();
+            info!("[Guides] update_all_guides_at_launch: {}/{} guides updated", success_count, total_count);
+        }
+        Err(err) => {
+            warn!("[Guides] update_all_guides_at_launch failed: {}", err);
+        }
+    }
+}
+
 /// Fetch a guide from the server by its ID
 pub async fn get_guide_from_server(
     guide_id: u32,
