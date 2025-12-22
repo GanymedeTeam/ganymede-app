@@ -1023,7 +1023,7 @@ msgstr "ou o botão seguinte"
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:108
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:109
 msgid "Ouvrir le sommaire"
 msgstr "Abrir resumo"
 

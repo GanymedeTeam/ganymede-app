@@ -96,20 +96,20 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger asChild>
-        <TooltipProvider>
-          <Tooltip delayDuration={400}>
-            <TooltipTrigger asChild>
+      <TooltipProvider>
+        <Tooltip delayDuration={400}>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
               <Button className="size-6 sm:size-8" size="icon" variant="ghost">
                 <BookTextIcon />
               </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <Trans>Ouvrir le sommaire</Trans>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </DialogTrigger>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <Trans>Ouvrir le sommaire</Trans>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DialogContent className="flex h-full max-h-[90vh] flex-col">
         <DialogHeader>
           <div className="flex items-center gap-2">

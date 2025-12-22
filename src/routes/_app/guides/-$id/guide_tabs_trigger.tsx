@@ -81,6 +81,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
         <TooltipTrigger asChild>
           <div className="relative flex shrink-0 pb-1">
             <TabsTrigger
+              asChild
               className={cn(
                 'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-lg bg-surface-inset font-medium text-foreground/75 text-xs xs:text-sm transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50 lg:max-w-62',
               )}
@@ -93,27 +94,29 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
               }}
               value={id.toString()}
             >
-              <GuideNodeImage guide={guide} />
-              <span className="-translate-y-0.5 hidden truncate sm:inline">{guide.name}</span>
-              {/* Progress bar */}
-              <div className="absolute bottom-0 left-0 h-0.5 w-full">
-                <div className="size-full bg-black/20">
-                  <div
-                    className="h-full rounded-b-xl bg-success"
-                    style={{ width: `${Math.min(progressPercent, 100)}%` }}
-                  />
+              <div>
+                <GuideNodeImage guide={guide} />
+                <span className="-translate-y-0.5 hidden truncate sm:inline">{guide.name}</span>
+                {/* Progress bar */}
+                <div className="absolute bottom-0 left-0 h-0.5 w-full">
+                  <div className="size-full bg-black/20">
+                    <div
+                      className="h-full rounded-b-xl bg-success"
+                      style={{ width: `${Math.min(progressPercent, 100)}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
-              <button
-                className="sm:mask-gradient-to-left group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible sm:top-0 sm:bottom-0.5 sm:flex sm:h-[calc(100%-0.125rem)] sm:w-12 sm:items-center sm:justify-end sm:pr-2"
-                onClick={async (evt) => {
-                  evt.stopPropagation()
+                <button
+                  className="sm:mask-gradient-to-left group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible sm:top-0 sm:bottom-0.5 sm:flex sm:h-[calc(100%-0.125rem)] sm:w-12 sm:items-center sm:justify-end sm:pr-2"
+                  onClick={async (evt) => {
+                    evt.stopPropagation()
 
-                  await onCloseTab()
-                }}
-              >
-                <XIcon className="size-4 rounded-full p-0.5 sm:group-hover/close:bg-surface-inset" />
-              </button>
+                    await onCloseTab()
+                  }}
+                >
+                  <XIcon className="size-4 rounded-full p-0.5 sm:group-hover/close:bg-surface-inset" />
+                </button>
+              </div>
             </TabsTrigger>
           </div>
         </TooltipTrigger>
