@@ -83,7 +83,7 @@ export function StepProgress({
           <TooltipTrigger asChild>
             <div
               className={cn(
-                'relative flex h-5 min-w-0 flex-1 cursor-pointer touch-none items-center justify-center overflow-hidden rounded-[6px] border border-[#121F2A] bg-secondary/80',
+                'relative flex h-5 min-w-0 flex-1 cursor-pointer touch-none items-center justify-center overflow-hidden rounded-[6px] bg-surface-inset',
               )}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}

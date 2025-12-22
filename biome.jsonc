@@ -9,7 +9,7 @@
     "lineWidth": 120,
     "attributePosition": "auto"
   },
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "assist": { "actions": { "source": { "organizeImports": "on", "useSortedAttributes": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {

@@ -154,11 +154,11 @@ function GuidesPage() {
 
   const onEnterSelectMode = () => {
     setSelect(true)
-    setSelectedItemsToDelete([])
   }
 
   const onExitSelectMode = () => {
     setSelect(false)
+    setSelectedItemsToDelete([])
   }
 
   const onDeleteComplete = () => {
@@ -231,7 +231,7 @@ function GuidesPage() {
               onDeleteComplete={onDeleteComplete}
             />
           ) : (
-            <div className="-mx-2 sticky top-0 z-50 px-2 py-2 backdrop-blur-sm">
+            <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 px-2 py-2 backdrop-blur-sm">
               <ClearInput
                 value={searchTerm}
                 onChange={(evt) => setSearchTerm(evt.currentTarget.value)}

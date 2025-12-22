@@ -338,7 +338,7 @@ function Settings() {
                 <Trans>Créer un profil</Trans>
               </Label>
               <form
-                className="space-y-2"
+                className="flex flex-col gap-2"
                 onSubmit={async (evt) => {
                   evt.preventDefault()
                   const form = evt.currentTarget
@@ -371,7 +371,7 @@ function Settings() {
                 }}
               >
                 <Input id="create-profile" name="newProfile" className="h-9" />
-                <Button type="submit">
+                <Button type="submit" className="self-start">
                   <span>
                     <Trans>Créer</Trans>
                   </span>

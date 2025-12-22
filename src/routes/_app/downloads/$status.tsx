@@ -220,7 +220,7 @@ function DownloadGuidePage() {
             </p>
           ) : (
             <div className="flex flex-col gap-2">
-              <div className="-mx-2 sticky top-0 z-50 flex flex-col gap-2 px-2 py-2 backdrop-blur-sm">
+              <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex flex-col gap-2 px-2 py-2 backdrop-blur-sm">
                 <ClearInput
                   value={searchTerm}
                   onChange={(evt) => setSearchTerm(evt.currentTarget.value)}

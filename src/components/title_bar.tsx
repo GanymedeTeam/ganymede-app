@@ -50,7 +50,7 @@ export function TitleBar() {
   const title = location.search.title || 'Ganymède'
 
   return (
-    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-primary text-primary-foreground">
+    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-surface-inset text-primary-foreground">
       {!linksAreDisabled && !isImageViewer && (
         <DropdownMenu>
           <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>
@@ -151,7 +151,7 @@ export function TitleBar() {
         {title}
       </p>
       <p data-tauri-drag-region="" className="relative z-10 size-full grow" />
-      <div className="flex justify-end">
+      <div className="flex h-full justify-end">
         {!linksAreDisabled && !isImageViewer && (
           <Link
             to="/settings"
@@ -161,7 +161,7 @@ export function TitleBar() {
               hash: location.hash,
               state: location.state,
             }}
-            className="inline-flex size-7 items-center justify-center hover:bg-primary-800 aria-disabled:pointer-events-none"
+            className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card aria-disabled:pointer-events-none"
             draggable={false}
             title={t`Paramètres`}
             disabled={location.pathname === '/settings' || isBodyLocked}
@@ -173,7 +173,7 @@ export function TitleBar() {
           onClick={async () => {
             await appWindow.minimize()
           }}
-          className="inline-flex size-7 items-center justify-center hover:bg-primary-800"
+          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card"
           id="titlebar-minimize"
           title={t`Réduire`}
         >
@@ -183,7 +183,7 @@ export function TitleBar() {
           onClick={async () => {
             await appWindow.close()
           }}
-          className="inline-flex size-7 items-center justify-center hover:bg-destructive"
+          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-destructive"
           id="titlebar-close"
           title={t`Fermer`}
         >

@@ -111,7 +111,7 @@
   --color-accent-dark: #5e5d82;
 }
 
-/* Theme: Bonta (Bleu) */
+/* Theme: Bonta (Blue) */
 [data-theme="bonta"] {
   --color-surface-page: #141c28;
   --color-surface-card: #1a2433;
@@ -123,7 +123,7 @@
   --color-accent-dark: #4a6591;
 }
 
-/* Theme: Brakmar (Rouge) */
+/* Theme: Brakmar (Red) */
 [data-theme="brakmar"] {
   --color-surface-page: #1e1418;
   --color-surface-card: #281a1f;
@@ -135,7 +135,7 @@
   --color-accent-dark: #82313f;
 }
 
-/* Theme: Tribute (Gris) */
+/* Theme: Tribute (Gray) */
 [data-theme="tribute"] {
   --color-surface-page: #1a1a1a;
   --color-surface-card: #222222;
@@ -207,7 +207,7 @@
   --color-accent-dark: #3a696a;
 }
 
-/* Theme: Pandala (Vert) */
+/* Theme: Pandala (Green) */
 [data-theme="pandala"] {
   --color-surface-page: #171a14;
   --color-surface-card: #1e221a;
@@ -281,6 +281,22 @@
 
 @variant first-tab (&:where(.group\/tab:has([data-state="active"]) + .group\/tab:has([data-state="inactive"]) *));
 @variant last-tab (&:where(.group\/tab:has([data-state="inactive"]):has(+ .group\/tab > [data-state="active"]) *), &:where(.group\/tab:has([data-state="inactive"]):last-of-type *));
+
+@utility mask-gradient-to-top {
+  @apply mask-t-from-0 mask-t-to-12% mask-t-from-transparent mask-t-to-black;
+}
+
+@utility mask-gradient-to-left {
+  mask: linear-gradient(
+    to right,
+    transparent,
+    rgba(29, 39, 48, 0.5) 20%,
+    var(--color-surface-page) 50%,
+    var(--color-surface-page) 100%
+  );
+
+  /*@apply mask-r-from-0% mask-r-to-90% mask-r-from-surface-page mask-r-to-black;*/
+}
 
 @layer base {
   :root {
@@ -517,14 +533,14 @@
 
       background-color: color-mix(
         in oklab,
-        var(--color-primary-800) clamp(40%, var(--opacity-percentage), 93%),
+        var(--color-surface-inset) clamp(40%, var(--opacity-percentage), 93%),
         transparent
       );
 
       @variant hover {
         background-color: color-mix(
           in oklab,
-          var(--color-primary-800) clamp(20%, calc(var(--final-opacity-80) * 100%), var(--opacity-percentage)),
+          var(--color-surface-inset) clamp(20%, calc(var(--final-opacity-80) * 100%), var(--opacity-percentage)),
           transparent
         );
       }
@@ -540,9 +556,9 @@
 }
 
 .toaster[data-sonner-toaster][data-sonner-theme="dark"] {
-  --normal-bg: var(--color-primary-900);
+  --normal-bg: var(--color-surface-inset);
   --normal-text: var(--color-primary-foreground);
-  --normal-border: var(--color-border);
+  --normal-border: var(--color-surface-page);
 
   @apply shadow-lg;
 }

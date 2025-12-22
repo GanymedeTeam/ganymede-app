@@ -114,7 +114,7 @@ function GuideIdPage() {
       >
         <div className="flex w-full bg-surface-card text-primary-foreground-800">
           <TabsList
-            className="group scrollbar-hide h-10 flex-1 overflow-x-auto pl-0"
+            className="group scrollbar-hide h-10 flex-1 overflow-x-auto overflow-y-hidden pl-0"
             data-multiple={tabs.length > 1 ? 'true' : 'false'}
           >
             {tabs.map((guideId) => (
@@ -122,11 +122,11 @@ function GuideIdPage() {
             ))}
           </TabsList>
 
-          <div className="flex items-center gap-1 px-2">
+          <div className="flex items-center gap-1 px-3">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="icon" className="ml-1 min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
+                  <Button size="icon" className="min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
                     <Link
                       to="/guides"
                       search={{
@@ -146,7 +146,7 @@ function GuideIdPage() {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button size="icon" className="mr-1 min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
+                  <Button size="icon" className="min-h-6 min-w-6 shrink-0 self-center" variant="secondary" asChild>
                     <Link
                       to="/guides"
                       search={{

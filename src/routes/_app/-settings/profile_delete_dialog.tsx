@@ -10,7 +10,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
-import { Button } from '@/components/ui/button.tsx'
 import { getProfileById } from '@/lib/profile.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 
@@ -36,17 +35,15 @@ export function ProfileDeleteDialog<T extends string | null>({
         <AlertDialogHeader>
           <AlertDialogTitle>{profile && <Trans>Profil "{profile.name}"</Trans>}</AlertDialogTitle>
           <AlertDialogDescription>
-            <Trans>Êtes-vous sûr de vouloir supprimer ce profil ? Cette action est irréversible.</Trans>
+            <Trans>Suppression du profil. Cette action est irréversible.</Trans>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>
             <Trans>Annuler</Trans>
           </AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button variant="destructive" onClick={() => onDelete(profileId)}>
-              <Trans>Supprimer</Trans>
-            </Button>
+          <AlertDialogAction variant="destructive" onClick={() => onDelete(profileId)}>
+            <Trans>Supprimer</Trans>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

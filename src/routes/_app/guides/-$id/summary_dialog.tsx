@@ -4,6 +4,7 @@ import debounce from 'debounce-fn'
 import { BookTextIcon } from 'lucide-react'
 import { useCallback, useState, useSyncExternalStore } from 'react'
 import { GenericLoader } from '@/components/generic_loader.tsx'
+import { GuideNodeImage } from '@/components/guide_node_image.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
 import {
@@ -94,15 +95,27 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="ghost" className="size-6 sm:size-8">
-          <BookTextIcon />
-        </Button>
+        <TooltipProvider>
+          <Tooltip delayDuration={400}>
+            <TooltipTrigger asChild>
+              <Button className="size-6 sm:size-8" size="icon" variant="ghost">
+                <BookTextIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Trans>Ouvrir le sommaire</Trans>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </DialogTrigger>
       <DialogContent className="flex h-full max-h-[90vh] flex-col">
         <DialogHeader>
-          <DialogTitle>{guide.name}</DialogTitle>
+          <div className="flex items-center gap-2">
+            <GuideNodeImage guide={guide} />
+            <DialogTitle>{guide.name}</DialogTitle>
+          </div>
           <DialogDescription>
             <span className="relative">
               <Trans>Sommaire</Trans>
@@ -114,13 +127,14 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
         </DialogHeader>
         {summary.isSuccess && summary.data.quests.length > 0 && (
           <ClearInput
-            value={searchTerm}
-            onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
-            onValueChange={setSearchTerm}
             autoComplete="off"
             autoCorrect="off"
-            placeholder={t`Rechercher une quête`}
+            className="bg-surface-inset"
             disabled={!summary.isSuccess}
+            onChange={(evt) => setSearchTerm(evt.currentTarget.value)}
+            onValueChange={setSearchTerm}
+            placeholder={t`Rechercher une quête`}
+            value={searchTerm}
           />
         )}
         {summary.isSuccess && summary.data.quests.length === 0 && (
@@ -136,10 +150,10 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
         {summary.isLoading && (
           <ScrollArea className="h-full">
             <div className="flex flex-col gap-2">
-              <Skeleton className="h-15 bg-primary/30" />
-              <Skeleton className="h-15 bg-primary/30" />
-              <Skeleton className="h-18 bg-primary/30" />
-              <Skeleton className="h-16 bg-primary/30" />
+              <Skeleton className="h-15 bg-surface-inset" />
+              <Skeleton className="h-15 bg-surface-inset" />
+              <Skeleton className="h-15 bg-surface-inset" />
+              <Skeleton className="h-15 bg-surface-inset" />
             </div>
           </ScrollArea>
         )}
@@ -159,11 +173,11 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
               {filteredQuests.map((quest) => (
                 <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
                   <div className="flex items-center gap-1">
-                    <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} alt="Quest" className="size-6" />
+                    <img alt="Quest" className="size-6" src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} />
                     <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
                   </div>
                   <span className="flex flex-col gap-1">
-                    <Plural value={quest.statuses.length} one="Étape" other="Étapes" />{' '}
+                    <Plural one="Étape" other="Étapes" value={quest.statuses.length} />{' '}
                     <div className="flex flex-wrap gap-1">
                       {quest.statuses.map((status) => {
                         const statusText =
@@ -188,13 +202,13 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button
+                                  className="border-none text-foreground data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
+                                  data-status={statusText}
                                   key={`${statusText}-${step}`}
                                   onClick={() => {
                                     onChangeStep(step - 1)
                                     setOpen(false)
                                   }}
-                                  className="bg-[#4a4535] text-foreground hover:bg-[#5a5545] data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
-                                  data-status={statusText}
                                 >
                                   {step}
                                 </Button>

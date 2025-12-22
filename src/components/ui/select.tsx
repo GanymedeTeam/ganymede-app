@@ -1,7 +1,7 @@
 import * as SelectPrimitive from '@radix-ui/react-select'
+import { cva } from 'class-variance-authority'
 import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from 'lucide-react'
 import * as React from 'react'
-
 import { cn } from '@/lib/utils.ts'
 
 const Select = SelectPrimitive.Root
@@ -12,6 +12,10 @@ const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
+const selectVariants = cva(
+  'flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-border-muted bg-surface-inset px-3 py-2 text-sm shadow-xs ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+)
+
 function SelectTrigger({
   className,
   children,
@@ -19,14 +23,7 @@ function SelectTrigger({
   ...props
 }: React.ComponentPropsWithRef<typeof SelectPrimitive.Trigger>) {
   return (
-    <SelectPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        'flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-border-muted bg-surface-inset px-3 py-2 text-sm shadow-xs ring-offset-background placeholder:text-muted-foreground focus:outline-hidden focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-        className,
-      )}
-      {...props}
-    >
+    <SelectPrimitive.Trigger ref={ref} className={selectVariants({ className })} {...props}>
       {children}
       <SelectPrimitive.Icon asChild>
         <ChevronsUpDownIcon className="size-4 opacity-50" />
@@ -142,4 +139,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  selectVariants,
 }

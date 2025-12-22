@@ -229,6 +229,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
   return (
     <Card key={guide.id} className={guideItemVariants({ variant: 'server' })}>
+      <GoldGradientDefs />
       {/* Mobile Layout */}
       <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
         <GuideIcon nodeImage={guide.node_image} gameType={guide.game_type} lang={guide.lang} />
@@ -256,7 +257,6 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
           </p>
         </div>
         <div className="absolute top-2 right-2 flex items-center gap-1">
-          <GoldGradientDefs />
           <GuideDownloadButton guide={guide} />
           <Link
             to="/guides/$id"
@@ -308,7 +308,6 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
         </div>
 
         <div className="flex items-center gap-1 pl-1">
-          <GoldGradientDefs />
           <GuideDownloadButton guide={guide} />
           <Link
             to="/guides/$id"

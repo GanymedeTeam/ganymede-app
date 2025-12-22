@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { rankItem } from '@tanstack/match-sorter-utils'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { CheckIcon, ChevronsUpDownIcon, TrashIcon } from 'lucide-react'
+import { CheckIcon, ChevronsUpDownIcon, PenIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button.tsx'
@@ -14,12 +14,14 @@ import {
   CommandList,
 } from '@/components/ui/command.tsx'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx'
+import { selectVariants } from '@/components/ui/select.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { getProfileById } from '@/lib/profile.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { ProfileDeleteDialog } from '@/routes/_app/-settings/profile_delete_dialog.tsx'
+import { ProfileEditNameDialog } from '@/routes/_app/-settings/profile_edit_name_dialog.tsx'
 
 export function Profiles() {
   const { t } = useLingui()
@@ -30,19 +32,39 @@ export function Profiles() {
   const [open, setOpen] = useState(false)
   const [openProfileDeleteDialog, setOpenProfileDeleteDialog] = useState(false)
   const [profileDeletionOpenId, setProfileDeletionOpenId] = useState<string | null>(null)
+  const [profileEditNameId, setEditProfileNameId] = useState<string | null>(null)
+  const [openProfileEditNameDialog, setOpenProfileEditNameDialog] = useState(false)
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open)
+
+        if (!openProfileEditNameDialog) {
+          setEditProfileNameId(null)
+        }
+      }}
+    >
       <PopoverTrigger asChild>
-        <button
-          role="combobox"
-          aria-expanded={open}
-          className="flex h-9 w-full cursor-pointer items-center justify-between whitespace-nowrap rounded-md border border-neutral-200 bg-transparent px-3 py-2 text-xs shadow-xs ring-offset-white placeholder:text-neutral-500 focus:outline-hidden focus:ring-1 focus:ring-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:ring-offset-neutral-950 dark:focus:ring-neutral-300 dark:placeholder:text-neutral-400 [&>span]:line-clamp-1"
-        >
+        <Button role="combobox" aria-expanded={open} className={selectVariants()}>
           {currentProfile?.name ?? 'Select profile'}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </button>
+        </Button>
       </PopoverTrigger>
+      <ProfileEditNameDialog
+        profileId={profileEditNameId}
+        open={openProfileEditNameDialog}
+        onOpenChange={(open) => {
+          if (!open) {
+            setTimeout(() => {
+              setEditProfileNameId(null)
+            }, 500)
+          }
+
+          setOpenProfileEditNameDialog(open)
+        }}
+      />
       <ProfileDeleteDialog
         profileId={profileDeletionOpenId}
         open={openProfileDeleteDialog}
@@ -104,8 +126,24 @@ export function Profiles() {
                         profileInUse: currentValue,
                       })
                     }}
+                    className="group/command-item"
                   >
-                    <span className="w-full">{profile.name}</span>
+                    <div className="flex w-full items-center gap-1">
+                      <span>{profile.name}</span>
+                      <Button
+                        size="icon-sm"
+                        variant="ghost"
+                        className="invisible group-hover/command-item:visible"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          setEditProfileNameId(profile.id)
+                          setOpenProfileEditNameDialog(true)
+                        }}
+                      >
+                        <PenIcon />
+                      </Button>
+                    </div>
                     <CheckIcon
                       className={cn('ml-2 size-4', currentProfile.id === profile.id ? 'opacity-100' : 'opacity-0')}
                     />

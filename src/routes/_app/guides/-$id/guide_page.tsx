@@ -129,8 +129,8 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
   return (
     <div
-      ref={scrollableRef}
       className="scroller mt-[40px] flex h-[calc(100vh-var(--spacing-titlebar)-40px-40px)] flex-col overflow-x-hidden overflow-y-scroll pb-2"
+      ref={scrollableRef}
       style={{ backgroundColor: bgColor }}
     >
       <header className="fixed inset-x-0 top-[70px] z-10 sm:top-[66px]" style={{ backgroundColor: bgColor }}>
@@ -147,12 +147,12 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
               {/* Center - Progress Bar */}
               <div className="flex flex-1 items-center justify-center">
                 <StepProgress
-                  key={`${guide.id}-${index}`}
                   currentIndex={index}
+                  key={`${guide.id}-${index}`}
                   maxIndex={stepMax}
-                  onPrevious={onClickPrevious}
-                  onNext={onClickNext}
                   onChangeStep={changeStep}
+                  onNext={onClickNext}
+                  onPrevious={onClickPrevious}
                 />
               </div>
 

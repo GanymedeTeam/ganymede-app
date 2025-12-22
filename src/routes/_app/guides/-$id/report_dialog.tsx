@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Textarea } from '@/components/ui/textarea.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useSendReport } from '@/mutations/send_report.mutation.ts'
 
 export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepIndex: number }) {
@@ -50,49 +51,58 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
           }
         }}
       >
-        <AlertDialogTrigger asChild>
-          <Button variant="ghost" size="icon" className="size-6 sm:size-8">
-            <BugIcon />
-          </Button>
-        </AlertDialogTrigger>
+        <TooltipProvider delayDuration={400}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <AlertDialogTrigger asChild>
+                <Button className="size-6 sm:size-8" size="icon" variant="ghost">
+                  <BugIcon />
+                </Button>
+              </AlertDialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Trans>Rapporter un problème</Trans>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <AlertDialogContent className="max-h-[calc(var(--spacing-app-without-header)-var(--spacing-titlebar)-1rem)] overflow-auto p-3 sm:p-6">
           <AlertDialogTitle>
             <Trans>Envoyer un rapport</Trans>
           </AlertDialogTitle>
-          <form id="report-form" onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <form className="flex flex-col gap-2" id="report-form" onSubmit={handleSubmit}>
             {!sendReport.isSuccess && (
               <>
                 <div>
-                  <Label htmlFor="username" className="mb-1 block">
+                  <Label className="mb-1 block" htmlFor="username">
                     <Trans>Votre pseudo</Trans>
                   </Label>
                   <Input
-                    id="username"
-                    disabled={sendReport.isPending}
-                    placeholder={t`Votre pseudo`}
-                    name="username"
                     className="placeholder:italic"
-                    value={username}
-                    onChange={(evt) => setUsername(evt.currentTarget.value)}
+                    disabled={sendReport.isPending}
+                    id="username"
                     maxLength={255}
+                    name="username"
+                    onChange={(evt) => setUsername(evt.currentTarget.value)}
+                    placeholder={t`Votre pseudo`}
+                    value={username}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="content" className="mb-1 block">
+                  <Label className="mb-1 block" htmlFor="content">
                     <Trans>Problème rencontré</Trans>
                   </Label>
                   <Textarea
-                    id="content"
-                    disabled={sendReport.isPending}
-                    placeholder={t`Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus.`}
-                    name="content"
-                    className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
-                    required
-                    autoComplete="off"
                     autoCapitalize="off"
+                    autoComplete="off"
+                    className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
+                    disabled={sendReport.isPending}
+                    id="content"
+                    name="content"
+                    onChange={(evt) => setContent(evt.currentTarget.value)}
+                    placeholder={t`Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus.`}
+                    required
                     rows={10}
                     value={content}
-                    onChange={(evt) => setContent(evt.currentTarget.value)}
                   />
                 </div>
               </>
@@ -159,9 +169,9 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
                       </AlertDialogCancel>
                       <AlertDialogAction asChild>
                         <Button
-                          type="submit"
-                          form="report-form"
                           disabled={content.trim().length === 0 || sendReport.isPending}
+                          form="report-form"
+                          type="submit"
                         >
                           {sendReport.isPending ? <LoaderCircleIcon className="animate-spin" /> : <SendIcon />}
                           <Trans>Mon guide est à jour</Trans>

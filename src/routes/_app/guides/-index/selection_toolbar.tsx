@@ -64,7 +64,7 @@ export function SelectionToolbar({ selectedItems, onCancel, onDeleteComplete }: 
   }
 
   return (
-    <div className="-mx-2 sticky top-0 z-10 flex gap-2 px-2 py-2 backdrop-blur-sm">
+    <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex gap-2 px-2 py-2 backdrop-blur-sm">
       <DeleteGuidesDialog
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
