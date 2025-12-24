@@ -116,6 +116,11 @@ function GuideIdPage() {
           <TabsList
             className="group scrollbar-hide h-10 flex-1 overflow-x-auto overflow-y-hidden pl-0"
             data-multiple={tabs.length > 1 ? 'true' : 'false'}
+            onWheel={(e) => {
+              if (e.deltaY !== 0) {
+                e.currentTarget.scrollLeft += e.deltaY
+              }
+            }}
           >
             {tabs.map((guideId) => (
               <GuideTabsTrigger currentId={params.id} id={guideId} key={guideId} />
