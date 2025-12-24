@@ -97,7 +97,7 @@ function GuideIdPage() {
   const guides = useSuspenseQuery(guidesQuery())
 
   return (
-    <PageContent key={`guide-step-${search.step}`}>
+    <PageContent key="guide">
       <Tabs
         onValueChange={(newTab) => {
           navigate({
