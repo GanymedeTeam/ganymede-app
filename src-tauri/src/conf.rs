@@ -66,6 +66,22 @@ pub enum ConfLang {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum ConfTheme {
+    Default,
+    Standard,
+    Bonta,
+    Brakmar,
+    Tribute,
+    GoldSteel,
+    Belladone,
+    Unicorn,
+    Emerald,
+    Sufokia,
+    Pandala,
+    Wabbit,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
 pub enum FontSize {
     ExtraSmall,
     Small,
@@ -137,6 +153,8 @@ pub struct Conf {
     pub show_done_guides: bool,
     #[serde(default)]
     pub lang: ConfLang,
+    #[serde(default)]
+    pub theme: ConfTheme,
     #[serde(default)]
     pub font_size: FontSize,
     pub profiles: Vec<Profile>,
@@ -268,6 +286,12 @@ impl Default for ConfLang {
     }
 }
 
+impl Default for ConfTheme {
+    fn default() -> Self {
+        ConfTheme::Default
+    }
+}
+
 impl Default for FontSize {
     fn default() -> Self {
         FontSize::Normal
@@ -283,6 +307,7 @@ impl Default for Conf {
             auto_travel_copy: true,
             show_done_guides: true,
             lang: ConfLang::default(),
+            theme: ConfTheme::default(),
             font_size: FontSize::default(),
             profiles: vec![default_profile],
             profile_in_use: default_profile_id,

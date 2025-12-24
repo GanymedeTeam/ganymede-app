@@ -16,13 +16,15 @@ export type AuthTokens = { access_token: string; refresh_token: string | null; e
 
 export type AutoPilot = { name: string; position: string }
 
-export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; fontSize?: FontSize; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts }
+export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts }
 
 export type ConfError = { Malformed: JsonError } | { CreateConfDir: string } | { ConfDir: string } | { SerializeConf: JsonError } | { UnhandledIo: string } | { SaveConf: string } | "GetProfileInUse" | { ResetConf: ConfError }
 
 export type ConfLang = "En" | "Fr" | "Es" | "Pt"
 
 export type ConfStep = { checkboxes: number[] }
+
+export type ConfTheme = "Default" | "Standard" | "Bonta" | "Brakmar" | "Tribute" | "GoldSteel" | "Belladone" | "Unicorn" | "Emerald" | "Sufokia" | "Pandala" | "Wabbit"
 
 export type Folder = { name: string }
 
@@ -44,7 +46,7 @@ export type GuideWithSteps = { id: number; name: string; description: string | n
 
 export type Guides = { guides: GuideWithSteps[] }
 
-export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
+export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { GuideNotFound: number } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
 
 export type GuidesOrFolder = ({ type: "guide" } & GuideWithSteps) | ({ type: "folder" } & Folder)
 

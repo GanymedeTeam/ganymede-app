@@ -5,10 +5,10 @@ type ToasterProps = React.ComponentProps<typeof Sonner>
 function Toaster({ ...props }: ToasterProps) {
   return (
     <Sonner
-      theme="dark"
       className="toaster group select-none"
-      richColors
       closeButton
+      richColors
+      theme="dark"
       toastOptions={{
         classNames: {
           toast: 'group toast',

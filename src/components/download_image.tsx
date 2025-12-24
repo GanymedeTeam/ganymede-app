@@ -24,9 +24,8 @@ export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'sr
 
       if (data.isErr()) throw data.error
 
-      const binary = String.fromCharCode(...new Uint8Array(data.value))
-
-      return btoa(binary)
+      const blob = new Blob([new Uint8Array(data.value)])
+      return URL.createObjectURL(blob)
     },
     enabled,
     staleTime: Infinity,
@@ -38,7 +37,7 @@ export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'sr
   if (image.isLoading) {
     return (
       <span className="mr-[0.17em] inline-block">
-        <GenericLoader data-slot="loader" className={cn('inline-block size-[1.05rem]', props.className)} />
+        <GenericLoader className={cn('inline-block size-[1.05rem]', props.className)} data-slot="loader" />
       </span>
     )
   }
@@ -48,8 +47,8 @@ export function DownloadImage({ src, ...props }: Omit<ComponentProps<'img'>, 'sr
       error(image.error.stack ?? 'No stack trace')
     })
 
-    return <img alt="" src={src} referrerPolicy="same-origin" {...props} />
+    return <img alt="" referrerPolicy="same-origin" src={src} {...props} />
   }
 
-  return <img alt="" src={`data:image/png;base64,${image.data}`} referrerPolicy="same-origin" {...props} />
+  return <img alt="" referrerPolicy="same-origin" src={image.data} {...props} />
 }

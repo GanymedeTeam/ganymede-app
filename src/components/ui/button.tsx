@@ -9,18 +9,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
+        default: 'bg-surface-inset text-primary-foreground border border-accent shadow-sm hover:bg-surface-inset/80',
         destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
-        outline: 'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        outline:
+          'border border-border-muted bg-surface-card shadow-xs hover:bg-surface-inset hover:text-primary-foreground',
+        secondary: 'bg-surface-inset text-primary-foreground shadow-xs hover:bg-surface-inset/80',
+        ghost: 'hover:bg-surface-inset hover:text-primary-foreground',
+        link: 'text-accent underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-6 px-2 py-1 sm:h-9 sm:px-4 sm:py-2',
         sm: 'h-8 rounded-md px-3',
         lg: 'h-10 rounded-md px-8 py-2 text-sm xs:text-base',
-        icon: 'size-6 sm:size-9',
+        icon: 'size-6 sm:size-7',
         ['icon-sm']: 'size-7 min-w-7 min-h-7',
       },
     },
@@ -30,6 +31,8 @@ const buttonVariants = cva(
     },
   },
 )
+
+export type ButtonVariant = VariantProps<typeof buttonVariants>
 
 export interface ButtonProps extends React.ComponentPropsWithRef<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean

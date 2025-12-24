@@ -22,13 +22,13 @@ export const Route = createFileRoute('/_app/auto-pilot')({
 
     return (
       <Page key="auto-pilot-page" title={t`Autopilotage`}>
-        <PageScrollableContent hasBottomBar className="flex items-center justify-center">
+        <PageScrollableContent className="flex items-center justify-center" hasBottomBar>
           <GenericLoader />
 
           <BottomBar>
-            <Input placeholder={t`Nom`} name="name" className="bg-secondary placeholder:italic" disabled />
-            <Input placeholder="2,-30" name="position" className="bg-secondary placeholder:italic" disabled />
-            <Button type="button" size="icon" className="min-w-6 sm:min-w-9" variant="secondary" disabled>
+            <Input className="placeholder:italic" disabled name="name" placeholder={t`Nom`} />
+            <Input className="placeholder:italic" disabled name="position" placeholder="2,-30" />
+            <Button className="min-w-6 sm:min-w-9" disabled size="icon" type="button" variant="secondary">
               <PlusIcon />
             </Button>
           </BottomBar>
@@ -50,16 +50,16 @@ function AutoPilotPage() {
         <ul className="flex flex-col gap-2">
           {conf.data.autoPilots.map((autoPilot) => {
             return (
-              <li key={autoPilot.name} className="flex w-full justify-between gap-2">
+              <li className="flex w-full justify-between gap-2" key={autoPilot.name}>
                 <div className="flex items-center gap-1">
                   <Button
-                    type="button"
-                    size="icon"
                     onClick={async () => {
                       const [x, y] = autoPilot.position.split(',').map((n) => Number.parseInt(n, 10))
                       await copyPosition(x, y, conf.data.autoTravelCopy)
                     }}
+                    size="icon"
                     title={conf.data.autoTravelCopy ? t`Copier la commande autopilote` : t`Copier la position`}
+                    type="button"
                   >
                     <CopyIcon />
                   </Button>
@@ -67,16 +67,16 @@ function AutoPilotPage() {
                   <p className="text-slate-300">{autoPilot.name}</p>
                 </div>
                 <Button
-                  type="button"
-                  size="icon"
-                  variant="destructive"
                   onClick={() => {
                     setConf.mutate({
                       ...conf.data,
                       autoPilots: conf.data.autoPilots.filter((pilot) => pilot.name !== autoPilot.name),
                     })
                   }}
+                  size="icon"
                   title={t`Supprimer de la liste`}
+                  type="button"
+                  variant="destructive"
                 >
                   <TrashIcon />
                 </Button>
@@ -114,22 +114,22 @@ function AutoPilotPage() {
             }}
           >
             <Input
-              placeholder={t`Nom`}
-              name="name"
-              className="bg-secondary placeholder:italic"
-              required
-              minLength={2}
+              className="placeholder:italic"
               maxLength={20}
+              minLength={2}
+              name="name"
+              placeholder={t`Nom`}
+              required
             />
             <Input
-              placeholder="2,-30"
-              name="position"
-              className="bg-secondary placeholder:italic"
-              pattern="\[?-?\d+,-?\d+\]?"
-              required
+              className="placeholder:italic"
               maxLength={11}
+              name="position"
+              pattern="\[?-?\d+,-?\d+\]?"
+              placeholder="2,-30"
+              required
             />
-            <Button type="submit" size="icon" className="min-w-6 sm:min-w-9" variant="secondary" title={t`Ajouter`}>
+            <Button className="min-w-6 sm:min-w-9" size="icon" title={t`Ajouter`} type="submit" variant="secondary">
               <PlusIcon />
             </Button>
           </form>

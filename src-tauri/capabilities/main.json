@@ -36,7 +36,6 @@
     "sentry:default",
     "log:default",
     "opener:allow-open-path",
-    "opener:allow-open-url",
     "deep-link:default"
   ]
 }

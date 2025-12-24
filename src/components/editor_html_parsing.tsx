@@ -79,14 +79,16 @@ export function EditorHtmlParsing({
               {prefix}
               {posX !== undefined && posY !== undefined && (
                 <button
-                  id={`copy-position-${posX}-${posY}`}
-                  type="button"
                   className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
+                  disabled={disabled}
+                  id={`copy-position-${posX}-${posY}`}
                   onClick={async () => {
                     await copyPosition(Number.parseInt(posX, 10), Number.parseInt(posY, 10), conf.data.autoTravelCopy)
+                    const content = conf.data.autoTravelCopy ? `/travel ${posX},${posY}` : `[${posX},${posY}]`
+                    toast(t`${content} copié`)
                   }}
-                  disabled={disabled}
                   title={conf.data.autoTravelCopy ? 'Copier la commande autopilote' : 'Copier la position'}
+                  type="button"
                 >
                   [{posX},{posY}]
                 </button>
@@ -162,20 +164,20 @@ export function EditorHtmlParsing({
             }
 
             return (
-              <div id="to-guide" className="contents hover:saturate-200 focus:saturate-[25%]">
+              <div className="contents hover:saturate-200 focus:saturate-[25%]" id="to-guide">
                 {/* same guide */}
                 {guideId === domGuideId || domGuideId === 0 ? (
                   <Link
                     {...attribs}
-                    to="/guides/$id"
+                    className={cn('contents select-none data-[type=guide-step]:no-underline', domNode.attribs.class)}
+                    disabled={disabled}
+                    draggable={false}
                     params={{ id: domGuideId === 0 ? (guideId ?? domGuideId) : domGuideId }}
                     search={{ step: stepNumber - 1 }}
-                    draggable={false}
-                    disabled={disabled}
-                    className={cn('contents select-none data-[type=guide-step]:no-underline', domNode.attribs.class)}
+                    to="/guides/$id"
                   >
                     {!hasGoToGuideIcon && (
-                      <img alt="" src={goToStepIcon} className="size-5 select-none" data-icon draggable={false} />
+                      <img alt="" className="size-5 select-none" data-icon draggable={false} src={goToStepIcon} />
                     )}
                     <span className="hover:saturate-200 focus:saturate-[25%] group-focus-within:saturate-[25%] peer-hover:saturate-200">
                       {domToReact(domNode.children as DOMNode[], options)}
@@ -185,13 +187,13 @@ export function EditorHtmlParsing({
                   // different guide
                   <button
                     {...attribs}
-                    id={`different-guide-${domGuideId}-step-${stepNumber}`}
                     className={cn(
                       'contents! group cursor-pointer select-none data-[type=guide-step]:no-underline',
                       downloadGuide.isError && 'text-destructive!',
                       domNode.attribs.class,
                     )}
                     disabled={disabled || downloadGuide.isPending}
+                    id={`different-guide-${domGuideId}-step-${stepNumber}`}
                     onClick={async () => {
                       if (domGuideId === undefined) {
                         // this should never happen
@@ -217,10 +219,10 @@ export function EditorHtmlParsing({
                     {!hasGoToGuideIcon && (
                       <img
                         alt=""
-                        src={goToStepIcon}
                         className="peer inline-flex size-5 select-none group-focus-within:saturate-[25%] group-hover:saturate-200"
                         data-icon
                         draggable={false}
+                        src={goToStepIcon}
                       />
                     )}
                     <span className="hover:saturate-200 focus:saturate-[25%] group-focus-within:saturate-[25%] peer-hover:saturate-200">
@@ -250,7 +252,6 @@ export function EditorHtmlParsing({
           return (
             <div {...restAttribs} className={cn('contents!', nodeClassName)}>
               <button
-                type="button"
                 className="group contents cursor-pointer"
                 disabled={disabled}
                 onClick={async (evt) => {
@@ -307,6 +308,7 @@ export function EditorHtmlParsing({
                         : t`Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN`
                   }
                 })()}
+                type="button"
               >
                 <span className="peer group-focus-within:saturate-[25%] group-hover:saturate-150">
                   {domToReact([domNode.children[0]] as DOMNode[], options)}
@@ -331,8 +333,8 @@ export function EditorHtmlParsing({
                 <TooltipTrigger asChild>
                   <div
                     className={cn('rounded-md p-2 transition-colors', domNode.attribs.class)}
-                    data-status={status}
                     data-quest={questName}
+                    data-status={status}
                   >
                     {domToReact(domNode.children as DOMNode[], options)}
                   </div>
@@ -341,7 +343,7 @@ export function EditorHtmlParsing({
                   {status === 'setup' && <PackageSearchIcon className="size-4 min-h-4 min-w-4 text-orange-400" />}
                   {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4 text-red-500" />}
                   {status === 'end' && <BookCheckIcon className="size-4 min-h-4 min-w-4 text-green-400" />}
-                  <img src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} className="size-6" />
+                  <img className="size-6" src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} />
                   <span className="text-balance text-base">{questName}</span>
                 </TooltipContent>
               </Tooltip>
@@ -366,6 +368,13 @@ export function EditorHtmlParsing({
           return (
             <DownloadImage
               {...attribs}
+              className={cn(
+                'inline-flex select-none',
+                isIcon && '-translate-y-0.5 text-[0.8em]',
+                !isIcon && 'cursor-pointer! pb-2',
+                domClassName,
+              )}
+              draggable={false}
               onClick={() => {
                 if (clickable) {
                   openImageViewer.mutate(
@@ -382,15 +391,8 @@ export function EditorHtmlParsing({
                   )
                 }
               }}
-              draggable={false}
-              title={clickable ? t`Cliquez pour ouvrir dans une nouvelle fenêtre` : undefined}
               role="button"
-              className={cn(
-                'inline-flex select-none',
-                isIcon && '-translate-y-0.5 text-[0.8em]',
-                !isIcon && 'cursor-pointer! pb-2',
-                domClassName,
-              )}
+              title={clickable ? t`Cliquez pour ouvrir dans une nouvelle fenêtre` : undefined}
             />
           )
         }
@@ -409,17 +411,17 @@ export function EditorHtmlParsing({
 
           return (
             <button
-              data-href={href}
-              id={`open-link-${href.slice(0, 10)}`}
-              type="button"
               className="inline-flex cursor-pointer text-yellow-300 underline [&_a]:underline"
+              data-href={href}
+              disabled={disabled}
+              id={`open-link-${href.slice(0, 10)}`}
               onClick={() => {
                 if (isHrefHttp) {
                   openUrlInBrowser.mutate(href)
                 }
               }}
-              disabled={disabled}
               title={isHrefHttp ? t`Cliquez pour ouvrir dans le navigateur` : undefined}
+              type="button"
             >
               {domToReact(domNode.children as DOMNode[], options)}
             </button>
@@ -452,6 +454,11 @@ export function EditorHtmlParsing({
           return (
             <input
               {...attribs}
+              checked={
+                !guideId || stepIndex === undefined || step === undefined ? false : step.checkboxes.includes(index)
+              }
+              className={domClassName}
+              disabled={disabled}
               onChange={() => {
                 if (guideId && stepIndex !== undefined) {
                   toggleGuideCheckbox.mutate({
@@ -461,11 +468,6 @@ export function EditorHtmlParsing({
                   })
                 }
               }}
-              checked={
-                !guideId || stepIndex === undefined || step === undefined ? false : step.checkboxes.includes(index)
-              }
-              disabled={disabled}
-              className={domClassName}
             />
           )
         }

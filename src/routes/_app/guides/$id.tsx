@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
@@ -7,6 +8,7 @@ import { PageContent } from '@/components/page_content.tsx'
 import { PageTitle, PageTitleText } from '@/components/page_title.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Tabs, TabsContent, TabsList } from '@/components/ui/tabs.tsx'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { registerGuideOpen } from '@/ipc/guides.ts'
@@ -97,7 +99,6 @@ function GuideIdPage() {
   return (
     <PageContent key={`guide-step-${search.step}`}>
       <Tabs
-        value={params.id.toString()}
         onValueChange={(newTab) => {
           navigate({
             to: '/guides/$id',
@@ -109,24 +110,42 @@ function GuideIdPage() {
             },
           })
         }}
+        value={params.id.toString()}
       >
-        <TabsList className="group pl-0 sm:pl-0" data-multiple={tabs.length > 1 ? 'true' : 'false'}>
-          {tabs.map((guideId) => (
-            <GuideTabsTrigger key={guideId} id={guideId} currentId={params.id} />
-          ))}
-          <Button size="icon" className="ml-1 min-h-6 min-w-6 self-center sm:size-6" variant="secondary" asChild>
-            <Link
-              to="/guides"
-              search={{
-                path: '',
-                from: params.id,
-              }}
-              draggable={false}
-            >
-              <PlusIcon />
-            </Link>
-          </Button>
-        </TabsList>
+        <div className="flex w-full bg-surface-card text-primary-foreground-800">
+          <TabsList
+            className="group scrollbar-hide h-10 flex-1 overflow-x-auto overflow-y-hidden pl-0"
+            data-multiple={tabs.length > 1 ? 'true' : 'false'}
+          >
+            {tabs.map((guideId) => (
+              <GuideTabsTrigger currentId={params.id} id={guideId} key={guideId} />
+            ))}
+          </TabsList>
+
+          <div className="flex items-center gap-1 px-3">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button asChild className="min-h-6 min-w-6 shrink-0 self-center" size="icon" variant="secondary">
+                    <Link
+                      draggable={false}
+                      search={{
+                        path: '',
+                        from: params.id,
+                      }}
+                      to="/guides"
+                    >
+                      <PlusIcon />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <Trans>Ouvrir un guide</Trans>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </div>
         {tabs.map((guide) => (
           <TabsContent key={`guide-${guide}-${search.step}`} value={guide.toString()}>
             <GuidePage id={guide} stepIndex={getStepClamped(guides.data, params.id, search.step)} />

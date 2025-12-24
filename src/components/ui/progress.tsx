@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils.ts'
 function Progress({ className, value, ref, ...props }: React.ComponentPropsWithRef<typeof ProgressPrimitive.Root>) {
   return (
     <ProgressPrimitive.Root
-      ref={ref}
       className={cn('relative h-4 w-full overflow-hidden rounded-full bg-secondary', className)}
+      ref={ref}
       {...props}
     >
       <ProgressPrimitive.Indicator

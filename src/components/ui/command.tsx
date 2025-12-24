@@ -9,8 +9,11 @@ import { cn } from '@/lib/utils.ts'
 function Command({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
+      className={cn(
+        'flex h-full w-full flex-col overflow-hidden rounded-md border border-border-muted bg-surface-card text-foreground',
+        className,
+      )}
       ref={ref}
-      className={cn('flex h-full w-full flex-col overflow-hidden rounded-md bg-white text-neutral-950', className)}
       {...props}
     />
   )
@@ -30,14 +33,14 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
 
 function CommandInput({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive.Input>) {
   return (
-    <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+    <div className="flex items-center border-border-muted border-b px-3" cmdk-input-wrapper="">
       <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
-        ref={ref}
         className={cn(
-          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+          'flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
+        ref={ref}
         {...props}
       />
     </div>
@@ -47,25 +50,25 @@ function CommandInput({ className, ref, ...props }: React.ComponentPropsWithRef<
 function CommandList({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
-      ref={ref}
       className={cn('max-h-[300px] overflow-y-auto overflow-x-hidden', className)}
+      ref={ref}
       {...props}
     />
   )
 }
 
 function CommandEmpty({ ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive.Empty>) {
-  return <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
+  return <CommandPrimitive.Empty className="py-6 text-center text-sm" ref={ref} {...props} />
 }
 
 function CommandGroup({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive.Group>) {
   return (
     <CommandPrimitive.Group
-      ref={ref}
       className={cn(
-        'overflow-hidden p-1 text-neutral-950 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs',
+        'overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs',
         className,
       )}
+      ref={ref}
       {...props}
     />
   )
@@ -76,17 +79,17 @@ function CommandSeparator({
   ref,
   ...props
 }: React.ComponentPropsWithRef<typeof CommandPrimitive.Separator>) {
-  return <CommandPrimitive.Separator ref={ref} className={cn('-mx-1 h-px bg-border', className)} {...props} />
+  return <CommandPrimitive.Separator className={cn('-mx-1 h-px bg-border', className)} ref={ref} {...props} />
 }
 
 function CommandItem({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
-      ref={ref}
       className={cn(
-        'relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden hover:bg-neutral-100 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+        'relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden hover:bg-surface-inset data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
         className,
       )}
+      ref={ref}
       {...props}
     />
   )

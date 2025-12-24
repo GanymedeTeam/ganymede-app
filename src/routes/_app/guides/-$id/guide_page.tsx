@@ -4,10 +4,9 @@ import { useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
-import { ChangeStep } from '@/components/change_step.tsx'
 import { GuideFrame } from '@/components/guide_frame.tsx'
-import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Position } from '@/components/position.tsx'
+import { StepProgress } from '@/components/step_progress/step_progress.tsx'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
 import { onCopyCurrentGuideStep } from '@/ipc/guides.ts'
@@ -125,26 +124,40 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
       .unwrap()
   })
 
+  // Use theme-aware background color with opacity via CSS color-mix
+  const bgColor = `color-mix(in srgb, var(--color-surface-page) ${conf.data.opacity * 100}%, transparent)`
+
   return (
-    <PageScrollableContent hasTitleBar ref={scrollableRef}>
-      <header className="fixed inset-x-0 top-[60px] z-10 bg-primary-800 sm:top-[66px]">
-        <div className="relative flex h-9 items-center justify-between gap-2 p-1">
+    <div
+      className="scroller mt-[40px] flex h-[calc(100vh-var(--spacing-titlebar)-40px-40px)] flex-col overflow-x-hidden overflow-y-scroll pb-2"
+      ref={scrollableRef}
+      style={{ backgroundColor: bgColor }}
+    >
+      <header className="fixed inset-x-0 top-[70px] z-10 sm:top-[66px]" style={{ backgroundColor: bgColor }}>
+        <div className="flex h-10 items-center p-1">
           {step && (
             <>
-              {step.map !== null && step.map.toLowerCase() !== 'nomap' && (
-                <Position pos_x={step.pos_x} pos_y={step.pos_y} />
-              )}
-              <ChangeStep
-                key={`${guide.id}-${index}`}
-                currentIndex={index}
-                maxIndex={stepMax}
-                onPrevious={onClickPrevious}
-                onNext={onClickNext}
-                setCurrentIndex={async (currentIndex) => {
-                  return changeStep(currentIndex)
-                }}
-              />
-              <div className="ml-auto flex">
+              {/* Left Side - Fixed width to maintain center balance */}
+              <div className="flex w-16 shrink-0 items-center justify-start pl-1">
+                {step.map !== null && step.map.toLowerCase() !== 'nomap' && (
+                  <Position pos_x={step.pos_x} pos_y={step.pos_y} />
+                )}
+              </div>
+
+              {/* Center - Progress Bar */}
+              <div className="flex flex-1 items-center justify-center">
+                <StepProgress
+                  currentIndex={index}
+                  key={`${guide.id}-${index}`}
+                  maxIndex={stepMax}
+                  onChangeStep={changeStep}
+                  onNext={onClickNext}
+                  onPrevious={onClickPrevious}
+                />
+              </div>
+
+              {/* Right Side - Fixed width to maintain center balance */}
+              <div className="flex w-14 shrink-0 items-center justify-end gap-1 pr-1">
                 {guide.game_type !== 'wakfu' && <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />}
                 {(guide.status === 'gp' || guide.status === 'certified') && (
                   <ReportDialog guideId={guide.id} stepIndex={index} />
@@ -168,6 +181,6 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
           stepIndex={index}
         />
       )}
-    </PageScrollableContent>
+    </div>
   )
 }

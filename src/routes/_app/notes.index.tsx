@@ -20,15 +20,15 @@ export const Route = createFileRoute('/_app/notes/')({
 
     return (
       <Page
-        key="notes-page"
-        title={t`Notes`}
         actions={
           <div className="flex w-full items-center justify-end gap-1 text-sm">
-            <Button size="icon-sm" variant="secondary" disabled>
+            <Button disabled size="icon-sm" variant="secondary">
               <PlusIcon />
             </Button>
           </div>
         }
+        key="notes-page"
+        title={t`Notes`}
       >
         <PageScrollableContent className="flex items-center justify-center">
           <GenericLoader />
@@ -46,55 +46,55 @@ function NotesPage() {
 
   return (
     <Page
-      key="notes-page"
-      title={t`Notes`}
       actions={
         <div className="flex w-full items-center justify-end gap-1 text-sm">
           <Button
-            size="icon-sm"
-            variant="secondary"
             asChild
-            title={t`Créer une nouvelle note`}
             className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
+            size="icon-sm"
+            title={t`Créer une nouvelle note`}
+            variant="secondary"
           >
-            <Link to="/notes/create" search={{}} draggable={false}>
+            <Link draggable={false} search={{}} to="/notes/create">
               <PlusIcon />
             </Link>
           </Button>
         </div>
       }
+      key="notes-page"
+      title={t`Notes`}
     >
       <PageScrollableContent className="p-2">
         <ul className="flex flex-col gap-2">
           {conf.data.notes.map((note) => {
             return (
-              <li key={note.name} className="flex w-full justify-between gap-2">
+              <li className="flex w-full justify-between gap-2" key={note.name}>
                 <Button asChild className="grow" title={t`Modifier la note`}>
-                  <Link to="/notes/create" search={{ name: note.name }} draggable={false}>
+                  <Link draggable={false} search={{ name: note.name }} to="/notes/create">
                     <p className="text-slate-300">{note.name}</p>
                   </Link>
                 </Button>
                 <Button
-                  type="button"
-                  size="icon"
                   onClick={async () => {
                     await writeText(note.text)
                   }}
+                  size="icon"
                   title={t`Copier la note`}
+                  type="button"
                 >
                   <CopyIcon />
                 </Button>
                 <Button
-                  type="button"
-                  size="icon"
-                  variant="destructive"
                   onClick={() => {
                     setConf.mutate({
                       ...conf.data,
                       notes: conf.data.notes.filter((pilot) => pilot.name !== note.name),
                     })
                   }}
+                  size="icon"
                   title={t`Supprimer de la liste`}
+                  type="button"
+                  variant="destructive"
                 >
                   <TrashIcon />
                 </Button>

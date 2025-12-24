@@ -12,11 +12,11 @@ export function PageTitle({
 
   return (
     <Comp
-      data-slot="page-title"
       className={cn(
-        'sticky top-7.5 z-10 flex h-7.5 w-full items-center justify-between bg-primary-800 p-1 font-semibold text-primary-foreground sm:h-[36px] sm:px-2',
+        'sticky top-7.5 z-10 flex h-7.5 w-full items-center justify-between gap-2 bg-surface-card px-3 py-5 font-semibold text-primary-foreground sm:h-[36px]',
         className,
       )}
+      data-slot="page-title"
       {...props}
     >
       {children}
@@ -33,7 +33,7 @@ export function PageTitleText({
   const Comp = asChild ? Slot : 'span'
 
   return (
-    <Comp data-slot="page-title-text" className={cn('text-xs xs:text-sm sm:text-base', className)} {...props}>
+    <Comp className={cn('text-xs xs:text-xl sm:text-base', className)} data-slot="page-title-text" {...props}>
       {children}
     </Comp>
   )

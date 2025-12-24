@@ -22,13 +22,13 @@ export function SelectLangSelect({
   return (
     <Select
       {...props}
-      value={value}
       onValueChange={async (value) => {
         onValueChange?.(value)
         await dynamicActiveLocale(value.toLowerCase())
       }}
+      value={value}
     >
-      <SelectTrigger id={id} className={cn('text-xs', className)}>
+      <SelectTrigger className={cn('text-xs', className)} id={id}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

@@ -64,18 +64,18 @@ export function SelectionToolbar({ selectedItems, onCancel, onDeleteComplete }: 
   }
 
   return (
-    <div className="sticky top-0 z-10 flex gap-2 bg-background py-0">
+    <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex gap-2 px-2 py-2 backdrop-blur-sm">
       <DeleteGuidesDialog
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        selectedItems={selectedItems}
         onConfirm={onDeleteGuidesInSystem}
+        onOpenChange={setDeleteDialogOpen}
+        open={deleteDialogOpen}
+        selectedItems={selectedItems}
       >
         <Button className="w-full" variant="destructive">
           <Trans>Supprimer</Trans>
         </Button>
       </DeleteGuidesDialog>
-      <Button className="w-full" onClick={onCancel}>
+      <Button className="w-full" onClick={onCancel} variant="outline">
         <Trans>Annuler</Trans>
       </Button>
     </div>

@@ -23,7 +23,7 @@ function Item({ guideId, error }: { guideId: number; error: string }) {
   const guide = getGuideById(guides.data, guideId)
 
   return (
-    <div className="flex flex-col items-center gap-1 rounded-lg bg-accent p-2 leading-5">
+    <div className="flex flex-col items-center gap-1 rounded-lg border border-amber-500/50 bg-surface-card p-2 leading-5">
       <h3 className="font-semibold text-sm">
         {guide ? (
           <>

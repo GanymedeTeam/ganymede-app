@@ -4,13 +4,13 @@ import {
   FolderOpenIcon,
   FolderSyncIcon,
   ImportIcon,
+  Loader2Icon,
   MenuIcon,
   ServerCrashIcon,
   SquareMousePointerIcon,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { GenericLoader } from '@/components/generic_loader.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import {
   DropdownMenu,
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
-import { useInterval } from '@/hooks/use_interval.ts'
+
 import { cn } from '@/lib/utils.ts'
 import { useOpenGuidesFolder } from '@/mutations/open_guides_folder.mutation.ts'
 import { useUpdateAllAtOnce } from '@/mutations/update_all_at_once.mutation.ts'
@@ -40,26 +40,17 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
   const guides = useSuspenseQuery(guidesInFolderQuery(path))
   const hasSomeGuideNotUpdated = useQuery(hasGuidesNotUpdatedQuery)
   const openGuidesFolder = useOpenGuidesFolder()
-  const interval = useInterval()
   const updateAllAtOnce = useUpdateAllAtOnce({
-    onMutate: () => {
-      interval.start()
-
-      // disable user interactions
-      document.body.style.pointerEvents = 'none'
-      document.body.setAttribute('aria-busy', 'true')
-      document.body.setAttribute('data-scroll-locked', '1')
+    onSuccess: (data) => {
+      const hasErrors = Object.values(data).some((v) => v !== null)
+      if (hasErrors) {
+        toast.warning(t`Mise à jour terminée avec des erreurs`)
+      } else {
+        toast.success(t`Tous les guides ont été mis à jour`)
+      }
     },
-    onSettled: () => {
-      interval.stop()
-      setTimeout(() => {
-        interval.reset()
-      }, 100)
-
-      // re-enable user interactions
-      document.body.removeAttribute('aria-busy')
-      document.body.removeAttribute('data-scroll-locked')
-      document.body.style.removeProperty('pointer-events')
+    onError: () => {
+      toast.error(t`Erreur lors de la mise à jour des guides`)
     },
   })
 
@@ -115,28 +106,15 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
 
   return (
     <>
-      {updateAllAtOnce.isPending && (
-        <div className="fixed inset-0 top-7.5 z-10 flex flex-col items-center justify-center bg-accent/75">
-          <div className="flex items-center">
-            <div className="flex items-center gap-2 p-2">
-              <span>
-                <Trans>Mise à jour de vos guides...</Trans>
-              </span>
-            </div>
-          </div>
-          <span className="text-3xl">{interval.value.toFixed(1)}s</span>
-        </div>
-      )}
       <div className="flex w-full items-center justify-end gap-1 text-sm">
-        {guides.isFetched && guides.isFetching && <GenericLoader className="size-4" />}
         {updateAllAtOnceGotError && (
           <GuideUpdateAllResultDialog result={updateAllAtOnce.data}>
             <Button
-              size="icon-sm"
-              variant="destructive"
-              title={t`Certains guides n'ont pas été mis à jour`}
               className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
               disabled={updateAllAtOnce.isPending || guides.isFetching}
+              size="icon-sm"
+              title={t`Certains guides n'ont pas été mis à jour`}
+              variant="destructive"
             >
               <ServerCrashIcon className="size-4" />
             </Button>
@@ -144,7 +122,6 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
         )}
         <TooltipProvider disableHoverableContent>
           <Tooltip
-            open={isHasUpdateTooltipOpen}
             onOpenChange={(open) => {
               if (!hasGuidesNotUpdated) {
                 setHasUpdateTooltipOpen(false)
@@ -154,20 +131,25 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
 
               setHasUpdateTooltipOpen(open)
             }}
+            open={isHasUpdateTooltipOpen}
           >
             <TooltipTrigger asChild>
               <Button
-                size="icon-sm"
-                variant="secondary"
-                onClick={onUpdateAllAtOnce}
-                title={t`Mettre à jour tous les guides`}
                 className={cn(
                   'size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7',
                   hasGuidesNotUpdated && 'text-orange-400',
                 )}
                 disabled={updateAllAtOnce.isPending || guides.isFetching}
+                onClick={onUpdateAllAtOnce}
+                size="icon-sm"
+                title={t`Mettre à jour tous les guides`}
+                variant="secondary"
               >
-                <ImportIcon className="size-4" />
+                {updateAllAtOnce.isPending ? (
+                  <Loader2Icon className="size-4 animate-spin" />
+                ) : (
+                  <ImportIcon className="size-4" />
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent align="center" side="bottom">
@@ -179,10 +161,10 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              size="icon-sm"
-              variant="secondary"
-              title={t`Plus d'options`}
               className="size-6 min-h-6 min-w-6 sm:size-7 sm:min-h-7 sm:min-w-7"
+              size="icon-sm"
+              title={t`Plus d'options`}
+              variant="secondary"
             >
               <MenuIcon className="size-4" />
             </Button>
@@ -196,7 +178,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
               <FolderOpenIcon className="size-4" />
               <Trans>Ouvrir le dossier des guides téléchargés</Trans>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onRefresh} disabled={isSelectMode}>
+            <DropdownMenuItem disabled={isSelectMode} onClick={onRefresh}>
               <FolderSyncIcon className="size-4" />
               <Trans>Rafraichir le dossier des guides téléchargés</Trans>
             </DropdownMenuItem>

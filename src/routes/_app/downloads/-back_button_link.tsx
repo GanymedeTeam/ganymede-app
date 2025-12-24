@@ -10,9 +10,9 @@ export function BackButtonLink<
   const TMaskTo extends string = '',
 >({ disabled, ...props }: LinkComponentProps<'a', TRouter, TFrom, TTo, TMaskFrom, TMaskTo>) {
   return (
-    <Button size="icon" className="min-h-6 min-w-6 sm:size-6" variant="secondary" disabled={disabled} asChild>
+    <Button asChild className="min-h-6 min-w-6" disabled={disabled} size="icon" variant="secondary">
       {/* @ts-expect-error - does not want to know */}
-      <Link draggable={false} disabled={disabled} {...props}>
+      <Link disabled={disabled} draggable={false} {...props}>
         <ChevronLeftIcon />
       </Link>
     </Button>

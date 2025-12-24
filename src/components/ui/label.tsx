@@ -9,7 +9,7 @@ const labelVariants = cva('text-sm font-medium leading-none peer-disabled:cursor
 export type LabelProps = React.ComponentPropsWithRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>
 
 function Label({ className, ref, ...props }: LabelProps) {
-  return <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...props} />
+  return <LabelPrimitive.Root className={cn(labelVariants(), className)} ref={ref} {...props} />
 }
 
 export { Label }

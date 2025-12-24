@@ -10,6 +10,7 @@ import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { SelectLangLabel, SelectLangSelect } from '@/components/select_lang.tsx'
 import { ShortcutInput } from '@/components/shortcut_input.tsx'
+import { ThemeSelector } from '@/components/theme_selector.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.tsx'
 import { Input } from '@/components/ui/input.tsx'
@@ -67,7 +68,7 @@ function SettingCard({
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
-      <CardContent id={id} className="flex flex-col gap-4 xs:pt-2">
+      <CardContent className="flex flex-col gap-4 xs:pt-2" id={id}>
         {children}
       </CardContent>
     </Card>
@@ -76,7 +77,7 @@ function SettingCard({
 
 function SettingCardSection({ id, children }: PropsWithChildren<{ id: string }>) {
   return (
-    <section id={id} className="flex flex-col gap-2">
+    <section className="flex flex-col gap-2" id={id}>
       {children}
     </section>
   )
@@ -106,21 +107,21 @@ function Settings() {
 
   return (
     <Page
+      backButton={<BackButtonLink from={Route.fullPath} hash={hash} search={search} state={state} to={from} />}
       key="settings-page"
       title={t`Paramètres`}
-      backButton={<BackButtonLink from={Route.fullPath} to={from} state={state} hash={hash} search={search} />}
     >
       <PageScrollableContent className="py-2">
-        <div className="container flex max-w-lg flex-col gap-4 px-4 py-2">
-          <SettingCard title={<Trans>Général</Trans>} id="section-general">
+        <div className="container flex max-w-lg flex-col gap-4 px-2 py-2">
+          <SettingCard id="section-general" title={<Trans>Général</Trans>}>
             <SettingCardSection id="section-auto-open-guides">
               <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="auto-open-guides" className="text-xs">
+                <Label className="text-xs" htmlFor="auto-open-guides">
                   <Trans>Ouvrir les guides à l'ouverture</Trans>
                 </Label>
                 <Switch
-                  id="auto-open-guides"
                   checked={conf.data.autoOpenGuides}
+                  id="auto-open-guides"
                   onCheckedChange={(checked) => {
                     setConf.mutate({
                       ...conf.data,
@@ -132,12 +133,12 @@ function Settings() {
             </SettingCardSection>
             <SettingCardSection id="section-auto-travel-copy">
               <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="auto-travel-copy" className="text-xs">
+                <Label className="text-xs" htmlFor="auto-travel-copy">
                   <Trans>Copie d'autopilote</Trans>
                 </Label>
                 <Switch
-                  id="auto-travel-copy"
                   checked={conf.data.autoTravelCopy}
+                  id="auto-travel-copy"
                   onCheckedChange={(checked) => {
                     setConf.mutate({
                       ...conf.data,
@@ -149,12 +150,12 @@ function Settings() {
             </SettingCardSection>
             <SettingCardSection id="section-show-done-guides">
               <div className="flex items-center justify-between gap-2">
-                <Label htmlFor="show-done-guides" className="text-xs">
+                <Label className="text-xs" htmlFor="show-done-guides">
                   <Trans>Afficher les guides terminés</Trans>
                 </Label>
                 <Switch
-                  id="show-done-guides"
                   checked={conf.data.showDoneGuides}
+                  id="show-done-guides"
                   onCheckedChange={(checked) => {
                     setConf.mutate({
                       ...conf.data,
@@ -165,19 +166,19 @@ function Settings() {
               </div>
             </SettingCardSection>
           </SettingCard>
-          <SettingCard title={<Trans>Apparence</Trans>} id="section-appearance">
+          <SettingCard id="section-appearance" title={<Trans>Apparence</Trans>}>
             <SettingCardSection id="section-opacity">
-              <Label htmlFor="opacity" className="text-xs">
+              <Label className="text-xs" htmlFor="opacity">
                 <Trans>Opacité</Trans>
               </Label>
               <Slider
-                id="opacity"
                 defaultValue={[conf.data.opacity * 100]}
-                step={1}
+                id="opacity"
                 max={98}
                 onValueChange={(v) => {
                   setOpacity(v[0] / 100)
                 }}
+                step={1}
               />
             </SettingCardSection>
             <SettingCardSection id="section-font-size">
@@ -185,15 +186,15 @@ function Settings() {
                 <Trans>Taille de texte des guides</Trans>
               </p>
               <Select
-                value={conf.data.fontSize}
                 onValueChange={(value) => {
                   setConf.mutate({
                     ...conf.data,
                     fontSize: value as FontSize,
                   })
                 }}
+                value={conf.data.fontSize}
               >
-                <SelectTrigger id="lang-guides" className="text-xs">
+                <SelectTrigger className="text-xs" id="lang-guides">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -218,33 +219,35 @@ function Settings() {
             <SettingCardSection id="section-lang">
               <SelectLangLabel htmlFor="lang-guides" />
               <SelectLangSelect
-                value={conf.data.lang}
                 onValueChange={async (value) => {
                   setConf.mutate({
                     ...conf.data,
                     lang: value as ConfLang,
                   })
                 }}
+                value={conf.data.lang}
               />
+            </SettingCardSection>
+            <SettingCardSection id="section-theme">
+              <ThemeSelector />
             </SettingCardSection>
           </SettingCard>
           <SettingCard
-            id="section-shortcuts"
             className="slot-[card-content]:pt-0 slot-[card-description]:text-xs"
-            title={<Trans>Raccourcis clavier</Trans>}
             description={
               <Trans>
                 Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne
                 peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications.
               </Trans>
             }
+            id="section-shortcuts"
+            title={<Trans>Raccourcis clavier</Trans>}
           >
             <SettingCardSection id="section-shortcuts-inputs">
               <ShortcutInput
+                description={t`Efface tous vos profils et paramètres (pas les guides)`}
                 id="reset-conf"
                 label={t`Réinitialiser la configuration`}
-                description={t`Efface tous vos profils et paramètres (pas les guides)`}
-                value={conf.data.shortcuts?.resetConf}
                 onChange={async (value) => {
                   try {
                     await setConf.mutateAsync({
@@ -260,11 +263,11 @@ function Settings() {
                     toast.error(t`Erreur lors de la mise à jour du raccourci`)
                   }
                 }}
+                value={conf.data.shortcuts?.resetConf}
               />
               <ShortcutInput
                 id="go-previous-step"
                 label={t`Étape précédente`}
-                value={conf.data.shortcuts?.goPreviousStep}
                 onChange={async (value) => {
                   try {
                     await setConf.mutateAsync({
@@ -280,11 +283,11 @@ function Settings() {
                     toast.error(t`Erreur lors de la mise à jour du raccourci`)
                   }
                 }}
+                value={conf.data.shortcuts?.goPreviousStep}
               />
               <ShortcutInput
                 id="go-next-step"
                 label={t`Étape suivante`}
-                value={conf.data.shortcuts?.goNextStep}
                 onChange={async (value) => {
                   try {
                     await setConf.mutateAsync({
@@ -300,11 +303,11 @@ function Settings() {
                     toast.error(t`Erreur lors de la mise à jour du raccourci`)
                   }
                 }}
+                value={conf.data.shortcuts?.goNextStep}
               />
               <ShortcutInput
                 id="copy-current-step"
                 label={t`Copier l'étape actuelle`}
-                value={conf.data.shortcuts?.copyCurrentStep}
                 onChange={async (value) => {
                   try {
                     await setConf.mutateAsync({
@@ -320,21 +323,22 @@ function Settings() {
                     toast.error(t`Erreur lors de la mise à jour du raccourci`)
                   }
                 }}
+                value={conf.data.shortcuts?.copyCurrentStep}
               />
             </SettingCardSection>
           </SettingCard>
-          <SettingCard title={<Trans>Profils</Trans>} id="section-profiles-card">
+          <SettingCard id="section-profiles-card" title={<Trans>Profils</Trans>}>
             <SettingCardSection id="section-profiles">
               <div className="w-full">
                 <Profiles />
               </div>
             </SettingCardSection>
             <SettingCardSection id="section-create-profile">
-              <Label htmlFor="create-profile" className="text-xs">
+              <Label className="text-xs" htmlFor="create-profile">
                 <Trans>Créer un profil</Trans>
               </Label>
               <form
-                className="space-y-2"
+                className="flex flex-col gap-2"
                 onSubmit={async (evt) => {
                   evt.preventDefault()
                   const form = evt.currentTarget
@@ -366,8 +370,8 @@ function Settings() {
                   }
                 }}
               >
-                <Input id="create-profile" name="newProfile" className="h-9" />
-                <Button type="submit">
+                <Input className="h-9" id="create-profile" name="newProfile" />
+                <Button className="self-start" type="submit">
                   <span>
                     <Trans>Créer</Trans>
                   </span>

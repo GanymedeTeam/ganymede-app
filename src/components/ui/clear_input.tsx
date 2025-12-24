@@ -11,10 +11,9 @@ function ClearInput({ className, onValueChange, value, type, ref, ...props }: Cl
   return (
     <div className="relative z-0 flex w-full">
       <Input
-        className={cn('peer bg-primary/80', className)}
+        className={cn('peer border-border-muted bg-surface-card', className)}
         type={type}
         {...props}
-        value={value}
         onKeyDown={(evt) => {
           if (evt.key === 'Escape') {
             evt.preventDefault()
@@ -23,13 +22,14 @@ function ClearInput({ className, onValueChange, value, type, ref, ...props }: Cl
           }
         }}
         ref={ref}
+        value={value}
       />
       <button
-        type="button"
         className="center-y-absolute right-2 opacity-0 transition-opacity peer-has-value:opacity-100"
         onClick={() => {
           onValueChange?.('')
         }}
+        type="button"
       >
         <XIcon className="size-4" />
       </button>

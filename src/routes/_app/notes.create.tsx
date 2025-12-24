@@ -34,9 +34,9 @@ function CreateNotePage() {
 
   return (
     <Page
+      backButton={<BackButtonLink to="/notes" />}
       key="create-or-edit-notes-page"
       title={noteName ? t`Éditer une note` : t`Créer une note`}
-      backButton={<BackButtonLink to="/notes" />}
     >
       <PageScrollableContent className="p-2">
         <form
@@ -70,23 +70,23 @@ function CreateNotePage() {
           }}
         >
           <Input
-            placeholder={t`Nom de la note`}
-            name="name"
             className="placeholder:italic"
-            required
-            minLength={2}
-            maxLength={20}
             defaultValue={note?.name}
+            maxLength={20}
+            minLength={2}
+            name="name"
+            placeholder={t`Nom de la note`}
+            required
           />
           <Textarea
-            placeholder={t`Contenu de la note.${linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu.`}
-            name="text"
-            className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
-            required
-            autoComplete="off"
             autoCapitalize="off"
-            rows={10}
+            autoComplete="off"
+            className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
             defaultValue={note?.text}
+            name="text"
+            placeholder={t`Contenu de la note.${linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu.`}
+            required
+            rows={10}
           />
           <Button type="submit">
             <SaveIcon />

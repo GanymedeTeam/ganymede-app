@@ -50,7 +50,7 @@ export function TitleBar() {
   const title = location.search.title || 'Ganymède'
 
   return (
-    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-primary text-primary-foreground">
+    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-surface-inset text-primary-foreground">
       {!linksAreDisabled && !isImageViewer && (
         <DropdownMenu>
           <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>
@@ -60,6 +60,7 @@ export function TitleBar() {
             {authTokens.isSuccess && authTokens.data !== null ? (
               <DropdownMenuItem
                 className="gap-2"
+                disabled={cleanAuthTokens.isPending}
                 onClick={async () => {
                   try {
                     await cleanAuthTokens.mutateAsync()
@@ -71,67 +72,66 @@ export function TitleBar() {
                     toast.error(t`Une erreur est survenue lors de la déconnexion`)
                   }
                 }}
-                disabled={cleanAuthTokens.isPending}
               >
                 <LogOutIcon />
                 <Trans>Se déconnecter</Trans>
               </DropdownMenuItem>
             ) : (
               <DropdownMenuItem
-                className="gap-2"
                 asChild
+                className="gap-2"
+                disabled={startOAuthFlow.isPending}
                 onClick={() => {
                   startOAuthFlow.mutate()
                 }}
-                disabled={startOAuthFlow.isPending}
               >
-                <Link to="/oauth/waiting" draggable={false}>
+                <Link draggable={false} to="/oauth/waiting">
                   <LogInIcon />
                   <Trans>Se connecter</Trans>
                 </Link>
               </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/">
                 <HomeIcon />
                 <Trans>Accueil</Trans>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/guides" search={{ path: '' }} draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} search={{ path: '' }} to="/guides">
                 <NotebookTextIcon />
                 <Trans>Guides</Trans>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/downloads" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/downloads">
                 <CloudDownloadIcon />
                 <Trans>Télécharger un guide</Trans>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/auto-pilot" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/auto-pilot">
                 <LocateIcon />
                 <Trans>Autopilotage</Trans>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/notes" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/notes">
                 <NotebookPenIcon />
                 <Trans>Notes</Trans>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/dofusdb/map" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/dofusdb/map">
                 <MapIcon />
                 <Trans>Carte</Trans>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="gap-2" asChild>
-              <Link to="/dofusdb/hunt" draggable={false}>
+            <DropdownMenuItem asChild className="gap-2">
+              <Link draggable={false} to="/dofusdb/hunt">
                 <CrosshairIcon />
                 <Trans>Chasse au trésor</Trans>
               </Link>
@@ -150,41 +150,41 @@ export function TitleBar() {
       <p className="center-absolute cursor-default select-none text-center font-semibold text-sm sm:text-base">
         {title}
       </p>
-      <p data-tauri-drag-region="" className="relative z-10 size-full grow" />
-      <div className="flex justify-end">
+      <p className="relative z-10 size-full grow" data-tauri-drag-region="" />
+      <div className="flex h-full justify-end">
         {!linksAreDisabled && !isImageViewer && (
           <Link
-            to="/settings"
+            className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card aria-disabled:pointer-events-none"
+            disabled={location.pathname === '/settings' || isBodyLocked}
+            draggable={false}
             search={{
               from: location.pathname,
               search: location.search,
               hash: location.hash,
               state: location.state,
             }}
-            className="inline-flex size-7 items-center justify-center hover:bg-primary-800 aria-disabled:pointer-events-none"
-            draggable={false}
             title={t`Paramètres`}
-            disabled={location.pathname === '/settings' || isBodyLocked}
+            to="/settings"
           >
             <SettingsIcon className="size-4" />
           </Link>
         )}
         <button
+          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card"
+          id="titlebar-minimize"
           onClick={async () => {
             await appWindow.minimize()
           }}
-          className="inline-flex size-7 items-center justify-center hover:bg-primary-800"
-          id="titlebar-minimize"
           title={t`Réduire`}
         >
           <MinusIcon className="size-4" />
         </button>
         <button
+          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-destructive"
+          id="titlebar-close"
           onClick={async () => {
             await appWindow.close()
           }}
-          className="inline-flex size-7 items-center justify-center hover:bg-destructive"
-          id="titlebar-close"
           title={t`Fermer`}
         >
           <XIcon className="size-4" />

@@ -56,25 +56,29 @@ export function InvisibleInput({
 
   return (
     <form
-      ref={formRef}
       onSubmit={async (evt) => {
         evt.preventDefault()
         await handleChange()
       }}
+      ref={formRef}
     >
       <input
-        name="current"
-        value={innerValue}
+        autoCapitalize="off"
+        autoComplete="off"
+        autoCorrect="off"
+        className={cn('w-8 bg-transparent text-center text-xs outline-hidden', className)}
         inputMode="numeric"
+        max={max + gap}
+        min={min}
+        name="current"
+        onBlur={async () => {
+          setHadLostFocus(true)
+          await handleChange()
+        }}
         onChange={(evt) => {
           const value = evt.currentTarget.value
           setInnerValue(value)
           onChange(value)
-        }}
-        className={cn('w-8 bg-transparent text-center text-xs outline-hidden', className)}
-        onBlur={async () => {
-          setHadLostFocus(true)
-          await handleChange()
         }}
         onClick={(evt) => {
           const input = evt.currentTarget
@@ -83,11 +87,7 @@ export function InvisibleInput({
             setHadLostFocus(false)
           }
         }}
-        autoCapitalize="off"
-        autoCorrect="off"
-        autoComplete="off"
-        max={max + gap}
-        min={min}
+        value={innerValue}
       />
     </form>
   )
