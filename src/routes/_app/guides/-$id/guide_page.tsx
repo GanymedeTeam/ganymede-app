@@ -49,23 +49,23 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
             ...p,
             progresses: existingProgress
               ? p.progresses.map((progress) => {
-                  if (progress.id === guide.id) {
-                    return {
-                      ...progress,
-                      currentStep: nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep,
-                    }
+                if (progress.id === guide.id) {
+                  return {
+                    ...progress,
+                    currentStep: nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep,
                   }
+                }
 
-                  return progress
-                })
+                return progress
+              })
               : [
-                  ...p.progresses,
-                  {
-                    id: guide.id,
-                    currentStep: 1, // 1 means the second step
-                    steps: {},
-                  },
-                ],
+                ...p.progresses,
+                {
+                  id: guide.id,
+                  currentStep: nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep,
+                  steps: {},
+                },
+              ],
           }
         }
 

@@ -7,7 +7,7 @@ export function GuideNodeImage({ guide }: { guide: Pick<GuideWithSteps, 'node_im
     <DownloadImage className="size-6 shrink-0 rounded object-cover" src={guide.node_image} />
   ) : (
     <div className="flex shrink-0 items-center justify-center rounded text-primary-foreground">
-      <GameIcon className="size-10" gameType={guide.game_type ?? 'dofus'} />
+      <GameIcon className="size-6" gameType={guide.game_type ?? 'dofus'} />
     </div>
   )
 }
