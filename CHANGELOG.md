@@ -1,5 +1,23 @@
 # ganymede-app
 
+## 1.16.0
+
+### Minor Changes
+
+- 06a71c7: Raccourcis clavier customisables depuis les paramètres. Modification des raccourcis avec application immédiate sans redémarrage.
+- 09e06e6: Ajout d'un système de thèmes pour personnaliser l'apparence de l'application
+- 09e06e6: Amélioration navigation et affichage des guides avec notification lors de la copie de coordonnées
+- 09e06e6: Vous pouvez désormais modifier le nom d'un profil dans les paramètres.
+- 09e06e6: Vous pouvez désormais fermer un guide en cliquant avec le bouton du milieu de la souris (comme sur votre navigateur favori par exemple !).
+- 09e06e6: Vos guides seront désormais mis à jour au lancement de l'application, garantissant que vous disposez toujours des informations les plus récentes dès que vous ouvrez Ganymède. En prime, la mise à jour des guides est dorénavant plus rapide.
+- dee2227: Rajoute du domain https://d-bk.net dans la whitelist des noms de domaine autorisé dans les guides.
+
+### Patch Changes
+
+- f084920: Backup automatique de la configuration avant reset via raccourci. Fichier horodaté au format `conf_yyyy_mm_dd_hh_mm_ss.json` pour récupération en cas d'erreur.
+- 09e06e6: Amélioration de la page d'accueil
+- 09e06e6: Ajout d'un filtre de langue dans la page de téléchargement des guides, permettant de filtrer les guides par langue (FR, EN, ES, PT).
+
 ## 1.15.0
 
 ### Minor Changes
