@@ -98,7 +98,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":[],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id"],"registerGuideOpen":["guide_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -118,12 +118,13 @@ getGuideFromServer: (guideId: number) => Promise<GuideWithSteps>,
 getGuideSummary: (guideId: number) => Promise<Summary>, 
 getGuides: (folder: string | null) => Promise<GuidesOrFolder[]>, 
 getGuidesFromServer: (status: Status | null) => Promise<Guide[]>, 
-getRecentGuides: () => Promise<number[]>, 
+getRecentGuides: (profileId: string) => Promise<number[]>, 
 guideExists: (guideId: number) => Promise<boolean>, 
 hasGuidesNotUpdated: () => Promise<boolean>, 
 openGuidesFolder: () => Promise<null>, 
-registerGuideClose: (guideId: number) => Promise<null>, 
-registerGuideOpen: (guideId: number) => Promise<null>, 
+registerGuideClose: (guideId: number, profileId: string) => Promise<null>, 
+registerGuideOpen: (guideId: number, profileId: string) => Promise<null>, 
+removeProfileFromRecentGuides: (profileId: string) => Promise<null>, 
 updateAllAtOnce: () => Promise<Partial<{ [key in number]: UpdateAllAtOnceResult }>>},
 "image": {fetchImage: (url: string) => Promise<number[]>},
 "image_viewer": {closeImageViewer: (windowLabel: string) => Promise<null>, 

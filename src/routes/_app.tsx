@@ -56,7 +56,8 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
     return
   }
 
-  const recentGuides = await queryClient.ensureQueryData(recentGuidesQuery)
+  const profile = getProfile(conf)
+  const recentGuides = await queryClient.ensureQueryData(recentGuidesQuery(profile.id))
 
   if (recentGuides.length === 0) {
     return
@@ -74,7 +75,6 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
     return
   }
 
-  const profile = getProfile(conf)
   const progress = getProgress(profile, firstRecentGuide)
 
   throw redirect({

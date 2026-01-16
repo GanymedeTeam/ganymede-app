@@ -1034,7 +1034,7 @@ msgstr "Open summary"
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Open guides on startup"
 
-#: src/routes/_app/guides/$id.tsx:143
+#: src/routes/_app/guides/$id.tsx:154
 msgid "Ouvrir un guide"
 msgstr "Open a guide"
 

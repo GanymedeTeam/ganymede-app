@@ -133,8 +133,8 @@ export class GetRecentGuidesError extends Error {
   }
 }
 
-export function getRecentGuides() {
-  return fromPromise(taurpc.guides.getRecentGuides(), GetRecentGuidesError.from)
+export function getRecentGuides(profileId: string) {
+  return fromPromise(taurpc.guides.getRecentGuides(profileId), GetRecentGuidesError.from)
 }
 
 export class RegisterGuideOpenError extends Error {
@@ -143,8 +143,8 @@ export class RegisterGuideOpenError extends Error {
   }
 }
 
-export function registerGuideOpen(guideId: number) {
-  return fromPromise(taurpc.guides.registerGuideOpen(guideId), RegisterGuideOpenError.from)
+export function registerGuideOpen(guideId: number, profileId: string) {
+  return fromPromise(taurpc.guides.registerGuideOpen(guideId, profileId), RegisterGuideOpenError.from)
 }
 
 export class RegisterGuideCloseError extends Error {
@@ -153,6 +153,16 @@ export class RegisterGuideCloseError extends Error {
   }
 }
 
-export function registerGuideClose(guideId: number) {
-  return fromPromise(taurpc.guides.registerGuideClose(guideId), RegisterGuideCloseError.from)
+export function registerGuideClose(guideId: number, profileId: string) {
+  return fromPromise(taurpc.guides.registerGuideClose(guideId, profileId), RegisterGuideCloseError.from)
+}
+
+export class RemoveProfileFromRecentGuidesError extends Error {
+  static from(error: unknown) {
+    return new RemoveProfileFromRecentGuidesError('Failed to remove profile from recent guides', { cause: error })
+  }
+}
+
+export function removeProfileFromRecentGuides(profileId: string) {
+  return fromPromise(taurpc.guides.removeProfileFromRecentGuides(profileId), RemoveProfileFromRecentGuidesError.from)
 }

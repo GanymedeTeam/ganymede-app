@@ -13,7 +13,9 @@ import { useProfile } from '@/hooks/use_profile.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { registerGuideOpen } from '@/ipc/guides.ts'
 import { getGuideById, getStepClamped } from '@/lib/guide.ts'
+import { getProfile } from '@/lib/profile.ts'
 import { getProgress } from '@/lib/progress.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { GuidePage } from './-$id/guide_page.tsx'
 import { GuideTabsTrigger } from './-$id/guide_tabs_trigger.tsx'
@@ -35,7 +37,10 @@ export const Route = createFileRoute('/_app/guides/$id')({
   },
   pendingComponent: Pending,
   beforeLoad: async ({ context: { queryClient }, params, search: { step } }) => {
-    const guides = await queryClient.ensureQueryData(guidesQuery())
+    const [guides, conf] = await Promise.all([
+      queryClient.ensureQueryData(guidesQuery()),
+      queryClient.ensureQueryData(confQuery),
+    ])
 
     const guideById = getGuideById(guides, params.id)
 
@@ -68,7 +73,8 @@ export const Route = createFileRoute('/_app/guides/$id')({
 
     addOrReplaceTab(guideById.id)
 
-    const registerResult = await registerGuideOpen(guideById.id)
+    const profile = getProfile(conf)
+    const registerResult = await registerGuideOpen(guideById.id, profile.id)
 
     if (registerResult.isErr()) {
       await debug(`Error registering guide open: ${registerResult.error.message}`)

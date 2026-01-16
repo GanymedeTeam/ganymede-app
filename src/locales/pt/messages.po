@@ -1034,7 +1034,7 @@ msgstr "Abrir resumo"
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Abrir guias ao iniciar"
 
-#: src/routes/_app/guides/$id.tsx:143
+#: src/routes/_app/guides/$id.tsx:154
 msgid "Ouvrir un guide"
 msgstr "Abrir um guia"
 

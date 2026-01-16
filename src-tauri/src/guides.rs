@@ -217,7 +217,7 @@ pub struct QuestSummary {
     pub statuses: Vec<SummaryQuestStatus>,
 }
 
-pub type RecentGuides = Vec<u32>;
+pub type RecentGuides = HashMap<String, Vec<u32>>;
 
 #[derive(Deserialize)]
 struct BatchGuideResponse {
@@ -586,51 +586,83 @@ async fn download_guides_by_ids<R: Runtime>(
     }
 }
 
-fn register_guide_open<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
-    debug!("[Guides] register_guide_open for guide {guide_id}");
+fn register_guide_open<R: Runtime>(
+    app_handle: AppHandle<R>,
+    guide_id: u32,
+    profile_id: String,
+) -> Result<(), Error> {
+    debug!("[Guides] register_guide_open for guide {guide_id} profile {profile_id}");
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    let mut recent_guides_list = read_recent_guides_file(&recent_guides_path)?;
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
+    let profile_guides = recent_guides.entry(profile_id).or_default();
 
-    if !recent_guides_list.contains(&guide_id) {
-        recent_guides_list.insert(0, guide_id); // Add to the start of the list
-        if recent_guides_list.len() > 6 {
-            recent_guides_list.pop(); // Keep only the last 6 entries
+    if !profile_guides.contains(&guide_id) {
+        profile_guides.insert(0, guide_id);
+        if profile_guides.len() > 6 {
+            profile_guides.pop();
         }
 
-        write_recent_guides_file(&recent_guides_path, &recent_guides_list)?;
+        write_recent_guides_file(&recent_guides_path, &recent_guides)?;
     }
 
     Ok(())
 }
 
-fn register_guide_close<R: Runtime>(app_handle: AppHandle<R>, guide_id: u32) -> Result<(), Error> {
-    debug!("[Guides] register_guide_close for guide {guide_id}");
+fn register_guide_close<R: Runtime>(
+    app_handle: AppHandle<R>,
+    guide_id: u32,
+    profile_id: String,
+) -> Result<(), Error> {
+    debug!("[Guides] register_guide_close for guide {guide_id} profile {profile_id}");
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    let mut recent_guides_list = read_recent_guides_file(&recent_guides_path)?;
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
 
-    recent_guides_list.retain(|&id| id != guide_id);
-
-    write_recent_guides_file(&recent_guides_path, &recent_guides_list)?;
+    if let Some(profile_guides) = recent_guides.get_mut(&profile_id) {
+        profile_guides.retain(|&id| id != guide_id);
+        write_recent_guides_file(&recent_guides_path, &recent_guides)?;
+    }
 
     Ok(())
 }
 
-fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<RecentGuides, Error> {
-    debug!("[Guides] get_recent_guides");
+fn get_recent_guides<R: Runtime>(
+    app_handle: AppHandle<R>,
+    profile_id: String,
+) -> Result<Vec<u32>, Error> {
+    debug!("[Guides] get_recent_guides for profile {profile_id}");
 
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
-    let mut recent_guides = read_recent_guides_file(&recent_guides_path)?;
+    let recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
     let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?.guides;
 
-    // remove any guide IDs that are no longer in the system since the last session
-    recent_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
+    let mut profile_guides = recent_guides.get(&profile_id).cloned().unwrap_or_default();
 
-    Ok(recent_guides)
+    // remove any guide IDs that are no longer in the system since the last session
+    profile_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
+
+    Ok(profile_guides)
+}
+
+fn remove_profile_from_recent_guides<R: Runtime>(
+    app_handle: AppHandle<R>,
+    profile_id: String,
+) -> Result<(), Error> {
+    debug!("[Guides] remove_profile_from_recent_guides for profile {profile_id}");
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
+
+    if recent_guides.remove(&profile_id).is_some() {
+        write_recent_guides_file(&recent_guides_path, &recent_guides)?;
+    }
+
+    Ok(())
 }
 
 fn write_recent_guides_file(
@@ -651,20 +683,37 @@ fn write_recent_guides_file(
     Ok(())
 }
 
-fn read_recent_guides_file(recent_guides_path: &PathBuf) -> Result<RecentGuides, Error> {
+fn read_recent_guides_file(
+    recent_guides_path: &PathBuf,
+    profile_id: &str,
+) -> Result<RecentGuides, Error> {
     if recent_guides_path.exists() {
-        debug!("[Guides] reading recent guides file",);
+        debug!("[Guides] reading recent guides file");
 
-        let file = fs::read_to_string(&recent_guides_path)
+        let file = fs::read_to_string(recent_guides_path)
             .map_err(|err| Error::ReadRecentGuidesFile(err.to_string()))?;
-        let recent_guides_list = crate::json::from_str::<RecentGuides>(file.as_str())
-            .map_err(|err| Error::RecentGuidesFileMalformed(err.to_string()))?;
 
-        Ok(recent_guides_list)
+        // Try new format: HashMap<String, Vec<u32>>
+        if let Ok(recent_guides) = crate::json::from_str::<RecentGuides>(&file) {
+            return Ok(recent_guides);
+        }
+
+        // Fallback: old format Vec<u32> -> migrate to current profile and persist
+        if let Ok(old_guides) = crate::json::from_str::<Vec<u32>>(&file) {
+            debug!("[Guides] old format detected, migrating to profile {profile_id}");
+            let mut migrated = HashMap::new();
+            migrated.insert(profile_id.to_string(), old_guides);
+            write_recent_guides_file(recent_guides_path, &migrated)?;
+            return Ok(migrated);
+        }
+
+        Err(Error::RecentGuidesFileMalformed(
+            "unknown format".to_string(),
+        ))
     } else {
-        debug!("[Guides] recent guides file does not exist, returning empty list");
+        debug!("[Guides] recent guides file does not exist, returning empty HashMap");
 
-        Ok(vec![])
+        Ok(HashMap::new())
     }
 }
 
@@ -1103,15 +1152,24 @@ pub trait GuidesApi {
     async fn register_guide_open<R: Runtime>(
         app_handle: AppHandle<R>,
         guide_id: u32,
+        profile_id: String,
     ) -> Result<(), Error>;
     #[taurpc(alias = "registerGuideClose")]
     async fn register_guide_close<R: Runtime>(
         app_handle: AppHandle<R>,
         guide_id: u32,
+        profile_id: String,
     ) -> Result<(), Error>;
     #[taurpc(alias = "getRecentGuides")]
-    async fn get_recent_guides<R: Runtime>(app_handle: AppHandle<R>)
-        -> Result<RecentGuides, Error>;
+    async fn get_recent_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
+        profile_id: String,
+    ) -> Result<Vec<u32>, Error>;
+    #[taurpc(alias = "removeProfileFromRecentGuides")]
+    async fn remove_profile_from_recent_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
+        profile_id: String,
+    ) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -1208,22 +1266,33 @@ impl GuidesApi for GuidesApiImpl {
         self,
         app_handle: AppHandle<R>,
         guide_id: u32,
+        profile_id: String,
     ) -> Result<(), Error> {
-        register_guide_open(app_handle, guide_id)
+        register_guide_open(app_handle, guide_id, profile_id)
     }
 
     async fn register_guide_close<R: Runtime>(
         self,
         app_handle: AppHandle<R>,
         guide_id: u32,
+        profile_id: String,
     ) -> Result<(), Error> {
-        register_guide_close(app_handle, guide_id)
+        register_guide_close(app_handle, guide_id, profile_id)
     }
 
     async fn get_recent_guides<R: Runtime>(
         self,
         app_handle: AppHandle<R>,
-    ) -> Result<RecentGuides, Error> {
-        get_recent_guides(app_handle)
+        profile_id: String,
+    ) -> Result<Vec<u32>, Error> {
+        get_recent_guides(app_handle, profile_id)
+    }
+
+    async fn remove_profile_from_recent_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        profile_id: String,
+    ) -> Result<(), Error> {
+        remove_profile_from_recent_guides(app_handle, profile_id)
     }
 }
