@@ -1,15 +1,17 @@
 import { queryOptions } from '@tanstack/react-query'
 import { getRecentGuides } from '@/ipc/guides.ts'
 
-export const recentGuidesQuery = queryOptions({
-  queryKey: ['recentGuides'],
-  queryFn: async () => {
-    const recentGuides = await getRecentGuides()
+export function recentGuidesQuery(profileId: string) {
+  return queryOptions({
+    queryKey: ['recentGuides', profileId],
+    queryFn: async () => {
+      const recentGuides = await getRecentGuides(profileId)
 
-    if (recentGuides.isErr()) {
-      throw recentGuides.error
-    }
+      if (recentGuides.isErr()) {
+        throw recentGuides.error
+      }
 
-    return recentGuides.value
-  },
-})
+      return recentGuides.value
+    },
+  })
+}

@@ -24,9 +24,9 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
   useEffect(() => {
     if (!guide) {
       removeTab(id)
-      registerGuideClose.mutate(id)
+      registerGuideClose.mutate({ guideId: id, profileId: profile.id })
     }
-  }, [guide, id, removeTab, registerGuideClose])
+  }, [guide, id, removeTab, registerGuideClose, profile.id])
 
   if (!guide) {
     return null
@@ -71,7 +71,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
       }
     } finally {
       removeTab(id)
-      registerGuideClose.mutate(id)
+      registerGuideClose.mutate({ guideId: id, profileId: profile.id })
     }
   }
 
