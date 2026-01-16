@@ -16,6 +16,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx'
 import { selectVariants } from '@/components/ui/select.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
+import { removeProfileFromRecentGuides } from '@/ipc/guides.ts'
 import { getProfileById } from '@/lib/profile.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
@@ -67,6 +68,8 @@ export function Profiles() {
       />
       <ProfileDeleteDialog
         onDelete={async (profileId) => {
+          if (!profileId) return
+
           const index = profiles.findIndex((p) => p.id === profileId)
           const nextProfileToUse =
             conf.data.profileInUse === profileId
@@ -78,6 +81,8 @@ export function Profiles() {
             profiles: profiles.filter((p) => p.id !== profileId),
             profileInUse: nextProfileToUse,
           })
+
+          await removeProfileFromRecentGuides(profileId)
 
           toast.success(t`Profil supprimé avec succès`)
 
