@@ -1,5 +1,16 @@
 # ganymede-app
 
+## 1.17.0
+
+### Minor Changes
+
+- 3c42040: Les guides récents sont maintenant stockés par profil. Chaque profil conserve ses propres onglets ouverts au redémarrage.
+
+### Patch Changes
+
+- 9fc9e80: Ajout de youtu.be dans la whitelist des liens autorisés.
+- 6ed75e1: Correction du scroll et de la sauvegarde de progression des onglets de guides
+
 ## 1.16.0
 
 ### Minor Changes

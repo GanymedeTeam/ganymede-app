@@ -1,6 +1,6 @@
 [package]
 name = "ganymede"
-version = "1.16.0"
+version = "1.17.0"
 description = "Dofus Ganymede app."
 authors = ["Kiyozz"]
 edition = "2021"
