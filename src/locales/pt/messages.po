@@ -103,7 +103,7 @@ msgstr "Nenhum guia{langLabel} encontrado"
 msgid "Aucun guides{langLabel} trouvé avec {term}"
 msgstr "Nenhum guia{langLabel} encontrado com {term}"
 
-#: src/routes/_app/-settings/profiles.tsx:115
+#: src/routes/_app/-settings/profiles.tsx:120
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
@@ -1087,7 +1087,7 @@ msgstr "Perfil \"{0}\""
 msgid "Profil créé avec succès"
 msgstr "Perfil criado com sucesso"
 
-#: src/routes/_app/-settings/profiles.tsx:82
+#: src/routes/_app/-settings/profiles.tsx:87
 msgid "Profil supprimé avec succès"
 msgstr "Perfil eliminado com sucesso"
 
@@ -1127,7 +1127,7 @@ msgstr "Resumo da mensagem"
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
-#: src/routes/_app/-settings/profiles.tsx:112
+#: src/routes/_app/-settings/profiles.tsx:117
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
