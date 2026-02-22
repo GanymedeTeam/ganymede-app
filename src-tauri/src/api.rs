@@ -9,11 +9,11 @@ pub enum Error {
 }
 
 pub const DOFUSDB_API: &str = "https://api.dofusdb.fr";
-pub const GANYMEDE_WEBSITE: &str = env!("GANYMEDE_WEBSITE");
-pub const GANYMEDE_API: &str = env!("GANYMEDE_API");
+pub const GANYMEDE_WEBSITE: &str = env!("GANYMEDE_WEBSITE_LOCAL");
+pub const GANYMEDE_API: &str = env!("GANYMEDE_API_LOCAL");
 
 pub const API_KEY_HEADER: &str = "X-API-KEY";
-pub const API_KEY: &str = env!("GANYMEDE_API_KEY");
+pub const API_KEY: &str = env!("GANYMEDE_API_KEY_LOCAL");
 
 #[derive(Deserialize)]
 struct AppRelease {

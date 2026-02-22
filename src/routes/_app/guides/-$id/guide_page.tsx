@@ -10,6 +10,8 @@ import { StepProgress } from '@/components/step_progress/step_progress.tsx'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
 import { onCopyCurrentGuideStep } from '@/ipc/guides.ts'
+import { getProfile } from '@/lib/profile.ts'
+import { queueProgressSync } from '@/lib/sync_progress_queue.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -39,6 +41,9 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
   useScrollToTop(scrollableRef, [step])
 
   const changeStep = async (nextStep: number) => {
+    const clampedStep = nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep
+    const updatedAt = new Date().toISOString()
+
     await setConf.mutateAsync({
       ...conf.data,
       profiles: conf.data.profiles.map((p) => {
@@ -49,29 +54,35 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
             ...p,
             progresses: existingProgress
               ? p.progresses.map((progress) => {
-                if (progress.id === guide.id) {
-                  return {
-                    ...progress,
-                    currentStep: nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep,
+                  if (progress.id === guide.id) {
+                    return {
+                      ...progress,
+                      currentStep: clampedStep,
+                      updatedAt,
+                    }
                   }
-                }
 
-                return progress
-              })
+                  return progress
+                })
               : [
-                ...p.progresses,
-                {
-                  id: guide.id,
-                  currentStep: nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep,
-                  steps: {},
-                },
-              ],
+                  ...p.progresses,
+                  {
+                    id: guide.id,
+                    currentStep: clampedStep,
+                    steps: {},
+                    updatedAt,
+                  },
+                ],
           }
         }
 
         return p
       }),
     })
+
+    const profile = getProfile(conf.data)
+    const progress = profile.progresses.find((p) => p.id === guide.id)
+    queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {})
 
     await navigate({
       to: '/guides/$id',

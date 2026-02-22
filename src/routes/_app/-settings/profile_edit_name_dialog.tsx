@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert_dialog.tsx'
 import { Input } from '@/components/ui/input.tsx'
+import { renameProfileRemote } from '@/ipc/sync.ts'
 import { getProfileById } from '@/lib/profile.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -67,6 +68,14 @@ export function ProfileEditNameDialog<T extends string | null>({
               ...conf.data,
               profiles: profiles.map((p) => (p.id === profile?.id ? { ...p, name: trimmedName } : p)),
             })
+
+            if (profile?.server_id) {
+              renameProfileRemote(profile.server_id, trimmedName).then((result) => {
+                if (result.isErr()) {
+                  // silent — logged in IPC layer
+                }
+              })
+            }
 
             toast.success(t`Nom du profil mis à jour avec succès.`)
 

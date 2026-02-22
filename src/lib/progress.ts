@@ -5,6 +5,7 @@ export function newProgress(guideId: number): Progress {
     id: guideId,
     currentStep: 0,
     steps: {},
+    updatedAt: new Date().toISOString(),
   }
 }
 

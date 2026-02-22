@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toggleGuideCheckbox } from '@/ipc/conf.ts'
 import { getProfile } from '@/lib/profile.ts'
 import { getProgress, getStep, newProgress } from '@/lib/progress.ts'
+import { queueProgressSync } from '@/lib/sync_progress_queue.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 
 export function useToggleGuideCheckbox() {
@@ -70,8 +71,17 @@ export function useToggleGuideCheckbox() {
 
       return baseConf
     },
-    onSuccess: async () => {
+    onSuccess: async (_data, { guideId }) => {
       await queryClient.invalidateQueries(confQuery)
+
+      const conf = queryClient.getQueryData(confQuery.queryKey)
+      if (conf) {
+        const profile = getProfile(conf)
+        const progress = getProgress(profile, guideId)
+        if (progress) {
+          queueProgressSync(profile.server_id, guideId, progress.currentStep, progress.steps)
+        }
+      }
     },
     onError: (_err, _vars, context) => {
       queryClient.setQueryData(confQuery['queryKey'], context)
