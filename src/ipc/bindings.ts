@@ -74,7 +74,7 @@ export type QuestError = { RequestQuest: string } | { RequestQuestContent: strin
 
 export type QuestSummary = { name: string; statuses: SummaryQuestStatus[] }
 
-export type RemoteProfile = { id: number; uuid: string; name: string; progresses: SyncProgressPayload[] }
+export type RemoteProfile = { id: number; uuid: string | null; name: string; progresses: SyncProgressPayload[] }
 
 export type ReportError = { Server: string } | { Status: [number, string] }
 
@@ -90,7 +90,7 @@ export type Summary = { quests: QuestSummary[] }
 
 export type SummaryQuestStatus = { setup: number } | { started: number } | { inProgress: number } | { completed: number }
 
-export type SyncError = "TokensNotFound" | "NotConnected" | { RequestFailed: string } | { InvalidResponse: string } | { Conf: ConfError } | "NoServerId" | "ProfileOrGuideNotFound" | { ValidationError: string }
+export type SyncError = "TokensNotFound" | "NotConnected" | { RequestFailed: string } | { InvalidResponse: string } | { Conf: ConfError } | "ProfileOrGuideNotFound" | { ValidationError: string }
 
 export type SyncProgressPayload = { id: number; current_step: number; steps: Partial<{ [key in number]: ConfStep }>; updated_at: string }
 

@@ -267,7 +267,7 @@ msgid "Copie d'autopilote"
 msgstr "Autopilot copy"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:133
+#: src/routes/_app/guides/-$id/guide_page.tsx:134
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copying step number ({0})..."
 
@@ -557,7 +557,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Unknown JSON error"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:132
+#: src/routes/_app/guides/-$id/guide_page.tsx:133
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error copying step number ({0})."
 
@@ -890,11 +890,12 @@ msgstr "I understand"
 msgid "La synchronisation a échoué : données invalides."
 msgstr "Synchronisation failed: invalid data."
 
+#: src/lib/sync_progress_queue.ts:22
 #: src/routes/_app.tsx:124
 msgid "La synchronisation a échoué."
 msgstr "Synchronisation failed."
 
-#: src/lib/sync_progress_queue.ts:53
+#: src/lib/sync_progress_queue.ts:82
 msgid "La synchronisation de la progression du guide {label} a échoué."
 msgstr "Progress synchronisation for guide {label} failed."
 
@@ -918,7 +919,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "Profile name cannot be empty."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:131
+#: src/routes/_app/guides/-$id/guide_page.tsx:132
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "The step number ({0}) has been copied to the clipboard."
 
@@ -1226,6 +1227,22 @@ msgstr "Delete"
 #: src/routes/_app/notes.index.tsx:95
 msgid "Supprimer de la liste"
 msgstr "Remove from list"
+
+#: src/lib/sync_progress_queue.ts:71
+msgid "Synchro impossible — guide {label} introuvable sur le serveur."
+msgstr "Sync failed — guide {label} not found on the server."
+
+#: src/lib/sync_progress_queue.ts:74
+msgid "Synchro totale"
+msgstr "Full sync"
+
+#: src/lib/sync_progress_queue.ts:16
+msgid "Synchronisation en cours…"
+msgstr "Synchronising…"
+
+#: src/lib/sync_progress_queue.ts:19
+msgid "Synchronisation réussie."
+msgstr "Synchronisation successful."
 
 #: src/routes/_app/settings.tsx:188
 msgid "Taille de texte des guides"

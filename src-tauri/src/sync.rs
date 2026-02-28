@@ -27,8 +27,6 @@ pub enum Error {
     InvalidResponse(String),
     #[error("conf error: {0}")]
     Conf(conf::Error),
-    #[error("no server id")]
-    NoServerId,
     #[error("profile or guide not found on server")]
     ProfileOrGuideNotFound,
     #[error("validation error: {0}")]
@@ -58,7 +56,7 @@ pub struct SyncProfilePayload {
 #[derive(Debug)]
 pub struct RemoteProfile {
     pub id: u32,
-    pub uuid: String,
+    pub uuid: Option<String>,
     pub name: String,
     pub progresses: Vec<SyncProgressPayload>,
 }
@@ -72,6 +70,27 @@ pub struct SyncResponse {
 #[derive(Deserialize)]
 struct CreateProfileResponse {
     id: u32,
+}
+
+#[derive(Deserialize)]
+struct RemoteProgressResponse {
+    id: u32,
+    current_step: u32,
+    steps: Vec<ConfStep>,
+    updated_at: String,
+}
+
+#[derive(Deserialize)]
+struct RemoteProfileResponse {
+    id: u32,
+    uuid: Option<String>,
+    name: String,
+    progresses: Vec<RemoteProgressResponse>,
+}
+
+#[derive(Deserialize)]
+struct SyncServerResponse {
+    profiles: Vec<RemoteProfileResponse>,
 }
 
 // Functions
@@ -268,21 +287,25 @@ impl SyncApi for SyncApiImpl {
 
         debug!("[Sync] Received sync response from server: {}", text);
 
-        let sync_response: SyncResponse =
+        let server_response: SyncServerResponse =
             json::from_str(&text).map_err(|e| Error::InvalidResponse(e.to_string()))?;
 
         // Merge server data into local conf
         let mut conf = conf::get_conf(&app).map_err(Error::Conf)?;
 
-        for remote_profile in &sync_response.profiles {
-            if let Some(local_profile) = conf
-                .profiles
-                .iter_mut()
-                .find(|p| p.id == remote_profile.uuid)
-            {
+        for remote_profile in &server_response.profiles {
+            let Some(ref uuid) = remote_profile.uuid else { continue };
+            if let Some(local_profile) = conf.profiles.iter_mut().find(|p| &p.id == uuid) {
                 local_profile.server_id = Some(remote_profile.id);
 
                 for remote_progress in &remote_profile.progresses {
+                    let remote_steps: HashMap<u32, ConfStep> = remote_progress
+                        .steps
+                        .iter()
+                        .enumerate()
+                        .map(|(i, s)| (i as u32, s.clone()))
+                        .collect();
+
                     if let Some(local_progress) = local_profile
                         .progresses
                         .iter_mut()
@@ -295,14 +318,14 @@ impl SyncApi for SyncApiImpl {
 
                         if should_update {
                             local_progress.current_step = remote_progress.current_step;
-                            local_progress.steps = remote_progress.steps.clone();
+                            local_progress.steps = remote_steps;
                             local_progress.updated_at = Some(remote_progress.updated_at.clone());
                         }
                     } else {
                         local_profile.progresses.push(conf::Progress {
                             id: remote_progress.id,
                             current_step: remote_progress.current_step,
-                            steps: remote_progress.steps.clone(),
+                            steps: remote_steps,
                             updated_at: Some(remote_progress.updated_at.clone()),
                         });
                     }
@@ -311,10 +334,11 @@ impl SyncApi for SyncApiImpl {
         }
 
         // Add new server profiles not in local
-        for remote_profile in &sync_response.profiles {
-            if !conf.profiles.iter().any(|p| p.id == remote_profile.uuid) {
+        for remote_profile in &server_response.profiles {
+            let Some(ref uuid) = remote_profile.uuid else { continue };
+            if !conf.profiles.iter().any(|p| &p.id == uuid) {
                 conf.profiles.push(conf::Profile {
-                    id: remote_profile.uuid.clone(),
+                    id: uuid.clone(),
                     name: remote_profile.name.clone(),
                     level: 200,
                     progresses: remote_profile
@@ -323,7 +347,7 @@ impl SyncApi for SyncApiImpl {
                         .map(|p| conf::Progress {
                             id: p.id,
                             current_step: p.current_step,
-                            steps: p.steps.clone(),
+                            steps: p.steps.iter().enumerate().map(|(i, s)| (i as u32, s.clone())).collect(),
                             updated_at: Some(p.updated_at.clone()),
                         })
                         .collect(),
@@ -336,7 +360,19 @@ impl SyncApi for SyncApiImpl {
 
         info!("[Sync] Initial sync completed successfully");
 
-        Ok(sync_response)
+        Ok(SyncResponse {
+            profiles: server_response.profiles.into_iter().map(|rp| RemoteProfile {
+                id: rp.id,
+                uuid: rp.uuid,
+                name: rp.name,
+                progresses: rp.progresses.into_iter().map(|prog| SyncProgressPayload {
+                    id: prog.id,
+                    current_step: prog.current_step,
+                    steps: prog.steps.into_iter().enumerate().map(|(i, s)| (i as u32, s)).collect(),
+                    updated_at: prog.updated_at,
+                }).collect(),
+            }).collect(),
+        })
     }
 
     async fn create_profile<R: Runtime>(
@@ -411,31 +447,6 @@ impl SyncApi for SyncApiImpl {
     ) -> Result<(), Error> {
         let (http_client, access_token) = get_auth(&app)?;
 
-        match sync_progress_on_server(&http_client, &access_token, server_id, guide_id, current_step, &steps).await {
-            Ok(()) => Ok(()),
-            Err(Error::ProfileOrGuideNotFound) => {
-                let mut conf = conf::get_conf(&app).map_err(Error::Conf)?;
-
-                let profile = conf
-                    .profiles
-                    .iter()
-                    .find(|p| p.server_id == Some(server_id))
-                    .ok_or(Error::NoServerId)?;
-
-                let name = profile.name.clone();
-                let uuid = profile.id.clone();
-
-                let new_server_id = create_profile_on_server(&http_client, &access_token, &name, &uuid).await?;
-
-                if let Some(p) = conf.profiles.iter_mut().find(|p| p.id == uuid) {
-                    p.server_id = Some(new_server_id);
-                }
-
-                conf::save_conf(&mut conf, &app).map_err(Error::Conf)?;
-
-                sync_progress_on_server(&http_client, &access_token, new_server_id, guide_id, current_step, &steps).await
-            }
-            Err(e) => Err(e),
-        }
+        sync_progress_on_server(&http_client, &access_token, server_id, guide_id, current_step, &steps).await
     }
 }

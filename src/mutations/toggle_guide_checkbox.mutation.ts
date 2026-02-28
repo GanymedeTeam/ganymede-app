@@ -80,7 +80,7 @@ export function useToggleGuideCheckbox() {
         const profile = getProfile(conf)
         const progress = getProgress(profile, guideId)
         if (progress) {
-          queueProgressSync(profile.server_id, guideId, progress.currentStep, progress.steps, guideName)
+          queueProgressSync(profile.server_id, guideId, progress.currentStep, progress.steps, queryClient, guideName)
         }
       }
     },

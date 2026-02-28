@@ -1,5 +1,5 @@
 import { useLingui } from '@lingui/react/macro'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import { useEffect, useRef } from 'react'
@@ -34,6 +34,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
   const step = guide.steps[index]
   const stepMax = guide.steps.length - 1
   const scrollableRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const navigate = useNavigate()
@@ -82,7 +83,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
     const profile = getProfile(conf.data)
     const progress = profile.progresses.find((p) => p.id === guide.id)
-    queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {}, guide.name)
+    queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {}, queryClient, guide.name)
 
     await navigate({
       to: '/guides/$id',

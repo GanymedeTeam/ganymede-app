@@ -267,7 +267,7 @@ msgid "Copie d'autopilote"
 msgstr "Copia del piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:133
+#: src/routes/_app/guides/-$id/guide_page.tsx:134
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copiando el número del paso ({0})..."
 
@@ -557,7 +557,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Error JSON desconocido"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:132
+#: src/routes/_app/guides/-$id/guide_page.tsx:133
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error al copiar el número del paso ({0})."
 
@@ -890,11 +890,12 @@ msgstr "Entendido"
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La sincronización ha fallado: datos no válidos."
 
+#: src/lib/sync_progress_queue.ts:22
 #: src/routes/_app.tsx:124
 msgid "La synchronisation a échoué."
 msgstr "La sincronización ha fallado."
 
-#: src/lib/sync_progress_queue.ts:53
+#: src/lib/sync_progress_queue.ts:82
 msgid "La synchronisation de la progression du guide {label} a échoué."
 msgstr "La sincronización del progreso de la guía {label} ha fallado."
 
@@ -918,7 +919,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "El nombre del perfil no puede estar vacío."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:131
+#: src/routes/_app/guides/-$id/guide_page.tsx:132
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 
@@ -1226,6 +1227,22 @@ msgstr "Eliminar"
 #: src/routes/_app/notes.index.tsx:95
 msgid "Supprimer de la liste"
 msgstr "Eliminar de la lista"
+
+#: src/lib/sync_progress_queue.ts:71
+msgid "Synchro impossible — guide {label} introuvable sur le serveur."
+msgstr "Sincronización imposible — guía {label} no encontrada en el servidor."
+
+#: src/lib/sync_progress_queue.ts:74
+msgid "Synchro totale"
+msgstr "Sincronización total"
+
+#: src/lib/sync_progress_queue.ts:16
+msgid "Synchronisation en cours…"
+msgstr "Sincronizando…"
+
+#: src/lib/sync_progress_queue.ts:19
+msgid "Synchronisation réussie."
+msgstr "Sincronización correcta."
 
 #: src/routes/_app/settings.tsx:188
 msgid "Taille de texte des guides"
