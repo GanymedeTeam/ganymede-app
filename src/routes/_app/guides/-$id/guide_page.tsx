@@ -82,7 +82,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
     const profile = getProfile(conf.data)
     const progress = profile.progresses.find((p) => p.id === guide.id)
-    queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {})
+    queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {}, guide.name)
 
     await navigate({
       to: '/guides/$id',

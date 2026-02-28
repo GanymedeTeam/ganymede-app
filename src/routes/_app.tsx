@@ -2,6 +2,7 @@ import { Trans } from '@lingui/react/macro'
 import type { QueryClient } from '@tanstack/react-query'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { syncProfiles } from '@/ipc/sync.ts'
@@ -16,6 +17,7 @@ const VERSION_CHECK_INTERVAL_MS = 1000 * 60 * 10 // 10 minutes
 
 let autoOpenGuidesHandled = false
 let initialSyncHandled = false
+let pendingSyncError: 'validation' | 'generic' | null = null
 
 async function handleInitialSync(queryClient: QueryClient) {
   if (initialSyncHandled) return
@@ -29,7 +31,8 @@ async function handleInitialSync(queryClient: QueryClient) {
       const err = syncResult.error.cause
       const isSilent = err === 'TokensNotFound' || err === 'NotConnected'
       if (!isSilent) {
-        toast(<Trans>La synchronisation a échoué.</Trans>, { duration: 4000 })
+        const isValidationError = typeof err === 'object' && err !== null && 'ValidationError' in err
+        pendingSyncError = isValidationError ? 'validation' : 'generic'
       }
       return
     }
@@ -110,6 +113,22 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
   })
 }
 
+function AppLayout() {
+  useEffect(() => {
+    if (pendingSyncError === 'validation') {
+      toast.error(<Trans>La synchronisation a échoué : données invalides.</Trans>, {
+        description: <Trans>Certaines données locales sont invalides et bloquent la synchronisation.</Trans>,
+        duration: Infinity,
+      })
+    } else if (pendingSyncError === 'generic') {
+      toast.error(<Trans>La synchronisation a échoué.</Trans>, { duration: 4000 })
+    }
+    pendingSyncError = null
+  }, [])
+
+  return <Outlet />
+}
+
 export const Route = createFileRoute('/_app')({
   beforeLoad: async ({ context: { queryClient } }) => {
     const shouldProceed = await checkAppVersion(queryClient)
@@ -125,5 +144,5 @@ export const Route = createFileRoute('/_app')({
       await handleAutoOpenGuides(queryClient)
     }
   },
-  component: () => <Outlet />,
+  component: AppLayout,
 })

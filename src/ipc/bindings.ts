@@ -90,7 +90,7 @@ export type Summary = { quests: QuestSummary[] }
 
 export type SummaryQuestStatus = { setup: number } | { started: number } | { inProgress: number } | { completed: number }
 
-export type SyncError = "TokensNotFound" | "NotConnected" | { RequestFailed: string } | { InvalidResponse: string } | { Conf: ConfError } | "NoServerId" | "ProfileNotFound"
+export type SyncError = "TokensNotFound" | "NotConnected" | { RequestFailed: string } | { InvalidResponse: string } | { Conf: ConfError } | "NoServerId" | "ProfileOrGuideNotFound" | { ValidationError: string }
 
 export type SyncProgressPayload = { id: number; current_step: number; steps: Partial<{ [key in number]: ConfStep }>; updated_at: string }
 

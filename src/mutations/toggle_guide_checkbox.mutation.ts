@@ -17,6 +17,7 @@ export function useToggleGuideCheckbox() {
       guideId: number
       checkboxIndex: number
       stepIndex: number
+      guideName?: string
     }) => {
       const result = await toggleGuideCheckbox(guideId, checkboxIndex, stepIndex)
 
@@ -71,7 +72,7 @@ export function useToggleGuideCheckbox() {
 
       return baseConf
     },
-    onSuccess: async (_data, { guideId }) => {
+    onSuccess: async (_data, { guideId, guideName }) => {
       await queryClient.invalidateQueries(confQuery)
 
       const conf = queryClient.getQueryData(confQuery.queryKey)
@@ -79,7 +80,7 @@ export function useToggleGuideCheckbox() {
         const profile = getProfile(conf)
         const progress = getProgress(profile, guideId)
         if (progress) {
-          queueProgressSync(profile.server_id, guideId, progress.currentStep, progress.steps)
+          queueProgressSync(profile.server_id, guideId, progress.currentStep, progress.steps, guideName)
         }
       }
     },

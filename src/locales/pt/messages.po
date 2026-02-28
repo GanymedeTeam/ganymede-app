@@ -142,6 +142,10 @@ msgstr "Categorias"
 msgid "Causée par"
 msgstr "Causado por"
 
+#: src/routes/_app.tsx:120
+msgid "Certaines données locales sont invalides et bloquent la synchronisation."
+msgstr "Alguns dados locais são inválidos e estão a bloquear a sincronização."
+
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:116
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
 msgid "Certains guides n'ont pas été mis à jour"
@@ -716,7 +720,7 @@ msgstr "Guias eliminados"
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
-#: src/routes/_app.tsx:54
+#: src/routes/_app.tsx:57
 msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
 msgstr "Pode ser um problema de ligação ou um erro do servidor."
 
@@ -861,7 +865,7 @@ msgstr "Não é possível transferir a imagem"
 msgid "Impossible de télécharger le guide"
 msgstr "Não é possível transferir o guia"
 
-#: src/routes/_app.tsx:53
+#: src/routes/_app.tsx:56
 msgid "Impossible de vérifier la mise à jour de l'application."
 msgstr "Não foi possível verificar a atualização da aplicação."
 
@@ -882,9 +886,17 @@ msgstr "Informações adicionais: {0}"
 msgid "J'ai compris"
 msgstr "Entendi"
 
-#: src/routes/_app.tsx:32
+#: src/routes/_app.tsx:119
+msgid "La synchronisation a échoué : données invalides."
+msgstr "A sincronização falhou: dados inválidos."
+
+#: src/routes/_app.tsx:124
 msgid "La synchronisation a échoué."
 msgstr "A sincronização falhou."
+
+#: src/lib/sync_progress_queue.ts:53
+msgid "La synchronisation de la progression du guide {label} a échoué."
+msgstr "A sincronização do progresso do guia {label} falhou."
 
 #: src/components/select_lang.tsx:10
 msgid "Langue"

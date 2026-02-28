@@ -29,8 +29,10 @@ pub enum Error {
     Conf(conf::Error),
     #[error("no server id")]
     NoServerId,
-    #[error("profile not found on server")]
-    ProfileNotFound,
+    #[error("profile or guide not found on server")]
+    ProfileOrGuideNotFound,
+    #[error("validation error: {0}")]
+    ValidationError(String),
 }
 
 // Structs
@@ -124,6 +126,8 @@ async fn sync_progress_on_server(
     current_step: u32,
     steps: &HashMap<u32, ConfStep>,
 ) -> Result<(), Error> {
+    debug!("[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}", server_id, guide_id, current_step, steps);
+
     let response = http_client
         .put(format!(
             "{}/profiles/{}/progress/{}",
@@ -139,12 +143,12 @@ async fn sync_progress_on_server(
         .map_err(|e| Error::RequestFailed(e.to_string()))?;
 
     if response.status() == 404 {
-        return Err(Error::ProfileNotFound);
+        return Err(Error::ProfileOrGuideNotFound);
     }
 
     if !response.status().is_success() {
         let status = response.status();
-        let text = response.text().await.unwrap_or_default();
+        let text = response.text().await.unwrap_or_default().replacen("\n", " ", 300);
         return Err(Error::RequestFailed(format!("HTTP {}: {}", status, text)));
     }
 
@@ -251,7 +255,7 @@ impl SyncApi for SyncApiImpl {
 
                 warn!("[Sync] HTTP 422 from server: {}", text);
 
-                return Err(Error::RequestFailed(format!("HTTP {}: {}", status, text)));
+                return Err(Error::ValidationError(text));
             }
 
             return Err(Error::RequestFailed(format!("HTTP {}", status)));
@@ -409,7 +413,7 @@ impl SyncApi for SyncApiImpl {
 
         match sync_progress_on_server(&http_client, &access_token, server_id, guide_id, current_step, &steps).await {
             Ok(()) => Ok(()),
-            Err(Error::ProfileNotFound) => {
+            Err(Error::ProfileOrGuideNotFound) => {
                 let mut conf = conf::get_conf(&app).map_err(Error::Conf)?;
 
                 let profile = conf

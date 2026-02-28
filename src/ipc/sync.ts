@@ -5,6 +5,7 @@ import { taurpc } from '@/ipc/ipc.ts'
 
 export class SyncProfilesError extends Error {
   static from(error: unknown) {
+    debug('[Sync] syncProfiles error: ' + JSON.stringify(error))
     return new SyncProfilesError('Failed to sync profiles', { cause: error })
   }
 }
@@ -15,7 +16,7 @@ export function syncProfiles() {
 
 export class CreateProfileRemoteError extends Error {
   static from(error: unknown) {
-    debug('[Sync] createProfile error: ' + JSON.stringify(error, undefined, 2))
+    debug('[Sync] createProfile error: ' + JSON.stringify(error))
     return new CreateProfileRemoteError('Failed to create remote profile', { cause: error })
   }
 }
@@ -26,7 +27,7 @@ export function createProfileRemote(name: string, uuid: string) {
 
 export class RenameProfileRemoteError extends Error {
   static from(error: unknown) {
-    debug('[Sync] renameProfile error: ' + JSON.stringify(error, undefined, 2))
+    debug('[Sync] renameProfile error: ' + JSON.stringify(error))
     return new RenameProfileRemoteError('Failed to rename remote profile', { cause: error })
   }
 }
@@ -37,7 +38,7 @@ export function renameProfileRemote(serverId: number, name: string) {
 
 export class DeleteProfileRemoteError extends Error {
   static from(error: unknown) {
-    debug('[Sync] deleteProfile error: ' + JSON.stringify(error, undefined, 2))
+    debug('[Sync] deleteProfile error: ' + JSON.stringify(error))
     return new DeleteProfileRemoteError('Failed to delete remote profile', { cause: error })
   }
 }
@@ -48,7 +49,7 @@ export function deleteProfileRemote(serverId: number) {
 
 export class SyncProgressError extends Error {
   static from(error: unknown) {
-    debug('[Sync] syncProgress error: ' + JSON.stringify(error, undefined, 2))
+    debug('[Sync] syncProgress error: ' + JSON.stringify(error))
     return new SyncProgressError('Failed to sync progress', { cause: error })
   }
 }

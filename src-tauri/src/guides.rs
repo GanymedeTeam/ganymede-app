@@ -564,14 +564,14 @@ async fn download_guides_by_ids<R: Runtime>(
                 }
 
                 debug!(
-                    "[Guides] download_guides_by_ids: {} in {:?}",
+                    "[Guides] download_guides_by_ids::for: {} in {:?}",
                     guide.id, guide.folder
                 );
 
                 downloaded_guides.push(guide);
             }
             Err(error) => {
-                warn!("[Guides] download_guides_by_ids error: {}", error);
+                warn!("[Guides] download_guides_by_ids::for error: {}", error);
                 errors.push(error);
             }
         }
@@ -959,7 +959,7 @@ fn generate_guide_summary<R: Runtime>(
 async fn update_all_guides_batch<R: Runtime>(
     app_handle: &AppHandle<R>,
 ) -> Result<HashMap<u32, UpdateAllAtOnceResult>, Error> {
-    info!("[Guides] update_all_at_once");
+    info!("[Guides] update_all_guides_batch");
 
     let mut guides = get_guides_from_handle(app_handle, "".to_string())?;
     let guide_ids: Vec<u32> = guides.guides.iter().map(|g| g.id).collect();
