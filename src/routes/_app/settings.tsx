@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { TriangleAlertIcon } from 'lucide-react'
@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { ConfLang, FontSize } from '@/ipc/bindings.ts'
+import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
 import { useReregisterShortcuts } from '@/mutations/reregister_shortcuts.mutation.ts'
@@ -86,6 +87,7 @@ function SettingCardSection({ id, children }: PropsWithChildren<{ id: string }>)
 function Settings() {
   const { t } = useLingui()
   const { from, hash, state, search } = Route.useSearch()
+  const queryClient = useQueryClient()
   const newId = useNewId()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
@@ -349,17 +351,34 @@ function Settings() {
                   if (profileName.trim() !== '' && !conf.data.profiles.find((p) => p.name === profileName.trim())) {
                     const id = await newId.mutateAsync()
 
+                    const trimmedName = profileName.trim()
+
                     await setConf.mutateAsync({
                       ...conf.data,
                       profiles: [
                         ...conf.data.profiles,
                         {
                           id,
-                          name: profileName.trim(),
+                          name: trimmedName,
                           progresses: [],
                         },
                       ],
                       profileInUse: id,
+                    })
+
+                    createProfileRemote(trimmedName, id).then((result) => {
+                      if (result.isOk()) {
+                        const serverId = result.value
+                        const currentConf = queryClient.getQueryData(confQuery.queryKey)
+                        if (currentConf) {
+                          setConf.mutate({
+                            ...currentConf,
+                            profiles: currentConf.profiles.map((p) =>
+                              p.id === id ? { ...p, server_id: serverId } : p,
+                            ),
+                          })
+                        }
+                      }
                     })
 
                     toast.success(t`Profil créé avec succès`)

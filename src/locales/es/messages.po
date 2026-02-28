@@ -40,7 +40,7 @@ msgstr "Acceder al sitio oficial"
 msgid "Accueil"
 msgstr "Inicio"
 
-#: src/routes/_app/settings.tsx:154
+#: src/routes/_app/settings.tsx:156
 msgid "Afficher les guides terminés"
 msgstr "Mostrar las guías terminadas"
 
@@ -50,7 +50,7 @@ msgstr "Añadir"
 
 #: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:43
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:94
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:103
 #: src/routes/_app/guides/-$id/report_dialog.tsx:131
 #: src/routes/_app/guides/-$id/report_dialog.tsx:168
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
@@ -58,7 +58,7 @@ msgstr "Añadir"
 msgid "Annuler"
 msgstr "Cancelar"
 
-#: src/routes/_app/settings.tsx:169
+#: src/routes/_app/settings.tsx:171
 msgid "Apparence"
 msgstr "Apariencia"
 
@@ -103,7 +103,7 @@ msgstr "No se encontraron guías{langLabel}"
 msgid "Aucun guides{langLabel} trouvé avec {term}"
 msgstr "No se encontraron guías{langLabel} con {term}"
 
-#: src/routes/_app/-settings/profiles.tsx:120
+#: src/routes/_app/-settings/profiles.tsx:131
 msgid "Aucun profil trouvé."
 msgstr "No se encontraron perfiles."
 
@@ -141,6 +141,10 @@ msgstr "Categorías"
 #: src/components/error_component.tsx:31
 msgid "Causée par"
 msgstr "Causado por"
+
+#: src/routes/_app.tsx:120
+msgid "Certaines données locales sont invalides et bloquent la synchronisation."
+msgstr "Algunos datos locales no son válidos y bloquean la sincronización."
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:116
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:54
@@ -258,12 +262,12 @@ msgstr "Contenido de la guía inválido"
 msgid "Continuer"
 msgstr "Continuar"
 
-#: src/routes/_app/settings.tsx:137
+#: src/routes/_app/settings.tsx:139
 msgid "Copie d'autopilote"
 msgstr "Copia del piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:122
+#: src/routes/_app/guides/-$id/guide_page.tsx:134
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copiando el número del paso ({0})..."
 
@@ -271,7 +275,7 @@ msgstr "Copiando el número del paso ({0})..."
 msgid "Copier : {title}"
 msgstr "Copiar: {title}"
 
-#: src/routes/_app/settings.tsx:310
+#: src/routes/_app/settings.tsx:312
 msgid "Copier l'étape actuelle"
 msgstr "Copiar paso actual"
 
@@ -289,7 +293,7 @@ msgstr "Copiar la nota"
 msgid "Copier la position"
 msgstr "Copiar la posición"
 
-#: src/routes/_app/settings.tsx:376
+#: src/routes/_app/settings.tsx:395
 msgid "Créer"
 msgstr "Crear"
 
@@ -297,7 +301,7 @@ msgstr "Crear"
 msgid "Créer un guide"
 msgstr "Crear una guía"
 
-#: src/routes/_app/settings.tsx:338
+#: src/routes/_app/settings.tsx:340
 msgid "Créer un profil"
 msgstr "Crear un perfil"
 
@@ -367,7 +371,7 @@ msgstr "Error en el intercambio de tokens"
 msgid "Éditer une note"
 msgstr "Editar una nota"
 
-#: src/routes/_app/settings.tsx:248
+#: src/routes/_app/settings.tsx:250
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos los perfiles y ajustes (no las guías)"
 
@@ -553,11 +557,11 @@ msgid "Erreur JSON inconnue"
 msgstr "Error JSON desconocido"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:121
+#: src/routes/_app/guides/-$id/guide_page.tsx:133
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error al copiar el número del paso ({0})."
 
-#: src/routes/_app/settings.tsx:369
+#: src/routes/_app/settings.tsx:388
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Error al crear el perfil. Verifique el nombre del perfil (debe ser único)."
 
@@ -565,10 +569,10 @@ msgstr "Error al crear el perfil. Verifique el nombre del perfil (debe ser únic
 msgid "Erreur lors de la mise à jour des guides"
 msgstr "Error al actualizar las guías"
 
-#: src/routes/_app/settings.tsx:263
-#: src/routes/_app/settings.tsx:283
-#: src/routes/_app/settings.tsx:303
-#: src/routes/_app/settings.tsx:323
+#: src/routes/_app/settings.tsx:265
+#: src/routes/_app/settings.tsx:285
+#: src/routes/_app/settings.tsx:305
+#: src/routes/_app/settings.tsx:325
 msgid "Erreur lors de la mise à jour du raccourci"
 msgstr "Error al actualizar el atajo"
 
@@ -611,11 +615,11 @@ msgstr "Error de usuario desconocido"
 msgid "Étape {current}"
 msgstr "Paso {current}"
 
-#: src/routes/_app/settings.tsx:270
+#: src/routes/_app/settings.tsx:272
 msgid "Étape précédente"
 msgstr "Paso anterior"
 
-#: src/routes/_app/settings.tsx:290
+#: src/routes/_app/settings.tsx:292
 msgid "Étape suivante"
 msgstr "Paso siguiente"
 
@@ -649,11 +653,11 @@ msgstr "Formato de datos incorrecto"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymede - No afiliado a Ankama Games"
 
-#: src/routes/_app/settings.tsx:116
+#: src/routes/_app/settings.tsx:118
 msgid "Général"
 msgstr "General"
 
-#: src/routes/_app/settings.tsx:211
+#: src/routes/_app/settings.tsx:213
 msgid "Grande"
 msgstr "Grande"
 
@@ -716,7 +720,7 @@ msgstr "Guías eliminadas"
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
 
-#: src/routes/_app.tsx:28
+#: src/routes/_app.tsx:57
 msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
 msgstr "Puede ser un problema de conexión o un error del servidor."
 
@@ -861,7 +865,7 @@ msgstr "No se puede descargar la imagen"
 msgid "Impossible de télécharger le guide"
 msgstr "No se puede descargar la guía"
 
-#: src/routes/_app.tsx:27
+#: src/routes/_app.tsx:56
 msgid "Impossible de vérifier la mise à jour de l'application."
 msgstr "No se pudo comprobar la actualización de la aplicación."
 
@@ -882,6 +886,19 @@ msgstr "Información adicional: {0}"
 msgid "J'ai compris"
 msgstr "Entendido"
 
+#: src/routes/_app.tsx:119
+msgid "La synchronisation a échoué : données invalides."
+msgstr "La sincronización ha fallado: datos no válidos."
+
+#: src/lib/sync_progress_queue.ts:22
+#: src/routes/_app.tsx:124
+msgid "La synchronisation a échoué."
+msgstr "La sincronización ha fallado."
+
+#: src/lib/sync_progress_queue.ts:82
+msgid "La synchronisation de la progression du guide {label} a échoué."
+msgstr "La sincronización del progreso de la guía {label} ha fallado."
+
 #: src/components/select_lang.tsx:10
 msgid "Langue"
 msgstr "Idioma"
@@ -897,12 +914,12 @@ msgstr "La guía #{pendingGuideId} no está descargada.<0/>¿Quiere descargarla 
 msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 msgstr "La guía se abrirá en <0>el paso {0}</0>. <1/>Estaba en <2>el paso {1}</2> en su perfil <3>\"{2}\"</3>."
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:53
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:54
 msgid "Le nom du profil ne peut pas être vide."
 msgstr "El nombre del perfil no puede estar vacío."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:120
+#: src/routes/_app/guides/-$id/guide_page.tsx:132
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 
@@ -967,7 +984,7 @@ msgstr "Actualización completada con errores"
 msgid "Mise à jour terminée. L'application va redémarrer."
 msgstr "Actualización completada. La aplicación se reiniciará."
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:97
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:106
 msgid "Modifier"
 msgstr "Modificar"
 
@@ -992,7 +1009,7 @@ msgstr "Nombre"
 msgid "Nom de la note"
 msgstr "Nombre de la nota"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:71
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:80
 msgid "Nom du profil mis à jour avec succès."
 msgstr "Nombre del perfil actualizado correctamente."
 
@@ -1000,11 +1017,11 @@ msgstr "Nombre del perfil actualizado correctamente."
 msgid "Non commencé"
 msgstr "No iniciado"
 
-#: src/routes/_app/settings.tsx:208
+#: src/routes/_app/settings.tsx:210
 msgid "Normale"
 msgstr "Normal"
 
-#: src/routes/_app/settings.tsx:238
+#: src/routes/_app/settings.tsx:240
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Los atajos ya utilizados por otras aplicaciones (AMD Adrenalin, Nvidia App, etc.) no se pueden registrar. Elimínelos primero en esas aplicaciones."
 
@@ -1014,7 +1031,7 @@ msgstr "Nota: Los atajos ya utilizados por otras aplicaciones (AMD Adrenalin, Nv
 msgid "Notes"
 msgstr "Notas"
 
-#: src/routes/_app/settings.tsx:172
+#: src/routes/_app/settings.tsx:174
 msgid "Opacité"
 msgstr "Opacidad"
 
@@ -1030,7 +1047,7 @@ msgstr "Abrir la carpeta de guías descargadas"
 msgid "Ouvrir le sommaire"
 msgstr "Abrir resumen"
 
-#: src/routes/_app/settings.tsx:120
+#: src/routes/_app/settings.tsx:122
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Abrir guías al inicio"
 
@@ -1039,8 +1056,8 @@ msgid "Ouvrir un guide"
 msgstr "Abrir una guía"
 
 #: src/components/title_bar.tsx:166
-#: src/routes/_app/settings.tsx:48
-#: src/routes/_app/settings.tsx:112
+#: src/routes/_app/settings.tsx:49
+#: src/routes/_app/settings.tsx:114
 msgid "Paramètres"
 msgstr "Configuraciones"
 
@@ -1048,7 +1065,7 @@ msgstr "Configuraciones"
 msgid "Parcourir le catalogue"
 msgstr "Explorar el catálogo"
 
-#: src/routes/_app/settings.tsx:205
+#: src/routes/_app/settings.tsx:207
 msgid "Petite"
 msgstr "Pequeña"
 
@@ -1079,30 +1096,30 @@ msgstr "Problema encontrado"
 
 #. placeholder {0}: profile.name
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:36
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:77
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:86
 msgid "Profil \"{0}\""
 msgstr "Perfil \"{0}\""
 
-#: src/routes/_app/settings.tsx:365
+#: src/routes/_app/settings.tsx:384
 msgid "Profil créé avec succès"
 msgstr "Perfil creado con éxito"
 
-#: src/routes/_app/-settings/profiles.tsx:87
+#: src/routes/_app/-settings/profiles.tsx:98
 msgid "Profil supprimé avec succès"
 msgstr "Perfil eliminado con éxito"
 
-#: src/routes/_app/settings.tsx:330
+#: src/routes/_app/settings.tsx:332
 msgid "Profils"
 msgstr "Perfiles"
 
-#: src/routes/_app/settings.tsx:261
-#: src/routes/_app/settings.tsx:281
-#: src/routes/_app/settings.tsx:301
-#: src/routes/_app/settings.tsx:321
+#: src/routes/_app/settings.tsx:263
+#: src/routes/_app/settings.tsx:283
+#: src/routes/_app/settings.tsx:303
+#: src/routes/_app/settings.tsx:323
 msgid "Raccourci mis à jour"
 msgstr "Atajo actualizado"
 
-#: src/routes/_app/settings.tsx:244
+#: src/routes/_app/settings.tsx:246
 msgid "Raccourcis clavier"
 msgstr "Atajos de teclado"
 
@@ -1127,7 +1144,7 @@ msgstr "Resumen del mensaje"
 msgid "Rechercher un guide"
 msgstr "Buscar una guía"
 
-#: src/routes/_app/-settings/profiles.tsx:117
+#: src/routes/_app/-settings/profiles.tsx:128
 msgid "Rechercher un profil..."
 msgstr "Buscar un perfil..."
 
@@ -1143,7 +1160,7 @@ msgstr "Minimizar"
 msgid "Réinitialiser"
 msgstr "Restablecer"
 
-#: src/routes/_app/settings.tsx:250
+#: src/routes/_app/settings.tsx:252
 msgid "Réinitialiser la configuration"
 msgstr "Restablecer configuración"
 
@@ -1211,7 +1228,23 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Eliminar de la lista"
 
-#: src/routes/_app/settings.tsx:186
+#: src/lib/sync_progress_queue.ts:71
+msgid "Synchro impossible — guide {label} introuvable sur le serveur."
+msgstr "Sincronización imposible — guía {label} no encontrada en el servidor."
+
+#: src/lib/sync_progress_queue.ts:74
+msgid "Synchro totale"
+msgstr "Sincronización total"
+
+#: src/lib/sync_progress_queue.ts:16
+msgid "Synchronisation en cours…"
+msgstr "Sincronizando…"
+
+#: src/lib/sync_progress_queue.ts:19
+msgid "Synchronisation réussie."
+msgstr "Sincronización correcta."
+
+#: src/routes/_app/settings.tsx:188
 msgid "Taille de texte des guides"
 msgstr "Tamaño del texto de las guías"
 
@@ -1256,11 +1289,11 @@ msgstr "Todos"
 msgid "Tous les guides ont été mis à jour"
 msgstr "Todas las guías han sido actualizadas"
 
-#: src/routes/_app/settings.tsx:214
+#: src/routes/_app/settings.tsx:216
 msgid "Très grande"
 msgstr "Extra grande"
 
-#: src/routes/_app/settings.tsx:202
+#: src/routes/_app/settings.tsx:204
 msgid "Très petite"
 msgstr "Extra pequeña"
 
@@ -1268,7 +1301,7 @@ msgstr "Extra pequeña"
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymede"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:61
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:62
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Ya existe un perfil con este nombre."
 
@@ -1323,7 +1356,7 @@ msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "Será redirigido a la página de inicio de sesión de Ganymède."
 
 #. placeholder {0}: profile?.name ?? ''
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:79
+#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:88
 msgid "Vous allez modifier le profil \"{0}\""
 msgstr "Va a modificar el perfil \"{0}\""
 

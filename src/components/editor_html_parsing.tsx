@@ -465,6 +465,7 @@ export function EditorHtmlParsing({
                     guideId,
                     checkboxIndex: index,
                     stepIndex,
+                    guideName: currentGuide?.name,
                   })
                 }
               }}
