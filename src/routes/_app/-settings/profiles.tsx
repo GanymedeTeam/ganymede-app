@@ -16,6 +16,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover.tsx'
 import { selectVariants } from '@/components/ui/select.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
+import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
 import { removeProfileFromRecentGuides } from '@/ipc/guides.ts'
 import { deleteProfileRemote } from '@/ipc/sync.ts'
 import { getProfileById } from '@/lib/profile.ts'
@@ -29,6 +30,7 @@ export function Profiles() {
   const { t } = useLingui()
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
+  const switchProfile = useSwitchProfile()
   const profiles = conf.data.profiles
   const currentProfile = useProfile()
   const [open, setOpen] = useState(false)
@@ -79,11 +81,17 @@ export function Profiles() {
 
           const deletedProfile = profiles.find((p) => p.id === profileId)
 
-          await setConf.mutateAsync({
+          const newConf = {
             ...conf.data,
             profiles: profiles.filter((p) => p.id !== profileId),
             profileInUse: nextProfileToUse,
-          })
+          }
+
+          await setConf.mutateAsync(newConf)
+
+          if (conf.data.profileInUse === profileId) {
+            await switchProfile(newConf, nextProfileToUse)
+          }
 
           if (deletedProfile?.server_id) {
             deleteProfileRemote(deletedProfile.server_id).then((result) => {
@@ -136,11 +144,10 @@ export function Profiles() {
                   <CommandItem
                     className="group/command-item"
                     key={profile.id}
-                    onSelect={(currentValue) => {
-                      setConf.mutate({
-                        ...conf.data,
-                        profileInUse: currentValue,
-                      })
+                    onSelect={async (currentValue) => {
+                      const newConf = { ...conf.data, profileInUse: currentValue }
+                      await setConf.mutateAsync(newConf)
+                      await switchProfile(newConf, currentValue)
                     }}
                     value={profile.id}
                   >

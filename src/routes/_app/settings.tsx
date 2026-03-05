@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { ConfLang, FontSize } from '@/ipc/bindings.ts'
+import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -92,6 +93,7 @@ function Settings() {
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const reregisterShortcuts = useReregisterShortcuts()
+  const switchProfile = useSwitchProfile()
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
 
@@ -353,7 +355,7 @@ function Settings() {
 
                     const trimmedName = profileName.trim()
 
-                    await setConf.mutateAsync({
+                    const newConf = {
                       ...conf.data,
                       profiles: [
                         ...conf.data.profiles,
@@ -364,7 +366,10 @@ function Settings() {
                         },
                       ],
                       profileInUse: id,
-                    })
+                    }
+
+                    await setConf.mutateAsync(newConf)
+                    await switchProfile(newConf, id)
 
                     createProfileRemote(trimmedName, id).then((result) => {
                       if (result.isOk()) {
