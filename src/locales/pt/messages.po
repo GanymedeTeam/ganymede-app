@@ -40,7 +40,7 @@ msgstr "Aceder ao site oficial"
 msgid "Accueil"
 msgstr "Início"
 
-#: src/routes/_app/settings.tsx:156
+#: src/routes/_app/settings.tsx:158
 msgid "Afficher les guides terminés"
 msgstr "Exibir os guias concluídos"
 
@@ -58,7 +58,7 @@ msgstr "Adicionar"
 msgid "Annuler"
 msgstr "Cancelar"
 
-#: src/routes/_app/settings.tsx:171
+#: src/routes/_app/settings.tsx:173
 msgid "Apparence"
 msgstr "Aparência"
 
@@ -103,7 +103,7 @@ msgstr "Nenhum guia{langLabel} encontrado"
 msgid "Aucun guides{langLabel} trouvé avec {term}"
 msgstr "Nenhum guia{langLabel} encontrado com {term}"
 
-#: src/routes/_app/-settings/profiles.tsx:131
+#: src/routes/_app/-settings/profiles.tsx:139
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
@@ -262,7 +262,7 @@ msgstr "Conteúdo do guia inválido"
 msgid "Continuer"
 msgstr "Continuar"
 
-#: src/routes/_app/settings.tsx:139
+#: src/routes/_app/settings.tsx:141
 msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
@@ -275,7 +275,7 @@ msgstr "A copiar o número da etapa ({0})..."
 msgid "Copier : {title}"
 msgstr "Copiar: {title}"
 
-#: src/routes/_app/settings.tsx:312
+#: src/routes/_app/settings.tsx:314
 msgid "Copier l'étape actuelle"
 msgstr "Copiar passo atual"
 
@@ -293,7 +293,7 @@ msgstr "Copiar a nota"
 msgid "Copier la position"
 msgstr "Copiar a posição"
 
-#: src/routes/_app/settings.tsx:395
+#: src/routes/_app/settings.tsx:400
 msgid "Créer"
 msgstr "Criar"
 
@@ -301,7 +301,7 @@ msgstr "Criar"
 msgid "Créer un guide"
 msgstr "Criar um guia"
 
-#: src/routes/_app/settings.tsx:340
+#: src/routes/_app/settings.tsx:342
 msgid "Créer un profil"
 msgstr "Criar um perfil"
 
@@ -371,7 +371,7 @@ msgstr "Falha na troca de tokens"
 msgid "Éditer une note"
 msgstr "Editar uma nota"
 
-#: src/routes/_app/settings.tsx:250
+#: src/routes/_app/settings.tsx:252
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos os perfis e definições (não os guias)"
 
@@ -561,7 +561,7 @@ msgstr "Erro JSON desconhecido"
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
 
-#: src/routes/_app/settings.tsx:388
+#: src/routes/_app/settings.tsx:393
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Erro ao criar o perfil. Verifique o nome do perfil (deve ser único)."
 
@@ -569,10 +569,10 @@ msgstr "Erro ao criar o perfil. Verifique o nome do perfil (deve ser único)."
 msgid "Erreur lors de la mise à jour des guides"
 msgstr "Erro ao atualizar os guias"
 
-#: src/routes/_app/settings.tsx:265
-#: src/routes/_app/settings.tsx:285
-#: src/routes/_app/settings.tsx:305
-#: src/routes/_app/settings.tsx:325
+#: src/routes/_app/settings.tsx:267
+#: src/routes/_app/settings.tsx:287
+#: src/routes/_app/settings.tsx:307
+#: src/routes/_app/settings.tsx:327
 msgid "Erreur lors de la mise à jour du raccourci"
 msgstr "Erro ao atualizar o atalho"
 
@@ -615,11 +615,11 @@ msgstr "Erro de utilizador desconhecido"
 msgid "Étape {current}"
 msgstr "Etapa {current}"
 
-#: src/routes/_app/settings.tsx:272
+#: src/routes/_app/settings.tsx:274
 msgid "Étape précédente"
 msgstr "Passo anterior"
 
-#: src/routes/_app/settings.tsx:292
+#: src/routes/_app/settings.tsx:294
 msgid "Étape suivante"
 msgstr "Passo seguinte"
 
@@ -653,11 +653,11 @@ msgstr "Formato de dados incorrecto"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganimedes - Não afiliado à Ankama Games"
 
-#: src/routes/_app/settings.tsx:118
+#: src/routes/_app/settings.tsx:120
 msgid "Général"
 msgstr "Geral"
 
-#: src/routes/_app/settings.tsx:213
+#: src/routes/_app/settings.tsx:215
 msgid "Grande"
 msgstr "Grande"
 
@@ -1019,11 +1019,11 @@ msgstr "Nome do perfil atualizado com sucesso."
 msgid "Non commencé"
 msgstr "Não iniciado"
 
-#: src/routes/_app/settings.tsx:210
+#: src/routes/_app/settings.tsx:212
 msgid "Normale"
 msgstr "Normal"
 
-#: src/routes/_app/settings.tsx:240
+#: src/routes/_app/settings.tsx:242
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Os atalhos já utilizados por outras aplicações (AMD Adrenalin, Nvidia App, etc.) não podem ser registados. Remova-os primeiro nessas aplicações."
 
@@ -1033,7 +1033,7 @@ msgstr "Nota: Os atalhos já utilizados por outras aplicações (AMD Adrenalin, 
 msgid "Notes"
 msgstr "Notas"
 
-#: src/routes/_app/settings.tsx:174
+#: src/routes/_app/settings.tsx:176
 msgid "Opacité"
 msgstr "Opacidade"
 
@@ -1049,7 +1049,7 @@ msgstr "Abrir a pasta dos guias baixados"
 msgid "Ouvrir le sommaire"
 msgstr "Abrir resumo"
 
-#: src/routes/_app/settings.tsx:122
+#: src/routes/_app/settings.tsx:124
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Abrir guias ao iniciar"
 
@@ -1058,8 +1058,8 @@ msgid "Ouvrir un guide"
 msgstr "Abrir um guia"
 
 #: src/components/title_bar.tsx:166
-#: src/routes/_app/settings.tsx:49
-#: src/routes/_app/settings.tsx:114
+#: src/routes/_app/settings.tsx:50
+#: src/routes/_app/settings.tsx:116
 msgid "Paramètres"
 msgstr "Configurações"
 
@@ -1067,7 +1067,7 @@ msgstr "Configurações"
 msgid "Parcourir le catalogue"
 msgstr "Explorar o catálogo"
 
-#: src/routes/_app/settings.tsx:207
+#: src/routes/_app/settings.tsx:209
 msgid "Petite"
 msgstr "Pequena"
 
@@ -1102,26 +1102,31 @@ msgstr "Problema encontrado"
 msgid "Profil \"{0}\""
 msgstr "Perfil \"{0}\""
 
-#: src/routes/_app/settings.tsx:384
+#. placeholder {0}: newProfile.name
+#: src/hooks/use_switch_profile.ts:23
+msgid "Profil \"{0}\" chargé"
+msgstr "Perfil \"{0}\" carregado"
+
+#: src/routes/_app/settings.tsx:389
 msgid "Profil créé avec succès"
 msgstr "Perfil criado com sucesso"
 
-#: src/routes/_app/-settings/profiles.tsx:98
+#: src/routes/_app/-settings/profiles.tsx:106
 msgid "Profil supprimé avec succès"
 msgstr "Perfil eliminado com sucesso"
 
-#: src/routes/_app/settings.tsx:332
+#: src/routes/_app/settings.tsx:334
 msgid "Profils"
 msgstr "Perfis"
 
-#: src/routes/_app/settings.tsx:263
-#: src/routes/_app/settings.tsx:283
-#: src/routes/_app/settings.tsx:303
-#: src/routes/_app/settings.tsx:323
+#: src/routes/_app/settings.tsx:265
+#: src/routes/_app/settings.tsx:285
+#: src/routes/_app/settings.tsx:305
+#: src/routes/_app/settings.tsx:325
 msgid "Raccourci mis à jour"
 msgstr "Atalho atualizado"
 
-#: src/routes/_app/settings.tsx:246
+#: src/routes/_app/settings.tsx:248
 msgid "Raccourcis clavier"
 msgstr "Atalhos de teclado"
 
@@ -1146,7 +1151,7 @@ msgstr "Resumo da mensagem"
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
-#: src/routes/_app/-settings/profiles.tsx:128
+#: src/routes/_app/-settings/profiles.tsx:136
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
@@ -1162,7 +1167,7 @@ msgstr "Minimizar"
 msgid "Réinitialiser"
 msgstr "Restabelecer"
 
-#: src/routes/_app/settings.tsx:252
+#: src/routes/_app/settings.tsx:254
 msgid "Réinitialiser la configuration"
 msgstr "Restabelecer configuração"
 
@@ -1250,7 +1255,7 @@ msgstr "A sincronizar…"
 msgid "Synchronisation réussie."
 msgstr "Sincronização concluída."
 
-#: src/routes/_app/settings.tsx:188
+#: src/routes/_app/settings.tsx:190
 msgid "Taille de texte des guides"
 msgstr "Tamanho do texto dos guias"
 
@@ -1295,11 +1300,11 @@ msgstr "Todos"
 msgid "Tous les guides ont été mis à jour"
 msgstr "Todos os guias foram atualizados"
 
-#: src/routes/_app/settings.tsx:216
+#: src/routes/_app/settings.tsx:218
 msgid "Très grande"
 msgstr "Extra grande"
 
-#: src/routes/_app/settings.tsx:204
+#: src/routes/_app/settings.tsx:206
 msgid "Très petite"
 msgstr "Extra pequena"
 
