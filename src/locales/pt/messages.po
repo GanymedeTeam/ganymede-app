@@ -267,7 +267,7 @@ msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:134
+#: src/routes/_app/guides/-$id/guide_page.tsx:136
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "A copiar o número da etapa ({0})..."
 
@@ -557,7 +557,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Erro JSON desconhecido"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:133
+#: src/routes/_app/guides/-$id/guide_page.tsx:135
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
 
@@ -887,11 +887,13 @@ msgid "J'ai compris"
 msgstr "Entendi"
 
 #: src/routes/_app.tsx:119
+#: src/routes/_app/oauth/waiting.tsx:61
 msgid "La synchronisation a échoué : données invalides."
 msgstr "A sincronização falhou: dados inválidos."
 
 #: src/lib/sync_progress_queue.ts:22
 #: src/routes/_app.tsx:124
+#: src/routes/_app/oauth/waiting.tsx:63
 msgid "La synchronisation a échoué."
 msgstr "A sincronização falhou."
 
@@ -919,7 +921,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "O nome do perfil não pode estar vazio."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:132
+#: src/routes/_app/guides/-$id/guide_page.tsx:134
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 
@@ -1177,7 +1179,7 @@ msgid "Réponse GitHub malformée"
 msgstr "Resposta do GitHub mal formada"
 
 #: src/components/title_bar.tsx:90
-#: src/routes/_app/oauth/waiting.tsx:58
+#: src/routes/_app/oauth/waiting.tsx:75
 msgid "Se connecter"
 msgstr "Iniciar sessão"
 
@@ -1235,6 +1237,10 @@ msgstr "Sincronização impossível — guia {label} não encontrado no servidor
 #: src/lib/sync_progress_queue.ts:74
 msgid "Synchro totale"
 msgstr "Sincronização total"
+
+#: src/routes/_app/oauth/waiting.tsx:56
+msgid "Synchronisation des profils terminée."
+msgstr "Sincronização de perfis concluída."
 
 #: src/lib/sync_progress_queue.ts:16
 msgid "Synchronisation en cours…"
@@ -1318,7 +1324,7 @@ msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "Ocorreu um erro ao recuperar a configuração"
 
 #. placeholder {0}: user.error.message
-#: src/routes/_app/oauth/waiting.tsx:36
+#: src/routes/_app/oauth/waiting.tsx:38
 msgid "Une erreur est survenue lors de la récupération de vos informations utilisateur : {0}"
 msgstr "Ocorreu um erro ao recuperar as suas informações de utilizador: {0}"
 
@@ -1351,7 +1357,7 @@ msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estar�
 msgid "Votre pseudo"
 msgstr "O seu nome de utilizador"
 
-#: src/routes/_app/oauth/waiting.tsx:61
+#: src/routes/_app/oauth/waiting.tsx:78
 msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "Será redirecionado para a página de início de sessão do Ganymède."
 
@@ -1361,7 +1367,7 @@ msgid "Vous allez modifier le profil \"{0}\""
 msgstr "Vai modificar o perfil \"{0}\""
 
 #. placeholder {0}: user.data?.name ?? 'non trouvé'
-#: src/routes/_app/oauth/waiting.tsx:46
+#: src/routes/_app/oauth/waiting.tsx:48
 msgid "Vous êtes maintenant connecté en tant que \"{0}\"."
 msgstr "Está agora conectado como \"{0}\"."
 

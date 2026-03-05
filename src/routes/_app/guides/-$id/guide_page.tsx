@@ -45,7 +45,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
     const clampedStep = nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep
     const updatedAt = new Date().toISOString()
 
-    await setConf.mutateAsync({
+    const newConf = {
       ...conf.data,
       profiles: conf.data.profiles.map((p) => {
         if (p.id === conf.data.profileInUse) {
@@ -79,9 +79,11 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
         return p
       }),
-    })
+    }
 
-    const profile = getProfile(conf.data)
+    setConf.mutate(newConf)
+
+    const profile = getProfile(newConf)
     const progress = profile.progresses.find((p) => p.id === guide.id)
     queueProgressSync(profile.server_id, guide.id, clampedStep, progress?.steps ?? {}, queryClient, guide.name)
 

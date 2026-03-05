@@ -17,8 +17,16 @@ export function useSetConf() {
         throw result.error
       }
     },
+    onMutate(conf: Conf) {
+      const previous = queryClient.getQueryData(confQuery.queryKey)
+      queryClient.setQueryData(confQuery.queryKey, () => conf)
+      return previous
+    },
     onSuccess: async () => {
       await queryClient.invalidateQueries(confQuery)
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(confQuery.queryKey, context)
     },
   })
 }
