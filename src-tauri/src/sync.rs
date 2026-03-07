@@ -297,6 +297,9 @@ impl SyncApi for SyncApiImpl {
             let Some(ref uuid) = remote_profile.uuid else { continue };
             if let Some(local_profile) = conf.profiles.iter_mut().find(|p| &p.id == uuid) {
                 local_profile.server_id = Some(remote_profile.id);
+                if local_profile.name != remote_profile.name {
+                    local_profile.name = remote_profile.name.clone();
+                }
 
                 for remote_progress in &remote_profile.progresses {
                     let remote_steps: HashMap<u32, ConfStep> = remote_progress
