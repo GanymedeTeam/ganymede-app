@@ -114,6 +114,8 @@ pub struct Profile {
     #[serde(default = "default_level")]
     pub level: u32,
     pub progresses: Vec<Progress>,
+    #[serde(default)]
+    pub server_id: Option<u32>,
 }
 
 #[derive(Debug)]
@@ -129,6 +131,8 @@ pub struct Progress {
     pub id: u32, // guide id
     pub current_step: u32,
     pub steps: HashMap<u32, ConfStep>,
+    #[serde(default)]
+    pub updated_at: Option<String>,
 }
 
 #[derive(Debug)]
@@ -186,6 +190,7 @@ fn create_progress(id: u32) -> Progress {
         id,
         current_step: 0,
         steps: HashMap::new(),
+        updated_at: Some(chrono::Utc::now().to_rfc3339()),
     }
 }
 
@@ -327,6 +332,7 @@ impl Default for Profile {
             name: "Player".to_string(),
             level: 200,
             progresses: vec![],
+            server_id: None,
         }
     }
 }
@@ -417,6 +423,7 @@ impl ConfApi for ConfApiImpl {
         };
 
         add_or_update_progress_step(progress, step, step_index);
+        progress.updated_at = Some(chrono::Utc::now().to_rfc3339());
 
         save_conf(conf, &app)?;
 

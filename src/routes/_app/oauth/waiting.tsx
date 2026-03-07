@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button.tsx'
 import { taurpc } from '@/ipc/ipc.ts'
+import { syncProfiles } from '@/ipc/sync.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { getAuthTokensQuery } from '@/queries/get_auth_tokens.query.ts'
 import { getMeQuery } from '@/queries/get_me.query.ts'
 import { Page } from '@/routes/-page.tsx'
@@ -42,10 +44,25 @@ function Waiting() {
 
       navigate({
         to: '/',
-      }).then(() => {
+      }).then(async () => {
         toast.success(<Trans>Vous êtes maintenant connecté en tant que "{user.data?.name ?? 'non trouvé'}".</Trans>)
 
         queryClient.invalidateQueries(getAuthTokensQuery)
+
+        const syncResult = await syncProfiles()
+
+        if (syncResult.isOk()) {
+          queryClient.invalidateQueries(confQuery)
+          toast.success(<Trans>Synchronisation des profils terminée.</Trans>)
+        } else {
+          const err = syncResult.error.cause
+          const isValidationError = typeof err === 'object' && err !== null && 'ValidationError' in err
+          if (isValidationError) {
+            toast.error(<Trans>La synchronisation a échoué : données invalides.</Trans>)
+          } else {
+            toast.error(<Trans>La synchronisation a échoué.</Trans>, { duration: 4000 })
+          }
+        }
       })
     })
 

@@ -158,7 +158,7 @@ function GuideIdPage() {
           </div>
         </div>
         {tabs.map((guide) => (
-          <TabsContent key={`guide-${guide}-${search.step}`} value={guide.toString()}>
+          <TabsContent key={`guide-${guide}`} value={guide.toString()}>
             <GuidePage id={guide} stepIndex={getStepClamped(guides.data, params.id, search.step)} />
           </TabsContent>
         ))}

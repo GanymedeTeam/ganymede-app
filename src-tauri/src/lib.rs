@@ -12,6 +12,7 @@ use crate::oauth::{OAuthApi, OAuthApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
 use crate::update::{UpdateApi, UpdateApiImpl};
+use crate::sync::{SyncApi, SyncApiImpl};
 use crate::user::{UserApi, UserApiImpl};
 use crate::window_manager::WindowManager;
 use log::{error, info, LevelFilter};
@@ -41,6 +42,7 @@ mod quest;
 mod report;
 mod security;
 mod shortcut;
+mod sync;
 mod tauri_api_ext;
 mod update;
 mod user;
@@ -161,7 +163,8 @@ pub fn run() {
         .merge(NotificationApiImpl.into_handler())
         .merge(OAuthApiImpl.into_handler())
         .merge(UserApiImpl.into_handler())
-        .merge(ShortcutsApiImpl.into_handler());
+        .merge(ShortcutsApiImpl.into_handler())
+        .merge(SyncApiImpl.into_handler());
 
     #[cfg(not(debug_assertions))]
     add_breadcrumb(Breadcrumb {
