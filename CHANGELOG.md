@@ -1,5 +1,23 @@
 # ganymede-app
 
+## 1.17.0
+
+### Minor Changes
+
+- 3c42040: Les guides récents sont maintenant stockés par profil. Chaque profil conserve ses propres onglets ouverts au redémarrage.
+- d6f06d0: Synchronisation de la progression et des profils de l'application au serveur.
+  Cela permet de suivre la progression de l'utilisateur et de synchroniser les données entre différents appareils.
+
+  **Cette fonctionnalité n'est disponible que si l'utilisateur est connecté à son compte.**
+
+- d6f06d0: Lors du changement ou de la création d'un profil, les onglets se mettent à jour avec les guides récents du nouveau profil et redirigent vers le premier guide.
+
+### Patch Changes
+
+- d6f06d0: Ajout de youtu.be dans la whitelist des liens autorisés.
+- d6f06d0: Correction du scroll et de la sauvegarde de progression des onglets de guides
+- d6f06d0: Optimise les performances du changement d'étape de guide.
+
 ## 1.16.0
 
 ### Minor Changes
