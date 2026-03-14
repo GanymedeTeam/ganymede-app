@@ -62,11 +62,21 @@ impl Api for ApiImpl {
             .build()
             .unwrap();
 
-        let res = client
+        let response = client
             .get(format!("{}/github/latest-release", GANYMEDE_API))
             .send()
-            .await
-            .map_err(|err| AppVersionError::GitHub(err.to_string()))?
+            .await;
+
+        let response = match response {
+            Err(err) if err.is_connect() || err.is_timeout() => {
+                debug!("[Api] offline, skipping version check");
+                return Ok(IsOld { from: version.to_string(), to: version.to_string(), is_old: false });
+            }
+            Err(err) => return Err(AppVersionError::GitHub(err.to_string())),
+            Ok(r) => r,
+        };
+
+        let res = response
             .json::<AppRelease>()
             .await
             .map_err(|err| AppVersionError::JsonMalformed(err.to_string()))?;

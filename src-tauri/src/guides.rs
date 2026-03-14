@@ -63,6 +63,8 @@ pub enum Error {
     DeleteGuideFolderInSystem(String),
     #[error("error in opener plugin")]
     Opener(String),
+    #[error("server unreachable")]
+    NetworkUnavailable,
 }
 
 #[derive(Serialize, Deserialize, Clone, taurpc::specta::Type)]
@@ -109,10 +111,11 @@ pub enum GuidesOrFolder {
 }
 
 #[derive(Serialize, Clone, taurpc::specta::Type)]
-#[serde(untagged, rename_all = "camelCase")]
+#[serde(tag = "type", rename_all = "camelCase")]
 pub enum UpdateAllAtOnceResult {
     Success,
-    Failure(String),
+    Failure { message: String },
+    Offline,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone, taurpc::specta::Type)]
@@ -342,7 +345,11 @@ pub async fn get_guides_from_server(
     let response = match res {
         Ok(response) => response,
         Err(err) => {
-            let error = Error::RequestGuides(err.to_string());
+            let error = if err.is_connect() || err.is_timeout() {
+                Error::NetworkUnavailable
+            } else {
+                Error::RequestGuides(err.to_string())
+            };
             return ids.iter().map(|_| Err(error.clone())).collect();
         }
     };
@@ -759,7 +766,13 @@ fn fetch_guides_from_server<R: Runtime>(
             .get(url)
             .send()
             .await
-            .map_err(|err| Error::RequestGuides(err.to_string()))?;
+            .map_err(|err| {
+                if err.is_connect() || err.is_timeout() {
+                    Error::NetworkUnavailable
+                } else {
+                    Error::RequestGuides(err.to_string())
+                }
+            })?;
 
         let text = res
             .text()
@@ -975,29 +988,38 @@ async fn update_all_guides_batch<R: Runtime>(
             }
         }
         Err(errors) => {
-            let mut error_ids: Vec<u32> = vec![];
+            // If all errors are network errors, treat as success (offline mode)
+            let all_network_errors = errors.iter().all(|e| matches!(e, Error::NetworkUnavailable));
 
-            for error in errors {
-                match error {
-                    Error::GuideNotFound(id) => {
-                        results.insert(id, UpdateAllAtOnceResult::Failure(error.to_string()));
-                        error_ids.push(id);
-                    }
-                    _ => {
-                        for id in &guide_ids {
-                            if !error_ids.contains(id) {
-                                results
-                                    .entry(*id)
-                                    .or_insert(UpdateAllAtOnceResult::Failure(error.to_string()));
+            if all_network_errors {
+                for id in guide_ids {
+                    results.insert(id, UpdateAllAtOnceResult::Offline);
+                }
+            } else {
+                let mut error_ids: Vec<u32> = vec![];
+
+                for error in errors {
+                    match error {
+                        Error::GuideNotFound(id) => {
+                            results.insert(id, UpdateAllAtOnceResult::Failure { message: error.to_string() });
+                            error_ids.push(id);
+                        }
+                        _ => {
+                            for id in &guide_ids {
+                                if !error_ids.contains(id) {
+                                    results
+                                        .entry(*id)
+                                        .or_insert(UpdateAllAtOnceResult::Failure { message: error.to_string() });
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            for id in guide_ids {
-                if !results.contains_key(&id) {
-                    results.insert(id, UpdateAllAtOnceResult::Success);
+                for id in guide_ids {
+                    if !results.contains_key(&id) {
+                        results.insert(id, UpdateAllAtOnceResult::Success);
+                    }
                 }
             }
         }
@@ -1015,7 +1037,11 @@ fn check_guides_need_update<R: Runtime>(
     async move {
         info!("[Guides] has_guides_not_updated");
 
-        let guides_in_server = fetch_guides_from_server(&app_handle, None).await?;
+        let guides_in_server = match fetch_guides_from_server(&app_handle, None).await {
+            Ok(guides) => guides,
+            Err(Error::NetworkUnavailable) => return Ok(false),
+            Err(e) => return Err(e),
+        };
 
         let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?;
 

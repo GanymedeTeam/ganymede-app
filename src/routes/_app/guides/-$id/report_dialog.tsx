@@ -110,7 +110,13 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
 
             {sendReport.isError && (
               <div className="break-all">
-                <ErrorDisplay error={sendReport.error} />
+                {sendReport.error.cause === 'NetworkUnavailable' ? (
+                  <p className="text-destructive text-sm">
+                    <Trans>Impossible d'envoyer le rapport : serveur inaccessible.</Trans>
+                  </p>
+                ) : (
+                  <ErrorDisplay error={sendReport.error} />
+                )}
               </div>
             )}
 

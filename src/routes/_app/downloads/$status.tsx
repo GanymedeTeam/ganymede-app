@@ -1,6 +1,6 @@
 import { t } from '@lingui/core/macro'
 import { Trans, useLingui } from '@lingui/react/macro'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useDebounce } from '@uidotdev/usehooks'
 import { CheckIcon, FilterIcon } from 'lucide-react'
@@ -73,9 +73,6 @@ export const Route = createFileRoute('/_app/downloads/$status')({
     return {
       page: search.page,
     }
-  },
-  loader: async ({ context, params }) => {
-    await context.queryClient.ensureQueryData(guidesFromServerQuery({ status: params.status }))
   },
   pendingComponent: Pending,
 })
@@ -239,7 +236,7 @@ function DownloadGuidePage() {
   const page = Route.useSearch({ select: (s) => s.page })
   const status = Route.useParams({ select: (p) => p.status })
   const debouncedTerm = useDebounce(searchTerm, 300)
-  const guides = useSuspenseQuery(guidesFromServerQuery({ status }))
+  const guides = useQuery(guidesFromServerQuery({ status }))
   const downloads = useSuspenseQuery(guidesQuery())
   const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
@@ -249,6 +246,27 @@ function DownloadGuidePage() {
   useScrollToTop(scrollableRef, [page, status])
 
   const title = titleByStatus(status)
+
+  if (guides.isError) {
+    return (
+      <Page backButton={<BackButtonLink to="/downloads" />} key={`download-${status}`} title={title}>
+        <PageScrollableContent className="flex items-center justify-center">
+          <div className="flex grow flex-col items-center justify-center gap-4 text-center">
+            <p className="text-muted-foreground text-sm">
+              <Trans>Impossible de charger les guides du serveur.</Trans>
+            </p>
+            <Button onClick={() => guides.refetch()} size="sm" variant="outline">
+              <Trans>Réessayer</Trans>
+            </Button>
+          </div>
+        </PageScrollableContent>
+      </Page>
+    )
+  }
+
+  if (guides.isPending) {
+    return <Pending />
+  }
 
   const term = searchTerm !== '' ? debouncedTerm : ''
 

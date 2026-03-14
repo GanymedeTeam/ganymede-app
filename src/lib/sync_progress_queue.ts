@@ -19,7 +19,12 @@ async function triggerFullSync(toastId: string | number, queryClient: QueryClien
     toast.success(t`Synchronisation réussie.`, { id: toastId, action: undefined })
     await queryClient.invalidateQueries(confQuery)
   } else {
-    toast.error(t`La synchronisation a échoué.`, { id: toastId, duration: 4000 })
+    const cause = result.error.cause
+    if (cause === 'NotConnected' || cause === 'TokensNotFound') {
+      toast.dismiss(toastId)
+    } else {
+      toast.error(t`La synchronisation a échoué.`, { id: toastId, duration: 4000 })
+    }
   }
 }
 
@@ -60,11 +65,13 @@ export function queueProgressSync(
     const result = await syncProgress(serverId, guideId, currentStep, steps)
     if (result.isErr()) {
       debug(`[Sync] progress sync failed: ${result.error}`)
+      const cause = result.error.cause
+      if (cause === 'NotConnected' || cause === 'TokensNotFound') return
+
       const lastShown = errorToastShownMap.get(key) ?? 0
       if (Date.now() - lastShown > ERROR_TOAST_COOLDOWN_MS) {
         errorToastShownMap.set(key, Date.now())
         const label = guideName ? `"${guideName}" (#${guideId})` : `#${guideId}`
-        const cause = result.error.cause
         const isProfileNotFound = cause === 'ProfileOrGuideNotFound'
 
         if (isProfileNotFound) {

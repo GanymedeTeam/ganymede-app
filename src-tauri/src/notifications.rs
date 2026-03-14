@@ -149,7 +149,14 @@ impl NotificationApi for NotificationApiImpl {
         self,
         app_handle: AppHandle<R>,
     ) -> Result<Vec<Notification>, Error> {
-        let notifications = fetch_notifications_from_api(&app_handle).await?;
+        let notifications = match fetch_notifications_from_api(&app_handle).await {
+            Ok(n) => n,
+            Err(Error::FetchNotifications(_) | Error::ParseApiResponse(_)) => {
+                debug!("[Notifications] server unreachable, returning empty notifications");
+                return Ok(vec![]);
+            }
+            Err(e) => return Err(e),
+        };
         let viewed_notifications = ViewedNotifications::get(&app_handle)?;
 
         let unviewed: Vec<Notification> = notifications

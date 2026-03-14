@@ -50,7 +50,13 @@ impl UserApi for UserApiImpl {
             .bearer_auth(tokens.access_token)
             .send()
             .await
-            .map_err(|err| Error::FailedToGetUser(format!("Request failed: {}", err)))?;
+            .map_err(|err| {
+                if err.is_connect() || err.is_timeout() {
+                    Error::NotConnected
+                } else {
+                    Error::FailedToGetUser(format!("Request failed: {}", err))
+                }
+            })?;
 
         if response.url().as_str().ends_with("/login") {
             return Err(Error::NotConnected);

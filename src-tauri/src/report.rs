@@ -11,6 +11,8 @@ pub enum Error {
     Server(String),
     #[error("failed to save report with status: {0}: {1}")]
     Status(u16, String),
+    #[error("server unreachable")]
+    NetworkUnavailable,
 }
 
 #[taurpc::ipc_type]
@@ -79,7 +81,13 @@ impl ReportApi for ReportApiImpl {
             .json(&Into::<ReportApiPayload>::into(payload))
             .send()
             .await
-            .map_err(|err| Error::Server(err.to_string()))?;
+            .map_err(|err| {
+                if err.is_connect() || err.is_timeout() {
+                    Error::NetworkUnavailable
+                } else {
+                    Error::Server(err.to_string())
+                }
+            })?;
 
         debug!("[Report] send_report—response = {:?}", res);
 

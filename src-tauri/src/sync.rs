@@ -159,7 +159,13 @@ async fn sync_progress_on_server(
         }))
         .send()
         .await
-        .map_err(|e| Error::RequestFailed(e.to_string()))?;
+        .map_err(|e| {
+            if e.is_connect() || e.is_timeout() {
+                Error::NotConnected
+            } else {
+                Error::RequestFailed(e.to_string())
+            }
+        })?;
 
     if response.status() == 404 {
         return Err(Error::ProfileOrGuideNotFound);
@@ -258,7 +264,13 @@ impl SyncApi for SyncApiImpl {
             .json(&serde_json::json!({ "profiles": payload }))
             .send()
             .await
-            .map_err(|e| Error::RequestFailed(e.to_string()))?;
+            .map_err(|e| {
+                if e.is_connect() || e.is_timeout() {
+                    Error::NotConnected
+                } else {
+                    Error::RequestFailed(e.to_string())
+                }
+            })?;
 
         if response.url().as_str().ends_with("/login") {
             return Err(Error::NotConnected);

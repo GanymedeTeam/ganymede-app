@@ -42,8 +42,12 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
   const openGuidesFolder = useOpenGuidesFolder()
   const updateAllAtOnce = useUpdateAllAtOnce({
     onSuccess: (data) => {
-      const hasErrors = Object.values(data).some((v) => v !== null)
-      if (hasErrors) {
+      const values = Object.values(data)
+      const allOffline = values.every((v) => v?.type === 'offline')
+      const hasErrors = values.some((v) => v?.type === 'failure')
+      if (allOffline) {
+        toast.warning(t`Impossible de vérifier les mises à jour`)
+      } else if (hasErrors) {
         toast.warning(t`Mise à jour terminée avec des erreurs`)
       } else {
         toast.success(t`Tous les guides ont été mis à jour`)
@@ -55,7 +59,7 @@ export function ActionsToolbar({ path, onEnterSelectMode, isSelectMode }: Action
   })
 
   const updateAllAtOnceGotError =
-    updateAllAtOnce.isSuccess && Object.values(updateAllAtOnce.data).some((v) => v !== null)
+    updateAllAtOnce.isSuccess && Object.values(updateAllAtOnce.data).some((v) => v?.type === 'failure')
   const hasGuidesNotUpdated = hasSomeGuideNotUpdated.isSuccess && hasSomeGuideNotUpdated.data
 
   const onUpdateAllAtOnce = () => {

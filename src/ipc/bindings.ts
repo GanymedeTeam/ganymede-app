@@ -46,7 +46,7 @@ export type GuideWithSteps = { id: number; name: string; description: string | n
 
 export type Guides = { guides: GuideWithSteps[] }
 
-export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { GuideNotFound: number } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string }
+export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | { ReadGuideFile: string } | { ReadRecentGuidesFile: string } | { GuideMalformed: JsonError } | { GuideNotFound: number } | { RecentGuidesFileMalformed: string } | { SerializeGuide: JsonError } | { SerializeRecentGuidesFile: JsonError } | { CreateGuidesDir: string } | { WriteGuideFile: string } | { WriteRecentGuidesFile: string } | { RequestGuide: string } | { RequestGuideContent: string } | { RequestGuides: string } | { RequestGuidesContent: string } | { GuideWithStepsMalformed: JsonError } | { GuidesMalformed: JsonError } | { ReadGuidesDir: string } | { GetGuideInSystem: number } | { DeleteGuideFileInSystem: string } | { DeleteGuideFolderInSystem: string } | { Opener: string } | "NetworkUnavailable"
 
 export type GuidesOrFolder = ({ type: "guide" } & GuideWithSteps) | ({ type: "folder" } & Folder)
 
@@ -76,7 +76,7 @@ export type QuestSummary = { name: string; statuses: SummaryQuestStatus[] }
 
 export type RemoteProfile = { id: number; uuid: string | null; name: string; progresses: SyncProgressPayload[] }
 
-export type ReportError = { Server: string } | { Status: [number, string] }
+export type ReportError = { Server: string } | { Status: [number, string] } | "NetworkUnavailable"
 
 export type ReportPayload = { username: string | null; content: string; step: number; guide_id: number }
 
@@ -96,7 +96,7 @@ export type SyncProgressPayload = { id: number; current_step: number; steps: Par
 
 export type SyncResponse = { profiles: RemoteProfile[] }
 
-export type UpdateAllAtOnceResult = null | string
+export type UpdateAllAtOnceResult = { type: "success" } | { type: "failure"; message: string } | { type: "offline" }
 
 export type UpdateError = { CheckUpdateError: string } | { GetUpdaterError: string }
 

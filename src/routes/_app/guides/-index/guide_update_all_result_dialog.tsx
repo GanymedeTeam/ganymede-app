@@ -58,15 +58,12 @@ export function GuideUpdateAllResultDialog({
         <ScrollArea className="h-full">
           <div className="flex flex-col gap-2">
             {Object.entries(result)
-              .filter(([, v]) => v !== null)
-              .map(([id, error]) => {
-                // filter already remove null values
-                return (
-                  <Suspense key={id}>
-                    <Item error={error as string} guideId={Number(id)} />
-                  </Suspense>
-                )
-              })}
+              .filter(([, v]) => v?.type === 'failure')
+              .map(([id, error]) => (
+                <Suspense key={id}>
+                  <Item error={(error as { type: 'failure'; message: string }).message} guideId={Number(id)} />
+                </Suspense>
+              ))}
           </div>
         </ScrollArea>
         <DialogFooter>

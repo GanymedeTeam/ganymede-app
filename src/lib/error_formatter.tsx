@@ -328,6 +328,14 @@ function formatJsonError(error: JsonError): FormattedError {
 }
 
 function formatGuidesError(error: GuidesError): FormattedError {
+  if (error === 'NetworkUnavailable') {
+    return {
+      type: t`Erreur de guides`,
+      message: t`Serveur inaccessible`,
+      details: undefined,
+    }
+  }
+
   if ('ReadGuidesDirGlob' in error) {
     return {
       type: t`Erreur de guides`,
@@ -631,6 +639,14 @@ function formatNotificationsError(error: NotificationsError): FormattedError {
 }
 
 function formatReportError(error: ReportError): FormattedError {
+  if (error === 'NetworkUnavailable') {
+    return {
+      type: t`Erreur de rapport`,
+      message: t`Serveur inaccessible`,
+      details: undefined,
+    }
+  }
+
   if ('Server' in error) {
     return {
       type: t`Erreur de rapport`,

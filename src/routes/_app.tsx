@@ -53,10 +53,6 @@ async function checkAppVersion(queryClient: QueryClient) {
   const isOldVersionResult = await queryClient.ensureQueryData(isAppOldVersionQuery)
 
   if (isOldVersionResult.isErr()) {
-    toast.error(<Trans>Impossible de vérifier la mise à jour de l'application.</Trans>, {
-      description: <Trans>Il peut s'agir d'un problème de connexion ou d'une erreur serveur.</Trans>,
-      duration: Infinity,
-    })
     return false
   }
 
