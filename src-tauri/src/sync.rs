@@ -8,9 +8,9 @@ use tauri_plugin_http::reqwest;
 use crate::{
     api::GANYMEDE_API,
     check_auth,
-    check_response_auth,
     conf::{self, ConfStep},
     json,
+    oauth::with_auth_retry,
 };
 
 // Enums
@@ -105,15 +105,30 @@ async fn create_profile_on_server<R: Runtime>(
     uuid: &str,
     app: &AppHandle<R>,
 ) -> Result<u32, Error> {
-    let response = http_client
-        .post(format!("{}/profiles", GANYMEDE_API))
-        .bearer_auth(access_token)
-        .json(&serde_json::json!({ "name": name, "uuid": uuid }))
-        .send()
-        .await
-        .map_err(|e| Error::RequestFailed(e.to_string()))?;
+    let client = http_client.clone();
+    let name_owned = name.to_owned();
+    let uuid_owned = uuid.to_owned();
 
-    check_response_auth!(response, app, Error::TokenExpired);
+    let response = with_auth_retry(
+        app,
+        access_token,
+        |token| {
+            let client = client.clone();
+            let name = name_owned.clone();
+            let uuid = uuid_owned.clone();
+            async move {
+                client
+                    .post(format!("{}/profiles", GANYMEDE_API))
+                    .bearer_auth(&token)
+                    .json(&serde_json::json!({ "name": name, "uuid": uuid }))
+                    .send()
+                    .await
+                    .map_err(|e| Error::RequestFailed(e.to_string()))
+            }
+        },
+        || Error::TokenExpired,
+    )
+    .await?;
 
     if !response.status().is_success() {
         let status = response.status();
@@ -145,31 +160,44 @@ async fn sync_progress_on_server<R: Runtime>(
 ) -> Result<(), Error> {
     debug!("[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}", server_id, guide_id, current_step, steps);
 
-    let response = http_client
-        .put(format!(
-            "{}/profiles/{}/progress/{}",
-            GANYMEDE_API, server_id, guide_id
-        ))
-        .bearer_auth(access_token)
-        .json(&serde_json::json!({
-            "current_step": current_step,
-            "steps": steps,
-        }))
-        .send()
-        .await
-        .map_err(|e| {
-            if e.is_connect() || e.is_timeout() {
-                Error::NotConnected
-            } else {
-                Error::RequestFailed(e.to_string())
+    let client = http_client.clone();
+    let steps_owned = steps.clone();
+
+    let response = with_auth_retry(
+        app,
+        access_token,
+        |token| {
+            let client = client.clone();
+            let steps = steps_owned.clone();
+            async move {
+                client
+                    .put(format!(
+                        "{}/profiles/{}/progress/{}",
+                        GANYMEDE_API, server_id, guide_id
+                    ))
+                    .bearer_auth(&token)
+                    .json(&serde_json::json!({
+                        "current_step": current_step,
+                        "steps": steps,
+                    }))
+                    .send()
+                    .await
+                    .map_err(|e| {
+                        if e.is_connect() || e.is_timeout() {
+                            Error::NotConnected
+                        } else {
+                            Error::RequestFailed(e.to_string())
+                        }
+                    })
             }
-        })?;
+        },
+        || Error::TokenExpired,
+    )
+    .await?;
 
     if response.status() == 404 {
         return Err(Error::ProfileOrGuideNotFound);
     }
-
-    check_response_auth!(response, app, Error::TokenExpired);
 
     if !response.status().is_success() {
         let status = response.status();
@@ -259,24 +287,32 @@ impl SyncApi for SyncApiImpl {
 
         info!("[Sync] Sending profiles sync request to server");
 
-        let response = http_client
-            .post(format!("{}/profiles/sync", GANYMEDE_API))
-            .bearer_auth(&access_token)
-            .json(&serde_json::json!({ "profiles": payload }))
-            .send()
-            .await
-            .map_err(|e| {
-                if e.is_connect() || e.is_timeout() {
-                    Error::NotConnected
-                } else {
-                    Error::RequestFailed(e.to_string())
+        let payload_owned = payload.clone();
+        let response = with_auth_retry(
+            &app,
+            &access_token,
+            |token| {
+                let client = http_client.clone();
+                let payload = payload_owned.clone();
+                async move {
+                    client
+                        .post(format!("{}/profiles/sync", GANYMEDE_API))
+                        .bearer_auth(&token)
+                        .json(&serde_json::json!({ "profiles": payload }))
+                        .send()
+                        .await
+                        .map_err(|e| {
+                            if e.is_connect() || e.is_timeout() {
+                                Error::NotConnected
+                            } else {
+                                Error::RequestFailed(e.to_string())
+                            }
+                        })
                 }
-            })?;
-
-        if response.url().as_str().ends_with("/login") || response.status() == 405 {
-            crate::oauth::emit_jwt_expired(&app);
-            return Err(Error::TokenExpired);
-        }
+            },
+            || Error::TokenExpired,
+        )
+        .await?;
 
         if !response.status().is_success() {
             let status = response.status();
@@ -412,15 +448,25 @@ impl SyncApi for SyncApiImpl {
         let (http_client, access_token) =
             check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
-        let response = http_client
-            .patch(format!("{}/profiles/{}", GANYMEDE_API, server_id))
-            .bearer_auth(&access_token)
-            .json(&serde_json::json!({ "name": name }))
-            .send()
-            .await
-            .map_err(|e| Error::RequestFailed(e.to_string()))?;
-
-        check_response_auth!(response, app, Error::TokenExpired);
+        let response = with_auth_retry(
+            &app,
+            &access_token,
+            |token| {
+                let client = http_client.clone();
+                let name = name.clone();
+                async move {
+                    client
+                        .patch(format!("{}/profiles/{}", GANYMEDE_API, server_id))
+                        .bearer_auth(&token)
+                        .json(&serde_json::json!({ "name": name }))
+                        .send()
+                        .await
+                        .map_err(|e| Error::RequestFailed(e.to_string()))
+                }
+            },
+            || Error::TokenExpired,
+        )
+        .await?;
 
         if !response.status().is_success() {
             let status = response.status();
@@ -441,14 +487,23 @@ impl SyncApi for SyncApiImpl {
         let (http_client, access_token) =
             check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
-        let response = http_client
-            .delete(format!("{}/profiles/{}", GANYMEDE_API, server_id))
-            .bearer_auth(&access_token)
-            .send()
-            .await
-            .map_err(|e| Error::RequestFailed(e.to_string()))?;
-
-        check_response_auth!(response, app, Error::TokenExpired);
+        let response = with_auth_retry(
+            &app,
+            &access_token,
+            |token| {
+                let client = http_client.clone();
+                async move {
+                    client
+                        .delete(format!("{}/profiles/{}", GANYMEDE_API, server_id))
+                        .bearer_auth(&token)
+                        .send()
+                        .await
+                        .map_err(|e| Error::RequestFailed(e.to_string()))
+                }
+            },
+            || Error::TokenExpired,
+        )
+        .await?;
 
         if !response.status().is_success() {
             let status = response.status();

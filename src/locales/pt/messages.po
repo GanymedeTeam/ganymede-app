@@ -1209,7 +1209,7 @@ msgstr "Terminar sessão"
 
 #: src/hooks/use_reconnect_toast.ts:17
 msgid "Se reconnecter"
-msgstr ""
+msgstr "Voltar a ligar"
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:179
 msgid "Sélectionner"
@@ -1218,7 +1218,7 @@ msgstr "Selecionar"
 #: src/lib/error_formatter.tsx:334
 #: src/lib/error_formatter.tsx:645
 msgid "Serveur inaccessible"
-msgstr ""
+msgstr "Servidor inacessível"
 
 #: src/components/home_footer.tsx:15
 msgid "Site officiel"
@@ -1388,7 +1388,7 @@ msgstr "O seu nome de utilizador"
 
 #: src/hooks/use_reconnect_toast.ts:14
 msgid "Votre session a expiré, veuillez vous reconnecter."
-msgstr ""
+msgstr "A sua sessão expirou, por favor volte a ligar-se."
 
 #: src/routes/_app/oauth/waiting.tsx:78
 msgid "Vous allez être redirigé vers la page de connexion de Ganymède."

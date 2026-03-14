@@ -337,6 +337,63 @@ pub fn load_auth_tokens<R: Runtime>(
     Ok(Some(tokens))
 }
 
+pub async fn refresh_auth_tokens<R: Runtime>(app_handle: &AppHandle<R>) -> Result<AuthTokens, Error> {
+    let tokens = load_auth_tokens(app_handle)?.ok_or(Error::LoadAuth("no tokens".into()))?;
+    let refresh_token = tokens
+        .refresh_token
+        .ok_or(Error::LoadAuth("no refresh token".into()))?;
+
+    let http_client = app_handle.state::<reqwest::Client>();
+    let token_url = format!("{}/oauth/token", GANYMEDE_WEBSITE);
+
+    // Client is public (no secret) — no client_secret needed
+    let params = [
+        ("grant_type", "refresh_token"),
+        ("refresh_token", refresh_token.as_str()),
+        ("client_id", CLIENT_ID),
+    ];
+
+    let response = http_client
+        .post(&token_url)
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .form(&params)
+        .timeout(std::time::Duration::from_secs(30))
+        .send()
+        .await
+        .map_err(|e| Error::TokenExchange(e.to_string()))?;
+
+    if !response.status().is_success() {
+        let status = response.status();
+        let text = response.text().await.unwrap_or_default();
+        return Err(Error::TokenExchange(format!("HTTP {}: {}", status, text)));
+    }
+
+    let text = response
+        .text()
+        .await
+        .map_err(|e| Error::TokenExchange(e.to_string()))?;
+    let token_response: TokenResponse =
+        json::from_str(&text).map_err(|e| Error::InvalidTokenResponse(e.to_string()))?;
+
+    let expires_at = token_response.expires_in.map(|expires_in| {
+        (std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs()
+            + expires_in) as u32
+    });
+
+    let new_tokens = AuthTokens {
+        access_token: token_response.access_token,
+        refresh_token: token_response.refresh_token,
+        expires_at,
+        token_type: token_response.token_type,
+    };
+    save_auth_tokens(app_handle, &new_tokens)?;
+    info!("[OAuth] Refreshed access token successfully");
+    Ok(new_tokens)
+}
+
 #[macro_export]
 macro_rules! check_auth {
     ($app:expr, $err_expired:expr, $err_not_found:expr) => {{
@@ -349,24 +406,56 @@ macro_rules! check_auth {
             Ok(None) => return Err($err_not_found),
             Ok(Some(tokens)) => {
                 if $crate::oauth::is_token_expired(&tokens) {
-                    $crate::oauth::emit_jwt_expired(&$app);
-                    return Err($err_expired);
+                    match $crate::oauth::refresh_auth_tokens(&$app).await {
+                        Ok(new_tokens) => (http_client, new_tokens.access_token),
+                        Err(_) => {
+                            $crate::oauth::emit_jwt_expired(&$app);
+                            return Err($err_expired);
+                        }
+                    }
+                } else {
+                    (http_client, tokens.access_token)
                 }
-                (http_client, tokens.access_token)
             }
         }
     }};
 }
 
-#[macro_export]
-macro_rules! check_response_auth {
-    ($response:expr, $app:expr, $err_expired:expr) => {
-        if $response.url().as_str().ends_with("/login")
-            || $response.status()
-                == tauri_plugin_http::reqwest::StatusCode::METHOD_NOT_ALLOWED
-        {
-            $crate::oauth::emit_jwt_expired(&$app);
-            return Err($err_expired);
+fn is_auth_failure(response: &reqwest::Response) -> bool {
+    response.url().as_str().ends_with("/login")
+        || response.status() == reqwest::StatusCode::METHOD_NOT_ALLOWED
+}
+
+pub async fn with_auth_retry<R, F, Fut, E>(
+    app: &AppHandle<R>,
+    access_token: &str,
+    request_fn: F,
+    on_expired: impl Fn() -> E,
+) -> Result<reqwest::Response, E>
+where
+    R: Runtime,
+    F: Fn(String) -> Fut,
+    Fut: std::future::Future<Output = Result<reqwest::Response, E>>,
+{
+    let response = request_fn(access_token.to_owned()).await?;
+
+    if !is_auth_failure(&response) {
+        return Ok(response);
+    }
+
+    match refresh_auth_tokens(app).await {
+        Ok(new_tokens) => {
+            let response2 = request_fn(new_tokens.access_token).await?;
+            if is_auth_failure(&response2) {
+                emit_jwt_expired(app);
+                Err(on_expired())
+            } else {
+                Ok(response2)
+            }
         }
-    };
+        Err(_) => {
+            emit_jwt_expired(app);
+            Err(on_expired())
+        }
+    }
 }

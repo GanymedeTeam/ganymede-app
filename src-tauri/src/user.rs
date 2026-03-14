@@ -2,7 +2,7 @@ use log::{debug, info};
 use serde::Serialize;
 use tauri::{AppHandle, Manager, Runtime};
 
-use crate::{check_auth, check_response_auth, json};
+use crate::{check_auth, json, oauth::with_auth_retry};
 
 #[derive(Debug, thiserror::Error, Serialize, taurpc::specta::Type)]
 #[specta(rename = "UserError")]
@@ -42,20 +42,29 @@ impl UserApi for UserApiImpl {
         let (http_client, access_token) =
             check_auth!(app_handle, Error::NotConnected, Error::TokensNotFound);
 
-        let response = http_client
-            .get(format!("{}/me", crate::api::GANYMEDE_API))
-            .bearer_auth(access_token)
-            .send()
-            .await
-            .map_err(|err| {
-                if err.is_connect() || err.is_timeout() {
-                    Error::NotConnected
-                } else {
-                    Error::FailedToGetUser(format!("Request failed: {}", err))
+        let response = with_auth_retry(
+            &app_handle,
+            &access_token,
+            |token| {
+                let client = http_client.clone();
+                async move {
+                    client
+                        .get(format!("{}/me", crate::api::GANYMEDE_API))
+                        .bearer_auth(&token)
+                        .send()
+                        .await
+                        .map_err(|err| {
+                            if err.is_connect() || err.is_timeout() {
+                                Error::NotConnected
+                            } else {
+                                Error::FailedToGetUser(format!("Request failed: {}", err))
+                            }
+                        })
                 }
-            })?;
-
-        check_response_auth!(response, app_handle, Error::NotConnected);
+            },
+            || Error::NotConnected,
+        )
+        .await?;
 
         let response_text = response
             .text()
