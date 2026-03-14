@@ -1,5 +1,16 @@
 # ganymede-app
 
+## 1.18.0
+
+### Minor Changes
+
+- 31283a7: Mode hors-ligne : l'application fonctionne désormais sans connexion serveur. Les guides et profils locaux restent accessibles.
+  La vérification de version, la synchronisation et les notifications sont silencieuses si le serveur est inaccessible.
+
+### Patch Changes
+
+- 8246d30: Déconnexion automatique lorsque la session a expiré, ou est invalide.
+
 ## 1.17.0
 
 ### Minor Changes
