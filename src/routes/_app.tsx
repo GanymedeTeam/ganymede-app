@@ -4,6 +4,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
+import { useReconnectToast } from '@/hooks/use_reconnect_toast.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { syncProfiles } from '@/ipc/sync.ts'
 import { getProfile } from '@/lib/profile.ts'
@@ -17,7 +18,7 @@ const VERSION_CHECK_INTERVAL_MS = 1000 * 60 * 10 // 10 minutes
 
 let autoOpenGuidesHandled = false
 let initialSyncHandled = false
-let pendingSyncError: 'validation' | 'generic' | null = null
+let pendingSyncError: 'validation' | 'generic' | 'token_invalid' | null = null
 
 async function handleInitialSync(queryClient: QueryClient) {
   if (initialSyncHandled) return
@@ -32,7 +33,7 @@ async function handleInitialSync(queryClient: QueryClient) {
       const isSilent = err === 'TokensNotFound' || err === 'NotConnected'
       if (!isSilent) {
         const isValidationError = typeof err === 'object' && err !== null && 'ValidationError' in err
-        pendingSyncError = isValidationError ? 'validation' : 'generic'
+        pendingSyncError = isValidationError ? 'validation' : err === 'TokenExpired' ? 'token_invalid' : 'generic'
       }
       return
     }
@@ -110,17 +111,21 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
 }
 
 function AppLayout() {
+  const showReconnectToast = useReconnectToast()
+
   useEffect(() => {
     if (pendingSyncError === 'validation') {
       toast.error(<Trans>La synchronisation a échoué : données invalides.</Trans>, {
         description: <Trans>Certaines données locales sont invalides et bloquent la synchronisation.</Trans>,
         duration: Infinity,
       })
+    } else if (pendingSyncError === 'token_invalid') {
+      showReconnectToast({ duration: Infinity })
     } else if (pendingSyncError === 'generic') {
       toast.error(<Trans>La synchronisation a échoué.</Trans>, { duration: 4000 })
     }
     pendingSyncError = null
-  }, [])
+  }, [showReconnectToast])
 
   return <Outlet />
 }

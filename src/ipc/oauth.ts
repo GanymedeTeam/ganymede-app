@@ -30,3 +30,7 @@ export async function getAuthTokens() {
 export async function cleanAuthTokens() {
   return fromPromise(taurpc.oauth.cleanAuthTokens(), CleanAuthTokensError.from)
 }
+
+export function onJwtExpired(callback: () => void) {
+  return taurpc.oauth.onJwtExpired.on(callback)
+}

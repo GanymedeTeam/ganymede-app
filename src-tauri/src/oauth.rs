@@ -79,6 +79,10 @@ pub trait OAuthApi {
     #[taurpc(event)]
     #[taurpc(alias = "onOAuthFlowEnd")]
     async fn on_oauth_flow_end();
+
+    #[taurpc(event)]
+    #[taurpc(alias = "onJwtExpired")]
+    async fn on_jwt_expired();
 }
 
 #[derive(Clone)]
@@ -304,6 +308,22 @@ fn clean_auth_tokens<R: Runtime>(app_handle: &AppHandle<R>) -> Result<Option<Aut
     }
 }
 
+pub fn is_token_expired(tokens: &AuthTokens) -> bool {
+    let Some(expires_at) = tokens.expires_at else { return false };
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs();
+    (expires_at as u64) < now
+}
+
+pub fn emit_jwt_expired<R: Runtime>(app_handle: &AppHandle<R>) {
+    let trigger = OAuthApiEventTrigger::new(app_handle.clone());
+    if let Err(e) = trigger.on_jwt_expired() {
+        error!("[OAuth] Failed to emit jwt_expired event: {}", e);
+    }
+}
+
 pub fn load_auth_tokens<R: Runtime>(
     app_handle: &AppHandle<R>,
 ) -> Result<Option<AuthTokens>, Error> {
@@ -315,4 +335,38 @@ pub fn load_auth_tokens<R: Runtime>(
     let content = fs::read_to_string(&path).map_err(|e| Error::LoadAuth(e.to_string()))?;
     let tokens: AuthTokens = json::from_str(&content)?;
     Ok(Some(tokens))
+}
+
+#[macro_export]
+macro_rules! check_auth {
+    ($app:expr, $err_expired:expr, $err_not_found:expr) => {{
+        let http_client = $app
+            .state::<tauri_plugin_http::reqwest::Client>()
+            .inner()
+            .clone();
+        match $crate::oauth::load_auth_tokens(&$app) {
+            Err(_) => return Err($err_not_found),
+            Ok(None) => return Err($err_not_found),
+            Ok(Some(tokens)) => {
+                if $crate::oauth::is_token_expired(&tokens) {
+                    $crate::oauth::emit_jwt_expired(&$app);
+                    return Err($err_expired);
+                }
+                (http_client, tokens.access_token)
+            }
+        }
+    }};
+}
+
+#[macro_export]
+macro_rules! check_response_auth {
+    ($response:expr, $app:expr, $err_expired:expr) => {
+        if $response.url().as_str().ends_with("/login")
+            || $response.status()
+                == tauri_plugin_http::reqwest::StatusCode::METHOD_NOT_ALLOWED
+        {
+            $crate::oauth::emit_jwt_expired(&$app);
+            return Err($err_expired);
+        }
+    };
 }

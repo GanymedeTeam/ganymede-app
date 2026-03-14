@@ -1,9 +1,8 @@
 use log::{debug, info};
 use serde::Serialize;
 use tauri::{AppHandle, Manager, Runtime};
-use tauri_plugin_http::reqwest;
 
-use crate::{json, oauth::load_auth_tokens};
+use crate::{check_auth, check_response_auth, json};
 
 #[derive(Debug, thiserror::Error, Serialize, taurpc::specta::Type)]
 #[specta(rename = "UserError")]
@@ -40,14 +39,12 @@ pub struct UserApiImpl;
 #[taurpc::resolvers]
 impl UserApi for UserApiImpl {
     async fn get_me<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<User, Error> {
-        let http_client = app_handle.state::<reqwest::Client>();
-        let tokens = load_auth_tokens(&app_handle)
-            .map_err(|_| Error::TokensNotFound)?
-            .ok_or_else(|| Error::TokensNotFound)?;
+        let (http_client, access_token) =
+            check_auth!(app_handle, Error::NotConnected, Error::TokensNotFound);
 
         let response = http_client
             .get(format!("{}/me", crate::api::GANYMEDE_API))
-            .bearer_auth(tokens.access_token)
+            .bearer_auth(access_token)
             .send()
             .await
             .map_err(|err| {
@@ -58,9 +55,7 @@ impl UserApi for UserApiImpl {
                 }
             })?;
 
-        if response.url().as_str().ends_with("/login") {
-            return Err(Error::NotConnected);
-        }
+        check_response_auth!(response, app_handle, Error::NotConnected);
 
         let response_text = response
             .text()

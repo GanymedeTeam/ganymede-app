@@ -142,7 +142,7 @@ msgstr "Catégories"
 msgid "Causée par"
 msgstr "Causée par"
 
-#: src/routes/_app.tsx:116
+#: src/routes/_app.tsx:119
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Certaines données locales sont invalides et bloquent la synchronisation."
 
@@ -897,13 +897,13 @@ msgstr "Informations supplémentaires : {0}"
 msgid "J'ai compris"
 msgstr "J'ai compris"
 
-#: src/routes/_app.tsx:115
+#: src/routes/_app.tsx:118
 #: src/routes/_app/oauth/waiting.tsx:61
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La synchronisation a échoué : données invalides."
 
 #: src/lib/sync_progress_queue.ts:26
-#: src/routes/_app.tsx:120
+#: src/routes/_app.tsx:125
 #: src/routes/_app/oauth/waiting.tsx:63
 msgid "La synchronisation a échoué."
 msgstr "La synchronisation a échoué."
@@ -1207,6 +1207,10 @@ msgstr "Se connecter"
 msgid "Se déconnecter"
 msgstr "Se déconnecter"
 
+#: src/hooks/use_reconnect_toast.ts:17
+msgid "Se reconnecter"
+msgstr "Se reconnecter"
+
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:179
 msgid "Sélectionner"
 msgstr "Sélectionner"
@@ -1381,6 +1385,10 @@ msgstr "Votre progression dans les guides sera réinitialisée. Les guides tél�
 #: src/routes/_app/guides/-$id/report_dialog.tsx:86
 msgid "Votre pseudo"
 msgstr "Votre pseudo"
+
+#: src/hooks/use_reconnect_toast.ts:14
+msgid "Votre session a expiré, veuillez vous reconnecter."
+msgstr "Votre session a expiré, veuillez vous reconnecter."
 
 #: src/routes/_app/oauth/waiting.tsx:78
 msgid "Vous allez être redirigé vers la page de connexion de Ganymède."

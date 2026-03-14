@@ -1,15 +1,16 @@
 use std::collections::HashMap;
 
-use log::{debug, info, warn};
+use log::{debug, error, info, warn};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
 use crate::{
     api::GANYMEDE_API,
+    check_auth,
+    check_response_auth,
     conf::{self, ConfStep},
     json,
-    oauth::load_auth_tokens,
 };
 
 // Enums
@@ -31,6 +32,8 @@ pub enum Error {
     ProfileOrGuideNotFound,
     #[error("validation error: {0}")]
     ValidationError(String),
+    #[error("token expired")]
+    TokenExpired,
 }
 
 // Structs
@@ -95,20 +98,12 @@ struct SyncServerResponse {
 
 // Functions
 
-fn get_auth<R: Runtime>(app: &AppHandle<R>) -> Result<(reqwest::Client, String), Error> {
-    let http_client = app.state::<reqwest::Client>().inner().clone();
-    let tokens = load_auth_tokens(app)
-        .map_err(|_| Error::TokensNotFound)?
-        .ok_or(Error::TokensNotFound)?;
-
-    Ok((http_client, tokens.access_token))
-}
-
-async fn create_profile_on_server(
+async fn create_profile_on_server<R: Runtime>(
     http_client: &reqwest::Client,
     access_token: &str,
     name: &str,
     uuid: &str,
+    app: &AppHandle<R>,
 ) -> Result<u32, Error> {
     let response = http_client
         .post(format!("{}/profiles", GANYMEDE_API))
@@ -117,6 +112,8 @@ async fn create_profile_on_server(
         .send()
         .await
         .map_err(|e| Error::RequestFailed(e.to_string()))?;
+
+    check_response_auth!(response, app, Error::TokenExpired);
 
     if !response.status().is_success() {
         let status = response.status();
@@ -137,13 +134,14 @@ async fn create_profile_on_server(
     Ok(parsed.id)
 }
 
-async fn sync_progress_on_server(
+async fn sync_progress_on_server<R: Runtime>(
     http_client: &reqwest::Client,
     access_token: &str,
     server_id: u32,
     guide_id: u32,
     current_step: u32,
     steps: &HashMap<u32, ConfStep>,
+    app: &AppHandle<R>,
 ) -> Result<(), Error> {
     debug!("[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}", server_id, guide_id, current_step, steps);
 
@@ -170,6 +168,8 @@ async fn sync_progress_on_server(
     if response.status() == 404 {
         return Err(Error::ProfileOrGuideNotFound);
     }
+
+    check_response_auth!(response, app, Error::TokenExpired);
 
     if !response.status().is_success() {
         let status = response.status();
@@ -231,7 +231,8 @@ impl SyncApi for SyncApiImpl {
         self,
         app: AppHandle<R>,
     ) -> Result<SyncResponse, Error> {
-        let (http_client, access_token) = get_auth(&app)?;
+        let (http_client, access_token) =
+            check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
         let conf = conf::get_conf(&app).map_err(Error::Conf)?;
 
         let payload: Vec<SyncProfilePayload> = conf
@@ -272,8 +273,9 @@ impl SyncApi for SyncApiImpl {
                 }
             })?;
 
-        if response.url().as_str().ends_with("/login") {
-            return Err(Error::NotConnected);
+        if response.url().as_str().ends_with("/login") || response.status() == 405 {
+            crate::oauth::emit_jwt_expired(&app);
+            return Err(Error::TokenExpired);
         }
 
         if !response.status().is_success() {
@@ -396,8 +398,9 @@ impl SyncApi for SyncApiImpl {
         name: String,
         uuid: String,
     ) -> Result<u32, Error> {
-        let (http_client, access_token) = get_auth(&app)?;
-        create_profile_on_server(&http_client, &access_token, &name, &uuid).await
+        let (http_client, access_token) =
+            check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
+        create_profile_on_server(&http_client, &access_token, &name, &uuid, &app).await
     }
 
     async fn rename_profile<R: Runtime>(
@@ -406,7 +409,8 @@ impl SyncApi for SyncApiImpl {
         server_id: u32,
         name: String,
     ) -> Result<(), Error> {
-        let (http_client, access_token) = get_auth(&app)?;
+        let (http_client, access_token) =
+            check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
         let response = http_client
             .patch(format!("{}/profiles/{}", GANYMEDE_API, server_id))
@@ -415,6 +419,8 @@ impl SyncApi for SyncApiImpl {
             .send()
             .await
             .map_err(|e| Error::RequestFailed(e.to_string()))?;
+
+        check_response_auth!(response, app, Error::TokenExpired);
 
         if !response.status().is_success() {
             let status = response.status();
@@ -432,7 +438,8 @@ impl SyncApi for SyncApiImpl {
         app: AppHandle<R>,
         server_id: u32,
     ) -> Result<(), Error> {
-        let (http_client, access_token) = get_auth(&app)?;
+        let (http_client, access_token) =
+            check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
         let response = http_client
             .delete(format!("{}/profiles/{}", GANYMEDE_API, server_id))
@@ -440,6 +447,8 @@ impl SyncApi for SyncApiImpl {
             .send()
             .await
             .map_err(|e| Error::RequestFailed(e.to_string()))?;
+
+        check_response_auth!(response, app, Error::TokenExpired);
 
         if !response.status().is_success() {
             let status = response.status();
@@ -460,8 +469,18 @@ impl SyncApi for SyncApiImpl {
         current_step: u32,
         steps: HashMap<u32, ConfStep>,
     ) -> Result<(), Error> {
-        let (http_client, access_token) = get_auth(&app)?;
+        let (http_client, access_token) =
+            check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
-        sync_progress_on_server(&http_client, &access_token, server_id, guide_id, current_step, &steps).await
+        sync_progress_on_server(
+            &http_client,
+            &access_token,
+            server_id,
+            guide_id,
+            current_step,
+            &steps,
+            &app,
+        )
+        .await
     }
 }

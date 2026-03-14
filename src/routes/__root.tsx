@@ -3,6 +3,7 @@ import { createRootRouteWithContext, Outlet, useLocation } from '@tanstack/react
 import { error } from '@tauri-apps/plugin-log'
 import { Suspense, useEffect, useRef } from 'react'
 import { DeepLinkGuideDownloadDialog } from '@/components/deep_link_guide_download_dialog.tsx'
+import { useJwtExpiredHandler } from '@/hooks/use_jwt_expired_handler.ts'
 import { NotificationAlertDialog } from '@/components/notification_alert_dialog.tsx'
 import { TitleBar } from '@/components/title_bar.tsx'
 import { Toaster } from '@/components/ui/sonner.tsx'
@@ -16,6 +17,7 @@ export const Route = createRootRouteWithContext<{
 })
 
 function Root() {
+  useJwtExpiredHandler()
   const location = useLocation()
   const isImageViewer = useRef(isInImageViewerPath(location.pathname)) // only check on first mount
 
