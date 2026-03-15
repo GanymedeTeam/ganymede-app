@@ -10,6 +10,7 @@ use crate::image::{ImageApi, ImageApiImpl};
 use crate::image_viewer::{ImageViewerApi, ImageViewerApiImpl};
 use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
+use crate::overlay::{OverlayApi, OverlayApiImpl, OverlayManager};
 use crate::pinned_guides::{PinnedGuidesApi, PinnedGuidesApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
@@ -42,6 +43,7 @@ mod item;
 mod json;
 mod notifications;
 mod oauth;
+mod overlay;
 mod pinned_guides;
 mod quest;
 mod report;
@@ -176,6 +178,7 @@ pub fn run() {
         .merge(OAuthApiImpl.into_handler())
         .merge(UserApiImpl.into_handler())
         .merge(ShortcutsApiImpl.into_handler())
+        .merge(OverlayApiImpl.into_handler())
         .merge(SyncApiImpl.into_handler())
         .merge(StepNotesApiImpl.into_handler())
         .merge(PinnedGuidesApiImpl.into_handler());
@@ -196,6 +199,7 @@ pub fn run() {
 
         app.manage(http_client.clone());
         app.manage(WindowManager::new());
+        app.manage(OverlayManager::default());
 
         #[cfg(not(debug_assertions))]
         add_breadcrumb(Breadcrumb {
@@ -226,6 +230,16 @@ pub fn run() {
             error!("[Lib] failed to ensure pinned guides: {:?}", err);
             #[cfg(not(debug_assertions))]
             capture_error(&err);
+        }
+
+        if let Err(err) = app.state::<OverlayManager>().install_on_main_window(app.handle()) {
+            error!("[Lib] failed to install overlay manager: {}", err);
+        }
+        app.state::<OverlayManager>()
+            .start_cursor_tracking(app.handle());
+
+        if let Ok(conf) = conf::get_conf(app.handle()) {
+            app.state::<OverlayManager>().set_enabled(conf.overlay_mode);
         }
 
         handle_first_start_setup(app.handle().clone());

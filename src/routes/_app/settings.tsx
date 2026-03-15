@@ -172,6 +172,30 @@ function Settings() {
                 />
               </div>
             </SettingCardSection>
+            <SettingCardSection id="section-overlay-mode">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col gap-1">
+                  <Label className="text-xs" htmlFor="overlay-mode">
+                    <Trans>Mode overlay</Trans>
+                  </Label>
+                  <p className="text-[11px] text-muted-foreground">
+                    <Trans>
+                      Laisse passer les clics vers Dofus sauf sur les éléments interactifs de Ganymède.
+                    </Trans>
+                  </p>
+                </div>
+                <Switch
+                  checked={conf.data.overlayMode ?? false}
+                  id="overlay-mode"
+                  onCheckedChange={(checked) => {
+                    setConf.mutate({
+                      ...conf.data,
+                      overlayMode: checked,
+                    })
+                  }}
+                />
+              </div>
+            </SettingCardSection>
           </SettingCard>
           <SettingCard id="section-appearance" title={<Trans>Apparence</Trans>}>
             <SettingCardSection id="section-opacity">

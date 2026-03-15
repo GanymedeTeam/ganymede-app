@@ -4,6 +4,7 @@ use log::{debug, info};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime, Window};
 
+use crate::overlay::OverlayManager;
 use crate::tauri_api_ext::ConfPathExt;
 
 // Constants
@@ -16,6 +17,10 @@ const fn default_level() -> u32 {
 
 const fn default_auto_open_guides() -> bool {
     true
+}
+
+const fn default_overlay_mode() -> bool {
+    false
 }
 
 fn default_reset_conf_shortcut() -> String {
@@ -176,6 +181,8 @@ pub struct Conf {
     pub opacity: f32,
     #[serde(default = "default_auto_open_guides")]
     pub auto_open_guides: bool,
+    #[serde(default = "default_overlay_mode")]
+    pub overlay_mode: bool,
     #[serde(default)]
     pub shortcuts: Shortcuts,
 }
@@ -335,6 +342,7 @@ impl Default for Conf {
             notes: vec![],
             opacity: 0.98,
             auto_open_guides: true,
+            overlay_mode: false,
             shortcuts: Shortcuts::default(),
         }
     }
@@ -405,7 +413,11 @@ impl ConfApi for ConfApiImpl {
     }
 
     async fn set<R: Runtime>(self, conf: Conf, app: AppHandle<R>) -> Result<(), Error> {
-        save_conf(conf.clone().borrow_mut(), &app)
+        let mut conf = conf;
+        save_conf(conf.borrow_mut(), &app)?;
+        app.state::<OverlayManager>().set_enabled(conf.overlay_mode);
+
+        Ok(())
     }
 
     async fn toggle_guide_checkbox<R: Runtime>(
@@ -446,7 +458,9 @@ impl ConfApi for ConfApiImpl {
     }
 
     async fn reset<R: Runtime>(self, app: AppHandle<R>, window: Window<R>) -> Result<(), Error> {
-        save_conf(&mut Conf::default(), &app).map_err(|e| Error::ResetConf(Box::new(e)))?;
+        let default_conf = &mut Conf::default();
+        save_conf(default_conf, &app).map_err(|e| Error::ResetConf(Box::new(e)))?;
+        app.state::<OverlayManager>().set_enabled(default_conf.overlay_mode);
 
         let webview = window
             .get_webview_window("main")

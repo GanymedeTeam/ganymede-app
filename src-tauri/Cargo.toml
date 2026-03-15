@@ -46,6 +46,7 @@ sha2 = "0.10.8"
 rand = "0.9.2"
 urlencoding = "2"
 md5 = "0.7"
+windows-sys = { version = "0.59.0", features = ["Win32_Foundation", "Win32_Graphics_Gdi", "Win32_UI_Controls", "Win32_UI_WindowsAndMessaging"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-window-state = "2"
