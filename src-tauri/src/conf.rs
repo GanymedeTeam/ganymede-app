@@ -34,6 +34,10 @@ fn default_copy_current_step_shortcut() -> String {
     "CommandOrControl+Shift+C".to_string()
 }
 
+const fn default_auto_travel_step_source() -> AutoTravelStepSource {
+    AutoTravelStepSource::Current
+}
+
 // Enums
 
 #[derive(Debug, Serialize, thiserror::Error, taurpc::specta::Type)]
@@ -94,6 +98,12 @@ pub enum FontSize {
 pub enum GuideDisplay {
     Dynamic,
     Small,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum AutoTravelStepSource {
+    Current,
+    Next,
 }
 
 // Structs
@@ -160,6 +170,8 @@ pub struct Note {
 #[serde(rename_all = "camelCase")]
 pub struct Conf {
     pub auto_travel_copy: bool,
+    #[serde(default = "default_auto_travel_step_source")]
+    pub auto_travel_step_source: AutoTravelStepSource,
     pub show_done_guides: bool,
     #[serde(default)]
     pub lang: ConfLang,
@@ -324,6 +336,7 @@ impl Default for Conf {
 
         Conf {
             auto_travel_copy: true,
+            auto_travel_step_source: AutoTravelStepSource::Current,
             show_done_guides: true,
             lang: ConfLang::default(),
             theme: ConfTheme::default(),

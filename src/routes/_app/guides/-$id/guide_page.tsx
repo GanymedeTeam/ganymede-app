@@ -32,6 +32,28 @@ const useOnCopyStep = (cb: () => void) => {
   }, [cb])
 }
 
+async function copyTravelOnStepChange(posX: number, posY: number): Promise<void> {
+  const travelCommand = `/travel ${posX},${posY}`
+
+  try {
+    await writeText(travelCommand)
+    return
+  } catch (_error) {
+    // Fallback when clipboard plugin is temporarily unavailable.
+  }
+
+  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(travelCommand)
+      return
+    } catch (_error) {
+      // no-op
+    }
+  }
+
+  console.debug('Unable to copy /travel command on step change')
+}
+
 export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: number }) {
   const { t } = useLingui()
   const guide = useGuide(id)
@@ -53,12 +75,11 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
   const changeStep = async (nextStep: number) => {
     const clampedStep = nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep
-    const nextGuideStep = guide.steps[clampedStep]
-    if (nextGuideStep?.map && nextGuideStep.map.toLowerCase() !== 'nomap') {
-      const travelCommand = `/travel ${nextGuideStep.pos_x},${nextGuideStep.pos_y}`
-      void writeText(travelCommand).catch((error) => {
-        console.debug('Unable to copy /travel command on step change', error)
-      })
+    const copySource = conf.data.autoTravelStepSource ?? 'Current'
+    const stepToCopyIndex = copySource === 'Next' ? clampedStep + 1 : clampedStep
+    const stepToCopy = guide.steps[stepToCopyIndex]
+    if (stepToCopy?.map && stepToCopy.map.toLowerCase() !== 'nomap') {
+      await copyTravelOnStepChange(stepToCopy.pos_x, stepToCopy.pos_y)
     }
     const updatedAt = new Date().toISOString()
 

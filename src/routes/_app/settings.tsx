@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
-import { ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
+import { AutoTravelStepSource, ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -154,6 +154,32 @@ function Settings() {
                   }}
                 />
               </div>
+            </SettingCardSection>
+            <SettingCardSection id="section-auto-travel-step-source">
+              <Label className="text-xs" htmlFor="auto-travel-step-source">
+                <Trans>Source de la copie autopilote</Trans>
+              </Label>
+              <Select
+                onValueChange={(value) => {
+                  setConf.mutate({
+                    ...conf.data,
+                    autoTravelStepSource: value as AutoTravelStepSource,
+                  })
+                }}
+                value={conf.data.autoTravelStepSource ?? 'Current'}
+              >
+                <SelectTrigger className="text-xs" id="auto-travel-step-source">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Current">
+                    <Trans>Étape actuelle</Trans>
+                  </SelectItem>
+                  <SelectItem value="Next">
+                    <Trans>Étape suivante</Trans>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </SettingCardSection>
             <SettingCardSection id="section-show-done-guides">
               <div className="flex items-center justify-between gap-2">
