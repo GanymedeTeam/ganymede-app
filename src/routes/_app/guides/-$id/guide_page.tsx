@@ -53,6 +53,13 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
   const changeStep = async (nextStep: number) => {
     const clampedStep = nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep
+    const nextGuideStep = guide.steps[clampedStep]
+    if (nextGuideStep?.map && nextGuideStep.map.toLowerCase() !== 'nomap') {
+      const travelCommand = `/travel ${nextGuideStep.pos_x},${nextGuideStep.pos_y}`
+      void writeText(travelCommand).catch((error) => {
+        console.debug('Unable to copy /travel command on step change', error)
+      })
+    }
     const updatedAt = new Date().toISOString()
 
     const newConf = {
