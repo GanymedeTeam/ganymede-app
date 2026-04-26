@@ -615,11 +615,7 @@ fn register_guide_open<R: Runtime>(
     let profile_guides = recent_guides.entry(profile_id).or_default();
 
     if !profile_guides.contains(&guide_id) {
-        profile_guides.insert(0, guide_id);
-        if profile_guides.len() > 6 {
-            profile_guides.pop();
-        }
-
+        profile_guides.push(guide_id);
         write_recent_guides_file(&recent_guides_path, &recent_guides)?;
     }
 
@@ -664,6 +660,25 @@ fn get_recent_guides<R: Runtime>(
     Ok(profile_guides)
 }
 
+fn set_recent_guides<R: Runtime>(
+    app_handle: AppHandle<R>,
+    profile_id: String,
+    guide_ids: Vec<u32>,
+) -> Result<(), Error> {
+    debug!(
+        "[Guides] set_recent_guides for profile {profile_id}: {:?}",
+        guide_ids
+    );
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
+
+    recent_guides.insert(profile_id, sanitize_recent_guides(guide_ids));
+    write_recent_guides_file(&recent_guides_path, &recent_guides)?;
+
+    Ok(())
+}
+
 fn remove_profile_from_recent_guides<R: Runtime>(
     app_handle: AppHandle<R>,
     profile_id: String,
@@ -697,6 +712,18 @@ fn write_recent_guides_file(
         .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
 
     Ok(())
+}
+
+fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
+    let mut sanitized = Vec::with_capacity(guide_ids.len());
+
+    for guide_id in guide_ids {
+        if !sanitized.contains(&guide_id) {
+            sanitized.push(guide_id);
+        }
+    }
+
+    sanitized
 }
 
 fn read_recent_guides_file(
@@ -1205,6 +1232,12 @@ pub trait GuidesApi {
         app_handle: AppHandle<R>,
         profile_id: String,
     ) -> Result<Vec<u32>, Error>;
+    #[taurpc(alias = "setRecentGuides")]
+    async fn set_recent_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
+        profile_id: String,
+        guide_ids: Vec<u32>,
+    ) -> Result<(), Error>;
     #[taurpc(alias = "removeProfileFromRecentGuides")]
     async fn remove_profile_from_recent_guides<R: Runtime>(
         app_handle: AppHandle<R>,
@@ -1326,6 +1359,15 @@ impl GuidesApi for GuidesApiImpl {
         profile_id: String,
     ) -> Result<Vec<u32>, Error> {
         get_recent_guides(app_handle, profile_id)
+    }
+
+    async fn set_recent_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        profile_id: String,
+        guide_ids: Vec<u32>,
+    ) -> Result<(), Error> {
+        set_recent_guides(app_handle, profile_id, guide_ids)
     }
 
     async fn remove_profile_from_recent_guides<R: Runtime>(
