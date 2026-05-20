@@ -315,11 +315,7 @@ function DownloadGuidePage() {
     <Page
       actions={
         <div className="ml-auto">
-          <LanguageFilterDropdown
-            availableLanguages={availableLanguages}
-            onChange={setLangFilter}
-            value={langFilter}
-          />
+          <LanguageFilterDropdown availableLanguages={availableLanguages} onChange={setLangFilter} value={langFilter} />
         </div>
       }
       backButton={<BackButtonLink to="/downloads" />}

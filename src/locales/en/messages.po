@@ -638,10 +638,19 @@ msgid "Étape suivante"
 msgstr "Next step"
 
 #: src/components/title_bar.tsx:188
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:209
 #: src/routes/_app/guides/-$id/report_dialog.tsx:129
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:72
 msgid "Fermer"
 msgstr "Close"
+
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:212
+msgid "Fermer à droite"
+msgstr "Close to the right"
+
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:215
+msgid "Fermer les autres"
+msgstr "Close others"
 
 #: src/lib/error_formatter.tsx:211
 msgid "Fichier de configuration malformé"
@@ -1328,6 +1337,10 @@ msgstr "All"
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:53
 msgid "Tous les guides ont été mis à jour"
 msgstr "All guides have been updated"
+
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:219
+msgid "Tout fermer"
+msgstr "Close all"
 
 #: src/routes/_app/settings.tsx:218
 msgid "Très grande"
