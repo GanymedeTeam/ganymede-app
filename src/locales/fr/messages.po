@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: quest.statuses.length
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:180
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:183
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Étape} other {Étapes}}"
 
@@ -111,11 +111,11 @@ msgstr "Aucun guides{langLabel} trouvé avec {term}"
 msgid "Aucun profil trouvé."
 msgstr "Aucun profil trouvé."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:142
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:143
 msgid "Aucune quête dans ce guide."
 msgstr "Aucune quête dans ce guide."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:147
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:148
 msgid "Aucune quête ne correspond à votre recherche."
 msgstr "Aucune quête ne correspond à votre recherche."
 
@@ -331,7 +331,7 @@ msgstr "Créez vos guides via le site officiel et téléchargez ceux des autres 
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:218
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:221
 msgid "Début"
 msgstr "Début"
 
@@ -387,7 +387,7 @@ msgstr "Éditer une note"
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Efface tous vos profils et paramètres (pas les guides)"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:219
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:222
 #: src/routes/_app/guides/-index/guide_item.tsx:224
 msgid "En cours"
 msgstr "En cours"
@@ -625,7 +625,7 @@ msgstr "Erreur utilisateur"
 msgid "Erreur utilisateur inconnue"
 msgstr "Erreur utilisateur inconnue"
 
-#: src/components/step_progress/step_progress.tsx:106
+#: src/components/step_progress/step_progress.tsx:114
 msgid "Étape {current}"
 msgstr "Étape {current}"
 
@@ -655,7 +655,7 @@ msgstr "Fichier des guides récents malformé"
 msgid "Filtrer par langue"
 msgstr "Filtrer par langue"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:217
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:220
 msgid "Fin"
 msgstr "Fin"
 
@@ -822,7 +822,7 @@ msgstr "Impossible de récupérer la quête"
 msgid "Impossible de récupérer le profil actuel"
 msgstr "Impossible de récupérer le profil actuel"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:163
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:164
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Impossible de récupérer le sommaire du guide."
 
@@ -1061,7 +1061,7 @@ msgstr "ou le bouton suivant"
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Ouvrir le dossier des guides téléchargés"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:109
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:110
 msgid "Ouvrir le sommaire"
 msgstr "Ouvrir le sommaire"
 
@@ -1096,11 +1096,11 @@ msgstr "Plus d'options"
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 
-#: src/components/step_progress/step_progress.tsx:69
+#: src/components/step_progress/step_progress.tsx:77
 msgid "Précédent"
 msgstr "Précédent"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:220
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:223
 msgid "Préparation"
 msgstr "Préparation"
 
@@ -1171,7 +1171,7 @@ msgstr "Rechercher un guide"
 msgid "Rechercher un profil..."
 msgstr "Rechercher un profil..."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:136
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:137
 msgid "Rechercher une quête"
 msgstr "Rechercher une quête"
 
@@ -1229,11 +1229,11 @@ msgstr "Serveur inaccessible"
 msgid "Site officiel"
 msgstr "Site officiel"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:121
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:122
 msgid "Sommaire"
 msgstr "Sommaire"
 
-#: src/components/step_progress/step_progress.tsx:111
+#: src/components/step_progress/step_progress.tsx:119
 msgid "Suivant"
 msgstr "Suivant"
 

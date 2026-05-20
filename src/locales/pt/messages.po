@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. placeholder {0}: quest.statuses.length
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:180
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:183
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
@@ -111,11 +111,11 @@ msgstr "Nenhum guia{langLabel} encontrado com {term}"
 msgid "Aucun profil trouvé."
 msgstr "Nenhum perfil encontrado."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:142
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:143
 msgid "Aucune quête dans ce guide."
 msgstr "Nenhuma missão neste guia."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:147
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:148
 msgid "Aucune quête ne correspond à votre recherche."
 msgstr "Nenhuma missão corresponde à sua pesquisa."
 
@@ -331,7 +331,7 @@ msgstr "Crie seus guias no site oficial e baixe os de outros usuários!"
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:218
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:221
 msgid "Début"
 msgstr "Início"
 
@@ -387,7 +387,7 @@ msgstr "Editar uma nota"
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos os perfis e definições (não os guias)"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:219
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:222
 #: src/routes/_app/guides/-index/guide_item.tsx:224
 msgid "En cours"
 msgstr "Em andamento"
@@ -625,7 +625,7 @@ msgstr "Erro de utilizador"
 msgid "Erreur utilisateur inconnue"
 msgstr "Erro de utilizador desconhecido"
 
-#: src/components/step_progress/step_progress.tsx:106
+#: src/components/step_progress/step_progress.tsx:114
 msgid "Étape {current}"
 msgstr "Etapa {current}"
 
@@ -655,7 +655,7 @@ msgstr "Ficheiro de guias recentes mal formado"
 msgid "Filtrer par langue"
 msgstr "Filtrar por idioma"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:217
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:220
 msgid "Fin"
 msgstr "Fim"
 
@@ -822,7 +822,7 @@ msgstr "Não é possível recuperar a missão"
 msgid "Impossible de récupérer le profil actuel"
 msgstr "Não é possível recuperar o perfil actual"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:163
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:164
 msgid "Impossible de récupérer le sommaire du guide."
 msgstr "Não foi possível obter o resumo do guia."
 
@@ -1061,7 +1061,7 @@ msgstr "ou o botão seguinte"
 msgid "Ouvrir le dossier des guides téléchargés"
 msgstr "Abrir a pasta dos guias baixados"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:109
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:110
 msgid "Ouvrir le sommaire"
 msgstr "Abrir resumo"
 
@@ -1096,11 +1096,11 @@ msgstr "Mais opções"
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>"
 
-#: src/components/step_progress/step_progress.tsx:69
+#: src/components/step_progress/step_progress.tsx:77
 msgid "Précédent"
 msgstr "Anterior"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:220
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:223
 msgid "Préparation"
 msgstr "Preparação"
 
@@ -1171,7 +1171,7 @@ msgstr "Pesquisar um guia"
 msgid "Rechercher un profil..."
 msgstr "Procurar um perfil..."
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:136
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:137
 msgid "Rechercher une quête"
 msgstr "Pesquisar uma missão"
 
@@ -1229,11 +1229,11 @@ msgstr "Servidor inacessível"
 msgid "Site officiel"
 msgstr "Site oficial"
 
-#: src/routes/_app/guides/-$id/summary_dialog.tsx:121
+#: src/routes/_app/guides/-$id/summary_dialog.tsx:122
 msgid "Sommaire"
 msgstr "Resumo"
 
-#: src/components/step_progress/step_progress.tsx:111
+#: src/components/step_progress/step_progress.tsx:119
 msgid "Suivant"
 msgstr "Seguinte"
 
