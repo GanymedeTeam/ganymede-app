@@ -71,7 +71,7 @@ msgid "Appuyez sur les touches..."
 msgstr "Press keys..."
 
 #: src/components/deep_link_guide_download_dialog.tsx:38
-#: src/routes/_app/downloads/$status.tsx:326
+#: src/routes/_app/downloads/$status.tsx:333
 msgid "Attention"
 msgstr "Warning"
 
@@ -79,31 +79,31 @@ msgstr "Warning"
 msgid "Attention !"
 msgstr "Warning!"
 
-#: src/routes/_app/downloads/$status.tsx:157
+#: src/routes/_app/downloads/$status.tsx:158
 msgid "Aucun guide Dofus{langLabel} trouvé"
 msgstr "No Dofus guide{langLabel} found"
 
-#: src/routes/_app/downloads/$status.tsx:153
+#: src/routes/_app/downloads/$status.tsx:154
 msgid "Aucun guide Dofus{langLabel} trouvé avec {term}"
 msgstr "No Dofus guide{langLabel} found with {term}"
 
-#: src/routes/_app/downloads/$status.tsx:166
+#: src/routes/_app/downloads/$status.tsx:167
 msgid "Aucun guide Wakfu{langLabel} trouvé"
 msgstr "No Wakfu guide{langLabel} found"
 
-#: src/routes/_app/downloads/$status.tsx:162
+#: src/routes/_app/downloads/$status.tsx:163
 msgid "Aucun guide Wakfu{langLabel} trouvé avec {term}"
 msgstr "No Wakfu guide{langLabel} found with {term}"
 
-#: src/routes/_app/downloads/$status.tsx:347
+#: src/routes/_app/downloads/$status.tsx:354
 msgid "Aucun guides trouvé"
 msgstr "No guides found"
 
-#: src/routes/_app/downloads/$status.tsx:147
+#: src/routes/_app/downloads/$status.tsx:148
 msgid "Aucun guides{langLabel} trouvé"
 msgstr "No guides{langLabel} found"
 
-#: src/routes/_app/downloads/$status.tsx:143
+#: src/routes/_app/downloads/$status.tsx:144
 msgid "Aucun guides{langLabel} trouvé avec {term}"
 msgstr "No guides{langLabel} found with {term}"
 
@@ -651,7 +651,7 @@ msgstr "Malformed configuration file"
 msgid "Fichier des guides récents malformé"
 msgstr "Malformed recent guides file"
 
-#: src/routes/_app/downloads/$status.tsx:208
+#: src/routes/_app/downloads/$status.tsx:209
 msgid "Filtrer par langue"
 msgstr "Filter by language"
 
@@ -692,7 +692,7 @@ msgid "Guide téléchargé avec succès"
 msgstr "Guide downloaded successfully"
 
 #: src/components/title_bar.tsx:104
-#: src/routes/_app/downloads/$status.tsx:107
+#: src/routes/_app/downloads/$status.tsx:108
 msgid "Guides"
 msgstr "Guides"
 
@@ -701,26 +701,26 @@ msgstr "Guides"
 msgid "Guides {0}"
 msgstr "Guides {0}"
 
-#: src/routes/_app/downloads/$status.tsx:105
+#: src/routes/_app/downloads/$status.tsx:106
 #: src/routes/_app/downloads/index.tsx:125
 msgid "Guides certifiés"
 msgstr "Certified guides"
 
-#: src/routes/_app/downloads/$status.tsx:101
+#: src/routes/_app/downloads/$status.tsx:102
 #: src/routes/_app/downloads/index.tsx:141
 msgid "Guides draft"
 msgstr "Draft guides"
 
-#: src/routes/_app/downloads/$status.tsx:103
+#: src/routes/_app/downloads/$status.tsx:104
 #: src/routes/_app/downloads/index.tsx:117
 msgid "Guides principaux"
 msgstr "Main guides"
 
-#: src/routes/_app/downloads/$status.tsx:99
+#: src/routes/_app/downloads/$status.tsx:100
 msgid "Guides privés"
 msgstr "Private guides"
 
-#: src/routes/_app/downloads/$status.tsx:97
+#: src/routes/_app/downloads/$status.tsx:98
 #: src/routes/_app/downloads/index.tsx:133
 msgid "Guides publics"
 msgstr "Publics guides"
@@ -766,7 +766,7 @@ msgstr "Unable to open browser"
 msgid "Impossible de charger l'authentification"
 msgstr "Unable to load authentication"
 
-#: src/routes/_app/downloads/$status.tsx:256
+#: src/routes/_app/downloads/$status.tsx:265
 msgid "Impossible de charger les guides du serveur."
 msgstr "Unable to load guides from server."
 
@@ -897,7 +897,7 @@ msgstr "Unable to check for updates"
 msgid "Informations supplémentaires : {0}"
 msgstr "More info: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:338
+#: src/routes/_app/downloads/$status.tsx:345
 msgid "J'ai compris"
 msgstr "I understand"
 
@@ -917,6 +917,7 @@ msgid "La synchronisation de la progression du guide {label} a échoué."
 msgstr "Progress synchronisation for guide {label} failed."
 
 #: src/components/select_lang.tsx:10
+#: src/routes/_app/downloads/$status.tsx:221
 msgid "Langue"
 msgstr "Language"
 
@@ -944,7 +945,7 @@ msgstr "The step number ({0}) has been copied to the clipboard."
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Guides created by the Ganymede team"
 
-#: src/routes/_app/downloads/$status.tsx:330
+#: src/routes/_app/downloads/$status.tsx:337
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Guides in this section have not been manually verified by the Ganymede team. <0/> Although the links to the sites are secure, please carefully check the guides <1>on our site</1> before downloading them."
 
@@ -1161,7 +1162,7 @@ msgstr "Report an issue"
 msgid "Récapitulatif du message"
 msgstr "Message summary"
 
-#: src/routes/_app/downloads/$status.tsx:358
+#: src/routes/_app/downloads/$status.tsx:365
 #: src/routes/_app/guides/index.tsx:241
 msgid "Rechercher un guide"
 msgstr "Search a guide"
@@ -1178,7 +1179,7 @@ msgstr "Search for a quest"
 msgid "Réduire"
 msgstr "Minimize"
 
-#: src/routes/_app/downloads/$status.tsx:259
+#: src/routes/_app/downloads/$status.tsx:268
 msgid "Réessayer"
 msgstr "Retry"
 
@@ -1320,7 +1321,7 @@ msgstr "Theme"
 msgid "Tokens d'authentification introuvables"
 msgstr "Authentication tokens not found"
 
-#: src/routes/_app/downloads/$status.tsx:368
+#: src/routes/_app/downloads/$status.tsx:375
 msgid "Tous"
 msgstr "All"
 
