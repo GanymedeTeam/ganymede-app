@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
 import { XIcon } from 'lucide-react'
@@ -12,6 +13,7 @@ import { clamp } from '@/lib/clamp.ts'
 import { getStepOr } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useRegisterGuideClose } from '@/mutations/register_guide_close.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 
 export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: number }) {
   const guide = useGuideOrUndefined(id)
@@ -20,6 +22,8 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
   const tabs = useTabs((s) => s.tabs)
   const navigate = useNavigate()
   const profile = useProfile()
+  const conf = useSuspenseQuery(confQuery)
+  const isSmallGuide = conf.data.guideDisplay === 'Small'
 
   useEffect(() => {
     if (!guide) {
@@ -83,7 +87,8 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
             <TabsTrigger
               asChild
               className={cn(
-                'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-lg bg-surface-inset font-medium text-foreground/75 text-xs xs:text-sm transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50 lg:max-w-62',
+                'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-lg bg-surface-inset font-medium text-foreground/75 text-xs transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50',
+                !isSmallGuide && 'xs:text-sm lg:max-w-62',
               )}
               onMouseDown={(evt) => {
                 if (evt.button === 1) {
@@ -96,7 +101,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
             >
               <div>
                 <GuideNodeImage guide={guide} />
-                <span className="-translate-y-0.5 xs:inline hidden truncate">{guide.name}</span>
+                <span className={cn('-translate-y-0.5 hidden truncate', !isSmallGuide && 'xs:inline')}>{guide.name}</span>
                 {/* Progress bar */}
                 <div className="absolute bottom-0 left-0 h-0.5 w-full">
                   <div className="size-full bg-black/20">
@@ -107,14 +112,20 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                   </div>
                 </div>
                 <button
-                  className="xs:mask-gradient-to-left group/close invisible absolute top-0 xs:top-0 right-0 xs:bottom-0.5 z-0 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-12 cursor-pointer xs:items-center xs:justify-end bg-surface-page xs:pr-2 text-primary-foreground transition-none group-hover/tab:visible"
+                  className={cn(
+                    'group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible',
+                    !isSmallGuide &&
+                      'xs:mask-gradient-to-left xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-12 xs:items-center xs:justify-end xs:pr-2',
+                  )}
                   onClick={async (evt) => {
                     evt.stopPropagation()
 
                     await onCloseTab()
                   }}
                 >
-                  <XIcon className="size-4 rounded-full p-0.5 xs:group-hover/close:bg-surface-inset" />
+                  <XIcon
+                    className={cn('size-4 rounded-full p-0.5', !isSmallGuide && 'xs:group-hover/close:bg-surface-inset')}
+                  />
                 </button>
               </div>
             </TabsTrigger>
