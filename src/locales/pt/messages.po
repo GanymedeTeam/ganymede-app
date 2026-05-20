@@ -52,11 +52,16 @@ msgstr "Exibir os guias concluídos"
 msgid "Ajouter"
 msgstr "Adicionar"
 
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:75
+msgid "Ajouter une note"
+msgstr "Adicionar uma nota"
+
 #: src/components/deep_link_guide_download_dialog.tsx:60
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:43
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:103
 #: src/routes/_app/guides/-$id/report_dialog.tsx:137
 #: src/routes/_app/guides/-$id/report_dialog.tsx:174
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:103
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -71,7 +76,7 @@ msgid "Appuyez sur les touches..."
 msgstr "Pressione as teclas..."
 
 #: src/components/deep_link_guide_download_dialog.tsx:38
-#: src/routes/_app/downloads/$status.tsx:333
+#: src/routes/_app/downloads/$status.tsx:329
 msgid "Attention"
 msgstr "Atenção"
 
@@ -95,7 +100,7 @@ msgstr "Nenhum guia de Wakfu{langLabel} encontrado"
 msgid "Aucun guide Wakfu{langLabel} trouvé avec {term}"
 msgstr "Nenhum guia de Wakfu{langLabel} encontrado com {term}"
 
-#: src/routes/_app/downloads/$status.tsx:354
+#: src/routes/_app/downloads/$status.tsx:350
 msgid "Aucun guides trouvé"
 msgstr "Nenhum guia encontrado"
 
@@ -275,7 +280,7 @@ msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:136
+#: src/routes/_app/guides/-$id/guide_page.tsx:137
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "A copiar o número da etapa ({0})..."
 
@@ -379,6 +384,10 @@ msgstr "Dinâmica (conforme a janela)"
 msgid "Échec de l'échange de tokens"
 msgstr "Falha na troca de tokens"
 
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:92
+msgid "Écrivez votre note ici…"
+msgstr "Escreve aqui a tua nota…"
+
 #: src/routes/_app/notes.create.tsx:39
 msgid "Éditer une note"
 msgstr "Editar uma nota"
@@ -395,6 +404,10 @@ msgstr "Em andamento"
 #: src/components/notification_alert_dialog.tsx:171
 msgid "En cours..."
 msgstr "Em progresso..."
+
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:115
+msgid "Enregistrer"
+msgstr "Guardar"
 
 #: src/routes/_app/notes.create.tsx:93
 msgid "Enregistrer la note"
@@ -571,7 +584,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Erro JSON desconhecido"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:135
+#: src/routes/_app/guides/-$id/guide_page.tsx:136
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
 
@@ -906,7 +919,7 @@ msgstr "Não é possível verificar as actualizações"
 msgid "Informations supplémentaires : {0}"
 msgstr "Informações adicionais: {0}"
 
-#: src/routes/_app/downloads/$status.tsx:345
+#: src/routes/_app/downloads/$status.tsx:341
 msgid "J'ai compris"
 msgstr "Entendi"
 
@@ -946,7 +959,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "O nome do perfil não pode estar vazio."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:134
+#: src/routes/_app/guides/-$id/guide_page.tsx:135
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 
@@ -954,7 +967,7 @@ msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 msgid "Les guides créés par l'équipe Ganymède"
 msgstr "Guias criados pela equipa do Ganymede"
 
-#: src/routes/_app/downloads/$status.tsx:337
+#: src/routes/_app/downloads/$status.tsx:333
 msgid "Les guides de cette section n'ont pas été vérifiés manuellement par l'équipe Ganymède. <0/> Bien que les liens vers les sites soient sécurisés, veuillez vérifier attentivement les guides <1>sur notre site</1> avant de les télécharger."
 msgstr "Os guias desta seção não foram verificados manualmente pela equipe Ganimedes. <0/> Embora os links para os sites sejam seguros, verifique cuidadosamente os guias <1>em nosso site</1> antes de baixá-los."
 
@@ -1015,6 +1028,7 @@ msgstr "Atualização concluída. A aplicação vai reiniciar."
 msgid "Modifier"
 msgstr "Modificar"
 
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:75
 #: src/routes/_app/notes.index.tsx:72
 msgid "Modifier la note"
 msgstr "Editar a nota"
@@ -1052,6 +1066,14 @@ msgstr "Normal"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Os atalhos já utilizados por outras aplicações (AMD Adrenalin, Nvidia App, etc.) não podem ser registados. Remova-os primeiro nessas aplicações."
 
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:97
+msgid "Note locale, non synchronisée avec le serveur."
+msgstr "Nota local, não sincronizada com o servidor."
+
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:82
+msgid "Note personnelle"
+msgstr "Nota pessoal"
+
 #: src/components/title_bar.tsx:123
 #: src/routes/_app/notes.index.tsx:31
 #: src/routes/_app/notes.index.tsx:65
@@ -1078,7 +1100,7 @@ msgstr "Abrir resumo"
 msgid "Ouvrir les guides à l'ouverture"
 msgstr "Abrir guias ao iniciar"
 
-#: src/routes/_app/guides/$id.tsx:154
+#: src/routes/_app/guides/$id.tsx:156
 msgid "Ouvrir un guide"
 msgstr "Abrir um guia"
 
@@ -1171,7 +1193,7 @@ msgstr "Reportar um problema"
 msgid "Récapitulatif du message"
 msgstr "Resumo da mensagem"
 
-#: src/routes/_app/downloads/$status.tsx:365
+#: src/routes/_app/downloads/$status.tsx:361
 #: src/routes/_app/guides/index.tsx:241
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
@@ -1273,6 +1295,10 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Remover da lista"
 
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:108
+msgid "Supprimer la note"
+msgstr "Eliminar a nota"
+
 #: src/lib/sync_progress_queue.ts:78
 msgid "Synchro impossible — guide {label} introuvable sur le serveur."
 msgstr "Sincronização impossível — guia {label} não encontrado no servidor."
@@ -1330,7 +1356,7 @@ msgstr "Tema"
 msgid "Tokens d'authentification introuvables"
 msgstr "Tokens de autenticação não encontrados"
 
-#: src/routes/_app/downloads/$status.tsx:375
+#: src/routes/_app/downloads/$status.tsx:371
 msgid "Tous"
 msgstr "Todos"
 

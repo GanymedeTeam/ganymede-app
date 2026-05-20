@@ -11,6 +11,7 @@ use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
+use crate::step_notes::{StepNotesApi, StepNotesApiImpl};
 use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::sync::{SyncApi, SyncApiImpl};
 use crate::user::{UserApi, UserApiImpl};
@@ -42,6 +43,7 @@ mod quest;
 mod report;
 mod security;
 mod shortcut;
+mod step_notes;
 mod sync;
 mod tauri_api_ext;
 mod update;
@@ -164,7 +166,8 @@ pub fn run() {
         .merge(OAuthApiImpl.into_handler())
         .merge(UserApiImpl.into_handler())
         .merge(ShortcutsApiImpl.into_handler())
-        .merge(SyncApiImpl.into_handler());
+        .merge(SyncApiImpl.into_handler())
+        .merge(StepNotesApiImpl.into_handler());
 
     #[cfg(not(debug_assertions))]
     add_breadcrumb(Breadcrumb {
@@ -198,6 +201,12 @@ pub fn run() {
 
         if let Err(err) = guides::ensure_guides_dir(app.handle()) {
             error!("[Lib] failed to ensure guides: {:?}", err);
+            #[cfg(not(debug_assertions))]
+            capture_error(&err);
+        }
+
+        if let Err(err) = step_notes::ensure_step_notes_file(app.handle()) {
+            error!("[Lib] failed to ensure step notes: {:?}", err);
             #[cfg(not(debug_assertions))]
             capture_error(&err);
         }

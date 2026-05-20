@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { ReportDialog } from './report_dialog.tsx'
+import { StepNoteDialog } from './step_note_dialog.tsx'
 import { SummaryDialog } from './summary_dialog.tsx'
 
 const useOnCopyStep = (cb: () => void) => {
@@ -175,7 +176,8 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
               </div>
 
               {/* Right Side - Fixed width to maintain center balance */}
-              <div className="flex w-14 shrink-0 items-center justify-end gap-1 pr-1">
+              <div className="flex w-20 shrink-0 items-center justify-end pr-1 sm:w-24">
+                <StepNoteDialog guideId={guide.id} stepIndex={index} />
                 {guide.game_type !== 'wakfu' && <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />}
                 {(guide.status === 'gp' || guide.status === 'certified') && (
                   <ReportDialog guideId={guide.id} stepIndex={index} />

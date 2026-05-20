@@ -42,6 +42,8 @@ export type GuideOrFolderToDelete = { type: "guide"; id: number; folder: string 
 
 export type GuideStep = { name: string | null; map: string | null; pos_x: number; pos_y: number; web_text: string }
 
+export type GuideStepNotes = { steps: Partial<{ [key in number]: string }> }
+
 export type GuideUser = { id: number; name: string; is_admin: number; is_certified: number }
 
 export type GuideWithSteps = { id: number; name: string; description: string | null; status: Status; likes: number; dislikes: number; downloads: number | null; deleted_at: string | null; updated_at: string | null; lang: GuideLang; game_type?: GameType; order: number; user: GuideUser; web_description: string | null; node_image: string | null; steps: GuideStep[] }
@@ -70,6 +72,8 @@ export type OpenGuideStep = { step: number; progressionStep: number | null }
 
 export type Profile = { id: string; name: string; level?: number; progresses: Progress[]; server_id?: number | null }
 
+export type ProfileStepNotes = { guides: Partial<{ [key in number]: GuideStepNotes }> }
+
 export type Progress = { id: number; currentStep: number; steps: Partial<{ [key in number]: ConfStep }>; updatedAt?: string | null }
 
 export type QuestError = { RequestQuest: string } | { RequestQuestContent: string } | { DofusDbQuestMalformed: JsonError }
@@ -87,6 +91,10 @@ export type ShortcutError = { Register: string } | { RegisterPlugin: string } | 
 export type Shortcuts = { resetConf?: string; goNextStep?: string; goPreviousStep?: string; copyCurrentStep?: string }
 
 export type Status = "draft" | "public" | "private" | "certified" | "gp"
+
+export type StepNotes = { profiles: Partial<{ [key in string]: ProfileStepNotes }> }
+
+export type StepNotesError = { Malformed: JsonError } | { CreateDir: string } | { ConfDir: string } | { SerializeStepNotes: JsonError } | { UnhandledIo: string } | { SaveStepNotes: string }
 
 export type Summary = { quests: QuestSummary[] }
 
@@ -108,7 +116,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -150,6 +158,8 @@ startOAuthFlow: () => Promise<null>},
 "report": {send_report: (payload: ReportPayload) => Promise<null>},
 "security": {getWhiteList: () => Promise<string[]>},
 "shortcuts": {reregister: () => Promise<null>},
+"stepNotes": {get: () => Promise<StepNotes>, 
+setStepNote: (profileId: string, guideId: number, stepIndex: number, note: string | null) => Promise<null>},
 "sync": {createProfile: (name: string, uuid: string) => Promise<number>, 
 deleteProfile: (serverId: number) => Promise<null>, 
 renameProfile: (serverId: number, name: string) => Promise<null>, 

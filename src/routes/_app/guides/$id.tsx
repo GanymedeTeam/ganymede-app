@@ -17,6 +17,7 @@ import { getProfile } from '@/lib/profile.ts'
 import { getProgress } from '@/lib/progress.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
+import { stepNotesQuery } from '@/queries/step_notes.query.ts'
 import { GuidePage } from './-$id/guide_page.tsx'
 import { GuideTabsTrigger } from './-$id/guide_tabs_trigger.tsx'
 
@@ -40,6 +41,7 @@ export const Route = createFileRoute('/_app/guides/$id')({
     const [guides, conf] = await Promise.all([
       queryClient.ensureQueryData(guidesQuery()),
       queryClient.ensureQueryData(confQuery),
+      queryClient.ensureQueryData(stepNotesQuery),
     ])
 
     const guideById = getGuideById(guides, params.id)

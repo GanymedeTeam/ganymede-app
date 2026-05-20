@@ -9,6 +9,7 @@ const APP_RECENT_GUIDES_FILE: &str = "recent_guides.json";
 const APP_FIRST_TIME_START_FILE: &str = "first_time_start.json";
 const APP_VIEWED_NOTIFICATIONS_FILE: &str = "viewed_notifications.json";
 const APP_AUTH_FILE: &str = "auth.json";
+const APP_STEP_NOTES_FILE: &str = "step_notes.json";
 
 pub trait ConfPathExt {
     fn app_conf_file(&self) -> PathBuf;
@@ -30,6 +31,10 @@ pub trait ViewedNotificationsPathExt {
 
 pub trait AuthPathExt {
     fn app_auth_file(&self) -> PathBuf;
+}
+
+pub trait StepNotesPathExt {
+    fn app_step_notes_file(&self) -> PathBuf;
 }
 
 impl<R: Runtime> ConfPathExt for PathResolver<R> {
@@ -97,5 +102,15 @@ impl<R: Runtime> AuthPathExt for PathResolver<R> {
     fn app_auth_file(&self) -> PathBuf {
         let path = self.app_config_dir().expect("[TauriApi] app_auth_file");
         path.join(APP_AUTH_FILE)
+    }
+}
+
+impl<R: Runtime> StepNotesPathExt for PathResolver<R> {
+    fn app_step_notes_file(&self) -> PathBuf {
+        let path = self
+            .app_config_dir()
+            .expect("[TauriApi] app_step_notes_file");
+
+        path.join(APP_STEP_NOTES_FILE)
     }
 }
