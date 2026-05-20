@@ -61,11 +61,19 @@ export function StepProgress({
     }
   }
 
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (!e.shiftKey) return
+    const delta = e.deltaY || e.deltaX
+    if (delta === 0) return
+    if (delta > 0) void onNext()
+    else void onPrevious()
+  }
+
   useWebviewEvent('go-to-previous-guide-step', () => void onPrevious(), [currentIndex])
   useWebviewEvent('go-to-next-guide-step', () => void onNext(), [currentIndex])
 
   return (
-    <div className="flex min-w-0 flex-1 items-center gap-1">
+    <div className="flex min-w-0 flex-1 items-center gap-1" onWheel={handleWheel}>
       <ShortcutTooltip description={t`Précédent`} shortcut={conf.shortcuts?.goPreviousStep}>
         <Button
           className="size-6 shrink-0 opacity-60 hover:opacity-100"
