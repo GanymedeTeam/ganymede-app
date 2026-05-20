@@ -40,6 +40,10 @@ msgstr "Accéder au site officiel"
 msgid "Accueil"
 msgstr "Accueil"
 
+#: src/routes/_app/settings.tsx:225
+msgid "Affichage des guides"
+msgstr "Affichage des guides"
+
 #: src/routes/_app/settings.tsx:158
 msgid "Afficher les guides terminés"
 msgstr "Afficher les guides terminés"
@@ -226,6 +230,10 @@ msgstr "Cliquez pour ouvrir dans le navigateur"
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Cliquez pour ouvrir dans une nouvelle fenêtre"
 
+#: src/routes/_app/settings.tsx:244
+msgid "Compact (toujours)"
+msgstr "Compact (toujours)"
+
 #: src/components/welcome_card.tsx:18
 msgid "Companion Dofus"
 msgstr "Companion Dofus"
@@ -275,7 +283,7 @@ msgstr "Copie du numéro de l'étape ({0})..."
 msgid "Copier : {title}"
 msgstr "Copier : {title}"
 
-#: src/routes/_app/settings.tsx:314
+#: src/routes/_app/settings.tsx:340
 msgid "Copier l'étape actuelle"
 msgstr "Copier l'étape actuelle"
 
@@ -293,7 +301,7 @@ msgstr "Copier la note"
 msgid "Copier la position"
 msgstr "Copier la position"
 
-#: src/routes/_app/settings.tsx:400
+#: src/routes/_app/settings.tsx:426
 msgid "Créer"
 msgstr "Créer"
 
@@ -301,7 +309,7 @@ msgstr "Créer"
 msgid "Créer un guide"
 msgstr "Créer un guide"
 
-#: src/routes/_app/settings.tsx:342
+#: src/routes/_app/settings.tsx:368
 msgid "Créer un profil"
 msgstr "Créer un profil"
 
@@ -363,6 +371,10 @@ msgstr "Données de quête malformées"
 msgid "Dossier des guides téléchargés rafraichi"
 msgstr "Dossier des guides téléchargés rafraichi"
 
+#: src/routes/_app/settings.tsx:241
+msgid "Dynamique (selon la fenêtre)"
+msgstr "Dynamique (selon la fenêtre)"
+
 #: src/lib/error_formatter.tsx:567
 msgid "Échec de l'échange de tokens"
 msgstr "Échec de l'échange de tokens"
@@ -371,7 +383,7 @@ msgstr "Échec de l'échange de tokens"
 msgid "Éditer une note"
 msgstr "Éditer une note"
 
-#: src/routes/_app/settings.tsx:252
+#: src/routes/_app/settings.tsx:278
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Efface tous vos profils et paramètres (pas les guides)"
 
@@ -563,7 +575,7 @@ msgstr "Erreur JSON inconnue"
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erreur lors de la copie du numéro de l'étape ({0})."
 
-#: src/routes/_app/settings.tsx:393
+#: src/routes/_app/settings.tsx:419
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 
@@ -571,10 +583,10 @@ msgstr "Erreur lors de la création du profil. Vérifiez le nom du profil (nom u
 msgid "Erreur lors de la mise à jour des guides"
 msgstr "Erreur lors de la mise à jour des guides"
 
-#: src/routes/_app/settings.tsx:267
-#: src/routes/_app/settings.tsx:287
-#: src/routes/_app/settings.tsx:307
-#: src/routes/_app/settings.tsx:327
+#: src/routes/_app/settings.tsx:293
+#: src/routes/_app/settings.tsx:313
+#: src/routes/_app/settings.tsx:333
+#: src/routes/_app/settings.tsx:353
 msgid "Erreur lors de la mise à jour du raccourci"
 msgstr "Erreur lors de la mise à jour du raccourci"
 
@@ -617,11 +629,11 @@ msgstr "Erreur utilisateur inconnue"
 msgid "Étape {current}"
 msgstr "Étape {current}"
 
-#: src/routes/_app/settings.tsx:274
+#: src/routes/_app/settings.tsx:300
 msgid "Étape précédente"
 msgstr "Étape précédente"
 
-#: src/routes/_app/settings.tsx:294
+#: src/routes/_app/settings.tsx:320
 msgid "Étape suivante"
 msgstr "Étape suivante"
 
@@ -721,10 +733,6 @@ msgstr "Guides supprimés"
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:89
 msgid "id <0>{0}</0>"
 msgstr "id <0>{0}</0>"
-
-#: src/routes/_app.tsx:57
-#~ msgid "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
-#~ msgstr "Il peut s'agir d'un problème de connexion ou d'une erreur serveur."
 
 #: src/routes/app-old-version.tsx:117
 msgid "Il semblerait que la mise à jour ait eu un problème."
@@ -874,10 +882,6 @@ msgstr "Impossible de télécharger l'image"
 #: src/lib/error_formatter.tsx:433
 msgid "Impossible de télécharger le guide"
 msgstr "Impossible de télécharger le guide"
-
-#: src/routes/_app.tsx:56
-#~ msgid "Impossible de vérifier la mise à jour de l'application."
-#~ msgstr "Impossible de vérifier la mise à jour de l'application."
 
 #: src/lib/error_formatter.tsx:834
 msgid "Impossible de vérifier la version sur GitHub"
@@ -1034,7 +1038,7 @@ msgstr "Non commencé"
 msgid "Normale"
 msgstr "Normale"
 
-#: src/routes/_app/settings.tsx:242
+#: src/routes/_app/settings.tsx:268
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 
@@ -1118,7 +1122,7 @@ msgstr "Profil \"{0}\""
 msgid "Profil \"{0}\" chargé"
 msgstr "Profil \"{0}\" chargé"
 
-#: src/routes/_app/settings.tsx:389
+#: src/routes/_app/settings.tsx:415
 msgid "Profil créé avec succès"
 msgstr "Profil créé avec succès"
 
@@ -1126,18 +1130,18 @@ msgstr "Profil créé avec succès"
 msgid "Profil supprimé avec succès"
 msgstr "Profil supprimé avec succès"
 
-#: src/routes/_app/settings.tsx:334
+#: src/routes/_app/settings.tsx:360
 msgid "Profils"
 msgstr "Profils"
 
-#: src/routes/_app/settings.tsx:265
-#: src/routes/_app/settings.tsx:285
-#: src/routes/_app/settings.tsx:305
-#: src/routes/_app/settings.tsx:325
+#: src/routes/_app/settings.tsx:291
+#: src/routes/_app/settings.tsx:311
+#: src/routes/_app/settings.tsx:331
+#: src/routes/_app/settings.tsx:351
 msgid "Raccourci mis à jour"
 msgstr "Raccourci mis à jour"
 
-#: src/routes/_app/settings.tsx:248
+#: src/routes/_app/settings.tsx:274
 msgid "Raccourcis clavier"
 msgstr "Raccourcis clavier"
 
@@ -1182,7 +1186,7 @@ msgstr "Réessayer"
 msgid "Réinitialiser"
 msgstr "Réinitialiser"
 
-#: src/routes/_app/settings.tsx:254
+#: src/routes/_app/settings.tsx:280
 msgid "Réinitialiser la configuration"
 msgstr "Réinitialiser la configuration"
 

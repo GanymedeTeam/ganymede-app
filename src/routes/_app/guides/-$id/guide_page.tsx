@@ -140,6 +140,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
   // Use theme-aware background color with opacity via CSS color-mix
   const bgColor = `color-mix(in srgb, var(--color-surface-page) ${conf.data.opacity * 100}%, transparent)`
+  const isSmallGuide = conf.data.guideDisplay === 'Small'
 
   return (
     <div
@@ -147,7 +148,10 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
       ref={scrollableRef}
       style={{ backgroundColor: bgColor }}
     >
-      <header className="fixed inset-x-0 top-[70px] z-10 sm:top-[66px]" style={{ backgroundColor: bgColor }}>
+      <header
+        className={cn('fixed inset-x-0 top-[70px] z-10', !isSmallGuide && 'sm:top-[66px]')}
+        style={{ backgroundColor: bgColor }}
+      >
         <div className="flex h-10 items-center p-1">
           {step && (
             <>
@@ -184,7 +188,8 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
       {step && (
         <GuideFrame
           className={cn(
-            'guide px-2 xs:px-3 pt-2 xs:pt-3 leading-5 sm:px-4 sm:pt-4',
+            'guide px-2 pt-2 leading-5',
+            !isSmallGuide && 'xs:px-3 xs:pt-3 sm:px-4 sm:pt-4',
             conf.data.fontSize === 'ExtraSmall' && 'text-xs',
             conf.data.fontSize === 'Small' && 'text-sm leading-4',
             conf.data.fontSize === 'Large' && 'text-md leading-5',
