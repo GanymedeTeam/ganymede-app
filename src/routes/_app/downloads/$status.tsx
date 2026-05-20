@@ -25,6 +25,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import {
@@ -216,6 +217,9 @@ function LanguageFilterDropdown({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="font-normal text-muted-foreground text-xs">
+          <Trans>Langue</Trans>
+        </DropdownMenuLabel>
         {languageOptions.map(({ lang, label }) => (
           <DropdownMenuItem key={lang} onClick={() => onChange(lang)}>
             <CheckIcon className={value === lang ? 'visible size-4' : 'invisible size-4'} />
@@ -230,15 +234,20 @@ function LanguageFilterDropdown({
 function DownloadGuidePage() {
   const { t } = useLingui()
   const baseSearch = Route.useSearch({ select: (s) => s.search })
+  const status = Route.useParams({ select: (p) => p.status })
+  const conf = useSuspenseQuery(confQuery)
   const [searchTerm, setSearchTerm] = useState(baseSearch ?? '')
   const [gameFilter, setGameFilter] = useState<GameType | 'all'>('all')
-  const [langFilter, setLangFilter] = useState<GuideLang | 'all'>('all')
+  const [langFilter, setLangFilter] = useState<GuideLang | 'all'>(() => {
+    if (status === 'certified' || status === 'gp') {
+      return getLang(conf.data.lang).toLowerCase() as GuideLang
+    }
+    return 'all'
+  })
   const page = Route.useSearch({ select: (s) => s.page })
-  const status = Route.useParams({ select: (p) => p.status })
   const debouncedTerm = useDebounce(searchTerm, 300)
   const guides = useQuery(guidesFromServerQuery({ status }))
   const downloads = useSuspenseQuery(guidesQuery())
-  const conf = useSuspenseQuery(confQuery)
   const profile = useProfile()
 
   const scrollableRef = useRef<HTMLDivElement>(null)
@@ -305,7 +314,7 @@ function DownloadGuidePage() {
   return (
     <Page
       actions={
-        availableLanguages.length > 1 ? (
+        availableLanguages.length > 1 || status === 'certified' || status === 'gp' ? (
           <div className="ml-auto">
             <LanguageFilterDropdown
               availableLanguages={availableLanguages}
