@@ -314,15 +314,13 @@ function DownloadGuidePage() {
   return (
     <Page
       actions={
-        availableLanguages.length > 1 || status === 'certified' || status === 'gp' ? (
-          <div className="ml-auto">
-            <LanguageFilterDropdown
-              availableLanguages={availableLanguages}
-              onChange={setLangFilter}
-              value={langFilter}
-            />
-          </div>
-        ) : undefined
+        <div className="ml-auto">
+          <LanguageFilterDropdown
+            availableLanguages={availableLanguages}
+            onChange={setLangFilter}
+            value={langFilter}
+          />
+        </div>
       }
       backButton={<BackButtonLink to="/downloads" />}
       key={`download-${status}`}
