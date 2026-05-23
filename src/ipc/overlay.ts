@@ -1,5 +1,6 @@
-import { fromPromise } from 'neverthrow'
-import { InteractiveRegion } from '@/ipc/bindings.ts'
+import { platform } from '@tauri-apps/plugin-os'
+import { fromPromise, okAsync } from 'neverthrow'
+import { type InteractiveRegion } from '@/ipc/bindings.ts'
 import { taurpc } from '@/ipc/ipc.ts'
 
 export class SetInteractiveRegionsError extends Error {
@@ -8,6 +9,18 @@ export class SetInteractiveRegionsError extends Error {
   }
 }
 
+export function isInteractiveOverlaySupported() {
+  try {
+    return typeof window !== 'undefined' && platform() === 'windows'
+  } catch {
+    return false
+  }
+}
+
 export function setInteractiveRegions(interactiveRegions: InteractiveRegion[]) {
+  if (!isInteractiveOverlaySupported()) {
+    return okAsync(null)
+  }
+
   return fromPromise(taurpc.overlay.setInteractiveRegions(interactiveRegions), SetInteractiveRegionsError.from)
 }

@@ -1,101 +1,136 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
 import { error } from '@tauri-apps/plugin-log'
-import { InteractiveRegion } from '@/ipc/bindings.ts'
-import { setInteractiveRegions } from '@/ipc/overlay.ts'
+import { useEffect, useRef } from 'react'
+import { type InteractiveRegion } from '@/ipc/bindings.ts'
+import { isInteractiveOverlaySupported, setInteractiveRegions } from '@/ipc/overlay.ts'
+import {
+  areInteractiveRegionsEqual,
+  collectInteractiveRegions,
+  OVERLAY_INTERACTIVE_SELECTOR,
+} from '@/lib/overlay_regions.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 
-const OVERLAY_INTERACTIVE_SELECTOR = [
-  '[data-overlay-interactive="true"]',
-  'button:not([disabled])',
-  'a[href]',
-  'input:not([type="hidden"]):not([disabled])',
-  'textarea:not([disabled])',
-  'select:not([disabled])',
-  '[role="button"]',
-  '[data-radix-popper-content-wrapper]',
-  '[data-sonner-toaster]',
-].join(', ')
+const SYNC_THROTTLE_MS = 100
 
-function isVisible(element: HTMLElement) {
-  const rect = element.getBoundingClientRect()
-  const style = window.getComputedStyle(element)
-
+function hasInteractiveCandidate(node: Node) {
   return (
-    rect.width > 0 &&
-    rect.height > 0 &&
-    style.display !== 'none' &&
-    style.visibility !== 'hidden' &&
-    style.pointerEvents !== 'none'
+    node instanceof HTMLElement &&
+    (node.matches(OVERLAY_INTERACTIVE_SELECTOR) || node.querySelector(OVERLAY_INTERACTIVE_SELECTOR) !== null)
   )
 }
 
-function toInteractiveRegion(rect: DOMRect): InteractiveRegion {
-  const scale = window.devicePixelRatio || 1
-  const padding = 2
-
-  return {
-    x: Math.round(rect.left * scale) - padding,
-    y: Math.round(rect.top * scale) - padding,
-    width: Math.round(rect.width * scale) + padding * 2,
-    height: Math.round(rect.height * scale) + padding * 2,
+function shouldSyncForMutation(mutation: MutationRecord) {
+  if (mutation.type === 'attributes') {
+    return mutation.target instanceof HTMLElement
   }
-}
 
-function collectInteractiveRegions() {
-  const elements = [...document.querySelectorAll<HTMLElement>(OVERLAY_INTERACTIVE_SELECTOR)]
-
-  return elements.filter(isVisible).map((element) => toInteractiveRegion(element.getBoundingClientRect()))
+  return (
+    hasInteractiveCandidate(mutation.target) ||
+    [...mutation.addedNodes].some(hasInteractiveCandidate) ||
+    [...mutation.removedNodes].some(hasInteractiveCandidate)
+  )
 }
 
 export function useOverlaySync() {
   const conf = useQuery(confQuery)
+  const hasConf = conf.data !== undefined
+  const overlayMode = conf.data?.overlayMode ?? false
+  const supportsInteractiveOverlay = isInteractiveOverlaySupported()
+  const lastSyncedRegions = useRef<InteractiveRegion[] | null>(null)
 
   useEffect(() => {
-    if (!conf.data?.overlayMode) {
-      setInteractiveRegions([]).then((result) => {
+    if (!supportsInteractiveOverlay || !hasConf) {
+      return
+    }
+
+    function syncRegions(regions: InteractiveRegion[]) {
+      if (areInteractiveRegionsEqual(lastSyncedRegions.current, regions)) {
+        return
+      }
+
+      setInteractiveRegions(regions).then((result) => {
         if (result.isErr()) {
-          error(`Failed to clear overlay regions: ${String(result.error.cause)}`)
+          error(`Failed to sync overlay regions: ${String(result.error.cause)}`)
+          return
         }
+
+        lastSyncedRegions.current = regions
       })
+    }
+
+    if (!overlayMode) {
+      syncRegions([])
 
       return
     }
 
     let frameId = 0
+    let timeoutId = 0
+    let lastSyncAt = 0
     let disposed = false
-    const mutationObserver = new MutationObserver(scheduleSync)
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleSync()
+    const mutationObserver = new MutationObserver((mutations) => {
+      if (mutations.some(shouldSyncForMutation)) {
+        scheduleSync()
+      }
     })
+    const resizeObserver = new ResizeObserver(scheduleSync)
+    const scrollListenerOptions = { capture: true, passive: true }
 
     function syncNow() {
       frameId = 0
+      lastSyncAt = Date.now()
 
-      setInteractiveRegions(collectInteractiveRegions()).then((result) => {
-        if (result.isErr()) {
-          error(`Failed to sync overlay regions: ${String(result.error.cause)}`)
-        }
-      })
+      syncRegions(collectInteractiveRegions())
+    }
+
+    function requestSyncFrame() {
+      if (!disposed && frameId === 0) {
+        frameId = window.requestAnimationFrame(syncNow)
+      }
     }
 
     function scheduleSync() {
-      if (disposed || frameId !== 0) {
+      if (disposed || frameId !== 0 || timeoutId !== 0) {
         return
       }
 
-      frameId = window.requestAnimationFrame(syncNow)
+      const elapsedSinceLastSync = Date.now() - lastSyncAt
+      const delay = Math.max(0, SYNC_THROTTLE_MS - elapsedSinceLastSync)
+
+      if (delay === 0) {
+        requestSyncFrame()
+        return
+      }
+
+      timeoutId = window.setTimeout(() => {
+        timeoutId = 0
+        requestSyncFrame()
+      }, delay)
     }
 
     mutationObserver.observe(document.body, {
       subtree: true,
       childList: true,
       attributes: true,
-      attributeFilter: ['class', 'style', 'data-state', 'data-disabled', 'hidden'],
+      attributeFilter: [
+        'aria-hidden',
+        'class',
+        'data-disabled',
+        'data-overlay-interactive',
+        'data-radix-popper-content-wrapper',
+        'data-sonner-toaster',
+        'data-state',
+        'disabled',
+        'hidden',
+        'href',
+        'role',
+        'style',
+        'type',
+      ],
     })
     resizeObserver.observe(document.body)
     window.addEventListener('resize', scheduleSync)
-    window.addEventListener('scroll', scheduleSync, true)
+    window.addEventListener('scroll', scheduleSync, scrollListenerOptions)
 
     scheduleSync()
 
@@ -106,10 +141,14 @@ export function useOverlaySync() {
         window.cancelAnimationFrame(frameId)
       }
 
+      if (timeoutId !== 0) {
+        window.clearTimeout(timeoutId)
+      }
+
       mutationObserver.disconnect()
       resizeObserver.disconnect()
       window.removeEventListener('resize', scheduleSync)
-      window.removeEventListener('scroll', scheduleSync, true)
+      window.removeEventListener('scroll', scheduleSync, scrollListenerOptions)
     }
-  }, [conf.data?.overlayMode])
+  }, [hasConf, overlayMode, supportsInteractiveOverlay])
 }

@@ -21,6 +21,7 @@ import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
 import { ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
+import { isInteractiveOverlaySupported } from '@/ipc/overlay.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -98,6 +99,7 @@ function Settings() {
   const switchProfile = useSwitchProfile()
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
+  const supportsInteractiveOverlay = isInteractiveOverlaySupported()
 
   // oxlint-disable react-hooks/exhaustive-deps -- no need more deps
   useEffect(() => {
@@ -172,30 +174,30 @@ function Settings() {
                 />
               </div>
             </SettingCardSection>
-            <SettingCardSection id="section-overlay-mode">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex flex-col gap-1">
-                  <Label className="text-xs" htmlFor="overlay-mode">
-                    <Trans>Mode overlay</Trans>
-                  </Label>
-                  <p className="text-[11px] text-muted-foreground">
-                    <Trans>
-                      Laisse passer les clics vers Dofus sauf sur les éléments interactifs de Ganymède.
-                    </Trans>
-                  </p>
+            {supportsInteractiveOverlay && (
+              <SettingCardSection id="section-overlay-mode">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex flex-col gap-1">
+                    <Label className="text-xs" htmlFor="overlay-mode">
+                      <Trans>Mode overlay</Trans>
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground">
+                      <Trans>Laisse passer les clics vers Dofus sauf sur les éléments interactifs de Ganymède.</Trans>
+                    </p>
+                  </div>
+                  <Switch
+                    checked={conf.data.overlayMode ?? false}
+                    id="overlay-mode"
+                    onCheckedChange={(checked) => {
+                      setConf.mutate({
+                        ...conf.data,
+                        overlayMode: checked,
+                      })
+                    }}
+                  />
                 </div>
-                <Switch
-                  checked={conf.data.overlayMode ?? false}
-                  id="overlay-mode"
-                  onCheckedChange={(checked) => {
-                    setConf.mutate({
-                      ...conf.data,
-                      overlayMode: checked,
-                    })
-                  }}
-                />
-              </div>
-            </SettingCardSection>
+              </SettingCardSection>
+            )}
           </SettingCard>
           <SettingCard id="section-appearance" title={<Trans>Apparence</Trans>}>
             <SettingCardSection id="section-opacity">
