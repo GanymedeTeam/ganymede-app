@@ -90,6 +90,12 @@ pub enum FontSize {
     ExtraLarge,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum GuideDisplay {
+    Dynamic,
+    Small,
+}
+
 // Structs
 
 #[derive(Debug)]
@@ -161,6 +167,8 @@ pub struct Conf {
     pub theme: ConfTheme,
     #[serde(default)]
     pub font_size: FontSize,
+    #[serde(default)]
+    pub guide_display: GuideDisplay,
     pub profiles: Vec<Profile>,
     pub profile_in_use: String,
     pub auto_pilots: Vec<AutoPilot>,
@@ -303,6 +311,12 @@ impl Default for FontSize {
     }
 }
 
+impl Default for GuideDisplay {
+    fn default() -> Self {
+        GuideDisplay::Dynamic
+    }
+}
+
 impl Default for Conf {
     fn default() -> Self {
         let default_profile = Profile::default();
@@ -314,6 +328,7 @@ impl Default for Conf {
             lang: ConfLang::default(),
             theme: ConfTheme::default(),
             font_size: FontSize::default(),
+            guide_display: GuideDisplay::default(),
             profiles: vec![default_profile],
             profile_in_use: default_profile_id,
             auto_pilots: vec![],

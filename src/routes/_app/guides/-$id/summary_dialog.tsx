@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import debounce from 'debounce-fn'
 import { BookTextIcon } from 'lucide-react'
 import { useCallback, useState, useSyncExternalStore } from 'react'
+import { CopyOnClick } from '@/components/copy_on_click.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideNodeImage } from '@/components/guide_node_image.tsx'
 import { Button } from '@/components/ui/button.tsx'
@@ -174,7 +175,9 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
                 <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
                   <div className="flex items-center gap-1">
                     <img alt="Quest" className="size-6" src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} />
-                    <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
+                    <CopyOnClick title={quest.name}>
+                      <span className="font-semibold text-[#eb5bc6]">{quest.name}</span>
+                    </CopyOnClick>
                   </div>
                   <span className="flex flex-col gap-1">
                     <Plural one="Étape" other="Étapes" value={quest.statuses.length} />{' '}

@@ -18,8 +18,8 @@ import { Label } from '@/components/ui/label.tsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.tsx'
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
-import { ConfLang, FontSize } from '@/ipc/bindings.ts'
 import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
+import { ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -216,6 +216,32 @@ function Settings() {
                   </SelectItem>
                   <SelectItem value="ExtraLarge">
                     <Trans>Très grande</Trans>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </SettingCardSection>
+            <SettingCardSection id="section-guide-display">
+              <p className="font-medium text-xs leading-none">
+                <Trans>Affichage des guides</Trans>
+              </p>
+              <Select
+                onValueChange={(value) => {
+                  setConf.mutate({
+                    ...conf.data,
+                    guideDisplay: value as GuideDisplay,
+                  })
+                }}
+                value={conf.data.guideDisplay ?? 'Dynamic'}
+              >
+                <SelectTrigger className="text-xs" id="guide-display">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Dynamic">
+                    <Trans>Dynamique (selon la fenêtre)</Trans>
+                  </SelectItem>
+                  <SelectItem value="Small">
+                    <Trans>Compact (toujours)</Trans>
                   </SelectItem>
                 </SelectContent>
               </Select>
