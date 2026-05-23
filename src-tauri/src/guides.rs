@@ -657,11 +657,12 @@ fn get_recent_guides<R: Runtime>(
 
     let recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
     let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?.guides;
+    let guide_ids_in_system = guides_in_system.iter().map(|guide| guide.id).collect::<HashSet<_>>();
 
     let mut profile_guides = recent_guides.get(&profile_id).cloned().unwrap_or_default();
 
     // remove any guide IDs that are no longer in the system since the last session
-    profile_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
+    profile_guides.retain(|id| guide_ids_in_system.contains(id));
 
     Ok(sanitize_recent_guides(profile_guides))
 }

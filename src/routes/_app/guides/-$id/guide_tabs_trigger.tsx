@@ -77,6 +77,22 @@ export function GuideTabsTrigger({ id, currentId, dropPosition, isDragging, onTa
     })
   }
 
+  const onOpenTab = async () => {
+    if (currentId === id) {
+      return
+    }
+
+    await navigate({
+      to: '/guides/$id',
+      params: {
+        id,
+      },
+      search: {
+        step: getStepOr(profile, id, 0),
+      },
+    })
+  }
+
   const onCloseTab = async () => {
     try {
       if (tabs.length === 1) {

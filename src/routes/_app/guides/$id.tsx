@@ -220,16 +220,21 @@ function GuideIdPage() {
       const { nextTabs } = state.pending
       state.pending = null
       const result = await setRecentGuides(profile.id, nextTabs)
+      const tabsChangedWhileSaving = !areTabsEqual(tabsRef.current, nextTabs)
 
       if (result.isErr()) {
         await debug(`Error saving guides tabs order: ${result.error.message}`)
 
-        if (!state.pending && areTabsEqual(tabsRef.current, nextTabs)) {
+        if (!state.pending && tabsChangedWhileSaving) {
+          state.pending = { nextTabs: tabsRef.current }
+        } else if (!state.pending) {
           const rollbackTabs = lastPersistedTabsRef.current
           tabsRef.current = rollbackTabs
           setTabs(rollbackTabs)
           toast.error(t`Impossible d'enregistrer l'ordre des onglets. L'ordre précédent a été restauré.`)
         }
+      } else if (!state.pending && tabsChangedWhileSaving) {
+        state.pending = { nextTabs: tabsRef.current }
       } else {
         lastPersistedTabsRef.current = nextTabs
       }
