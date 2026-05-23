@@ -98,6 +98,7 @@ function Settings() {
   const switchProfile = useSwitchProfile()
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
+  const autoTravelCopyOnStepChange = conf.data.autoTravelCopyOnStepChange ?? false
 
   // oxlint-disable react-hooks/exhaustive-deps -- no need more deps
   useEffect(() => {
@@ -155,11 +156,32 @@ function Settings() {
                 />
               </div>
             </SettingCardSection>
+            <SettingCardSection id="section-auto-travel-copy-on-step-change">
+              <div className="flex items-center justify-between gap-2">
+                <Label className="text-xs" htmlFor="auto-travel-copy-on-step-change">
+                  <Trans>Copie automatique au changement d'étape</Trans>
+                </Label>
+                <Switch
+                  checked={autoTravelCopyOnStepChange}
+                  id="auto-travel-copy-on-step-change"
+                  onCheckedChange={(checked) => {
+                    setConf.mutate({
+                      ...conf.data,
+                      autoTravelCopyOnStepChange: checked,
+                    })
+                  }}
+                />
+              </div>
+            </SettingCardSection>
             <SettingCardSection id="section-auto-travel-step-source">
-              <Label className="text-xs" htmlFor="auto-travel-step-source">
-                <Trans>Source de la copie autopilote</Trans>
+              <Label
+                className={cn('text-xs', !autoTravelCopyOnStepChange && 'text-muted-foreground')}
+                htmlFor="auto-travel-step-source"
+              >
+                <Trans>Source de la copie automatique</Trans>
               </Label>
               <Select
+                disabled={!autoTravelCopyOnStepChange}
                 onValueChange={(value) => {
                   setConf.mutate({
                     ...conf.data,
@@ -168,7 +190,7 @@ function Settings() {
                 }}
                 value={conf.data.autoTravelStepSource ?? 'Current'}
               >
-                <SelectTrigger className="text-xs" id="auto-travel-step-source">
+                <SelectTrigger className="text-xs" disabled={!autoTravelCopyOnStepChange} id="auto-travel-step-source">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

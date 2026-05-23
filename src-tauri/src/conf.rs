@@ -170,6 +170,8 @@ pub struct Note {
 #[serde(rename_all = "camelCase")]
 pub struct Conf {
     pub auto_travel_copy: bool,
+    #[serde(default)]
+    pub auto_travel_copy_on_step_change: bool,
     #[serde(default = "default_auto_travel_step_source")]
     pub auto_travel_step_source: AutoTravelStepSource,
     pub show_done_guides: bool,
@@ -336,6 +338,7 @@ impl Default for Conf {
 
         Conf {
             auto_travel_copy: true,
+            auto_travel_copy_on_step_change: false,
             auto_travel_step_source: AutoTravelStepSource::Current,
             show_done_guides: true,
             lang: ConfLang::default(),
