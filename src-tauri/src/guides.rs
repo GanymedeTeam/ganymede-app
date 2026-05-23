@@ -663,7 +663,7 @@ fn get_recent_guides<R: Runtime>(
     // remove any guide IDs that are no longer in the system since the last session
     profile_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
 
-    Ok(profile_guides)
+    Ok(sanitize_recent_guides(profile_guides))
 }
 
 fn set_recent_guides<R: Runtime>(
@@ -706,8 +706,9 @@ fn write_recent_guides_file(
     recent_guides_path: &PathBuf,
     recent_guides: &RecentGuides,
 ) -> Result<(), Error> {
+    let recent_guides = sanitize_recent_guides_by_profile(recent_guides);
     let json =
-        crate::json::serialize_pretty(recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
+        crate::json::serialize_pretty(&recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
 
     debug!(
         "[Guides] writing recent guides file: {:?}",
@@ -718,6 +719,18 @@ fn write_recent_guides_file(
         .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
 
     Ok(())
+}
+
+fn sanitize_recent_guides_by_profile(recent_guides: &RecentGuides) -> RecentGuides {
+    recent_guides
+        .iter()
+        .map(|(profile_id, guide_ids)| {
+            (
+                profile_id.clone(),
+                sanitize_recent_guides(guide_ids.clone()),
+            )
+        })
+        .collect()
 }
 
 fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
@@ -736,6 +749,28 @@ fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
     }
 
     sanitized
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{sanitize_recent_guides, MAX_RECENT_GUIDES};
+
+    #[test]
+    fn sanitize_recent_guides_removes_duplicates_preserving_order() {
+        let guide_ids = vec![3, 1, 3, 2, 1, 4];
+
+        assert_eq!(sanitize_recent_guides(guide_ids), vec![3, 1, 2, 4]);
+    }
+
+    #[test]
+    fn sanitize_recent_guides_caps_to_limit() {
+        let guide_ids = (1..=(MAX_RECENT_GUIDES as u32 + 10)).collect::<Vec<_>>();
+        let sanitized = sanitize_recent_guides(guide_ids);
+
+        assert_eq!(sanitized.len(), MAX_RECENT_GUIDES);
+        assert_eq!(sanitized.first(), Some(&11));
+        assert_eq!(sanitized.last(), Some(&(MAX_RECENT_GUIDES as u32 + 10)));
+    }
 }
 
 fn read_recent_guides_file(
