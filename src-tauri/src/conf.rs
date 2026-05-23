@@ -1,10 +1,10 @@
 use std::{borrow::BorrowMut, collections::HashMap, fs};
 
-use log::{debug, info};
+use log::{debug, error, info};
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Manager, Runtime, Window};
+use tauri::{AppHandle, Emitter, Manager, Runtime, Window};
 
-use crate::overlay::OverlayManager;
+use crate::event::{ConfUpdatedPayload, Event};
 use crate::tauri_api_ext::ConfPathExt;
 
 // Constants
@@ -17,10 +17,6 @@ const fn default_level() -> u32 {
 
 const fn default_auto_open_guides() -> bool {
     true
-}
-
-const fn default_overlay_mode() -> bool {
-    false
 }
 
 fn default_reset_conf_shortcut() -> String {
@@ -181,7 +177,7 @@ pub struct Conf {
     pub opacity: f32,
     #[serde(default = "default_auto_open_guides")]
     pub auto_open_guides: bool,
-    #[serde(default = "default_overlay_mode")]
+    #[serde(default)]
     pub overlay_mode: bool,
     #[serde(default)]
     pub shortcuts: Shortcuts,
@@ -254,7 +250,19 @@ pub fn save_conf<R: Runtime>(conf: &mut Conf, app: &AppHandle<R>) -> Result<(), 
 
     let json = crate::json::serialize_pretty(conf).map_err(Error::SerializeConf)?;
 
-    fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))
+    fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))?;
+    emit_conf_updated(app, conf.overlay_mode);
+
+    Ok(())
+}
+
+fn emit_conf_updated<R: Runtime>(app: &AppHandle<R>, overlay_mode: bool) {
+    if let Err(err) = app.emit(
+        Event::ConfUpdated.into(),
+        ConfUpdatedPayload { overlay_mode },
+    ) {
+        error!("[Conf] failed to emit conf updated event: {}", err);
+    }
 }
 
 pub fn backup_conf<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
@@ -415,7 +423,6 @@ impl ConfApi for ConfApiImpl {
     async fn set<R: Runtime>(self, conf: Conf, app: AppHandle<R>) -> Result<(), Error> {
         let mut conf = conf;
         save_conf(conf.borrow_mut(), &app)?;
-        app.state::<OverlayManager>().set_enabled(conf.overlay_mode);
 
         Ok(())
     }
@@ -460,7 +467,6 @@ impl ConfApi for ConfApiImpl {
     async fn reset<R: Runtime>(self, app: AppHandle<R>, window: Window<R>) -> Result<(), Error> {
         let default_conf = &mut Conf::default();
         save_conf(default_conf, &app).map_err(|e| Error::ResetConf(Box::new(e)))?;
-        app.state::<OverlayManager>().set_enabled(default_conf.overlay_mode);
 
         let webview = window
             .get_webview_window("main")

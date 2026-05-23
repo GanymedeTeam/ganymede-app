@@ -4,6 +4,7 @@ use crate::base::{BaseApi, BaseApiImpl};
 use crate::conf::{ConfApi, ConfApiImpl};
 use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
 use crate::dofusdb::{DofusDbApi, DofusDbApiImpl};
+use crate::event::{ConfUpdatedPayload, Event};
 use crate::first_start::handle_first_start_setup;
 use crate::guides::{GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
@@ -21,7 +22,7 @@ use crate::user::{UserApi, UserApiImpl};
 use crate::window_manager::WindowManager;
 use log::{error, info, LevelFilter};
 use report::{ReportApi, ReportApiImpl};
-use tauri::Manager;
+use tauri::{Listener, Manager};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
 use taurpc::Router;
@@ -136,6 +137,11 @@ pub fn run() {
                 })
                 .build(),
         )
+        .on_window_event(|window, event| {
+            if window.label() == "main" && matches!(event, tauri::WindowEvent::Destroyed) {
+                window.state::<OverlayManager>().stop_cursor_tracking();
+            }
+        })
         .plugin({
             let log_builder = tauri_plugin_log::Builder::new()
                 .clear_targets()
@@ -200,6 +206,17 @@ pub fn run() {
         app.manage(http_client.clone());
         app.manage(WindowManager::new());
         app.manage(OverlayManager::default());
+
+        let app_handle = app.handle().clone();
+        let conf_updated_event: &str = Event::ConfUpdated.into();
+        app.listen(conf_updated_event, move |event| {
+            match serde_json::from_str::<ConfUpdatedPayload>(event.payload()) {
+                Ok(payload) => app_handle
+                    .state::<OverlayManager>()
+                    .set_enabled(payload.overlay_mode),
+                Err(err) => error!("[Lib] failed to parse conf updated event: {}", err),
+            }
+        });
 
         #[cfg(not(debug_assertions))]
         add_breadcrumb(Breadcrumb {
