@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fmt, fs, path::PathBuf, vec};
+use std::{collections::{HashMap, HashSet}, fmt, fs, path::PathBuf, vec};
 
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
@@ -9,6 +9,7 @@ use tauri_plugin_opener::OpenerExt;
 use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
 
 pub const DEFAULT_GUIDE_ID: u32 = 1074;
+const MAX_RECENT_GUIDES: usize = 50;
 
 // ================================================================================================
 // Enums
@@ -616,6 +617,11 @@ fn register_guide_open<R: Runtime>(
 
     if !profile_guides.contains(&guide_id) {
         profile_guides.push(guide_id);
+        if profile_guides.len() > MAX_RECENT_GUIDES {
+            let overflow = profile_guides.len() - MAX_RECENT_GUIDES;
+            profile_guides.drain(0..overflow);
+        }
+
         write_recent_guides_file(&recent_guides_path, &recent_guides)?;
     }
 
@@ -715,12 +721,18 @@ fn write_recent_guides_file(
 }
 
 fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
-    let mut sanitized = Vec::with_capacity(guide_ids.len());
+    let mut sanitized = Vec::with_capacity(guide_ids.len().min(MAX_RECENT_GUIDES));
+    let mut seen = HashSet::with_capacity(guide_ids.len().min(MAX_RECENT_GUIDES));
 
     for guide_id in guide_ids {
-        if !sanitized.contains(&guide_id) {
+        if seen.insert(guide_id) {
             sanitized.push(guide_id);
         }
+    }
+
+    if sanitized.len() > MAX_RECENT_GUIDES {
+        let overflow = sanitized.len() - MAX_RECENT_GUIDES;
+        sanitized.drain(0..overflow);
     }
 
     sanitized
