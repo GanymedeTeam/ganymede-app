@@ -2,4 +2,4 @@
 "ganymede-app": minor
 ---
 
-Ajoute une note personnelle par étape de guide (locale, non synchronisée).
+Ajoutez une note personnelle sur une étape d'un guide (en local, non synchronisé sur nos serveurs).

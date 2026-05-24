@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { SaveIcon, StickyNoteIcon, TrashIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +10,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert_dialog.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Textarea } from '@/components/ui/textarea.tsx'
@@ -23,59 +22,83 @@ import { stepNotesQuery } from '@/queries/step_notes.query.ts'
 
 const MAX_NOTE_LEN = 1000
 
-export function StepNoteDialog({ guideId, stepIndex }: { guideId: number; stepIndex: number }) {
-  const { t } = useLingui()
+function useHasNote(guideId: number, stepIndex: number) {
   const conf = useSuspenseQuery(confQuery)
   const stepNotes = useSuspenseQuery(stepNotesQuery)
+  const profileId = conf.data.profileInUse
+  const currentNote = getStepNote(stepNotes.data, profileId, guideId, stepIndex) ?? ''
+
+  return { profileId, currentNote, hasNote: currentNote.trim() !== '' }
+}
+
+export function StepNoteDialogTrigger({
+  guideId,
+  stepIndex,
+  onClick,
+}: {
+  guideId: number
+  stepIndex: number
+  onClick: () => void
+}) {
+  const { hasNote } = useHasNote(guideId, stepIndex)
+
+  return (
+    <TooltipProvider delayDuration={400}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button className="size-6 sm:size-8" onClick={onClick} size="icon" variant="ghost">
+            <StickyNoteIcon className={cn(hasNote && 'text-yellow-400')} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{hasNote ? <Trans>Modifier la note</Trans> : <Trans>Ajouter une note</Trans>}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  )
+}
+
+export function StepNoteDialog({
+  guideId,
+  stepIndex,
+  open,
+  onOpenChange,
+}: {
+  guideId: number
+  stepIndex: number
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
+  const { t } = useLingui()
+  const { profileId, currentNote, hasNote } = useHasNote(guideId, stepIndex)
   const setStepNote = useSetStepNote()
-  const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState('')
   const [snapshotHadNote, setSnapshotHadNote] = useState(false)
 
-  const profileId = conf.data.profileInUse
-  const currentNote = getStepNote(stepNotes.data, profileId, guideId, stepIndex) ?? ''
-  const hasNote = currentNote.trim() !== ''
-
-  const handleOpenChange = (next: boolean) => {
-    setOpen(next)
-
-    if (next) {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: snapshot only on open transition
+  useEffect(() => {
+    if (open) {
       setDraft(currentNote)
       setSnapshotHadNote(hasNote)
     } else {
-      setTimeout(() => {
+      const id = setTimeout(() => {
         setDraft('')
         setSnapshotHadNote(false)
       }, 200)
+      return () => clearTimeout(id)
     }
-  }
+  }, [open])
 
   const handleSave = () => {
     setStepNote.mutate({ profileId, guideId, stepIndex, note: draft })
-    setOpen(false)
+    onOpenChange(false)
   }
 
   const handleDelete = () => {
     setStepNote.mutate({ profileId, guideId, stepIndex, note: null })
-    setOpen(false)
+    onOpenChange(false)
   }
 
   return (
-    <AlertDialog onOpenChange={handleOpenChange} open={open}>
-      <TooltipProvider delayDuration={400}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <AlertDialogTrigger asChild>
-              <Button className="size-6 sm:size-8" size="icon" variant="ghost">
-                <StickyNoteIcon className={cn(hasNote && 'text-yellow-400')} />
-              </Button>
-            </AlertDialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent>
-            {hasNote ? <Trans>Modifier la note</Trans> : <Trans>Ajouter une note</Trans>}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <AlertDialog onOpenChange={onOpenChange} open={open}>
       <AlertDialogContent className="max-h-[calc(var(--spacing-app-without-header)-var(--spacing-titlebar)-1rem)] overflow-auto p-3 sm:p-6">
         <AlertDialogHeader>
           <AlertDialogTitle>
