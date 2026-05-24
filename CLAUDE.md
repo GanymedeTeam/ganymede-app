@@ -17,7 +17,7 @@ Ganymède is a Tauri-based desktop application for the game Dofus (by Ankama Gam
 This project uses pnpm. Use pnpm instead of npm.
 
 **Development:**
-- `pnpm tauri dev` - Start development server with Tauri
+- `pnpm tauri dev` - Start development server with Tauri (regenerates Rust TauRPC bindings and restarts on changes)
 - `pnpm dev` - Start Vite dev server only (for frontend-only development)
 
 **Build:**

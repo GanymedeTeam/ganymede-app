@@ -62,7 +62,7 @@ msgstr "Ajouter une note"
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:103
 #: src/routes/_app/guides/-$id/report_dialog.tsx:151
 #: src/routes/_app/guides/-$id/report_dialog.tsx:188
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:125
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:126
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -179,8 +179,8 @@ msgstr "Champ manquant : {0}"
 msgid "Chasse au trésor"
 msgstr "Chasse au trésor"
 
-#: src/routes/_app/guides/index.tsx:81
-#: src/routes/_app/guides/index.tsx:223
+#: src/routes/_app/guides/index.tsx:82
+#: src/routes/_app/guides/index.tsx:236
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
@@ -332,8 +332,8 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:270
-#: src/routes/_app/guides/-index/guide_item.tsx:320
+#: src/routes/_app/guides/-index/guide_item.tsx:333
+#: src/routes/_app/guides/-index/guide_item.tsx:383
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -345,7 +345,7 @@ msgstr "Début"
 msgid "Déconnecté"
 msgstr "Déconnecté"
 
-#: src/routes/_app/guides/index.tsx:297
+#: src/routes/_app/guides/index.tsx:312
 msgid "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgstr "Découvrez et ajoutez de nouveaux guides à votre liste."
 
@@ -356,6 +356,10 @@ msgstr "Décrivez le problème rencontré. L'étape et le guide seront automatiq
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:160
 msgid "Des mises à jour sont disponibles"
 msgstr "Des mises à jour sont disponibles"
+
+#: src/routes/_app/guides/-index/guide_item.tsx:295
+msgid "Désépingler"
+msgstr "Désépingler"
 
 #: src/components/home_footer.tsx:13
 msgid "Discord de Ganymède"
@@ -385,7 +389,7 @@ msgstr "Dynamique (selon la fenêtre)"
 msgid "Échec de l'échange de tokens"
 msgstr "Échec de l'échange de tokens"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:114
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:115
 msgid "Écrivez votre note ici…"
 msgstr "Écrivez votre note ici…"
 
@@ -398,7 +402,7 @@ msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Efface tous vos profils et paramètres (pas les guides)"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:227
-#: src/routes/_app/guides/-index/guide_item.tsx:224
+#: src/routes/_app/guides/-index/guide_item.tsx:262
 msgid "En cours"
 msgstr "En cours"
 
@@ -406,7 +410,7 @@ msgstr "En cours"
 msgid "En cours..."
 msgstr "En cours..."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:137
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:138
 msgid "Enregistrer"
 msgstr "Enregistrer"
 
@@ -421,6 +425,10 @@ msgstr "Envoyer le message"
 #: src/routes/_app/guides/-$id/report_dialog.tsx:84
 msgid "Envoyer un rapport"
 msgstr "Envoyer un rapport"
+
+#: src/routes/_app/guides/-index/guide_item.tsx:300
+msgid "Épingler"
+msgstr "Épingler"
 
 #: src/lib/error_formatter.tsx:679
 #: src/lib/error_formatter.tsx:688
@@ -720,7 +728,7 @@ msgid "Guides"
 msgstr "Guides"
 
 #. placeholder {0}: createPagePath(path)
-#: src/routes/_app/guides/index.tsx:81
+#: src/routes/_app/guides/index.tsx:82
 msgid "Guides {0}"
 msgstr "Guides {0}"
 
@@ -988,6 +996,10 @@ msgstr "Les guides partagés par la communauté"
 msgid "lien masqué"
 msgstr "lien masqué"
 
+#: src/routes/_app/guides/-index/guide_item.tsx:162
+msgid "Limite de {MAX_PINNED_PER_PROFILE} guides épinglés atteinte."
+msgstr "Limite de {MAX_PINNED_PER_PROFILE} guides épinglés atteinte."
+
 #: src/lib/error_formatter.tsx:475
 msgid "Liste des guides malformée"
 msgstr "Liste des guides malformée"
@@ -997,7 +1009,7 @@ msgid "Marquer comme lu"
 msgstr "Marquer comme lu"
 
 #. placeholder {0}: createPagePath(path)
-#: src/routes/_app/guides/index.tsx:223
+#: src/routes/_app/guides/index.tsx:236
 msgid "Mes guides {0}"
 msgstr "Mes guides {0}"
 
@@ -1056,7 +1068,7 @@ msgstr "Nom de la note"
 msgid "Nom du profil mis à jour avec succès."
 msgstr "Nom du profil mis à jour avec succès."
 
-#: src/routes/_app/guides/-index/guide_item.tsx:226
+#: src/routes/_app/guides/-index/guide_item.tsx:264
 msgid "Non commencé"
 msgstr "Non commencé"
 
@@ -1068,11 +1080,11 @@ msgstr "Normale"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:119
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:120
 msgid "Note locale, non synchronisée avec le serveur."
 msgstr "Note locale, non synchronisée avec le serveur."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:104
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:105
 msgid "Note personnelle"
 msgstr "Note personnelle"
 
@@ -1113,7 +1125,7 @@ msgstr "Ouvrir un guide"
 msgid "Paramètres"
 msgstr "Paramètres"
 
-#: src/routes/_app/guides/index.tsx:294
+#: src/routes/_app/guides/index.tsx:309
 msgid "Parcourir le catalogue"
 msgstr "Parcourir le catalogue"
 
@@ -1198,7 +1210,7 @@ msgid "Récapitulatif du message"
 msgstr "Récapitulatif du message"
 
 #: src/routes/_app/downloads/$status.tsx:361
-#: src/routes/_app/guides/index.tsx:241
+#: src/routes/_app/guides/index.tsx:254
 msgid "Rechercher un guide"
 msgstr "Rechercher un guide"
 
@@ -1299,7 +1311,7 @@ msgstr "Supprimer"
 msgid "Supprimer de la liste"
 msgstr "Supprimer de la liste"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:130
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:131
 msgid "Supprimer la note"
 msgstr "Supprimer la note"
 
@@ -1348,7 +1360,7 @@ msgstr "Télécharger le guide"
 msgid "Télécharger un guide"
 msgstr "Télécharger un guide"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:222
+#: src/routes/_app/guides/-index/guide_item.tsx:260
 msgid "Terminé"
 msgstr "Terminé"
 

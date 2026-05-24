@@ -1,17 +1,26 @@
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { cva } from 'class-variance-authority'
-import { FileDownIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
+import { FileDownIcon, PinIcon, PinOffIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
+import { toast } from 'sonner'
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GameIcon } from '@/components/game_icon.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
 import { Card } from '@/components/ui/card.tsx'
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '@/components/ui/context_menu.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { useProfile } from '@/hooks/use_profile.ts'
 import { GameType, Guide, GuidesOrFolder } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { cn } from '@/lib/utils.ts'
+import { MAX_PINNED_PER_PROFILE, useTogglePinnedGuide } from '@/mutations/toggle_pinned_guide.mutation.ts'
 
 type GuideWithFolder = Extract<GuidesOrFolder, { type: 'guide' }> & Pick<GuideWithStepsWithFolder, 'folder'>
 type LocalGuide = GuideWithFolder & { currentStep: number | null }
@@ -22,6 +31,8 @@ type LocalGuideItemProps = {
   isSelected: boolean
   onSelect: (guide: GuideWithFolder) => void
   isSelectMode: boolean
+  isPinned: boolean
+  pinnedCount: number
   intl?: never
   isGuideDownloaded?: never
   currentStep?: never
@@ -36,6 +47,8 @@ type ServerGuideItemProps = {
   isSelected?: never
   onSelect?: never
   isSelectMode?: never
+  isPinned?: never
+  pinnedCount?: never
 }
 
 type GuideItemProps = LocalGuideItemProps | ServerGuideItemProps
@@ -78,11 +91,13 @@ function GuideIcon({
   nodeImage,
   gameType,
   lang,
+  isPinned,
 }: {
   id: number
   nodeImage: string | null
   gameType?: GameType
   lang: string
+  isPinned?: boolean
 }) {
   return (
     <TooltipProvider delayDuration={400}>
@@ -97,6 +112,11 @@ function GuideIcon({
             <div className="absolute top-0.5 left-0.5">
               <FlagPerLang className="size-4" lang={lang} />
             </div>
+            {isPinned && (
+              <div className="absolute top-0.5 right-0.5 flex size-4 items-center justify-center rounded-full bg-accent text-accent-foreground shadow">
+                <PinIcon className="size-2.5" fill="currentColor" />
+              </div>
+            )}
           </div>
         </TooltipTrigger>
         <TooltipContent>ID: {id}</TooltipContent>
@@ -127,14 +147,26 @@ export function GuideItem(props: GuideItemProps) {
   return <ServerGuideItem {...props} />
 }
 
-function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuideItemProps) {
+function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, pinnedCount }: LocalGuideItemProps) {
+  const { t } = useLingui()
+  const profile = useProfile()
+  const togglePinned = useTogglePinnedGuide()
   const totalSteps = guide.steps.length
   const currentStepIndex = guide.currentStep ?? 0
   const step = clamp(currentStepIndex + 1, 1, totalSteps)
   const percentage = Math.round((step / totalSteps) * 100)
   const isFinished = guide.currentStep !== null && guide.currentStep >= totalSteps - 1
 
-  return (
+  const onTogglePin = () => {
+    if (!isPinned && pinnedCount >= MAX_PINNED_PER_PROFILE) {
+      toast.error(t`Limite de ${MAX_PINNED_PER_PROFILE} guides épinglés atteinte.`)
+      return
+    }
+
+    togglePinned.mutate({ profileId: profile.id, guideId: guide.id, pinned: !isPinned })
+  }
+
+  const card = (
     <Card
       aria-selected={isSelected}
       asChild
@@ -152,7 +184,13 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
       }}
     >
       <li>
-        <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
+        <GuideIcon
+          gameType={guide.game_type}
+          id={guide.id}
+          isPinned={isPinned}
+          lang={guide.lang}
+          nodeImage={guide.node_image}
+        />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1.5">
           <TooltipProvider>
@@ -240,6 +278,31 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode }: LocalGuid
         )}
       </li>
     </Card>
+  )
+
+  if (isSelectMode) {
+    return card
+  }
+
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger asChild>{card}</ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem onSelect={onTogglePin}>
+          {isPinned ? (
+            <>
+              <PinOffIcon className="size-4" />
+              <Trans>Désépingler</Trans>
+            </>
+          ) : (
+            <>
+              <PinIcon className="size-4" />
+              <Trans>Épingler</Trans>
+            </>
+          )}
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   )
 }
 

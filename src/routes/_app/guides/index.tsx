@@ -17,6 +17,7 @@ import { rankList } from '@/lib/rank.ts'
 import { OpenedGuideZod } from '@/lib/tabs.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
+import { pinnedGuidesQuery } from '@/queries/pinned_guides.query.ts'
 import { Page } from '@/routes/-page.tsx'
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
 import { ActionsToolbar } from './-index/actions_toolbar.tsx'
@@ -108,6 +109,10 @@ function GuidesPage() {
   const profile = useProfile()
   const guides = useSuspenseQuery(guidesInFolderQuery(path))
   const allGuidesInPath = useSuspenseQuery(guidesQuery(path))
+  const pinnedGuides = useSuspenseQuery(pinnedGuidesQuery)
+  const pinnedIds = new Set(pinnedGuides.data.profiles[profile.id]?.guides ?? [])
+  const pinnedCount = pinnedIds.size
+  const isPinned = (id: number) => pinnedIds.has(id)
 
   const guidesWithCurrentProgression = guides.data
     .map((guide) => {
@@ -123,9 +128,10 @@ function GuidesPage() {
     .filter((guide) => guide !== null)
   const notDoneGuides = conf.data.showDoneGuides
     ? guidesWithCurrentProgression
-    : // Filter out guides that are done (all steps are completed in the profile)
+    : // Filter out guides that are done (all steps are completed in the profile), keep pinned ones visible
       guidesWithCurrentProgression.filter((guide) => {
         if (guide.type === 'folder') return true
+        if (isPinned(guide.id)) return true
 
         return guide.currentStep === null || guide.currentStep < guide.steps.length - 1
       })
@@ -143,13 +149,20 @@ function GuidesPage() {
           }),
           keys: [(guide) => guide.name],
           term: searchTerm,
-          sortKeys: [(guide) => guide.order],
+          sortKeys: [(guide) => (isPinned(guide.id) ? 1 : 2), (guide) => guide.order],
         })
       : rankList({
           list: notDoneGuides,
           keys: [(guide) => guide.name],
           term: searchTerm,
-          sortKeys: [(guide) => (guide.type === 'folder' ? -1 : guide.order)],
+          sortKeys: [
+            (guide) => {
+              if (guide.type === 'folder') return 1
+              if (isPinned(guide.id)) return 2
+              return 3
+            },
+            (guide) => (guide.type === 'folder' ? null : guide.order),
+          ],
         })
 
   const onEnterSelectMode = () => {
@@ -267,10 +280,12 @@ function GuidesPage() {
             return (
               <GuideItem
                 guide={guide}
+                isPinned={isPinned(guide.id)}
                 isSelected={isThisGuideSelected}
                 isSelectMode={isSelect}
                 key={guide.id}
                 onSelect={onSelectGuide}
+                pinnedCount={pinnedCount}
                 variant="local"
               />
             )
