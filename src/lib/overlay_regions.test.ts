@@ -98,6 +98,45 @@ describe('overlay regions', () => {
     expect(collectInteractiveRegions()).toEqual([])
   })
 
+  it('collects visible children of display contents interactive elements', () => {
+    const link = document.createElement('a')
+    link.href = '#'
+    link.style.display = 'contents'
+    setRect(link, new DOMRect(0, 0, 0, 0))
+
+    const label = document.createElement('span')
+    label.textContent = 'Open guide'
+    setRect(label, new DOMRect(20, 30, 80, 12))
+
+    link.append(label)
+    document.body.append(link)
+
+    expect(collectInteractiveRegions()).toEqual([
+      {
+        x: 18,
+        y: 28,
+        width: 84,
+        height: 16,
+      },
+    ])
+  })
+
+  it('ignores display contents interactive elements when their pointer path is hidden', () => {
+    const link = document.createElement('a')
+    link.href = '#'
+    link.style.display = 'contents'
+    link.style.pointerEvents = 'none'
+    setRect(link, new DOMRect(0, 0, 0, 0))
+
+    const label = document.createElement('span')
+    setRect(label, new DOMRect(20, 30, 80, 12))
+
+    link.append(label)
+    document.body.append(link)
+
+    expect(collectInteractiveRegions()).toEqual([])
+  })
+
   it('compares region payloads by value', () => {
     const regions = [{ x: 1, y: 2, width: 3, height: 4 }]
 

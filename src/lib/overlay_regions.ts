@@ -29,6 +29,10 @@ export function isVisible(element: HTMLElement, rect = element.getBoundingClient
     return false
   }
 
+  return hasVisiblePointerPath(element)
+}
+
+function hasVisiblePointerPath(element: HTMLElement) {
   for (let current: HTMLElement | null = element; current !== null; current = current.parentElement) {
     const style = window.getComputedStyle(current)
 
@@ -58,10 +62,24 @@ export function toInteractiveRegion(rect: DOMRect): InteractiveRegion {
 export function collectInteractiveRegions(root: ParentNode = document) {
   const elements = [...root.querySelectorAll<HTMLElement>(OVERLAY_INTERACTIVE_SELECTOR)]
 
-  return elements.flatMap((element) => {
-    const rect = element.getBoundingClientRect()
+  return elements.flatMap(collectInteractiveElementRegions)
+}
 
-    return isVisible(element, rect) ? [toInteractiveRegion(rect)] : []
+function collectInteractiveElementRegions(element: HTMLElement) {
+  const rect = element.getBoundingClientRect()
+
+  if (isVisible(element, rect)) {
+    return [toInteractiveRegion(rect)]
+  }
+
+  if (window.getComputedStyle(element).display !== 'contents' || !hasVisiblePointerPath(element)) {
+    return []
+  }
+
+  return [...element.querySelectorAll<HTMLElement>('*')].flatMap((child) => {
+    const childRect = child.getBoundingClientRect()
+
+    return isVisible(child, childRect) ? [toInteractiveRegion(childRect)] : []
   })
 }
 
