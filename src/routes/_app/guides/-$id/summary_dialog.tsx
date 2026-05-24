@@ -8,14 +8,7 @@ import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideNodeImage } from '@/components/guide_node_image.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { ClearInput } from '@/components/ui/clear_input.tsx'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog.tsx'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.tsx'
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Skeleton } from '@/components/ui/skeleton.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
@@ -64,10 +57,36 @@ function useHasVerticalScroll(element: HTMLElement | null) {
   return useSyncExternalStore(subscribe, getSnapshot)
 }
 
-export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onChangeStep: (step: number) => void }) {
+export function SummaryDialogTrigger({ onClick }: { onClick: () => void }) {
+  return (
+    <TooltipProvider>
+      <Tooltip delayDuration={400}>
+        <TooltipTrigger asChild>
+          <Button className="size-6 sm:size-8" onClick={onClick} size="icon" variant="ghost">
+            <BookTextIcon />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <Trans>Ouvrir le sommaire</Trans>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  )
+}
+
+export function SummaryDialog({
+  guideId,
+  onChangeStep,
+  open,
+  onOpenChange,
+}: {
+  guideId: number
+  onChangeStep: (step: number) => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const [searchTerm, setSearchTerm] = useState('')
-  const [open, setOpen] = useState(false)
   const summary = useQuery({
     ...summaryQuery(guideId),
     enabled: open,
@@ -96,21 +115,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
   }
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
-      <TooltipProvider>
-        <Tooltip delayDuration={400}>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button className="size-6 sm:size-8" size="icon" variant="ghost">
-                <BookTextIcon />
-              </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent>
-            <Trans>Ouvrir le sommaire</Trans>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="flex h-full max-h-[90vh] flex-col">
         <DialogHeader>
           <div className="flex items-center gap-2">
@@ -210,7 +215,7 @@ export function SummaryDialog({ guideId, onChangeStep }: { guideId: number; onCh
                                   key={`${statusText}-${step}`}
                                   onClick={() => {
                                     onChangeStep(step - 1)
-                                    setOpen(false)
+                                    onOpenChange(false)
                                   }}
                                 >
                                   {step}

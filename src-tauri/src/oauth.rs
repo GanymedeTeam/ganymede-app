@@ -309,7 +309,9 @@ fn clean_auth_tokens<R: Runtime>(app_handle: &AppHandle<R>) -> Result<Option<Aut
 }
 
 pub fn is_token_expired(tokens: &AuthTokens) -> bool {
-    let Some(expires_at) = tokens.expires_at else { return false };
+    let Some(expires_at) = tokens.expires_at else {
+        return false;
+    };
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap_or_default()
@@ -337,7 +339,9 @@ pub fn load_auth_tokens<R: Runtime>(
     Ok(Some(tokens))
 }
 
-pub async fn refresh_auth_tokens<R: Runtime>(app_handle: &AppHandle<R>) -> Result<AuthTokens, Error> {
+pub async fn refresh_auth_tokens<R: Runtime>(
+    app_handle: &AppHandle<R>,
+) -> Result<AuthTokens, Error> {
     let tokens = load_auth_tokens(app_handle)?.ok_or(Error::LoadAuth("no tokens".into()))?;
     let refresh_token = tokens
         .refresh_token

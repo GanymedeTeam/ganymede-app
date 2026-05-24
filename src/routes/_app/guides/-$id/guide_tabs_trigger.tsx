@@ -184,7 +184,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                       className={cn(
                         'group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible',
                         !isSmallGuide &&
-                          'xs:mask-gradient-to-left xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-8 xs:items-center xs:justify-end xs:pr-1.5',
+                          'xs:mask-gradient-to-left xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-6 xs:items-center xs:justify-end xs:pr-1.5',
                       )}
                       onClick={async (evt) => {
                         evt.stopPropagation()

@@ -70,7 +70,11 @@ impl Api for ApiImpl {
         let response = match response {
             Err(err) if err.is_connect() || err.is_timeout() => {
                 debug!("[Api] offline, skipping version check");
-                return Ok(IsOld { from: version.to_string(), to: version.to_string(), is_old: false });
+                return Ok(IsOld {
+                    from: version.to_string(),
+                    to: version.to_string(),
+                    is_old: false,
+                });
             }
             Err(err) => return Err(AppVersionError::GitHub(err.to_string())),
             Ok(r) => r,

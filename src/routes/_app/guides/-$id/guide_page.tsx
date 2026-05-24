@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { GuideFrame } from '@/components/guide_frame.tsx'
 import { Position } from '@/components/position.tsx'
@@ -15,8 +15,10 @@ import { queueProgressSync } from '@/lib/sync_progress_queue.ts'
 import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { ReportDialog } from './report_dialog.tsx'
-import { SummaryDialog } from './summary_dialog.tsx'
+import { GuideActionsDropdown } from '@/routes/_app/guides/-$id/guide_actions_dropdown.tsx'
+import { ReportDialog, ReportDialogTrigger } from './report_dialog.tsx'
+import { StepNoteDialog, StepNoteDialogTrigger } from './step_note_dialog.tsx'
+import { SummaryDialog, SummaryDialogTrigger } from './summary_dialog.tsx'
 
 const useOnCopyStep = (cb: () => void) => {
   useEffect(() => {
@@ -38,6 +40,12 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
   const conf = useSuspenseQuery(confQuery)
   const setConf = useSetConf()
   const navigate = useNavigate()
+  const [noteOpen, setNoteOpen] = useState(false)
+  const [summaryOpen, setSummaryOpen] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
+
+  const showSummary = guide.game_type !== 'wakfu'
+  const showReport = guide.status === 'gp' || guide.status === 'certified'
 
   useScrollToTop(scrollableRef, [step])
 
@@ -175,16 +183,38 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
               </div>
 
               {/* Right Side - Fixed width to maintain center balance */}
-              <div className="flex w-14 shrink-0 items-center justify-end gap-1 pr-1">
-                {guide.game_type !== 'wakfu' && <SummaryDialog guideId={guide.id} onChangeStep={onChangeStep} />}
-                {(guide.status === 'gp' || guide.status === 'certified') && (
-                  <ReportDialog guideId={guide.id} stepIndex={index} />
-                )}
+              <div className="xs:flex hidden w-20 shrink-0 items-center justify-end pr-1 sm:w-24">
+                <StepNoteDialogTrigger guideId={guide.id} onClick={() => setNoteOpen(true)} stepIndex={index} />
+                {showSummary && <SummaryDialogTrigger onClick={() => setSummaryOpen(true)} />}
+                {showReport && <ReportDialogTrigger onClick={() => setReportOpen(true)} />}
+              </div>
+              <div className="flex xs:hidden w-fit shrink-0 items-center justify-end pr-1">
+                <GuideActionsDropdown
+                  guideId={guide.id}
+                  onOpenNote={() => setNoteOpen(true)}
+                  onOpenReport={() => setReportOpen(true)}
+                  onOpenSummary={() => setSummaryOpen(true)}
+                  showReport={showReport}
+                  showSummary={showSummary}
+                  stepIndex={index}
+                />
               </div>
             </>
           )}
         </div>
       </header>
+      <StepNoteDialog guideId={guide.id} onOpenChange={setNoteOpen} open={noteOpen} stepIndex={index} />
+      {showSummary && (
+        <SummaryDialog
+          guideId={guide.id}
+          onChangeStep={onChangeStep}
+          onOpenChange={setSummaryOpen}
+          open={summaryOpen}
+        />
+      )}
+      {showReport && (
+        <ReportDialog guideId={guide.id} onOpenChange={setReportOpen} open={reportOpen} stepIndex={index} />
+      )}
       {step && (
         <GuideFrame
           className={cn(

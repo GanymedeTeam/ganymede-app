@@ -21,7 +21,34 @@ import { Textarea } from '@/components/ui/textarea.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useSendReport } from '@/mutations/send_report.mutation.ts'
 
-export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepIndex: number }) {
+export function ReportDialogTrigger({ onClick }: { onClick: () => void }) {
+  return (
+    <TooltipProvider delayDuration={400}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button className="size-6 sm:size-8" onClick={onClick} size="icon" variant="ghost">
+            <BugIcon />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <Trans>Rapporter un problème</Trans>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  )
+}
+
+export function ReportDialog({
+  guideId,
+  stepIndex,
+  open,
+  onOpenChange,
+}: {
+  guideId: number
+  stepIndex: number
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const [username, setUsername] = useState('')
   const [content, setContent] = useState('')
@@ -38,33 +65,20 @@ export function ReportDialog({ guideId, stepIndex }: { guideId: number; stepInde
     })
   }
 
+  const handleOpenChange = (next: boolean) => {
+    onOpenChange(next)
+    if (!next) {
+      setTimeout(() => {
+        sendReport.reset()
+        setUsername('')
+        setContent('')
+      }, 200)
+    }
+  }
+
   return (
     <>
-      <AlertDialog
-        onOpenChange={(open) => {
-          if (!open) {
-            setTimeout(() => {
-              sendReport.reset()
-              setUsername('')
-              setContent('')
-            }, 200)
-          }
-        }}
-      >
-        <TooltipProvider delayDuration={400}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <AlertDialogTrigger asChild>
-                <Button className="size-6 sm:size-8" size="icon" variant="ghost">
-                  <BugIcon />
-                </Button>
-              </AlertDialogTrigger>
-            </TooltipTrigger>
-            <TooltipContent>
-              <Trans>Rapporter un problème</Trans>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <AlertDialog onOpenChange={handleOpenChange} open={open}>
         <AlertDialogContent className="max-h-[calc(var(--spacing-app-without-header)-var(--spacing-titlebar)-1rem)] overflow-auto p-3 sm:p-6">
           <AlertDialogTitle>
             <Trans>Envoyer un rapport</Trans>
