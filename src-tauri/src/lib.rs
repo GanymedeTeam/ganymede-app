@@ -11,6 +11,7 @@ use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
+use crate::pinned_guides::{PinnedGuidesApi, PinnedGuidesApiImpl};
 use crate::step_notes::{StepNotesApi, StepNotesApiImpl};
 use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::sync::{SyncApi, SyncApiImpl};
@@ -39,6 +40,7 @@ mod item;
 mod json;
 mod notifications;
 mod oauth;
+mod pinned_guides;
 mod quest;
 mod report;
 mod security;
@@ -167,7 +169,8 @@ pub fn run() {
         .merge(UserApiImpl.into_handler())
         .merge(ShortcutsApiImpl.into_handler())
         .merge(SyncApiImpl.into_handler())
-        .merge(StepNotesApiImpl.into_handler());
+        .merge(StepNotesApiImpl.into_handler())
+        .merge(PinnedGuidesApiImpl.into_handler());
 
     #[cfg(not(debug_assertions))]
     add_breadcrumb(Breadcrumb {
@@ -207,6 +210,12 @@ pub fn run() {
 
         if let Err(err) = step_notes::ensure_step_notes_file(app.handle()) {
             error!("[Lib] failed to ensure step notes: {:?}", err);
+            #[cfg(not(debug_assertions))]
+            capture_error(&err);
+        }
+
+        if let Err(err) = pinned_guides::ensure_pinned_guides_file(app.handle()) {
+            error!("[Lib] failed to ensure pinned guides: {:?}", err);
             #[cfg(not(debug_assertions))]
             capture_error(&err);
         }

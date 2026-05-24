@@ -70,7 +70,13 @@ export type OAuthError = { OpenBrowser: string } | { SaveAuth: string } | { Load
 
 export type OpenGuideStep = { step: number; progressionStep: number | null }
 
+export type PinnedGuides = { profiles: Partial<{ [key in string]: ProfilePinnedGuides }> }
+
+export type PinnedGuidesError = { Malformed: JsonError } | { CreateDir: string } | { ConfDir: string } | { SerializePinnedGuides: JsonError } | { UnhandledIo: string } | { SavePinnedGuides: string } | "LimitReached"
+
 export type Profile = { id: string; name: string; level?: number; progresses: Progress[]; server_id?: number | null }
+
+export type ProfilePinnedGuides = { guides: number[] }
 
 export type ProfileStepNotes = { guides: Partial<{ [key in number]: GuideStepNotes }> }
 
@@ -116,7 +122,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -155,6 +161,9 @@ getAuthTokens: () => Promise<AuthTokens | null>,
 onJwtExpired: () => Promise<void>, 
 onOAuthFlowEnd: () => Promise<void>, 
 startOAuthFlow: () => Promise<null>},
+"pinnedGuides": {get: () => Promise<PinnedGuides>, 
+pinGuide: (profileId: string, guideId: number) => Promise<null>, 
+unpinGuide: (profileId: string, guideId: number) => Promise<null>},
 "report": {send_report: (payload: ReportPayload) => Promise<null>},
 "security": {getWhiteList: () => Promise<string[]>},
 "shortcuts": {reregister: () => Promise<null>},

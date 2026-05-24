@@ -62,7 +62,7 @@ msgstr "Añadir una nota"
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:103
 #: src/routes/_app/guides/-$id/report_dialog.tsx:151
 #: src/routes/_app/guides/-$id/report_dialog.tsx:188
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:125
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:126
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -179,8 +179,8 @@ msgstr "Campo que falta: {0}"
 msgid "Chasse au trésor"
 msgstr "Búsqueda del tesoro"
 
-#: src/routes/_app/guides/index.tsx:81
-#: src/routes/_app/guides/index.tsx:223
+#: src/routes/_app/guides/index.tsx:82
+#: src/routes/_app/guides/index.tsx:236
 msgid "Choisissez un guide"
 msgstr "Elija una guía"
 
@@ -332,8 +332,8 @@ msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !
 msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:270
-#: src/routes/_app/guides/-index/guide_item.tsx:320
+#: src/routes/_app/guides/-index/guide_item.tsx:333
+#: src/routes/_app/guides/-index/guide_item.tsx:383
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -345,7 +345,7 @@ msgstr "Inicio"
 msgid "Déconnecté"
 msgstr "Desconectado"
 
-#: src/routes/_app/guides/index.tsx:297
+#: src/routes/_app/guides/index.tsx:312
 msgid "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgstr "Descubre y añade nuevas guías a tu lista."
 
@@ -356,6 +356,10 @@ msgstr "Describe el problema encontrado. El paso y la guía se incluirán autom�
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:160
 msgid "Des mises à jour sont disponibles"
 msgstr "Actualizaciones disponibles"
+
+#: src/routes/_app/guides/-index/guide_item.tsx:295
+msgid "Désépingler"
+msgstr "Desanclar"
 
 #: src/components/home_footer.tsx:13
 msgid "Discord de Ganymède"
@@ -385,7 +389,7 @@ msgstr "Dinámica (según la ventana)"
 msgid "Échec de l'échange de tokens"
 msgstr "Error en el intercambio de tokens"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:114
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:115
 msgid "Écrivez votre note ici…"
 msgstr "Escribe aquí tu nota…"
 
@@ -398,7 +402,7 @@ msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos los perfiles y ajustes (no las guías)"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:227
-#: src/routes/_app/guides/-index/guide_item.tsx:224
+#: src/routes/_app/guides/-index/guide_item.tsx:262
 msgid "En cours"
 msgstr "En progreso"
 
@@ -406,7 +410,7 @@ msgstr "En progreso"
 msgid "En cours..."
 msgstr "En progreso..."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:137
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:138
 msgid "Enregistrer"
 msgstr "Guardar"
 
@@ -421,6 +425,10 @@ msgstr "Enviar mensaje"
 #: src/routes/_app/guides/-$id/report_dialog.tsx:84
 msgid "Envoyer un rapport"
 msgstr "Enviar un informe"
+
+#: src/routes/_app/guides/-index/guide_item.tsx:300
+msgid "Épingler"
+msgstr "Anclar"
 
 #: src/lib/error_formatter.tsx:679
 #: src/lib/error_formatter.tsx:688
@@ -720,7 +728,7 @@ msgid "Guides"
 msgstr "Guías"
 
 #. placeholder {0}: createPagePath(path)
-#: src/routes/_app/guides/index.tsx:81
+#: src/routes/_app/guides/index.tsx:82
 msgid "Guides {0}"
 msgstr "Guías {0}"
 
@@ -988,6 +996,10 @@ msgstr "Guías compartidas por la comunidad"
 msgid "lien masqué"
 msgstr "enlace oculto"
 
+#: src/routes/_app/guides/-index/guide_item.tsx:162
+msgid "Limite de {MAX_PINNED_PER_PROFILE} guides épinglés atteinte."
+msgstr "Se ha alcanzado el límite de {MAX_PINNED_PER_PROFILE} guías ancladas."
+
 #: src/lib/error_formatter.tsx:475
 msgid "Liste des guides malformée"
 msgstr "Lista de guías mal formada"
@@ -997,7 +1009,7 @@ msgid "Marquer comme lu"
 msgstr "Marcar como leído"
 
 #. placeholder {0}: createPagePath(path)
-#: src/routes/_app/guides/index.tsx:223
+#: src/routes/_app/guides/index.tsx:236
 msgid "Mes guides {0}"
 msgstr "Mis guías {0}"
 
@@ -1056,7 +1068,7 @@ msgstr "Nombre de la nota"
 msgid "Nom du profil mis à jour avec succès."
 msgstr "Nombre del perfil actualizado correctamente."
 
-#: src/routes/_app/guides/-index/guide_item.tsx:226
+#: src/routes/_app/guides/-index/guide_item.tsx:264
 msgid "Non commencé"
 msgstr "No iniciado"
 
@@ -1068,11 +1080,11 @@ msgstr "Normal"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Los atajos ya utilizados por otras aplicaciones (AMD Adrenalin, Nvidia App, etc.) no se pueden registrar. Elimínelos primero en esas aplicaciones."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:119
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:120
 msgid "Note locale, non synchronisée avec le serveur."
 msgstr "Nota local, no sincronizada con el servidor."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:104
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:105
 msgid "Note personnelle"
 msgstr "Nota personal"
 
@@ -1113,7 +1125,7 @@ msgstr "Abrir una guía"
 msgid "Paramètres"
 msgstr "Configuraciones"
 
-#: src/routes/_app/guides/index.tsx:294
+#: src/routes/_app/guides/index.tsx:309
 msgid "Parcourir le catalogue"
 msgstr "Explorar el catálogo"
 
@@ -1198,7 +1210,7 @@ msgid "Récapitulatif du message"
 msgstr "Resumen del mensaje"
 
 #: src/routes/_app/downloads/$status.tsx:361
-#: src/routes/_app/guides/index.tsx:241
+#: src/routes/_app/guides/index.tsx:254
 msgid "Rechercher un guide"
 msgstr "Buscar una guía"
 
@@ -1299,7 +1311,7 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Eliminar de la lista"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:130
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:131
 msgid "Supprimer la note"
 msgstr "Eliminar la nota"
 
@@ -1348,7 +1360,7 @@ msgstr "Descargar la guía"
 msgid "Télécharger un guide"
 msgstr "Descargar una guía"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:222
+#: src/routes/_app/guides/-index/guide_item.tsx:260
 msgid "Terminé"
 msgstr "Completado"
 
