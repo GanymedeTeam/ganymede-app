@@ -32,6 +32,10 @@ msgstr "{totalNotifications, plural, one {Mensaje del equipo} other {Mensajes de
 msgid "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</1></0>"
 msgstr "<0>Encontrarás las notas de versión en nuestro Discord <1>#changelog</1></0>"
 
+#: src/routes/_app/guides/-index/guide_item.tsx:322
+#~ msgid "Ã‰pingler"
+#~ msgstr ""
+
 #: src/components/welcome_card.tsx:55
 msgid "Accéder au site officiel"
 msgstr "Acceder al sitio oficial"
@@ -331,9 +335,13 @@ msgstr "Crear una nueva nota"
 msgid "Créez vos guides via le site officiel et téléchargez ceux des autres !"
 msgstr "¡Crea tus guías en el sitio oficial y descarga las de otros!"
 
+#: src/routes/_app/guides/-index/guide_item.tsx:317
+#~ msgid "DÃ©sÃ©pingler"
+#~ msgstr ""
+
 #. placeholder {0}: guide.user.name
-#: src/routes/_app/guides/-index/guide_item.tsx:329
-#: src/routes/_app/guides/-index/guide_item.tsx:379
+#: src/routes/_app/guides/-index/guide_item.tsx:350
+#: src/routes/_app/guides/-index/guide_item.tsx:384
 msgid "de <0>{0}</0>"
 msgstr "de <0>{0}</0>"
 
@@ -357,7 +365,7 @@ msgstr "Describe el problema encontrado. El paso y la guía se incluirán autom�
 msgid "Des mises à jour sont disponibles"
 msgstr "Actualizaciones disponibles"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:291
+#: src/routes/_app/guides/-index/guide_item.tsx:317
 msgid "Désépingler"
 msgstr "Desanclar"
 
@@ -402,7 +410,7 @@ msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Elimina todos los perfiles y ajustes (no las guías)"
 
 #: src/routes/_app/guides/-$id/summary_dialog.tsx:230
-#: src/routes/_app/guides/-index/guide_item.tsx:258
+#: src/routes/_app/guides/-index/guide_item.tsx:289
 msgid "En cours"
 msgstr "En progreso"
 
@@ -426,7 +434,7 @@ msgstr "Enviar mensaje"
 msgid "Envoyer un rapport"
 msgstr "Enviar un informe"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:296
+#: src/routes/_app/guides/-index/guide_item.tsx:322
 msgid "Épingler"
 msgstr "Anclar"
 
@@ -1000,7 +1008,11 @@ msgstr "Guías compartidas por la comunidad"
 msgid "lien masqué"
 msgstr "enlace oculto"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:158
+#: src/routes/_app/guides/-index/guide_item.tsx:215
+#~ msgid "Limite de {MAX_PINNED_PER_PROFILE} guides Ã©pinglÃ©s atteinte."
+#~ msgstr ""
+
+#: src/routes/_app/guides/-index/guide_item.tsx:215
 msgid "Limite de {MAX_PINNED_PER_PROFILE} guides épinglés atteinte."
 msgstr "Se ha alcanzado el límite de {MAX_PINNED_PER_PROFILE} guías ancladas."
 
@@ -1076,7 +1088,7 @@ msgstr "Nombre de la nota"
 msgid "Nom du profil mis à jour avec succès."
 msgstr "Nombre del perfil actualizado correctamente."
 
-#: src/routes/_app/guides/-index/guide_item.tsx:260
+#: src/routes/_app/guides/-index/guide_item.tsx:291
 msgid "Non commencé"
 msgstr "No iniciado"
 
@@ -1368,7 +1380,7 @@ msgstr "Descargar la guía"
 msgid "Télécharger un guide"
 msgstr "Descargar una guía"
 
-#: src/routes/_app/guides/-index/guide_item.tsx:256
+#: src/routes/_app/guides/-index/guide_item.tsx:287
 msgid "Terminé"
 msgstr "Completado"
 

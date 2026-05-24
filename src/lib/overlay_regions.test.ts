@@ -70,6 +70,34 @@ describe('overlay regions', () => {
     ])
   })
 
+  it('collects ARIA tab triggers as interactive elements', () => {
+    const tab = document.createElement('div')
+    tab.role = 'tab'
+    setRect(tab, new DOMRect(4, 8, 120, 24))
+
+    document.body.append(tab)
+
+    expect(collectInteractiveRegions()).toEqual([
+      {
+        x: 2,
+        y: 6,
+        width: 124,
+        height: 28,
+      },
+    ])
+  })
+
+  it('ignores disabled ARIA interactive elements', () => {
+    const tab = document.createElement('div')
+    tab.role = 'tab'
+    tab.setAttribute('aria-disabled', 'true')
+    setRect(tab, new DOMRect(4, 8, 120, 24))
+
+    document.body.append(tab)
+
+    expect(collectInteractiveRegions()).toEqual([])
+  })
+
   it('compares region payloads by value', () => {
     const regions = [{ x: 1, y: 2, width: 3, height: 4 }]
 
