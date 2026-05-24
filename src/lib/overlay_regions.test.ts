@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   areInteractiveRegionsEqual,
   collectInteractiveRegions,
@@ -10,7 +10,16 @@ function setRect(element: HTMLElement, rect: DOMRect) {
   element.getBoundingClientRect = () => rect
 }
 
+function mockTextRects(...rects: DOMRect[]) {
+  vi.spyOn(document, 'createRange').mockReturnValue({
+    detach: vi.fn(),
+    getClientRects: () => rects as unknown as DOMRectList,
+    selectNodeContents: vi.fn(),
+  } as unknown as Range)
+}
+
 afterEach(() => {
+  vi.restoreAllMocks()
   document.body.replaceChildren()
   Object.defineProperty(window, 'devicePixelRatio', {
     configurable: true,
@@ -117,6 +126,36 @@ describe('overlay regions', () => {
         y: 28,
         width: 84,
         height: 16,
+      },
+    ])
+  })
+
+  it('collects text nodes of display contents interactive elements', () => {
+    mockTextRects(new DOMRect(40, 30, 72, 14))
+
+    const link = document.createElement('a')
+    link.href = '#'
+    link.style.display = 'contents'
+    setRect(link, new DOMRect(0, 0, 0, 0))
+
+    const icon = document.createElement('img')
+    setRect(icon, new DOMRect(20, 30, 12, 12))
+
+    link.append(icon, document.createTextNode(' Open guide'))
+    document.body.append(link)
+
+    expect(collectInteractiveRegions()).toEqual([
+      {
+        x: 18,
+        y: 28,
+        width: 16,
+        height: 16,
+      },
+      {
+        x: 38,
+        y: 28,
+        width: 76,
+        height: 18,
       },
     ])
   })

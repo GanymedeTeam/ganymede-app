@@ -76,10 +76,54 @@ function collectInteractiveElementRegions(element: HTMLElement) {
     return []
   }
 
-  return [...element.querySelectorAll<HTMLElement>('*')].flatMap((child) => {
-    const childRect = child.getBoundingClientRect()
+  return collectVisibleContentRegions(element)
+}
 
-    return isVisible(child, childRect) ? [toInteractiveRegion(childRect)] : []
+function collectVisibleContentRegions(root: HTMLElement) {
+  const regions: InteractiveRegion[] = []
+
+  collectVisibleContentRegionsFromNode(root, regions)
+
+  return regions
+}
+
+function collectVisibleContentRegionsFromNode(root: ParentNode, regions: InteractiveRegion[]) {
+  root.childNodes.forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as HTMLElement
+      const rect = element.getBoundingClientRect()
+
+      if (isVisible(element, rect)) {
+        regions.push(toInteractiveRegion(rect))
+      }
+
+      if (hasVisiblePointerPath(element)) {
+        collectVisibleContentRegionsFromNode(element, regions)
+      }
+
+      return
+    }
+
+    if (node.nodeType !== Node.TEXT_NODE || node.textContent?.trim() === '') {
+      return
+    }
+
+    const parent = node.parentElement
+
+    if (!parent || !hasVisiblePointerPath(parent)) {
+      return
+    }
+
+    const range = document.createRange()
+    range.selectNodeContents(node)
+
+    for (const rect of range.getClientRects()) {
+      if (rect.width > 0 && rect.height > 0) {
+        regions.push(toInteractiveRegion(rect))
+      }
+    }
+
+    range.detach()
   })
 }
 
