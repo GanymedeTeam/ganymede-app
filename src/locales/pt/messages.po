@@ -285,7 +285,7 @@ msgid "Copie d'autopilote"
 msgstr "Cópia do piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:163
+#: src/routes/_app/guides/-$id/guide_page.tsx:164
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "A copiar o número da etapa ({0})..."
 
@@ -596,12 +596,12 @@ msgstr "Erro JSON"
 msgid "Erreur JSON inconnue"
 msgstr "Erro JSON desconhecido"
 
-#: src/routes/_app/guides/-$id/guide_page.tsx:69
+#: src/routes/_app/guides/-$id/guide_page.tsx:70
 msgid "Erreur lors de la copie automatique de la position."
 msgstr ""
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:162
+#: src/routes/_app/guides/-$id/guide_page.tsx:163
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Erro ao copiar o número da etapa ({0})."
 
@@ -981,7 +981,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "O nome do perfil não pode estar vazio."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:161
+#: src/routes/_app/guides/-$id/guide_page.tsx:162
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "O número da etapa ({0}) foi copiado para a área de transferência."
 

@@ -285,7 +285,7 @@ msgid "Copie d'autopilote"
 msgstr "Autopilot copy"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:163
+#: src/routes/_app/guides/-$id/guide_page.tsx:164
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copying step number ({0})..."
 
@@ -596,12 +596,12 @@ msgstr "JSON error"
 msgid "Erreur JSON inconnue"
 msgstr "Unknown JSON error"
 
-#: src/routes/_app/guides/-$id/guide_page.tsx:69
+#: src/routes/_app/guides/-$id/guide_page.tsx:70
 msgid "Erreur lors de la copie automatique de la position."
 msgstr ""
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:162
+#: src/routes/_app/guides/-$id/guide_page.tsx:163
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error copying step number ({0})."
 
@@ -981,7 +981,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "Profile name cannot be empty."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:161
+#: src/routes/_app/guides/-$id/guide_page.tsx:162
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "The step number ({0}) has been copied to the clipboard."
 
