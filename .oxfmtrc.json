@@ -14,8 +14,8 @@
   "endOfLine": "lf",
   "insertFinalNewline": true,
   "singleAttributePerLine": false,
-  "sortImports": false,
+  "sortImports": true,
   "sortPackageJson": false,
-  "sortTailwindcss": false,
+  "sortTailwindcss": true,
   "ignorePatterns": ["dist/**", "src-tauri/**", "node_modules/**", ".claude/**", "src/routeTree.gen.ts"]
 }

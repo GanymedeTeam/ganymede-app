@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise } from 'neverthrow'
 import { ComponentProps } from 'react'
+
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { taurpc } from '@/ipc/ipc.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'

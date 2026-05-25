@@ -6,6 +6,7 @@ import { TriangleAlertIcon } from 'lucide-react'
 import { type PropsWithChildren, type ReactNode, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { SelectLangLabel, SelectLangSelect } from '@/components/select_lang.tsx'
@@ -26,8 +27,9 @@ import { useNewId } from '@/mutations/new_id.mutation.ts'
 import { useReregisterShortcuts } from '@/mutations/reregister_shortcuts.mutation.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
-import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
 import { Page } from '@/routes/-page.tsx'
+import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
+
 import { BackButtonLink } from './downloads/-back_button_link.tsx'
 
 const SearchZod = z.object({
@@ -72,7 +74,7 @@ function SettingCard({
         <CardTitle>{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
-      <CardContent className="flex flex-col gap-4 xs:pt-2" id={id}>
+      <CardContent className="xs:pt-2 flex flex-col gap-4" id={id}>
         {children}
       </CardContent>
     </Card>
@@ -189,7 +191,7 @@ function Settings() {
               />
             </SettingCardSection>
             <SettingCardSection id="section-font-size">
-              <p className="font-medium text-xs leading-none">
+              <p className="text-xs leading-none font-medium">
                 <Trans>Taille de texte des guides</Trans>
               </p>
               <Select
@@ -224,7 +226,7 @@ function Settings() {
               </Select>
             </SettingCardSection>
             <SettingCardSection id="section-guide-display">
-              <p className="font-medium text-xs leading-none">
+              <p className="text-xs leading-none font-medium">
                 <Trans>Affichage des guides</Trans>
               </p>
               <Select

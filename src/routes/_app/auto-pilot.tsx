@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { CopyIcon, PlusIcon, TrashIcon } from 'lucide-react'
+
 import { BottomBar } from '@/components/bottom_bar.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
