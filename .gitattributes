@@ -1,1 +1,17 @@
+*.css text eol=lf
+*.cts text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+*.jsx text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+*.mts text eol=lf
+*.po text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
 src-tauri/src/lib.rs whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
