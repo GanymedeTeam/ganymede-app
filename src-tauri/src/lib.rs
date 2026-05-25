@@ -95,6 +95,9 @@ fn formatter(file: &Path) -> io::Result<()> {
             ),
         ));
     }
+    let file = file
+        .canonicalize()
+        .map_err(|err| io::Error::new(io::ErrorKind::NotFound, err))?;
     let config = root.join(".oxfmtrc.json");
     if !config.exists() {
         return Err(io::Error::new(
@@ -107,7 +110,7 @@ fn formatter(file: &Path) -> io::Result<()> {
         .arg("--config")
         .arg(config)
         .arg("--write")
-        .arg(file)
+        .arg(&file)
         .output()?;
     if output.status.success() {
         return Ok(());
