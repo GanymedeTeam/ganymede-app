@@ -62,6 +62,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
     if (conf.data.autoTravelCopyOnStepChange) {
       const copySource = conf.data.autoTravelStepSource ?? 'Current'
       const stepToCopyIndex = copySource === 'Next' ? clampedStep + 1 : clampedStep
+      // On the last step, "Next" intentionally falls back to the current clamped step.
       const stepToCopy = guide.steps[stepToCopyIndex] ?? guide.steps[clampedStep]
 
       if (hasValidMap(stepToCopy)) {
