@@ -11,6 +11,22 @@ import {
 import { confQuery } from '@/queries/conf.query.ts'
 
 const SYNC_THROTTLE_MS = 100
+const OVERLAY_LAYOUT_ATTRIBUTES = new Set(['class', 'style'])
+const OVERLAY_SYNC_ATTRIBUTES = new Set([
+  'aria-hidden',
+  'class',
+  'data-disabled',
+  'data-overlay-interactive',
+  'data-radix-popper-content-wrapper',
+  'data-sonner-toaster',
+  'data-state',
+  'disabled',
+  'hidden',
+  'href',
+  'role',
+  'style',
+  'type',
+])
 
 function hasInteractiveCandidate(node: Node) {
   return (
@@ -21,7 +37,17 @@ function hasInteractiveCandidate(node: Node) {
 
 function shouldSyncForMutation(mutation: MutationRecord) {
   if (mutation.type === 'attributes') {
-    return mutation.target instanceof HTMLElement
+    const attributeName = mutation.attributeName
+
+    if (attributeName === null || !OVERLAY_SYNC_ATTRIBUTES.has(attributeName)) {
+      return false
+    }
+
+    if (OVERLAY_LAYOUT_ATTRIBUTES.has(attributeName)) {
+      return mutation.target instanceof HTMLElement && mutation.target.matches(OVERLAY_INTERACTIVE_SELECTOR)
+    }
+
+    return hasInteractiveCandidate(mutation.target)
   }
 
   return (
@@ -112,21 +138,7 @@ export function useOverlaySync() {
       subtree: true,
       childList: true,
       attributes: true,
-      attributeFilter: [
-        'aria-hidden',
-        'class',
-        'data-disabled',
-        'data-overlay-interactive',
-        'data-radix-popper-content-wrapper',
-        'data-sonner-toaster',
-        'data-state',
-        'disabled',
-        'hidden',
-        'href',
-        'role',
-        'style',
-        'type',
-      ],
+      attributeFilter: [...OVERLAY_SYNC_ATTRIBUTES],
     })
     resizeObserver.observe(document.body)
     window.addEventListener('resize', scheduleSync)

@@ -252,12 +252,10 @@ pub fn run() {
         if let Err(err) = app.state::<OverlayManager>().install_on_main_window(app.handle()) {
             error!("[Lib] failed to install overlay manager: {}", err);
         }
-        app.state::<OverlayManager>()
-            .start_cursor_tracking(app.handle());
-
         if let Ok(conf) = conf::get_conf(app.handle()) {
             app.state::<OverlayManager>().set_enabled(conf.overlay_mode);
         }
+        app.state::<OverlayManager>().start_cursor_tracking(app.handle());
 
         handle_first_start_setup(app.handle().clone());
 
