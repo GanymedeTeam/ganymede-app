@@ -8,13 +8,13 @@ import { summaryQuery } from '@/queries/summary.query.ts'
 /**
  * Get the Data from the ResultAsync
  */
-// biome-ignore lint/suspicious/noExplicitAny: needed
+// oxlint-disable-next-line typescript/no-explicit-any -- needed
 type ResultAsyncData<T> = T extends ResultAsync<infer R, any> ? R : never
 
 /**
  * Get the Error from the ResultAsync
  */
-// biome-ignore lint/suspicious/noExplicitAny: needed
+// oxlint-disable-next-line typescript/no-explicit-any -- needed
 type ResultAsyncError<T> = T extends ResultAsync<any, infer R> ? R : never
 
 export function useUpdateAllAtOnce(

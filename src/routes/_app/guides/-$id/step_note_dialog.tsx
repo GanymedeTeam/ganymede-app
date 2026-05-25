@@ -73,7 +73,7 @@ export function StepNoteDialog({
   const [draft, setDraft] = useState('')
   const [snapshotHadNote, setSnapshotHadNote] = useState(false)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: snapshot only on open transition
+  // oxlint-disable react/exhaustive-deps -- snapshot only on open transition
   useEffect(() => {
     if (open) {
       setDraft(currentNote)
@@ -86,6 +86,7 @@ export function StepNoteDialog({
       return () => clearTimeout(id)
     }
   }, [open])
+  // oxlint-enable react/exhaustive-deps
 
   const handleSave = () => {
     setStepNote.mutate({ profileId, guideId, stepIndex, note: draft })

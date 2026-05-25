@@ -19,6 +19,11 @@ use crate::user::{UserApi, UserApiImpl};
 use crate::window_manager::WindowManager;
 use log::{error, info, LevelFilter};
 use report::{ReportApi, ReportApiImpl};
+use std::{
+    io,
+    path::{Path, PathBuf},
+    process::Command,
+};
 use tauri::Manager;
 use tauri_plugin_http::reqwest;
 use tauri_plugin_log::{Target, TargetKind};
@@ -64,14 +69,63 @@ const LOG_TARGETS: [Target; 2] = [
     Target::new(TargetKind::LogDir { file_name: None }),
 ];
 
-fn formatter(file: &std::path::Path) -> std::io::Result<()> {
-    std::process::Command::new("pnpm")
-        .arg("biome")
-        .arg("format")
+fn repo_root() -> PathBuf {
+    let mut root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    root.pop();
+    root
+}
+
+fn oxfmt_binary(root: &Path) -> PathBuf {
+    let mut binary = root.to_path_buf();
+    binary.push("node_modules");
+    binary.push(".bin");
+    binary.push(if cfg!(windows) { "oxfmt.cmd" } else { "oxfmt" });
+    binary
+}
+
+fn formatter(file: &Path) -> io::Result<()> {
+    let root = repo_root();
+    let binary = oxfmt_binary(&root);
+    if !binary.exists() {
+        return Err(io::Error::new(
+            io::ErrorKind::NotFound,
+            format!(
+                "OXC formatter not found at {}. Run `pnpm install` before exporting TauRPC bindings.",
+                binary.display()
+            ),
+        ));
+    }
+    let config = root.join(".oxfmtrc.json");
+    if !config.exists() {
+        return Err(io::Error::new(
+            io::ErrorKind::NotFound,
+            format!("OXC formatter config not found at {}.", config.display()),
+        ));
+    }
+
+    let output = Command::new(&binary)
+        .arg("--config")
+        .arg(config)
+        .arg("--write")
         .arg(file)
-        .output()
-        .map(|_| ())
-        .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
+        .output()?;
+    if output.status.success() {
+        return Ok(());
+    }
+
+    let stderr = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+    let stdout = String::from_utf8_lossy(&output.stdout).trim().to_owned();
+    let detail = if stderr.is_empty() { stdout } else { stderr };
+    let suffix = if detail.is_empty() {
+        ".".to_string()
+    } else {
+        format!(": {detail}")
+    };
+
+    Err(io::Error::new(
+        io::ErrorKind::Other,
+        format!("OXC formatter failed for {}{suffix}", file.display()),
+    ))
 }
 
 // Asserts that the formatter function matches the expected signature
@@ -151,7 +205,7 @@ pub fn run() {
         .export_config(
             specta_typescript::Typescript::default()
                 .formatter(formatter)
-                .header("// @ts-nocheck\n/** biome-ignore */\n"),
+                .header("// @ts-nocheck\n/* oxlint-disable */\n"),
         )
         .merge(BaseApiImpl.into_handler())
         .merge(AlmanaxApiImpl.into_handler())

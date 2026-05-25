@@ -1,6 +1,6 @@
 import { rankItem } from '@tanstack/match-sorter-utils'
 
-// biome-ignore lint/suspicious/noExplicitAny: needed any
+// oxlint-disable-next-line typescript/no-explicit-any -- needed any
 type RankListParams<T extends Record<any, unknown>> = {
   list: T[]
   keys: ((item: T) => string)[]
@@ -11,7 +11,7 @@ type RankListParams<T extends Record<any, unknown>> = {
 /**
  * Rank a list of items based on a term and sort them by rank
  */
-// biome-ignore lint/suspicious/noExplicitAny: needed any
+// oxlint-disable-next-line typescript/no-explicit-any -- needed any
 export function rankList<T extends Record<any, unknown>>({ list, keys, sortKeys, term }: RankListParams<T>): T[] {
   return [...list]
     .map(

@@ -97,13 +97,14 @@ function Settings() {
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: no need more deps
+  // oxlint-disable react/exhaustive-deps -- no need more deps
   useEffect(() => {
     setConf.mutate({
       ...conf.data,
       opacity: opacityDebounced,
     })
   }, [opacityDebounced])
+  // oxlint-enable react/exhaustive-deps
 
   useEffect(() => {
     window.document.documentElement.style.setProperty('--opacity', `${opacity.toFixed(2)}`)

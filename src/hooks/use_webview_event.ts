@@ -7,7 +7,7 @@ export function useWebviewEvent<Evt extends AvailableEvent>(
   cb: (event: Event<PayloadByEvent[Evt]>) => void | Promise<void>,
   deps: unknown[] = [],
 ) {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: we use the parameter deps
+  // oxlint-disable react/exhaustive-deps -- we use the parameter deps
   useEffect(() => {
     const unlisten = webviewEvent(eventName, async (event) => {
       await cb(event)
@@ -17,4 +17,5 @@ export function useWebviewEvent<Evt extends AvailableEvent>(
       unlisten.then((fn) => fn())
     }
   }, [...deps])
+  // oxlint-enable react/exhaustive-deps
 }

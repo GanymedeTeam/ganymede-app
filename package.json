@@ -10,7 +10,7 @@
     "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
     "changeset:version": "changeset version && node scripts/changeset-update-versions.js",
-    "format": "biome check --unsafe --fix"
+    "format": "oxfmt --config .oxfmtrc.json --write . && oxlint --fix ."
   },
   "dependencies": {
     "@lingui/core": "^5.5.0",
@@ -66,7 +66,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
     "@changesets/cli": "^2.29.7",
     "@lingui/cli": "^5.5.0",
     "@lingui/conf": "^5.5.0",
@@ -83,6 +82,8 @@
     "@vitejs/plugin-react": "^5.0.3",
     "babel-plugin-macros": "^3.1.0",
     "dotenv-cli": "^11.0.0",
+    "oxfmt": "0.51.0",
+    "oxlint": "1.66.0",
     "tailwindcss": "4.1.13",
     "typescript": "^5.9.2",
     "vite": "^7.1.6"

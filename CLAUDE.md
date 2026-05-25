@@ -26,7 +26,7 @@ This project uses pnpm. Use pnpm instead of npm.
 - `pnpm tauri build` - to test compilation, do not use `cargo check` directly
 
 **Linting/Formatting:**
-- Uses Biome (configured in `biome.jsonc`)
+- Uses the OXC toolchain (`oxfmt` and `oxlint`, configured in `.oxfmtrc.json` and `.oxlintrc.json`)
 - Format: 2 spaces, semicolons as needed, single quotes
 - No separate commands - handled by editor/CI
 - No unnecessary comments
