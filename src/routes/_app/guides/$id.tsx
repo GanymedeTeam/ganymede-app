@@ -176,10 +176,6 @@ function GuideIdPage() {
 
   useEffect(() => {
     tabsRef.current = tabs
-
-    if (!tabsPersistenceRef.current.isSaving && !tabsPersistenceRef.current.pending) {
-      lastPersistedTabsRef.current = tabs
-    }
   }, [tabs])
 
   const preventNextClick = useCallback(() => {
