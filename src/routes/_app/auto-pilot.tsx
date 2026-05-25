@@ -12,30 +12,32 @@ import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
 
+function AutoPilotPendingPage() {
+  const { t } = useLingui()
+
+  return (
+    <Page key="auto-pilot-page" title={t`Autopilotage`}>
+      <PageScrollableContent className="flex items-center justify-center" hasBottomBar>
+        <GenericLoader />
+
+        <BottomBar>
+          <Input className="placeholder:italic" disabled name="name" placeholder={t`Nom`} />
+          <Input className="placeholder:italic" disabled name="position" placeholder="2,-30" />
+          <Button className="min-w-6 sm:min-w-9" disabled size="icon" type="button" variant="secondary">
+            <PlusIcon />
+          </Button>
+        </BottomBar>
+      </PageScrollableContent>
+    </Page>
+  )
+}
+
 export const Route = createFileRoute('/_app/auto-pilot')({
   component: AutoPilotPage,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(confQuery)
   },
-  pendingComponent: () => {
-    const { t } = useLingui()
-
-    return (
-      <Page key="auto-pilot-page" title={t`Autopilotage`}>
-        <PageScrollableContent className="flex items-center justify-center" hasBottomBar>
-          <GenericLoader />
-
-          <BottomBar>
-            <Input className="placeholder:italic" disabled name="name" placeholder={t`Nom`} />
-            <Input className="placeholder:italic" disabled name="position" placeholder="2,-30" />
-            <Button className="min-w-6 sm:min-w-9" disabled size="icon" type="button" variant="secondary">
-              <PlusIcon />
-            </Button>
-          </BottomBar>
-        </PageScrollableContent>
-      </Page>
-    )
-  },
+  pendingComponent: AutoPilotPendingPage,
   pendingMs: 200,
 })
 

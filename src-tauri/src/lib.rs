@@ -90,7 +90,7 @@ fn formatter(file: &Path) -> io::Result<()> {
         return Err(io::Error::new(
             io::ErrorKind::NotFound,
             format!(
-                "OXC formatter not found at {}. Run `pnpm install` before exporting TauRPC bindings.",
+                "OXC formatter not found at {}. Install frontend dependencies before exporting TauRPC bindings.",
                 binary.display()
             ),
         ));

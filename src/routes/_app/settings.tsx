@@ -37,23 +37,25 @@ const SearchZod = z.object({
   search: z.any().optional(),
 })
 
+function SettingsPendingPage() {
+  const { t } = useLingui()
+
+  return (
+    <Page key="settings-page" title={t`Paramètres`}>
+      <PageScrollableContent className="flex items-center justify-center">
+        <GenericLoader />
+      </PageScrollableContent>
+    </Page>
+  )
+}
+
 export const Route = createFileRoute('/_app/settings')({
   validateSearch: SearchZod.parse,
   component: Settings,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(confQuery)
   },
-  pendingComponent: () => {
-    const { t } = useLingui()
-
-    return (
-      <Page key="settings-page" title={t`Paramètres`}>
-        <PageScrollableContent className="flex items-center justify-center">
-          <GenericLoader />
-        </PageScrollableContent>
-      </Page>
-    )
-  },
+  pendingComponent: SettingsPendingPage,
   pendingMs: 200,
 })
 

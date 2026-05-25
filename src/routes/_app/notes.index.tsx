@@ -10,32 +10,34 @@ import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
 
+function NotesPendingPage() {
+  const { t } = useLingui()
+
+  return (
+    <Page
+      actions={
+        <div className="flex w-full items-center justify-end gap-1 text-sm">
+          <Button disabled size="icon-sm" variant="secondary">
+            <PlusIcon />
+          </Button>
+        </div>
+      }
+      key="notes-page"
+      title={t`Notes`}
+    >
+      <PageScrollableContent className="flex items-center justify-center">
+        <GenericLoader />
+      </PageScrollableContent>
+    </Page>
+  )
+}
+
 export const Route = createFileRoute('/_app/notes/')({
   component: NotesPage,
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData(confQuery)
   },
-  pendingComponent: () => {
-    const { t } = useLingui()
-
-    return (
-      <Page
-        actions={
-          <div className="flex w-full items-center justify-end gap-1 text-sm">
-            <Button disabled size="icon-sm" variant="secondary">
-              <PlusIcon />
-            </Button>
-          </div>
-        }
-        key="notes-page"
-        title={t`Notes`}
-      >
-        <PageScrollableContent className="flex items-center justify-center">
-          <GenericLoader />
-        </PageScrollableContent>
-      </Page>
-    )
-  },
+  pendingComponent: NotesPendingPage,
   pendingMs: 200,
 })
 
