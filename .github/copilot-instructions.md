@@ -6,9 +6,8 @@ Les fonctionnalités
 Avec Ganymède, vous pouvez :
 Suivre des guides de progression rédigés par nos experts en PVM 😎 ou bien lire ceux de n'importe quel utilisateur, dont vous
 Stocker des messages que vous souhaiteriez garder pour votre prochaine session (par exemple un message de recrutement de guilde), et le copier en un seul clic
-Garder sous la main vos positions préférées (par exemple des endroits où le poisson 🐟  est frais, comme dans certains spots de pêche de Frigost ❄️ ), et pouvoir les copier facilement
+Garder sous la main vos positions préférées (par exemple des endroits où le poisson 🐟 est frais, comme dans certains spots de pêche de Frigost ❄️ ), et pouvoir les copier facilement
 Effectuer des chasses au trésor 🪙 avec l'overlay DofusDB par dessus votre jeu!
-
 
 Technologies utilisées:
 
@@ -59,6 +58,7 @@ Nous utilisons la toolchain OXC pour formater et linter notre code. La configura
 Pour démarrer l'application `pnpm tauri dev` en mode dev. Pour compiler l'application `pnpm tauri build`, s'il faut les infos de debug `pnpm tauri build --debug`.
 
 Les builds de l'app se trouvent dans `/src-tauri/target/release/bundle/nsis`.
+
 # Git
 
 Nous utilisons le format de la team angular. `feat(subject)` par exemple. Le sujet doit être inclu. Si nécessaire au contexte, un fichier changeset pourrait être nécessaire pour expliquer le changelog, celui-ci est en français.

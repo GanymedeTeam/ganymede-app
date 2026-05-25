@@ -53,7 +53,7 @@ msgid "Ajouter"
 msgstr "Adicionar"
 
 #: src/routes/_app/guides/-$id/guide_actions_dropdown.tsx:48
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:53
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:54
 msgid "Ajouter une note"
 msgstr "Adicionar uma nota"
 
@@ -62,7 +62,7 @@ msgstr "Adicionar uma nota"
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:103
 #: src/routes/_app/guides/-$id/report_dialog.tsx:151
 #: src/routes/_app/guides/-$id/report_dialog.tsx:188
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:127
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:128
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:104
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:79
 msgid "Annuler"
@@ -389,7 +389,7 @@ msgstr "Dinâmica (conforme a janela)"
 msgid "Échec de l'échange de tokens"
 msgstr "Falha na troca de tokens"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:116
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:117
 msgid "Écrivez votre note ici…"
 msgstr "Escreve aqui a tua nota…"
 
@@ -410,7 +410,7 @@ msgstr "Em andamento"
 msgid "En cours..."
 msgstr "Em progresso..."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:139
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:140
 msgid "Enregistrer"
 msgstr "Guardar"
 
@@ -1042,7 +1042,7 @@ msgid "Modifier"
 msgstr "Modificar"
 
 #: src/routes/_app/guides/-$id/guide_actions_dropdown.tsx:48
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:53
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:54
 #: src/routes/_app/notes.index.tsx:75
 msgid "Modifier la note"
 msgstr "Editar a nota"
@@ -1080,11 +1080,11 @@ msgstr "Normal"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Os atalhos já utilizados por outras aplicações (AMD Adrenalin, Nvidia App, etc.) não podem ser registados. Remova-os primeiro nessas aplicações."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:121
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:122
 msgid "Note locale, non synchronisée avec le serveur."
 msgstr "Nota local, não sincronizada com o servidor."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:106
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:107
 msgid "Note personnelle"
 msgstr "Nota pessoal"
 
@@ -1311,7 +1311,7 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Remover da lista"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:132
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:133
 msgid "Supprimer la note"
 msgstr "Eliminar a nota"
 

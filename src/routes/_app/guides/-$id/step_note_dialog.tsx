@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { SaveIcon, StickyNoteIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
 import {
   AlertDialog,
   AlertDialogAction,
