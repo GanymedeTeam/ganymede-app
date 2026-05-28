@@ -24,7 +24,7 @@ export function useSwitchProfile() {
 
       const recentGuides = await queryClient.fetchQuery(recentGuidesQuery(newProfileId))
 
-      setTabs(recentGuides)
+      setTabs([...recentGuides].reverse())
 
       if (recentGuides.length === 0) {
         navigate({ to: '/guides', search: { path: '' } })
