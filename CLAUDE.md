@@ -147,6 +147,7 @@ impl ApiName for ApiNameImpl { ... }
 - All files should be staged with `git add --all`
 - Do not commit directly to `main` branch
 - Do not include a Test Plan section when generating PRs
+- Pull Request descriptions should be in English
 
 ### Translations
 - French is the source language (msgid)
