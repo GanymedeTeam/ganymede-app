@@ -37,3 +37,62 @@ jobs:
 
       - name: typecheck (tsc)
         run: pnpm typecheck
+
+  build:
+    name: Build app (ubuntu)
+    runs-on: ubuntu-24.04
+    env:
+      # Dummy values: env! only needs to be defined at compile time, real
+      # secrets are not required to verify the build compiles.
+      GANYMEDE_WEBSITE: 'https://example.com'
+      GANYMEDE_API: 'https://example.com'
+      GANYMEDE_API_KEY: 'ci'
+      GANYMEDE_CLIENT_ID: 'ci'
+      SENTRY_DSN: 'https://public@example.com/1'
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: setup node
+        uses: actions/setup-node@v6
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: install dependencies (Linux)
+        run: |
+          sudo apt-get update
+          sudo apt install -y \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libssl-dev \
+            libgtk-3-dev \
+            libappindicator3-dev \
+            librsvg2-dev;
+
+          sudo apt install -y \
+            libwebkit2gtk-4.1-0 \
+            libwebkit2gtk-4.1-dev \
+            libjavascriptcoregtk-4.1-0 \
+            libjavascriptcoregtk-4.1-dev \
+            gir1.2-javascriptcoregtk-4.1 \
+            gir1.2-webkit2-4.1;
+
+      - name: setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: 'src-tauri -> target'
+
+      - name: install frontend dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: build (tauri)
+        run: pnpm tauri build --no-bundle
