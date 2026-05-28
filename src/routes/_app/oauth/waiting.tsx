@@ -70,7 +70,7 @@ function Waiting() {
     return () => {
       unlisten.then((cb) => cb())
     }
-  }, [navigate, getMe, queryClient.invalidateQueries, t])
+  }, [navigate, getMe, queryClient, t])
 
   return (
     <Page title={t`Se connecter`}>

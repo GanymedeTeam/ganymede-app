@@ -8,7 +8,7 @@ import 'dayjs/locale/es'
 import 'dayjs/locale/pt'
 import dayjs from 'dayjs'
 import { EyeIcon } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { EditorHtmlParsing } from '@/components/editor_html_parsing.tsx'
 import {
@@ -73,7 +73,7 @@ export function NotificationAlertDialog() {
   const markAsViewed = useMarkNotificationViewed()
   const { count, start } = useTimer(2)
 
-  const notifications = unviewedNotifications.data ?? []
+  const notifications = useMemo(() => unviewedNotifications.data ?? [], [unviewedNotifications.data])
   const currentNotification = allNotifications[currentIndex]
 
   const getLocale = (lang: ReturnType<typeof getLang>) => {

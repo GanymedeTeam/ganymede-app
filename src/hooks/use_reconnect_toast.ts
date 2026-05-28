@@ -10,6 +10,7 @@ export function useReconnectToast() {
   const navigate = useNavigate()
   const startOAuthFlow = useStartOAuthFlow()
 
+  // oxlint-disable react-hooks/exhaustive-deps -- mutateAsync is stable; depending on the mutation object would re-create this callback every render
   return useCallback(
     (opts?: Parameters<typeof toast.error>[1]) => {
       toast.error(t`Votre session a expiré, veuillez vous reconnecter.`, {
@@ -25,4 +26,5 @@ export function useReconnectToast() {
     },
     [t, navigate, startOAuthFlow.mutateAsync],
   )
+  // oxlint-enable react-hooks/exhaustive-deps
 }

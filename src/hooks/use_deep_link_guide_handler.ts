@@ -81,6 +81,7 @@ export function useDeepLinkGuideHandler() {
     [navigateToGuide, t],
   )
 
+  // oxlint-disable react-hooks/exhaustive-deps -- mutateAsync is stable; depending on the mutation object would re-create this callback every render
   const handleDownloadConfirm = useCallback(async () => {
     if (!pendingGuideId) return
 
@@ -101,6 +102,7 @@ export function useDeepLinkGuideHandler() {
       toast.error(t`Erreur lors du téléchargement du guide`)
     }
   }, [pendingGuideId, pendingStep, progressionStep, navigateToGuide, t, downloadGuideFromServer.mutateAsync])
+  // oxlint-enable react-hooks/exhaustive-deps
 
   useEffect(() => {
     const unlisten = onOpenGuideRequest(handleDeepLink)
