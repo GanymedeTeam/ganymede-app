@@ -80,6 +80,8 @@ const _: specta_typescript::FormatterFn = formatter;
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    #[cfg(target_os = "linux")]
+    std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
     #[cfg(not(debug_assertions))]
     use tauri_plugin_sentry::{
         init_with_no_injection, minidump,
