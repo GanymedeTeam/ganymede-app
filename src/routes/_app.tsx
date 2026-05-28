@@ -92,7 +92,7 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
   await debug(`Recent guides: ${recentGuides.join(', ')}`)
 
   const { setTabs } = useTabs.getState()
-  setTabs(recentGuides)
+  setTabs([...recentGuides].reverse())
 
   const firstRecentGuide = recentGuides.at(0)
 
