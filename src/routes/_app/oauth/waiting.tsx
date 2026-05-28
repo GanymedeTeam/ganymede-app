@@ -4,6 +4,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { info } from '@tauri-apps/plugin-log'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
+
 import { Button } from '@/components/ui/button.tsx'
 import { taurpc } from '@/ipc/ipc.ts'
 import { syncProfiles } from '@/ipc/sync.ts'

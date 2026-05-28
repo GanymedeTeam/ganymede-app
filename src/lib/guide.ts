@@ -1,5 +1,6 @@
 import { Guide, GuideWithSteps } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
+
 import { clamp } from './clamp.ts'
 
 /**

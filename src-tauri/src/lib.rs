@@ -9,12 +9,12 @@ use crate::image::{ImageApi, ImageApiImpl};
 use crate::image_viewer::{ImageViewerApi, ImageViewerApiImpl};
 use crate::notifications::{NotificationApi, NotificationApiImpl};
 use crate::oauth::{OAuthApi, OAuthApiImpl};
+use crate::pinned_guides::{PinnedGuidesApi, PinnedGuidesApiImpl};
 use crate::security::{SecurityApi, SecurityApiImpl};
 use crate::shortcut::{handle_shortcuts, ShortcutsApi, ShortcutsApiImpl};
-use crate::pinned_guides::{PinnedGuidesApi, PinnedGuidesApiImpl};
 use crate::step_notes::{StepNotesApi, StepNotesApiImpl};
-use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::sync::{SyncApi, SyncApiImpl};
+use crate::update::{UpdateApi, UpdateApiImpl};
 use crate::user::{UserApi, UserApiImpl};
 use crate::window_manager::WindowManager;
 use log::{error, info, LevelFilter};
@@ -66,8 +66,7 @@ const LOG_TARGETS: [Target; 2] = [
 
 fn formatter(file: &std::path::Path) -> std::io::Result<()> {
     std::process::Command::new("pnpm")
-        .arg("biome")
-        .arg("format")
+        .arg("oxfmt")
         .arg(file)
         .output()
         .map(|_| ())
@@ -125,10 +124,14 @@ pub fn run() {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_http::init())
-        .plugin(tauri_plugin_window_state::Builder::new().with_filter(|label| {
-            // only keep main window state
-            label == "main"
-        }).build())
+        .plugin(
+            tauri_plugin_window_state::Builder::new()
+                .with_filter(|label| {
+                    // only keep main window state
+                    label == "main"
+                })
+                .build(),
+        )
         .plugin({
             let log_builder = tauri_plugin_log::Builder::new()
                 .clear_targets()
@@ -153,7 +156,7 @@ pub fn run() {
         .export_config(
             specta_typescript::Typescript::default()
                 .formatter(formatter)
-                .header("// @ts-nocheck\n/** biome-ignore */\n"),
+                .header("// @ts-nocheck\n/* oxlint-disable */\n"),
         )
         .merge(BaseApiImpl.into_handler())
         .merge(AlmanaxApiImpl.into_handler())

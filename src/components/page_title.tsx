@@ -1,5 +1,6 @@
 import { Slot } from '@radix-ui/react-slot'
 import { ComponentProps } from 'react'
+
 import { cn } from '@/lib/utils.ts'
 
 export function PageTitle({

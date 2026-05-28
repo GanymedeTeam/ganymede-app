@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
 import { PinnedGuides } from '@/ipc/bindings.ts'
 import { pinGuide, unpinGuide } from '@/ipc/pinned_guides.ts'
 import { pinnedGuidesQuery } from '@/queries/pinned_guides.query.ts'
@@ -9,15 +10,7 @@ export function useTogglePinnedGuide() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async ({
-      profileId,
-      guideId,
-      pinned,
-    }: {
-      profileId: string
-      guideId: number
-      pinned: boolean
-    }) => {
+    mutationFn: async ({ profileId, guideId, pinned }: { profileId: string; guideId: number; pinned: boolean }) => {
       const result = await (pinned ? pinGuide(profileId, guideId) : unpinGuide(profileId, guideId))
 
       if (result.isErr()) {

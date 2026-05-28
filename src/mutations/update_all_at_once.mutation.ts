@@ -1,5 +1,6 @@
 import { UseMutationOptions, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ResultAsync } from 'neverthrow'
+
 import { updateAllAtOnce } from '@/ipc/guides.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query.ts'
@@ -8,13 +9,13 @@ import { summaryQuery } from '@/queries/summary.query.ts'
 /**
  * Get the Data from the ResultAsync
  */
-// biome-ignore lint/suspicious/noExplicitAny: needed
+// oxlint-disable-next-line typescript/no-explicit-any -- needed
 type ResultAsyncData<T> = T extends ResultAsync<infer R, any> ? R : never
 
 /**
  * Get the Error from the ResultAsync
  */
-// biome-ignore lint/suspicious/noExplicitAny: needed
+// oxlint-disable-next-line typescript/no-explicit-any -- needed
 type ResultAsyncError<T> = T extends ResultAsync<any, infer R> ? R : never
 
 export function useUpdateAllAtOnce(

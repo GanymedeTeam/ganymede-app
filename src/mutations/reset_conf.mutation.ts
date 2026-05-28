@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { resetConf } from '@/ipc/conf.ts'
 
 export function useResetConf() {

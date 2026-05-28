@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
 import { XIcon } from 'lucide-react'
 import { useEffect } from 'react'
+
 import { GuideNodeImage } from '@/components/guide_node_image.tsx'
 import {
   ContextMenu,
@@ -154,7 +155,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                 <TabsTrigger
                   asChild
                   className={cn(
-                    'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-lg bg-surface-inset font-medium text-foreground/75 text-xs transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50',
+                    'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden rounded-lg bg-surface-inset text-xs font-medium whitespace-nowrap text-foreground/75 transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50',
                     !isSmallGuide && 'xs:text-sm lg:max-w-62',
                   )}
                   onMouseDown={(evt) => {
@@ -168,7 +169,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                 >
                   <div>
                     <GuideNodeImage guide={guide} />
-                    <span className={cn('-translate-y-0.5 hidden truncate', !isSmallGuide && 'xs:inline')}>
+                    <span className={cn('hidden -translate-y-0.5 truncate', !isSmallGuide && 'xs:inline')}>
                       {guide.name}
                     </span>
                     {/* Progress bar */}
@@ -184,7 +185,7 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                       className={cn(
                         'group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible',
                         !isSmallGuide &&
-                          'xs:mask-gradient-to-left xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-6 xs:items-center xs:justify-end xs:pr-1.5',
+                          'xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-6 xs:items-center xs:justify-end xs:pr-1.5 xs:mask-gradient-to-left',
                       )}
                       onClick={async (evt) => {
                         evt.stopPropagation()

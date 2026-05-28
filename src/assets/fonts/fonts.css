@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./LexendDeca.ttf) format("truetype");
+  src: url(./LexendDeca.ttf) format('truetype');
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(./Lexend-Light.ttf) format("truetype");
+  src: url(./Lexend-Light.ttf) format('truetype');
 }
 
 /* Not used at the moment */

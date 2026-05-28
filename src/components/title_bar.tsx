@@ -19,6 +19,7 @@ import {
   XIcon,
 } from 'lucide-react'
 import { toast } from 'sonner'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +33,7 @@ import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
 import { getAuthTokensQuery } from '@/queries/get_auth_tokens.query.ts'
+
 import { KoFiIcon } from './icons/ko_fi_icon.tsx'
 
 const appWindow = getCurrentWindow()
@@ -147,14 +149,14 @@ export function TitleBar() {
           </DropdownMenuContent>
         </DropdownMenu>
       )}
-      <p className="center-absolute cursor-default select-none text-center font-semibold text-sm sm:text-base">
+      <p className="center-absolute cursor-default text-center text-sm font-semibold select-none sm:text-base">
         {title}
       </p>
       <p className="relative z-10 size-full grow" data-tauri-drag-region="" />
       <div className="flex h-full justify-end">
         {!linksAreDisabled && !isImageViewer && (
           <Link
-            className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card aria-disabled:pointer-events-none"
+            className="inline-flex h-titlebar w-6 items-center justify-center hover:bg-surface-card aria-disabled:pointer-events-none xs:w-titlebar"
             disabled={location.pathname === '/settings' || isBodyLocked}
             draggable={false}
             search={{
@@ -170,7 +172,7 @@ export function TitleBar() {
           </Link>
         )}
         <button
-          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-surface-card"
+          className="inline-flex h-titlebar w-6 items-center justify-center hover:bg-surface-card xs:w-titlebar"
           id="titlebar-minimize"
           onClick={async () => {
             await appWindow.minimize()
@@ -180,7 +182,7 @@ export function TitleBar() {
           <MinusIcon className="size-4" />
         </button>
         <button
-          className="inline-flex h-titlebar w-6 xs:w-titlebar items-center justify-center hover:bg-destructive"
+          className="inline-flex h-titlebar w-6 items-center justify-center hover:bg-destructive xs:w-titlebar"
           id="titlebar-close"
           onClick={async () => {
             await appWindow.close()

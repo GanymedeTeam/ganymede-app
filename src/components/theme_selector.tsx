@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/react/macro'
 import { CheckIcon, ChevronDownIcon } from 'lucide-react'
 import { useState } from 'react'
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useTheme } from '@/hooks/use_theme'
 import { type ConfTheme } from '@/ipc/bindings'
@@ -41,9 +42,9 @@ function ThemePreview({ theme, isSelected, onSelect }: ThemePreviewProps) {
           />
         </div>
       </div>
-      <span className="w-full truncate text-center font-medium text-xxs">{theme.name}</span>
+      <span className="w-full truncate text-center text-xxs font-medium">{theme.name}</span>
       {isSelected && (
-        <div className="-top-1 -right-1 absolute flex size-4 items-center justify-center rounded-full bg-success">
+        <div className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-success">
           <CheckIcon className="size-2.5 text-surface-page" />
         </div>
       )}
@@ -60,11 +61,11 @@ export function ThemeSelector() {
     <div className="flex flex-col gap-2">
       <Collapsible onOpenChange={setIsOpen} open={isOpen}>
         <CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between">
-          <p className="font-medium text-xs leading-none">
+          <p className="text-xs leading-none font-medium">
             <Trans>Thème</Trans>
           </p>
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-xs">{current.name}</span>
+            <span className="text-xs text-muted-foreground">{current.name}</span>
             <div
               className="size-4 rounded-full border border-border-muted"
               style={{ backgroundColor: current.accent }}

@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { startOAuthFlow } from '@/ipc/oauth.ts'
 
 export function useStartOAuthFlow() {

@@ -26,9 +26,11 @@ This project uses pnpm. Use pnpm instead of npm.
 - `pnpm tauri build` - to test compilation, do not use `cargo check` directly
 
 **Linting/Formatting:**
-- Uses Biome (configured in `biome.jsonc`)
+- Uses the OXC toolchain: oxlint (lint) + oxfmt (format), configured in `oxlint.config.ts` and `oxfmt.config.ts`
+- oxfmt also sorts imports and Tailwind CSS classes
 - Format: 2 spaces, semicolons as needed, single quotes
-- No separate commands - handled by editor/CI
+- `pnpm lint` / `pnpm lint:fix` - run oxlint
+- `pnpm format` / `pnpm format:check` - run oxfmt
 - No unnecessary comments
 - Comments in English
 

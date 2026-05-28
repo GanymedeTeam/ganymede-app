@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro'
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+
 import { AlmanaxCard } from '@/components/almanax_card.tsx'
 import { HomeFooter } from '@/components/home_footer.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'

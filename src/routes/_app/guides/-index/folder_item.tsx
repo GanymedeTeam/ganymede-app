@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { FolderIcon } from 'lucide-react'
 import { z } from 'zod'
+
 import { Card } from '@/components/ui/card.tsx'
 import { GuidesOrFolder } from '@/ipc/bindings.ts'
 import { OpenedGuideZod } from '@/lib/tabs.ts'
@@ -25,7 +26,7 @@ export function FolderItem({ folder, path, isSelected, onSelect, isSelectMode, c
     <Card
       aria-selected={isSelected}
       asChild
-      className={cn('flex items-center gap-2 p-2 xs:px-3 text-xxs xs:text-sm aria-selected:bg-accent sm:text-base')}
+      className={cn('flex items-center gap-2 p-2 text-xxs aria-selected:bg-accent xs:px-3 xs:text-sm sm:text-base')}
       key={folder.name}
     >
       <Link
@@ -46,7 +47,7 @@ export function FolderItem({ folder, path, isSelected, onSelect, isSelectMode, c
         to="/guides"
       >
         <span className="grow">{folder.name}</span>
-        <FolderIcon className="size-4 xs:size-6 focus-visible:bg-white" />
+        <FolderIcon className="size-4 focus-visible:bg-white xs:size-6" />
       </Link>
     </Card>
   )

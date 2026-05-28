@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { startUpdate } from '@/ipc/update.ts'
 
 export function useStartUpdate() {

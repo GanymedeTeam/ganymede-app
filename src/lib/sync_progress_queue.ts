@@ -2,6 +2,7 @@ import { t } from '@lingui/core/macro'
 import type { QueryClient } from '@tanstack/react-query'
 import { debug } from '@tauri-apps/plugin-log'
 import { toast } from 'sonner'
+
 import type { ConfStep } from '@/ipc/bindings.ts'
 import { syncProfiles, syncProgress } from '@/ipc/sync.ts'
 import { confQuery } from '@/queries/conf.query.ts'

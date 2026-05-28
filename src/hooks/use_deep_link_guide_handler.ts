@@ -3,6 +3,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { info } from '@tauri-apps/plugin-log'
 import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
+
 import { OpenGuideStep } from '@/ipc/bindings.ts'
 import { onOpenGuideRequest } from '@/ipc/deep_link.ts'
 import { guideExists } from '@/ipc/guides.ts'

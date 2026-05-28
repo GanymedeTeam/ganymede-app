@@ -6,6 +6,7 @@ import { useDebounce } from '@uidotdev/usehooks'
 import { CheckIcon, FilterIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { z } from 'zod'
+
 import { BottomBar } from '@/components/bottom_bar.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
@@ -46,8 +47,9 @@ import { paginate } from '@/lib/search.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { guidesFromServerQuery, itemsPerPage } from '@/queries/guides_from_server.query.ts'
-import { GuideItem } from '@/routes/_app/guides/-index/guide_item.tsx'
 import { Page } from '@/routes/-page.tsx'
+import { GuideItem } from '@/routes/_app/guides/-index/guide_item.tsx'
+
 import { BackButtonLink } from './-back_button_link.tsx'
 
 const SearchZod = z.object({
@@ -210,14 +212,14 @@ function LanguageFilterDropdown({
             <FilterIcon className="size-4" />
           </Button>
           {value !== 'all' && (
-            <Badge className="-top-1 -right-1 absolute size-4 cursor-pointer p-0 text-[9px]" variant="default">
+            <Badge className="absolute -top-1 -right-1 size-4 cursor-pointer p-0 text-[9px]" variant="default">
               {value.toUpperCase()}
             </Badge>
           )}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel className="font-normal text-muted-foreground text-xs">
+        <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
           <Trans>Langue</Trans>
         </DropdownMenuLabel>
         {languageOptions.map(({ lang, label }) => (
@@ -261,7 +263,7 @@ function DownloadGuidePage() {
       <Page backButton={<BackButtonLink to="/downloads" />} key={`download-${status}`} title={title}>
         <PageScrollableContent className="flex items-center justify-center">
           <div className="flex grow flex-col items-center justify-center gap-4 text-center">
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               <Trans>Impossible de charger les guides du serveur.</Trans>
             </p>
             <Button onClick={() => guides.refetch()} size="sm" variant="outline">
@@ -323,7 +325,7 @@ function DownloadGuidePage() {
       title={title}
     >
       <AlertDialog defaultOpen={status === 'draft' || status === 'public'}>
-        <AlertDialogContent className="data-[state=open]:fade-in-100 bg-surface-page">
+        <AlertDialogContent className="bg-surface-page data-[state=open]:fade-in-100">
           <AlertDialogHeader>
             <AlertDialogTitle>
               <Trans>Attention</Trans>
@@ -351,7 +353,7 @@ function DownloadGuidePage() {
             </p>
           ) : (
             <div className="flex flex-col gap-2">
-              <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex flex-col gap-2 px-2 py-2 backdrop-blur-sm">
+              <div className="sticky top-0 z-50 -mx-2 flex flex-col gap-2 mask-gradient-to-top px-2 py-2 backdrop-blur-sm">
                 <ClearInput
                   autoCapitalize="off"
                   autoComplete="off"

@@ -1,4 +1,5 @@
 import * as Flag from 'country-flag-icons/react/3x2'
+
 import { cn } from '@/lib/utils'
 
 export function FlagPerLang({ lang, className }: { lang: string; className?: string }) {

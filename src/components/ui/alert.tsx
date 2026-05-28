@@ -4,7 +4,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils.ts'
 
 const alertVariants = cva(
-  'relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+  'relative w-full rounded-lg border p-4 [&>svg]:absolute [&>svg]:top-4 [&>svg]:left-4 [&>svg]:text-foreground [&>svg+div]:translate-y-[-3px] [&>svg~*]:pl-7',
   {
     variants: {
       variant: {
@@ -28,7 +28,7 @@ function Alert({
 }
 
 function AlertTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'h5'>) {
-  return <h5 className={cn('mb-1 font-medium leading-none tracking-tight', className)} ref={ref} {...props} />
+  return <h5 className={cn('mb-1 leading-none font-medium tracking-tight', className)} ref={ref} {...props} />
 }
 
 function AlertDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {

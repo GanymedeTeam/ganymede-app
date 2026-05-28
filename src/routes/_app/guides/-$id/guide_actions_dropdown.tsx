@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { BookTextIcon, BugIcon, CircleEllipsisIcon, StickyNoteIcon } from 'lucide-react'
+
 import { Button } from '@/components/ui/button.tsx'
 import {
   DropdownMenu,

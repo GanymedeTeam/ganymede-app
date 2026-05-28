@@ -35,9 +35,7 @@ impl ImageViewerApi for ImageViewerApiImpl {
             image_url
         );
 
-        let window_manager = app_handle
-            .state::<WindowManager>()
-            .inner();
+        let window_manager = app_handle.state::<WindowManager>().inner();
 
         let label = window_manager.get_or_create_window(&app_handle, image_url.clone(), title)?;
 

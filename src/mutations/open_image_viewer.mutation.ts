@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { openImageViewer } from '@/ipc/image_viewer.ts'
 
 export function useOpenImageViewer() {

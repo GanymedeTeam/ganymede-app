@@ -2,7 +2,9 @@ use std::collections::HashMap;
 use std::sync::Mutex;
 
 use log::{debug, info, warn};
-use tauri::{AppHandle, LogicalSize, LogicalPosition, Manager, Runtime, WebviewUrl, WebviewWindowBuilder};
+use tauri::{
+    AppHandle, LogicalPosition, LogicalSize, Manager, Runtime, WebviewUrl, WebviewWindowBuilder,
+};
 
 pub struct WindowMetadata {
     pub label: String,
@@ -27,7 +29,9 @@ impl WindowManager {
             .get_webview_window("main")
             .ok_or_else(|| "Main window not found".to_string())?;
 
-        let factor = main_window.scale_factor().map_err(|e| format!("Failed to get scale factor: {}", e))?;
+        let factor = main_window
+            .scale_factor()
+            .map_err(|e| format!("Failed to get scale factor: {}", e))?;
 
         let position = main_window
             .outer_position()
@@ -79,7 +83,10 @@ impl WindowManager {
 
         window.on_window_event(move |event| {
             if let tauri::WindowEvent::Destroyed = event {
-                info!("[WindowManager] Image viewer window destroyed: {}", window_label);
+                info!(
+                    "[WindowManager] Image viewer window destroyed: {}",
+                    window_label
+                );
                 if let Some(window_manager) = app_handle.try_state::<WindowManager>() {
                     window_manager.cleanup_closed_window(&window_label);
                 }

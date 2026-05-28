@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { debug } from '@tauri-apps/plugin-log'
+
 import { Conf } from '@/ipc/bindings.ts'
 import { setConf } from '@/ipc/conf.ts'
 import { confQuery } from '@/queries/conf.query.ts'

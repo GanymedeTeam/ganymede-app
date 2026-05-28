@@ -87,14 +87,13 @@ pub fn get_step_notes<R: Runtime>(app_handle: &AppHandle<R>) -> Result<StepNotes
             std::io::ErrorKind::NotFound => Ok(StepNotes::default()),
             _ => Err(Error::UnhandledIo(err.to_string())),
         },
-        Ok(file) => Ok(crate::json::from_str::<StepNotes>(file.as_str()).map_err(Error::Malformed)?),
+        Ok(file) => {
+            Ok(crate::json::from_str::<StepNotes>(file.as_str()).map_err(Error::Malformed)?)
+        }
     }
 }
 
-pub fn save_step_notes<R: Runtime>(
-    notes: &StepNotes,
-    app: &AppHandle<R>,
-) -> Result<(), Error> {
+pub fn save_step_notes<R: Runtime>(notes: &StepNotes, app: &AppHandle<R>) -> Result<(), Error> {
     let path = app.path().app_step_notes_file();
 
     let json = crate::json::serialize_pretty(notes).map_err(Error::SerializeStepNotes)?;

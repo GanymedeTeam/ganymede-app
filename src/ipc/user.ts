@@ -1,5 +1,6 @@
 import { debug } from '@tauri-apps/plugin-log'
 import { fromPromise } from 'neverthrow'
+
 import { taurpc } from '@/ipc/ipc.ts'
 
 export class GetMeError extends Error {

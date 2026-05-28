@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { openUrlInBrowser } from '@/ipc/base.ts'
 
 export function useOpenUrlInBrowser() {

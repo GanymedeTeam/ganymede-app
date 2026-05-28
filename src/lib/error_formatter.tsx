@@ -1,5 +1,6 @@
 import { t } from '@lingui/core/macro'
 import { ReactNode } from 'react'
+
 import type {
   AlmanaxError,
   AppVersionError,

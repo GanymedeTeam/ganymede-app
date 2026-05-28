@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useNavigate } from '@tanstack/react-router'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
+
 import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
 
 export function useReconnectToast() {

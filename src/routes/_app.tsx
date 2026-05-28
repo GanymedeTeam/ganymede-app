@@ -4,6 +4,7 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
+
 import { useReconnectToast } from '@/hooks/use_reconnect_toast.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { syncProfiles } from '@/ipc/sync.ts'

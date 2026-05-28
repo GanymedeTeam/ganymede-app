@@ -1,14 +1,15 @@
 import { Plural, Trans } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
+import { useLocation } from '@tanstack/react-router'
 import { error } from '@tauri-apps/plugin-log'
-import dayjs from 'dayjs'
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
 import 'dayjs/locale/es'
 import 'dayjs/locale/pt'
-import { useLocation } from '@tanstack/react-router'
+import dayjs from 'dayjs'
 import { EyeIcon } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
+
 import { EditorHtmlParsing } from '@/components/editor_html_parsing.tsx'
 import {
   AlertDialog,
@@ -158,7 +159,7 @@ export function NotificationAlertDialog() {
               value={totalNotifications}
             />
           </AlertDialogTitle>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-sm text-muted-foreground">
             {dayjs(currentNotification.displayAt).locale(locale).format('DD MMMM YYYY à HH:mm')}
           </p>
         </AlertDialogHeader>
@@ -173,7 +174,7 @@ export function NotificationAlertDialog() {
               <>
                 <Trans>Marquer comme lu</Trans>
                 {count > 0 ? (
-                  <span className="flex size-4 items-center justify-center rounded-full bg-red-500 font-bold text-white text-xs">
+                  <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                     {count}
                   </span>
                 ) : (

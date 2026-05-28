@@ -3,6 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { SaveIcon } from 'lucide-react'
 import { z } from 'zod'
+
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Input } from '@/components/ui/input.tsx'
@@ -10,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea.tsx'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
+
 import { BackButtonLink } from './downloads/-back_button_link.tsx'
 
 const SearchZod = z.object({
@@ -81,7 +83,7 @@ function CreateNotePage() {
           <Textarea
             autoCapitalize="off"
             autoComplete="off"
-            className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
+            className="grow resize-none placeholder:text-xs placeholder:italic xs:placeholder:text-sm"
             defaultValue={note?.text}
             name="text"
             placeholder={t`Contenu de la note.${linesBreak}Depuis le menu précédent, une fois créée, je peux la modifier en cliquant dessus, ou copier son contenu.`}

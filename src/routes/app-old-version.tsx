@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { ExternalLinkIcon } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
+
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Progress } from '@/components/ui/progress.tsx'
@@ -77,7 +78,7 @@ function AppOldVersionPage() {
 
       {updateState === 'idle' && (
         <a
-          className="group text-slate-300 leading-5"
+          className="group leading-5 text-slate-300"
           draggable={false}
           href={discordChannels[getLang(conf.data.lang)]}
           rel="noreferrer noopener"

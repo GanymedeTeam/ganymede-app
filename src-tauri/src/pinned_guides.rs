@@ -117,11 +117,7 @@ pub fn ensure_pinned_guides_file(app_handle: &AppHandle) -> Result<(), Error> {
 
 // Private Functions
 
-fn pin_guide(
-    pinned: &mut PinnedGuides,
-    profile_id: String,
-    guide_id: u32,
-) -> Result<(), Error> {
+fn pin_guide(pinned: &mut PinnedGuides, profile_id: String, guide_id: u32) -> Result<(), Error> {
     let entry = pinned
         .profiles
         .entry(profile_id)

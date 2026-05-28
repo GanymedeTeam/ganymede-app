@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+
 import { GuideFrame } from '@/components/guide_frame.tsx'
 import { Position } from '@/components/position.tsx'
 import { StepProgress } from '@/components/step_progress/step_progress.tsx'
@@ -16,6 +17,7 @@ import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { GuideActionsDropdown } from '@/routes/_app/guides/-$id/guide_actions_dropdown.tsx'
+
 import { ReportDialog, ReportDialogTrigger } from './report_dialog.tsx'
 import { StepNoteDialog, StepNoteDialogTrigger } from './step_note_dialog.tsx'
 import { SummaryDialog, SummaryDialogTrigger } from './summary_dialog.tsx'
@@ -183,12 +185,12 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
               </div>
 
               {/* Right Side - Fixed width to maintain center balance */}
-              <div className="xs:flex hidden w-20 shrink-0 items-center justify-end pr-1 sm:w-24">
+              <div className="hidden w-20 shrink-0 items-center justify-end pr-1 xs:flex sm:w-24">
                 <StepNoteDialogTrigger guideId={guide.id} onClick={() => setNoteOpen(true)} stepIndex={index} />
                 {showSummary && <SummaryDialogTrigger onClick={() => setSummaryOpen(true)} />}
                 {showReport && <ReportDialogTrigger onClick={() => setReportOpen(true)} />}
               </div>
-              <div className="flex xs:hidden w-fit shrink-0 items-center justify-end pr-1">
+              <div className="flex w-fit shrink-0 items-center justify-end pr-1 xs:hidden">
                 <GuideActionsDropdown
                   guideId={guide.id}
                   onOpenNote={() => setNoteOpen(true)}

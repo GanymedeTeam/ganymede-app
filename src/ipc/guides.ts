@@ -1,5 +1,6 @@
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise, ResultAsync } from 'neverthrow'
+
 import { GuideOrFolderToDelete, Status } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder, taurpc } from '@/ipc/ipc.ts'
 

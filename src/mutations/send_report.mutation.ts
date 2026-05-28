@@ -1,4 +1,5 @@
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
+
 import { ReportPayload } from '@/ipc/bindings.ts'
 import { ReportError, report } from '@/ipc/report.ts'
 

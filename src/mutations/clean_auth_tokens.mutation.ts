@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
 import { cleanAuthTokens } from '@/ipc/oauth.ts'
 import { getAuthTokensQuery } from '@/queries/get_auth_tokens.query.ts'
 

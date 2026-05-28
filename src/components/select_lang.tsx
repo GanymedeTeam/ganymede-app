@@ -1,6 +1,8 @@
 import { Trans } from '@lingui/react/macro'
+
 import { dynamicActiveLocale } from '@/i18n.ts'
 import { cn } from '@/lib/utils.ts'
+
 import { Label, type LabelProps } from './ui/label.tsx'
 import { Select, SelectContent, SelectItem, SelectProps, SelectTrigger, SelectValue } from './ui/select.tsx'
 

@@ -1,6 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { BugIcon, LoaderCircleIcon, SendIcon } from 'lucide-react'
 import { FormEvent, Fragment, useState } from 'react'
+
 import { ErrorDisplay } from '@/components/error_component.tsx'
 import {
   AlertDialog,
@@ -108,7 +109,7 @@ export function ReportDialog({
                   <Textarea
                     autoCapitalize="off"
                     autoComplete="off"
-                    className="grow resize-none placeholder:text-xs xs:placeholder:text-sm placeholder:italic"
+                    className="grow resize-none placeholder:text-xs placeholder:italic xs:placeholder:text-sm"
                     disabled={sendReport.isPending}
                     id="content"
                     name="content"
@@ -125,7 +126,7 @@ export function ReportDialog({
             {sendReport.isError && (
               <div className="break-all">
                 {sendReport.error.cause === 'NetworkUnavailable' ? (
-                  <p className="text-destructive text-sm">
+                  <p className="text-sm text-destructive">
                     <Trans>Impossible d'envoyer le rapport : serveur inaccessible.</Trans>
                   </p>
                 ) : (
@@ -170,7 +171,7 @@ export function ReportDialog({
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <ScrollArea className="-my-1 prose-sm h-full" type="auto">
-                      <p className="break-all py-2">
+                      <p className="py-2 break-all">
                         {content
                           .trim()
                           .split('\n')
