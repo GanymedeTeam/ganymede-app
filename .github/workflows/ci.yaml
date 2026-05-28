@@ -42,13 +42,11 @@ jobs:
     name: Build app (ubuntu)
     runs-on: ubuntu-24.04
     env:
-      # Dummy values: env! only needs to be defined at compile time, real
-      # secrets are not required to verify the build compiles.
-      GANYMEDE_WEBSITE: 'https://example.com'
-      GANYMEDE_API: 'https://example.com'
-      GANYMEDE_API_KEY: 'ci'
-      GANYMEDE_CLIENT_ID: 'ci'
-      SENTRY_DSN: 'https://public@example.com/1'
+      GANYMEDE_WEBSITE: ${{ secrets.GANYMEDE_WEBSITE }}
+      GANYMEDE_API: ${{ secrets.GANYMEDE_API }}
+      GANYMEDE_API_KEY: ${{ secrets.GANYMEDE_API_KEY }}
+      GANYMEDE_CLIENT_ID: ${{ secrets.GANYMEDE_CLIENT_ID }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     steps:
       - name: checkout
         uses: actions/checkout@v6
