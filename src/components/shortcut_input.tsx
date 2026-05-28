@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro'
 import { InfoIcon } from 'lucide-react'
 import { type KeyboardEvent, useState } from 'react'
+
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'

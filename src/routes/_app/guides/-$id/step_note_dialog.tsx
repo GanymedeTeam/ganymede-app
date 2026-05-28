@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { SaveIcon, StickyNoteIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -73,7 +74,7 @@ export function StepNoteDialog({
   const [draft, setDraft] = useState('')
   const [snapshotHadNote, setSnapshotHadNote] = useState(false)
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: snapshot only on open transition
+  // oxlint-disable react-hooks/exhaustive-deps -- snapshot only on open transition
   useEffect(() => {
     if (open) {
       setDraft(currentNote)
@@ -86,6 +87,7 @@ export function StepNoteDialog({
       return () => clearTimeout(id)
     }
   }, [open])
+  // oxlint-enable react-hooks/exhaustive-deps
 
   const handleSave = () => {
     setStepNote.mutate({ profileId, guideId, stepIndex, note: draft })
@@ -116,7 +118,7 @@ export function StepNoteDialog({
             rows={8}
             value={draft}
           />
-          <p className="text-muted-foreground text-xs italic">
+          <p className="text-xs text-muted-foreground italic">
             <Trans>Note locale, non synchronisée avec le serveur.</Trans>
           </p>
         </div>

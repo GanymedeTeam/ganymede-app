@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { CircleAlertIcon, CircleCheckIcon, ImportIcon, LoaderIcon } from 'lucide-react'
 import { fromPromise } from 'neverthrow'
+
 import { Button } from '@/components/ui/button.tsx'
 import { Guide } from '@/ipc/bindings.ts'
 import { getGuideById, isGuideNew } from '@/lib/guide.ts'
@@ -51,7 +52,7 @@ export function GuideDownloadButton({ guide }: { guide: Pick<Guide, 'id' | 'stat
         {downloadGuideFromServer.isError && <CircleAlertIcon className="size-5" />}
         {isGuideNeedUpdate && (
           <span
-            className="-right-2 -top-3.5 absolute size-4 font-black text-2xl text-yellow-400"
+            className="absolute -top-3.5 -right-2 size-4 text-2xl font-black text-yellow-400"
             title="Update available"
           >
             !

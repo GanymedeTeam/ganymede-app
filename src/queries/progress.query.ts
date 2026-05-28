@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { useProfile } from '@/hooks/use_profile.ts'
 import { getProgress, newProgress } from '@/lib/progress.ts'
 

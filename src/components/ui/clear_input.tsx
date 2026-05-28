@@ -1,6 +1,8 @@
 import { XIcon } from 'lucide-react'
 import * as React from 'react'
+
 import { cn } from '@/lib/utils.ts'
+
 import { Input } from './input.tsx'
 
 export interface ClearInputProps extends React.ComponentPropsWithRef<'input'> {

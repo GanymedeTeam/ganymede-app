@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { StepNotes } from '@/ipc/bindings.ts'
 import { GetStepNotesError, getStepNotes } from '@/ipc/step_notes.ts'
 

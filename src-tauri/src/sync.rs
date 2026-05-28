@@ -144,7 +144,10 @@ async fn create_profile_on_server<R: Runtime>(
     let parsed: CreateProfileResponse =
         json::from_str(&text).map_err(|e| Error::InvalidResponse(e.to_string()))?;
 
-    info!("[Sync] Created remote profile '{}' with id {}", name, parsed.id);
+    info!(
+        "[Sync] Created remote profile '{}' with id {}",
+        name, parsed.id
+    );
 
     Ok(parsed.id)
 }
@@ -158,7 +161,10 @@ async fn sync_progress_on_server<R: Runtime>(
     steps: &HashMap<u32, ConfStep>,
     app: &AppHandle<R>,
 ) -> Result<(), Error> {
-    debug!("[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}", server_id, guide_id, current_step, steps);
+    debug!(
+        "[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}",
+        server_id, guide_id, current_step, steps
+    );
 
     let client = http_client.clone();
     let steps_owned = steps.clone();
@@ -201,7 +207,11 @@ async fn sync_progress_on_server<R: Runtime>(
 
     if !response.status().is_success() {
         let status = response.status();
-        let text = response.text().await.unwrap_or_default().replacen("\n", " ", 300);
+        let text = response
+            .text()
+            .await
+            .unwrap_or_default()
+            .replacen("\n", " ", 300);
         return Err(Error::RequestFailed(format!("HTTP {}: {}", status, text)));
     }
 
@@ -255,10 +265,7 @@ pub struct SyncApiImpl;
 
 #[taurpc::resolvers]
 impl SyncApi for SyncApiImpl {
-    async fn sync_profiles<R: Runtime>(
-        self,
-        app: AppHandle<R>,
-    ) -> Result<SyncResponse, Error> {
+    async fn sync_profiles<R: Runtime>(self, app: AppHandle<R>) -> Result<SyncResponse, Error> {
         let (http_client, access_token) =
             check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
         let conf = conf::get_conf(&app).map_err(Error::Conf)?;
@@ -317,7 +324,10 @@ impl SyncApi for SyncApiImpl {
         if !response.status().is_success() {
             let status = response.status();
 
-            warn!("[Sync] payload sent for profiles sync: {}", serde_json::json!({ "profiles": payload }));
+            warn!(
+                "[Sync] payload sent for profiles sync: {}",
+                serde_json::json!({ "profiles": payload })
+            );
 
             if status == 422 {
                 let text = response.text().await.unwrap_or_default();
@@ -344,7 +354,9 @@ impl SyncApi for SyncApiImpl {
         let mut conf = conf::get_conf(&app).map_err(Error::Conf)?;
 
         for remote_profile in &server_response.profiles {
-            let Some(ref uuid) = remote_profile.uuid else { continue };
+            let Some(ref uuid) = remote_profile.uuid else {
+                continue;
+            };
             if let Some(local_profile) = conf.profiles.iter_mut().find(|p| &p.id == uuid) {
                 local_profile.server_id = Some(remote_profile.id);
                 if local_profile.name != remote_profile.name {
@@ -364,10 +376,11 @@ impl SyncApi for SyncApiImpl {
                         .iter_mut()
                         .find(|p| p.id == remote_progress.id)
                     {
-                        let should_update = match (&local_progress.updated_at, &remote_progress.updated_at) {
-                            (Some(local_ts), remote_ts) => remote_ts > local_ts,
-                            (None, _) => true,
-                        };
+                        let should_update =
+                            match (&local_progress.updated_at, &remote_progress.updated_at) {
+                                (Some(local_ts), remote_ts) => remote_ts > local_ts,
+                                (None, _) => true,
+                            };
 
                         if should_update {
                             local_progress.current_step = remote_progress.current_step;
@@ -388,7 +401,9 @@ impl SyncApi for SyncApiImpl {
 
         // Add new server profiles not in local
         for remote_profile in &server_response.profiles {
-            let Some(ref uuid) = remote_profile.uuid else { continue };
+            let Some(ref uuid) = remote_profile.uuid else {
+                continue;
+            };
             if !conf.profiles.iter().any(|p| &p.id == uuid) {
                 conf.profiles.push(conf::Profile {
                     id: uuid.clone(),
@@ -400,7 +415,12 @@ impl SyncApi for SyncApiImpl {
                         .map(|p| conf::Progress {
                             id: p.id,
                             current_step: p.current_step,
-                            steps: p.steps.iter().enumerate().map(|(i, s)| (i as u32, s.clone())).collect(),
+                            steps: p
+                                .steps
+                                .iter()
+                                .enumerate()
+                                .map(|(i, s)| (i as u32, s.clone()))
+                                .collect(),
                             updated_at: Some(p.updated_at.clone()),
                         })
                         .collect(),
@@ -414,17 +434,30 @@ impl SyncApi for SyncApiImpl {
         info!("[Sync] Initial sync completed successfully");
 
         Ok(SyncResponse {
-            profiles: server_response.profiles.into_iter().map(|rp| RemoteProfile {
-                id: rp.id,
-                uuid: rp.uuid,
-                name: rp.name,
-                progresses: rp.progresses.into_iter().map(|prog| SyncProgressPayload {
-                    id: prog.id,
-                    current_step: prog.current_step,
-                    steps: prog.steps.into_iter().enumerate().map(|(i, s)| (i as u32, s)).collect(),
-                    updated_at: prog.updated_at,
-                }).collect(),
-            }).collect(),
+            profiles: server_response
+                .profiles
+                .into_iter()
+                .map(|rp| RemoteProfile {
+                    id: rp.id,
+                    uuid: rp.uuid,
+                    name: rp.name,
+                    progresses: rp
+                        .progresses
+                        .into_iter()
+                        .map(|prog| SyncProgressPayload {
+                            id: prog.id,
+                            current_step: prog.current_step,
+                            steps: prog
+                                .steps
+                                .into_iter()
+                                .enumerate()
+                                .map(|(i, s)| (i as u32, s))
+                                .collect(),
+                            updated_at: prog.updated_at,
+                        })
+                        .collect(),
+                })
+                .collect(),
         })
     }
 

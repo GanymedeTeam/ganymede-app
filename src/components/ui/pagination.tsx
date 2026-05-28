@@ -1,6 +1,7 @@
 import { Link, type LinkProps, useLinkProps } from '@tanstack/react-router'
 import { ChevronLeftIcon, ChevronRightIcon, EllipsisIcon } from 'lucide-react'
 import type * as React from 'react'
+
 import { type ButtonProps, buttonVariants } from '@/components/ui/button.tsx'
 import { cn } from '@/lib/utils.ts'
 

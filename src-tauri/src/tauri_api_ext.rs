@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use chrono::{Datelike, Timelike};
+use std::path::PathBuf;
 use tauri::path::PathResolver;
 use tauri::Runtime;
 
@@ -50,7 +50,9 @@ impl<R: Runtime> ConfPathExt for PathResolver<R> {
     }
 
     fn app_conf_backup_file(&self) -> PathBuf {
-        let path = self.app_config_dir().expect("[TauriApi] app_conf_backup_file");
+        let path = self
+            .app_config_dir()
+            .expect("[TauriApi] app_conf_backup_file");
 
         let now = chrono::Local::now();
         let backup_filename = format!(

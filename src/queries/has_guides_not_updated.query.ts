@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { hasGuidesNotUpdated } from '@/ipc/guides.ts'
 
 export const hasGuidesNotUpdatedQuery = queryOptions({

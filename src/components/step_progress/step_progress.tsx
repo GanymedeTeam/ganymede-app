@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { useState } from 'react'
+
 import { ShortcutTooltip } from '@/components/shortcut_tooltip'
 import { Button } from '@/components/ui/button.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
@@ -105,7 +106,7 @@ export function StepProgress({
                 )}
                 style={{ width: `${(current / total) * 100}%` }}
               />
-              <span className="relative z-10 select-none font-medium text-white text-xs drop-shadow">
+              <span className="relative z-10 text-xs font-medium text-white drop-shadow select-none">
                 {current}/{total}
               </span>
             </div>

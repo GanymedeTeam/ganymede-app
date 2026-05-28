@@ -1,4 +1,5 @@
 import { fromPromise } from 'neverthrow'
+
 import { taurpc } from '@/ipc/ipc.ts'
 
 export class GetAlmanaxError extends Error {

@@ -1,6 +1,7 @@
 import { useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { copyPosition } from '@/lib/copy_position.ts'
 import { confQuery } from '@/queries/conf.query.ts'

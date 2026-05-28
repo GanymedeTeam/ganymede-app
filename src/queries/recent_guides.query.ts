@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { getRecentGuides } from '@/ipc/guides.ts'
 
 export function recentGuidesQuery(profileId: string) {

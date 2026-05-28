@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { FolderIcon } from 'lucide-react'
+
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import {
@@ -60,12 +61,12 @@ export function DeleteGuidesDialog({
             {selectedItems.map((guideOrFolder) => {
               if (guideOrFolder.type === 'folder') {
                 return (
-                  <Card className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" key={guideOrFolder.folder}>
+                  <Card className="flex gap-2 p-2 text-xxs xs:px-3 xs:text-sm sm:text-base" key={guideOrFolder.folder}>
                     <div className="flex min-w-9 flex-col items-center gap-0.5">
                       <FolderIcon />
                     </div>
                     <div className="flex grow flex-col gap-1">
-                      <h3 className="grow text-balance font-mono">{guideOrFolder.folder}</h3>
+                      <h3 className="grow font-mono text-balance">{guideOrFolder.folder}</h3>
                     </div>
                   </Card>
                 )
@@ -74,18 +75,18 @@ export function DeleteGuidesDialog({
               const guide = guideOrFolder.guide
 
               return (
-                <Card className="flex gap-2 p-2 xs:px-3 text-xxs xs:text-sm sm:text-base" key={guide.id}>
+                <Card className="flex gap-2 p-2 text-xxs xs:px-3 xs:text-sm sm:text-base" key={guide.id}>
                   {USE_GUIDE_IMAGE && guide.node_image && (
                     <div className="flex flex-col items-center justify-center">
                       <DownloadImage
-                        className="size-8 xs:size-10 rounded object-cover sm:size-12"
+                        className="size-8 rounded object-cover xs:size-10 sm:size-12"
                         src={guide.node_image}
                       />
                     </div>
                   )}
                   <div className="flex min-w-9 flex-col items-center gap-0.5">
                     <FlagPerLang lang={guide.lang} />
-                    <span className="whitespace-nowrap text-xxs">
+                    <span className="text-xxs whitespace-nowrap">
                       <Trans>
                         id <span className="text-yellow-300">{guide.id}</span>
                       </Trans>

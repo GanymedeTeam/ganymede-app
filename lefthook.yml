@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - run: pnpm format --no-error-on-unmatched-pattern "{staged_files}"
+      name: format
+      glob: '**/*.{ts,tsx,js,jsx,json,css}'
+      stage_fixed: true
+      tags:
+        - fmt
+
+    - run: pnpm lint --no-error-on-unmatched-pattern "{staged_files}"
+      name: lint
+      glob: '**/*.{ts,tsx,js,jsx}'
+      stage_fixed: false
+      tags:
+        - lint
+
+    - run: rustfmt --edition 2021 "{staged_files}"
+      name: rust-format
+      glob: '**/*.rs'
+      stage_fixed: true
+      tags:
+        - fmt

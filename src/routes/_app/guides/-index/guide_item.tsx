@@ -3,17 +3,13 @@ import { Link } from '@tanstack/react-router'
 import { cva } from 'class-variance-authority'
 import { FileDownIcon, PinIcon, PinOffIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
 import { toast } from 'sonner'
+
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GameIcon } from '@/components/game_icon.tsx'
 import { GuideDownloadButton } from '@/components/guide_download_button.tsx'
 import { Card } from '@/components/ui/card.tsx'
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuTrigger,
-} from '@/components/ui/context_menu.tsx'
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context_menu.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GameType, Guide, GuidesOrFolder } from '@/ipc/bindings.ts'
@@ -126,7 +122,7 @@ function GuideIcon({
 }
 
 const guideItemVariants = cva(
-  'flex gap-3 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_0.3125rem_0.875rem_rgba(0,0,0,0.5)]',
+  'flex gap-3 rounded-xl border border-border-muted bg-surface-card p-2 shadow-[0_0.3125rem_0.875rem_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70 xs:gap-3',
   {
     variants: {
       variant: {
@@ -196,7 +192,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 className="line-clamp-2 w-full cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
+                <h3 className="line-clamp-2 w-full cursor-default text-sm leading-tight font-semibold">{guide.name}</h3>
               </TooltipTrigger>
               <TooltipContent className="max-w-[250px]" side="top">
                 {guide.name}
@@ -205,17 +201,17 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
           </TooltipProvider>
           <div className="flex w-full items-center gap-2">
             {/* Mobile: percentage badge with progress */}
-            <div className="relative flex xs:hidden h-4 w-full min-w-[48px] items-center justify-center overflow-hidden rounded-md border border-border-inset bg-surface-inset">
+            <div className="relative flex h-4 w-full min-w-[48px] items-center justify-center overflow-hidden rounded-md border border-border-inset bg-surface-inset xs:hidden">
               <div
                 className={cn('absolute inset-y-0 left-0', isFinished ? 'bg-success' : 'bg-success/80')}
                 style={{ width: `${percentage}%` }}
               />
-              <span className="relative z-10 select-none px-1.5 font-medium text-white text-xs drop-shadow-md">
+              <span className="relative z-10 px-1.5 text-xs font-medium text-white drop-shadow-md select-none">
                 {percentage}%
               </span>
             </div>
             {/* Larger screens: full progress bar */}
-            <div className="relative xs:flex hidden h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] border border-border-inset bg-surface-inset">
+            <div className="relative hidden h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] border border-border-inset bg-surface-inset xs:flex">
               <div
                 className={cn(
                   'absolute inset-y-0 left-0 transition-all duration-300',
@@ -223,7 +219,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
                 )}
                 style={{ width: `${percentage}%` }}
               />
-              <span className="relative z-10 select-none font-medium text-white text-xs drop-shadow-md">
+              <span className="relative z-10 text-xs font-medium text-white drop-shadow-md select-none">
                 {isFinished ? '100% - Terminé' : `${percentage}% - (${step}/${totalSteps})`}
               </span>
             </div>
@@ -311,11 +307,11 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
     <Card className={guideItemVariants({ variant: 'server' })} key={guide.id}>
       <GoldGradientDefs />
       {/* Mobile Layout */}
-      <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
+      <div className="grid w-full grid-cols-[auto_1fr] gap-2 xs:hidden">
         <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
         <div className="flex min-w-0 flex-col gap-1 pr-16">
-          <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
-          <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
+          <h3 className="line-clamp-2 text-sm leading-tight font-semibold">{guide.name}</h3>
+          <div className="flex flex-wrap items-center gap-2 text-xxs text-muted-foreground">
             <span className="flex items-center gap-1">
               {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
               <FileDownIcon className="size-3" />
@@ -351,21 +347,21 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
       </div>
 
       {/* Larger screens */}
-      <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
+      <div className="hidden w-full xs:flex xs:items-center xs:gap-3">
         <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
 
         <div className="flex min-w-0 grow flex-col justify-center gap-1">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <h3 className="line-clamp-2 cursor-default font-semibold text-sm leading-tight">{guide.name}</h3>
+                <h3 className="line-clamp-2 cursor-default text-sm leading-tight font-semibold">{guide.name}</h3>
               </TooltipTrigger>
               <TooltipContent className="max-w-[250px]" side="top">
                 {guide.name}
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <div className="flex items-center gap-3 text-muted-foreground text-xxs">
+          <div className="flex items-center gap-3 text-xxs text-muted-foreground">
             <span className="flex items-center gap-1">
               {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
               <FileDownIcon className="size-3" />
@@ -383,7 +379,7 @@ function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: Server
             <Trans>
               de <span className="font-semibold text-blue-400">{guide.user.name}</span>
             </Trans>
-            {guide.user.is_certified === 1 && <VerifiedIcon className="size-3 xs:size-4 text-orange-300" />}
+            {guide.user.is_certified === 1 && <VerifiedIcon className="size-3 text-orange-300 xs:size-4" />}
           </p>
         </div>
 

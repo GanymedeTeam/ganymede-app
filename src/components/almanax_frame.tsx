@@ -3,6 +3,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { type Dayjs } from 'dayjs'
 import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon } from 'lucide-react'
 import { useState } from 'react'
+
 import kamasIcon from '@/assets/kamas.webp'
 import xpIcon from '@/assets/xp.webp'
 import { CopyOnClick } from '@/components/copy_on_click.tsx'

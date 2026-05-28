@@ -105,14 +105,19 @@ pub fn handle_deep_link_url<R: tauri::Runtime>(app: AppHandle<R>, url: &str) -> 
             .as_str()
             .to_string();
 
-        debug!("[DeepLink] Parsed OAuth callback - code: {}, state: {}", code, state_id);
+        debug!(
+            "[DeepLink] Parsed OAuth callback - code: {}, state: {}",
+            code, state_id
+        );
 
         // Spawner une tâche asynchrone pour gérer l'OAuth callback
         let app_clone = app.clone();
         let code_clone = code.clone();
         let state_clone = state_id.clone();
         tauri::async_runtime::spawn(async move {
-            if let Err(e) = oauth::handle_oauth_callback_directly(&app_clone, &code_clone, &state_clone).await {
+            if let Err(e) =
+                oauth::handle_oauth_callback_directly(&app_clone, &code_clone, &state_clone).await
+            {
                 error!("[DeepLink] Failed to handle OAuth callback: {:?}", e);
             } else {
                 info!("[DeepLink] OAuth callback handled successfully");

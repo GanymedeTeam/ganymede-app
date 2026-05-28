@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useCallback } from 'react'
 import { toast } from 'sonner'
+
 import { useTabs } from '@/hooks/use_tabs.ts'
 import type { Conf } from '@/ipc/bindings.ts'
 import { getProfileById } from '@/lib/profile.ts'

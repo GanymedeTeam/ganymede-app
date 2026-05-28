@@ -3,6 +3,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { cva, VariantProps } from 'class-variance-authority'
 import { BookOpenIcon, GlobeIcon, PenToolIcon, TrophyIcon } from 'lucide-react'
 import { ReactNode } from 'react'
+
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
 import { cn } from '@/lib/utils.ts'
 import { Page } from '@/routes/-page.tsx'
@@ -91,8 +92,8 @@ function CategoryCard({ status, icon, title, description, variant }: CategoryCar
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h3 className="font-semibold text-sm leading-tight">{title}</h3>
-        <p className="xs:block hidden text-muted-foreground text-xs leading-relaxed">{description}</p>
+        <h3 className="text-sm leading-tight font-semibold">{title}</h3>
+        <p className="hidden text-xs leading-relaxed text-muted-foreground xs:block">{description}</p>
       </div>
 
       {/* Chevron */}

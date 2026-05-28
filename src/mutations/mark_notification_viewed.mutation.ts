@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+
 import { markNotificationAsViewed } from '@/ipc/notifications.ts'
 import { unviewedNotificationsQuery } from '@/queries/notifications.query.ts'
 

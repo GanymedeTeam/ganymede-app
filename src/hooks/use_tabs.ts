@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+
 import { OpenedGuide } from '@/lib/tabs.ts'
 
 type State = {

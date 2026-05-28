@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { reregisterShortcuts } from '@/ipc/shortcuts.ts'
 
 export function useReregisterShortcuts() {

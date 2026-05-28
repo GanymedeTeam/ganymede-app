@@ -1,4 +1,5 @@
 import { type CSSProperties, type PropsWithChildren, type ReactNode } from 'react'
+
 import { PageContent } from '@/components/page_content.tsx'
 import { PageTitle, PageTitleText } from '@/components/page_title.tsx'
 import { cn } from '@/lib/utils.ts'

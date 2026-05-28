@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,7 +22,7 @@ interface ProfileDeleteDialogProps<T extends string | null> {
 }
 
 export function ProfileDeleteDialog<T extends string | null>({
-  profileId: profileId,
+  profileId,
   onDelete,
   open,
   onOpenChange,

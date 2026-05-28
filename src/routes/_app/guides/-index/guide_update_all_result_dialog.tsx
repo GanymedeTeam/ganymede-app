@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { PropsWithChildren, Suspense } from 'react'
+
 import { Button } from '@/components/ui/button.tsx'
 import {
   Dialog,
@@ -24,7 +25,7 @@ function Item({ guideId, error }: { guideId: number; error: string }) {
 
   return (
     <div className="flex flex-col items-center gap-1 rounded-lg border border-amber-500/50 bg-surface-card p-2 leading-5">
-      <h3 className="font-semibold text-sm">
+      <h3 className="text-sm font-semibold">
         {guide ? (
           <>
             ID {guide.id} — {guide.name}
@@ -33,7 +34,7 @@ function Item({ guideId, error }: { guideId: number; error: string }) {
           <>ID {guideId}</>
         )}
       </h3>
-      <p className="text-balance px-4 text-center">{error}</p>
+      <p className="px-4 text-center text-balance">{error}</p>
     </div>
   )
 }

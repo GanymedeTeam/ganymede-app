@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
+
 import { DownloadImage } from '@/components/download_image.tsx'
 import { Toaster } from '@/components/ui/sonner.tsx'
 
@@ -33,7 +34,7 @@ function ImageViewerPage() {
         src={image}
       />
       {title && (
-        <div className="-translate-x-1/2 absolute bottom-8 left-1/2 rounded-lg bg-black/70 px-4 py-2 text-sm text-white backdrop-blur-sm">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-lg bg-black/70 px-4 py-2 text-sm text-white backdrop-blur-sm">
           {title}
         </div>
       )}

@@ -54,7 +54,7 @@ Tous les composants React exportent des functions et non pas des arrow functions
 
 Nous utilisons React 19.
 
-Nous utilisons Biome pour formater et linter notre code, sa configuration se trouve dans le fichier `/biome.jsonc`.
+Nous utilisons la toolchain OXC pour formater et linter notre code : oxlint (`/oxlint.config.ts`) pour le lint et oxfmt (`/oxfmt.config.ts`) pour le format. oxfmt trie aussi les imports et les classes Tailwind.
 
 Pour démarrer l'application `pnpm tauri dev` en mode dev. Pour compiler l'application `pnpm tauri build`, s'il faut les infos de debug `pnpm tauri build --debug`.
 

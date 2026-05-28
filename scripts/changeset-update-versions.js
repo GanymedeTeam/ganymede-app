@@ -1,6 +1,7 @@
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import * as url from 'node:url'
+
 import packageJson from '../package.json' with { type: 'json' }
 
 const dirname = path.dirname(url.fileURLToPath(import.meta.url))

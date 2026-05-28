@@ -1,9 +1,9 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "./assets/fonts/fonts.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './assets/fonts/fonts.css';
 
-@plugin "@tailwindcss/typography";
-@plugin "../tailwind-slot-plugin.ts";
+@plugin '@tailwindcss/typography';
+@plugin '../tailwind-slot-plugin.ts';
 
 @keyframes pulse-success {
   0% {
@@ -74,7 +74,7 @@
   --color-primary-800: hsl(236 27% 25%);
   --color-primary-900: hsl(236 27% 20%);
   --color-primary-foreground-800: hsl(0 0% 95%);
-  --font-liberation: "Liberation", var(--default-font-family);
+  --font-liberation: 'Liberation', var(--default-font-family);
   --text-xxs: 0.625rem;
   --text-xxs--line-height: calc(0.75 / 0.625);
   --breakpoint-xs: 320px;
@@ -100,7 +100,7 @@
 }
 
 /* Theme: Standard (Violet) */
-[data-theme="standard"] {
+[data-theme='standard'] {
   --color-surface-page: #1a1a24;
   --color-surface-card: #22222e;
   --color-surface-inset: #2d2d3d;
@@ -112,7 +112,7 @@
 }
 
 /* Theme: Bonta (Blue) */
-[data-theme="bonta"] {
+[data-theme='bonta'] {
   --color-surface-page: #141c28;
   --color-surface-card: #1a2433;
   --color-surface-inset: #243044;
@@ -124,7 +124,7 @@
 }
 
 /* Theme: Brakmar (Red) */
-[data-theme="brakmar"] {
+[data-theme='brakmar'] {
   --color-surface-page: #1e1418;
   --color-surface-card: #281a1f;
   --color-surface-inset: #36242b;
@@ -136,7 +136,7 @@
 }
 
 /* Theme: Tribute (Gray) */
-[data-theme="tribute"] {
+[data-theme='tribute'] {
   --color-surface-page: #1a1a1a;
   --color-surface-card: #222222;
   --color-surface-inset: #2e2e2e;
@@ -148,7 +148,7 @@
 }
 
 /* Theme: Gold and Steel (Bronze) */
-[data-theme="gold-steel"] {
+[data-theme='gold-steel'] {
   --color-surface-page: #1c1814;
   --color-surface-card: #251f1a;
   --color-surface-inset: #322922;
@@ -160,7 +160,7 @@
 }
 
 /* Theme: Belladone (Mauve) */
-[data-theme="belladone"] {
+[data-theme='belladone'] {
   --color-surface-page: #1a181c;
   --color-surface-card: #231f26;
   --color-surface-inset: #2f2a33;
@@ -172,7 +172,7 @@
 }
 
 /* Theme: Unicorn (Rose) */
-[data-theme="unicorn"] {
+[data-theme='unicorn'] {
   --color-surface-page: #1c161c;
   --color-surface-card: #261d26;
   --color-surface-inset: #342834;
@@ -184,7 +184,7 @@
 }
 
 /* Theme: Emerald Mine (Cyan) */
-[data-theme="emerald"] {
+[data-theme='emerald'] {
   --color-surface-page: #14191a;
   --color-surface-card: #1a2223;
   --color-surface-inset: #242e30;
@@ -196,7 +196,7 @@
 }
 
 /* Theme: Sufokia (Turquoise) */
-[data-theme="sufokia"] {
+[data-theme='sufokia'] {
   --color-surface-page: #121a1a;
   --color-surface-card: #182323;
   --color-surface-inset: #222f30;
@@ -208,7 +208,7 @@
 }
 
 /* Theme: Pandala (Green) */
-[data-theme="pandala"] {
+[data-theme='pandala'] {
   --color-surface-page: #171a14;
   --color-surface-card: #1e221a;
   --color-surface-inset: #2a2f24;
@@ -220,7 +220,7 @@
 }
 
 /* Theme: Wabbit (Orange) */
-[data-theme="wabbit"] {
+[data-theme='wabbit'] {
   --color-surface-page: #1e1614;
   --color-surface-card: #281d1a;
   --color-surface-inset: #362824;
@@ -283,7 +283,7 @@
 @variant last-tab (&:where(.group\/tab:has([data-state="inactive"]):has(+ .group\/tab > [data-state="active"]) *), &:where(.group\/tab:has([data-state="inactive"]):last-of-type *));
 
 @utility mask-gradient-to-top {
-  @apply mask-t-from-0 mask-t-to-12% mask-t-from-transparent mask-t-to-black;
+  @apply mask-t-from-transparent mask-t-from-0 mask-t-to-black mask-t-to-12%;
 }
 
 @utility mask-gradient-to-left {
@@ -302,10 +302,8 @@
   :root {
     --background: 236 21% 11%;
     --font-sans:
-      "Lexend", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-      "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-      "Noto Color Emoji";
+      'Lexend', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans',
+      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     --default-font-family: var(--font-sans);
     --opacity: 0.93;
   }
@@ -317,8 +315,8 @@
 
   body {
     font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+      'rlig' 1,
+      'calt' 1;
     overflow: hidden;
     background: color-mix(in srgb, var(--color-surface-page) calc(var(--opacity) * 100%), transparent);
     color: var(--color-foreground);
@@ -353,13 +351,13 @@
     position: relative;
 
     @variant before {
-      content: "";
+      content: '';
       display: block;
       inset: 0;
       width: 100%;
       height: 100%;
       position: absolute;
-      background: url("@/assets/app-bg.webp") 50% 0 no-repeat;
+      background: url('@/assets/app-bg.webp') 50% 0 no-repeat;
       background-size: cover;
       opacity: 0.2;
       z-index: -1;
@@ -463,7 +461,7 @@
     margin-right: 0.2em;
   }
 
-  .guide-step img[data-icon="true"] {
+  .guide-step img[data-icon='true'] {
     margin-right: 0;
   }
 
@@ -482,28 +480,28 @@
     }
 
     /* Task list specific styles */
-    ul[data-type="taskList"] {
+    ul[data-type='taskList'] {
       list-style: none;
       margin-left: 0;
       padding: 0;
     }
 
-    ul[data-type="taskList"] li {
+    ul[data-type='taskList'] li {
       align-items: flex-start;
       display: flex;
     }
 
-    ul[data-type="taskList"] li > label {
+    ul[data-type='taskList'] li > label {
       flex: 0 0 auto;
       margin-right: 0.5rem;
       user-select: none;
     }
 
-    ul[data-type="taskList"] li > div {
+    ul[data-type='taskList'] li > div {
       flex: 1 1 auto;
     }
 
-    ul[data-type="taskList"] ul[data-type="taskList"] {
+    ul[data-type='taskList'] ul[data-type='taskList'] {
       margin: 0;
     }
 
@@ -546,8 +544,8 @@
       }
     }
 
-    input:is([type="button"], [type="submit"], [type="reset"]),
-    input[type="file"]::file-selector-button,
+    input:is([type='button'], [type='submit'], [type='reset']),
+    input[type='file']::file-selector-button,
     button[data-href] {
       text-align: left;
       word-break: break-all;
@@ -555,7 +553,7 @@
   }
 }
 
-.toaster[data-sonner-toaster][data-sonner-theme="dark"] {
+.toaster[data-sonner-toaster][data-sonner-theme='dark'] {
   --normal-bg: var(--color-surface-inset);
   --normal-text: var(--color-primary-foreground);
   --normal-border: var(--color-surface-page);

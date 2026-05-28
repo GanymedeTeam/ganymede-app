@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import debounce from 'debounce-fn'
 import { BookTextIcon } from 'lucide-react'
 import { useCallback, useState, useSyncExternalStore } from 'react'
+
 import { CopyOnClick } from '@/components/copy_on_click.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { GuideNodeImage } from '@/components/guide_node_image.tsx'
@@ -177,7 +178,10 @@ export function SummaryDialog({
           <ScrollArea className="h-full" ref={contentRef}>
             <div className="group flex flex-col gap-2" data-has-scroll={hasScroll}>
               {filteredQuests.map((quest) => (
-                <div className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3">
+                <div
+                  className="flex flex-col rounded-lg p-2 text-left group-data-[has-scroll=true]:mr-3"
+                  key={quest.name}
+                >
                   <div className="flex items-center gap-1">
                     <img alt="Quest" className="size-6" src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} />
                     <CopyOnClick title={quest.name}>
@@ -206,13 +210,12 @@ export function SummaryDialog({
                                 : status.setup
 
                         return (
-                          <TooltipProvider>
+                          <TooltipProvider key={`${statusText}-${step}`}>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button
                                   className="border-none text-foreground data-[status=completed]:text-green-500 data-[status=setup]:text-orange-400 data-[status=started]:text-red-500"
                                   data-status={statusText}
-                                  key={`${statusText}-${step}`}
                                   onClick={() => {
                                     onChangeStep(step - 1)
                                     onOpenChange(false)

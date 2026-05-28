@@ -1,6 +1,7 @@
 import { t } from '@lingui/core/macro'
 import { Trans } from '@lingui/react/macro'
 import { ExternalLinkIcon } from 'lucide-react'
+
 import { DiscordIcon } from '@/components/icons/discord_icon.tsx'
 import { TwitterIcon } from '@/components/icons/twitter_icon.tsx'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
@@ -30,7 +31,7 @@ export function HomeFooter() {
           </button>
         ))}
       </div>
-      <p className="text-center text-muted-foreground text-xxs">
+      <p className="text-center text-xxs text-muted-foreground">
         <Trans>Ganymède - Non affilié à Ankama Games</Trans>
       </p>
     </div>

@@ -1,5 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 import { type Dayjs } from 'dayjs'
+
 import { getAlmanax } from '@/ipc/almanax.ts'
 import { ConfLang } from '@/ipc/bindings.ts'
 

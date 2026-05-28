@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.18.0",
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && lingui extract && vite build",
@@ -10,7 +13,11 @@
     "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
     "changeset:version": "changeset version && node scripts/changeset-update-versions.js",
-    "format": "biome check --unsafe --fix"
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@lingui/core": "^5.5.0",
@@ -66,7 +73,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
     "@changesets/cli": "^2.29.7",
     "@lingui/cli": "^5.5.0",
     "@lingui/conf": "^5.5.0",
@@ -83,6 +89,9 @@
     "@vitejs/plugin-react": "^5.0.3",
     "babel-plugin-macros": "^3.1.0",
     "dotenv-cli": "^11.0.0",
+    "lefthook": "^2.1.8",
+    "oxfmt": "^0.52.0",
+    "oxlint": "^1.67.0",
     "tailwindcss": "4.1.13",
     "typescript": "^5.9.2",
     "vite": "^7.1.6"

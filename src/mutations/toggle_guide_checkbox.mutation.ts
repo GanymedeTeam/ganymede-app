@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
 import { toggleGuideCheckbox } from '@/ipc/conf.ts'
 import { getProfile } from '@/lib/profile.ts'
 import { getProgress, getStep, newProgress } from '@/lib/progress.ts'

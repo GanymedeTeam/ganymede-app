@@ -289,9 +289,15 @@ pub async fn update_all_guides_at_launch(app: &AppHandle) {
 
     match update_all_guides_batch(app).await {
         Ok(results) => {
-            let success_count = results.values().filter(|r| matches!(r, UpdateAllAtOnceResult::Success)).count();
+            let success_count = results
+                .values()
+                .filter(|r| matches!(r, UpdateAllAtOnceResult::Success))
+                .count();
             let total_count = results.len();
-            info!("[Guides] update_all_guides_at_launch: {}/{} guides updated", success_count, total_count);
+            info!(
+                "[Guides] update_all_guides_at_launch: {}/{} guides updated",
+                success_count, total_count
+            );
         }
         Err(err) => {
             warn!("[Guides] update_all_guides_at_launch failed: {}", err);
@@ -338,7 +344,10 @@ pub async fn get_guides_from_server(
         .join(",");
 
     let res = http_client
-        .get(format!("{}/v2/guides/batch?ids={}", GANYMEDE_API, joined_ids))
+        .get(format!(
+            "{}/v2/guides/batch?ids={}",
+            GANYMEDE_API, joined_ids
+        ))
         .send()
         .await;
 
@@ -762,17 +771,13 @@ fn fetch_guides_from_server<R: Runtime>(
             format!("{}/v2/guides", GANYMEDE_API)
         };
 
-        let res = http_client
-            .get(url)
-            .send()
-            .await
-            .map_err(|err| {
-                if err.is_connect() || err.is_timeout() {
-                    Error::NetworkUnavailable
-                } else {
-                    Error::RequestGuides(err.to_string())
-                }
-            })?;
+        let res = http_client.get(url).send().await.map_err(|err| {
+            if err.is_connect() || err.is_timeout() {
+                Error::NetworkUnavailable
+            } else {
+                Error::RequestGuides(err.to_string())
+            }
+        })?;
 
         let text = res
             .text()
@@ -941,7 +946,7 @@ fn generate_guide_summary<R: Runtime>(
 
                     match (a_step, b_step) {
                         (Some(a_val), Some(b_val)) => a_val.cmp(&b_val),
-                        (Some(_), None) => std::cmp::Ordering::Less,  // Non-setup before setup-only
+                        (Some(_), None) => std::cmp::Ordering::Less, // Non-setup before setup-only
                         (None, Some(_)) => std::cmp::Ordering::Greater,
                         (None, None) => {
                             // Both setup-only: compare first status step
@@ -989,7 +994,9 @@ async fn update_all_guides_batch<R: Runtime>(
         }
         Err(errors) => {
             // If all errors are network errors, treat as success (offline mode)
-            let all_network_errors = errors.iter().all(|e| matches!(e, Error::NetworkUnavailable));
+            let all_network_errors = errors
+                .iter()
+                .all(|e| matches!(e, Error::NetworkUnavailable));
 
             if all_network_errors {
                 for id in guide_ids {
@@ -1001,7 +1008,12 @@ async fn update_all_guides_batch<R: Runtime>(
                 for error in errors {
                     match error {
                         Error::GuideNotFound(id) => {
-                            results.insert(id, UpdateAllAtOnceResult::Failure { message: error.to_string() });
+                            results.insert(
+                                id,
+                                UpdateAllAtOnceResult::Failure {
+                                    message: error.to_string(),
+                                },
+                            );
                             error_ids.push(id);
                         }
                         _ => {
@@ -1009,7 +1021,9 @@ async fn update_all_guides_batch<R: Runtime>(
                                 if !error_ids.contains(id) {
                                     results
                                         .entry(*id)
-                                        .or_insert(UpdateAllAtOnceResult::Failure { message: error.to_string() });
+                                        .or_insert(UpdateAllAtOnceResult::Failure {
+                                            message: error.to_string(),
+                                        });
                                 }
                             }
                         }

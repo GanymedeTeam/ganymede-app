@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+
 import { openGuidesFolder } from '@/ipc/guides.ts'
 
 export function useOpenGuidesFolder() {

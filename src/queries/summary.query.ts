@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { getGuideSummary } from '@/ipc/guides.ts'
 
 export function summaryQuery(guideId: number) {

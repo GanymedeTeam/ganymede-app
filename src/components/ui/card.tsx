@@ -1,5 +1,6 @@
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
+
 import { cn } from '@/lib/utils.ts'
 
 function Card({
@@ -29,7 +30,7 @@ function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'d
 function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
     <div
-      className={cn('text-sm xs:text-base leading-none tracking-tight', className)}
+      className={cn('text-sm leading-none tracking-tight xs:text-base', className)}
       data-slot="card-title"
       ref={ref}
       {...props}
@@ -47,7 +48,7 @@ function CardDescription({
 
   return (
     <Comp
-      className={cn('text-muted-foreground text-xs xs:text-sm', className)}
+      className={cn('text-xs text-muted-foreground xs:text-sm', className)}
       data-slot="card-description"
       ref={ref}
       {...props}
@@ -58,7 +59,7 @@ function CardDescription({
 function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
     <div
-      className={cn('p-3 xs:p-6 pt-0 text-xs xs:text-base', className)}
+      className={cn('p-3 pt-0 text-xs xs:p-6 xs:text-base', className)}
       data-slot="card-content"
       ref={ref}
       {...props}
@@ -68,7 +69,7 @@ function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'
 
 function CardFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
   return (
-    <div className={cn('flex items-center p-3 xs:p-6 pt-0', className)} data-slot="card-footer" ref={ref} {...props} />
+    <div className={cn('flex items-center p-3 pt-0 xs:p-6', className)} data-slot="card-footer" ref={ref} {...props} />
   )
 }
 

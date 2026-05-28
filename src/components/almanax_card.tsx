@@ -3,6 +3,7 @@ import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { type Dayjs } from 'dayjs'
 import { ChevronLeftIcon, ChevronRightIcon, LoaderIcon, Undo2Icon } from 'lucide-react'
 import { useState } from 'react'
+
 import kamasIcon from '@/assets/kamas.webp'
 import xpIcon from '@/assets/xp.webp'
 import { CopyOnClick } from '@/components/copy_on_click.tsx'
@@ -61,7 +62,7 @@ export function AlmanaxCard() {
         </div>
 
         {/* Date display */}
-        <span className="font-semibold text-accent text-sm">{dateToDayMonthYear(date)}</span>
+        <span className="text-sm font-semibold text-accent">{dateToDayMonthYear(date)}</span>
 
         {/* Today button */}
         <TooltipProvider>
@@ -151,7 +152,7 @@ export function AlmanaxCard() {
                 </CopyOnClick>
 
                 {/* XP & Kamas */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground text-xs">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
                   <div className="flex items-center gap-1.5">
                     <img alt="XP" className="h-3.5 select-none" draggable={false} src={xpIcon} />
                     <span>{almanax.data.experience.toLocaleString()}</span>
@@ -166,7 +167,7 @@ export function AlmanaxCard() {
 
             {/* Bonus description */}
             <div
-              className="text-muted-foreground text-xs leading-relaxed"
+              className="text-xs leading-relaxed text-muted-foreground"
               dangerouslySetInnerHTML={{ __html: almanax.data.bonus }}
             />
           </div>

@@ -5,11 +5,11 @@ import * as React from 'react'
 import { cn } from '@/lib/utils.ts'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap rounded-md text-xs xs:text-sm font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring aria-disabled:pointer-events-none aria-disabled:opacity-50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-3 xs:[&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-xs font-medium whitespace-nowrap transition-colors focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 xs:text-sm [&_svg]:pointer-events-none [&_svg]:size-3 [&_svg]:shrink-0 xs:[&_svg]:size-4',
   {
     variants: {
       variant: {
-        default: 'bg-surface-inset text-primary-foreground border border-accent shadow-sm hover:bg-surface-inset/80',
+        default: 'border border-accent bg-surface-inset text-primary-foreground shadow-sm hover:bg-surface-inset/80',
         destructive: 'bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90',
         outline:
           'border border-border-muted bg-surface-card shadow-xs hover:bg-surface-inset hover:text-primary-foreground',
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         sm: 'h-8 rounded-md px-3',
         lg: 'h-10 rounded-md px-8 py-2 text-sm xs:text-base',
         icon: 'size-6 sm:size-7',
-        ['icon-sm']: 'size-7 min-w-7 min-h-7',
+        ['icon-sm']: 'size-7 min-h-7 min-w-7',
       },
     },
     defaultVariants: {

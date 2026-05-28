@@ -4,6 +4,7 @@ import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
 import { PlusIcon } from 'lucide-react'
 import { z } from 'zod'
+
 import { PageContent } from '@/components/page_content.tsx'
 import { PageTitle, PageTitleText } from '@/components/page_title.tsx'
 import { Button } from '@/components/ui/button.tsx'
@@ -18,6 +19,7 @@ import { getProgress } from '@/lib/progress.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { stepNotesQuery } from '@/queries/step_notes.query.ts'
+
 import { GuidePage } from './-$id/guide_page.tsx'
 import { GuideTabsTrigger } from './-$id/guide_tabs_trigger.tsx'
 

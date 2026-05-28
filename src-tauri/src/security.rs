@@ -13,7 +13,7 @@ const VALID_LINKS: [&'static str; 33] = [
     "https://twitter.com",
     "https://x.com",
     "https://dofus.com",
-    "https://www.dofus.com",    
+    "https://www.dofus.com",
     "https://www.twitch.tv",
     "https://twitch.tv",
     "https://metamob.fr",
@@ -31,7 +31,7 @@ const VALID_LINKS: [&'static str; 33] = [
     "https://www.gamosaurus.com",
     "https://comteharebourg.com",
     "https://www.comteharebourg.com",
-    "https://d-bk.net"
+    "https://d-bk.net",
 ];
 
 #[taurpc::procedures(path = "security", export_to = "../src/ipc/bindings.ts")]

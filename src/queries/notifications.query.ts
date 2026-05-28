@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { Notification } from '@/ipc/bindings.ts'
 import { GetUnviewedNotificationsError, getUnviewedNotifications } from '@/ipc/notifications.ts'
 

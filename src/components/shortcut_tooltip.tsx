@@ -1,4 +1,5 @@
 import type { PropsWithChildren, ReactNode } from 'react'
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface ShortcutTooltipProps {
@@ -72,7 +73,7 @@ export function ShortcutTooltip({
             <div className="flex gap-0.5 text-muted-foreground">
               {parts.map((part) => (
                 <kbd
-                  className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-surface-page px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100"
+                  className="pointer-events-none inline-flex h-5 items-center gap-1 rounded border bg-surface-page px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 select-none"
                   key={part}
                 >
                   <span className="text-xs">{formatKey(part)}</span>

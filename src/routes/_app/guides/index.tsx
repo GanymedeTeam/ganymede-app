@@ -4,6 +4,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { MenuIcon } from 'lucide-react'
 import { useState } from 'react'
 import { z } from 'zod'
+
 import addGuideImage from '@/assets/add-guide.png'
 import { GenericLoader } from '@/components/generic_loader.tsx'
 import { PageScrollableContent } from '@/components/page_scrollable_content.tsx'
@@ -19,6 +20,7 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { guidesInFolderQuery, guidesQuery } from '@/queries/guides.query.ts'
 import { pinnedGuidesQuery } from '@/queries/pinned_guides.query.ts'
 import { Page } from '@/routes/-page.tsx'
+
 import { BackButtonLink } from '../downloads/-back_button_link.tsx'
 import { ActionsToolbar } from './-index/actions_toolbar.tsx'
 import { FolderItem } from './-index/folder_item.tsx'
@@ -244,7 +246,7 @@ function GuidesPage() {
               selectedItems={selectedItemsToDelete}
             />
           ) : (
-            <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 px-2 py-2 backdrop-blur-sm">
+            <div className="sticky top-0 z-50 -mx-2 mask-gradient-to-top px-2 py-2 backdrop-blur-sm">
               <ClearInput
                 autoComplete="off"
                 autoCorrect="off"
@@ -305,10 +307,10 @@ function GuidesPage() {
 
               {/* Content */}
               <div className="flex min-w-0 grow flex-col justify-center gap-1">
-                <h3 className="font-semibold text-sm leading-tight">
+                <h3 className="text-sm leading-tight font-semibold">
                   <Trans>Parcourir le catalogue</Trans>
                 </h3>
-                <p className="hidden text-muted-foreground text-xs leading-tight sm:block">
+                <p className="hidden text-xs leading-tight text-muted-foreground sm:block">
                   <Trans>Découvrez et ajoutez de nouveaux guides à votre liste.</Trans>
                 </p>
               </div>

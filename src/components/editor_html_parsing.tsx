@@ -6,6 +6,7 @@ import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from 'ht
 import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
 import { Fragment, type ReactNode } from 'react'
 import { toast } from 'sonner'
+
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { DownloadImage } from '@/components/download_image.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
@@ -66,7 +67,7 @@ export function EditorHtmlParsing({
           return <Trans>lien masqué</Trans>
         }
 
-        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|\.|,|:|;|'|")\s]*)/gu
+        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|.|,|:|;|'|")\s]*)/gu
 
         let elems: ReactNode[] = []
 
@@ -179,7 +180,7 @@ export function EditorHtmlParsing({
                     {!hasGoToGuideIcon && (
                       <img alt="" className="size-5 select-none" data-icon draggable={false} src={goToStepIcon} />
                     )}
-                    <span className="hover:saturate-200 focus:saturate-[25%] group-focus-within:saturate-[25%] peer-hover:saturate-200">
+                    <span className="group-focus-within:saturate-[25%] peer-hover:saturate-200 hover:saturate-200 focus:saturate-[25%]">
                       {domToReact(domNode.children as DOMNode[], options)}
                     </span>
                   </Link>
@@ -188,7 +189,7 @@ export function EditorHtmlParsing({
                   <button
                     {...attribs}
                     className={cn(
-                      'contents! group cursor-pointer select-none data-[type=guide-step]:no-underline',
+                      'group contents! cursor-pointer select-none data-[type=guide-step]:no-underline',
                       downloadGuide.isError && 'text-destructive!',
                       domNode.attribs.class,
                     )}
@@ -214,7 +215,7 @@ export function EditorHtmlParsing({
                     }}
                   >
                     {downloadGuide.isError && (
-                      <AlertCircleIcon className="-translate-y-0.5 inline-flex size-5 text-destructive" />
+                      <AlertCircleIcon className="inline-flex size-5 -translate-y-0.5 text-destructive" />
                     )}
                     {!hasGoToGuideIcon && (
                       <img
@@ -225,7 +226,7 @@ export function EditorHtmlParsing({
                         src={goToStepIcon}
                       />
                     )}
-                    <span className="hover:saturate-200 focus:saturate-[25%] group-focus-within:saturate-[25%] peer-hover:saturate-200">
+                    <span className="group-focus-within:saturate-[25%] peer-hover:saturate-200 hover:saturate-200 focus:saturate-[25%]">
                       {domToReact(domNode.children as DOMNode[], options)}
                     </span>
                   </button>
@@ -313,7 +314,7 @@ export function EditorHtmlParsing({
                 <span className="peer group-focus-within:saturate-[25%] group-hover:saturate-150">
                   {domToReact([domNode.children[0]] as DOMNode[], options)}
                 </span>
-                <span className="hover:saturate-150 focus:saturate-[25%] group-focus-within:saturate-[25%] group-hover:saturate-150">
+                <span className="group-focus-within:saturate-[25%] group-hover:saturate-150 hover:saturate-150 focus:saturate-[25%]">
                   {name}
                 </span>
               </button>
@@ -344,7 +345,7 @@ export function EditorHtmlParsing({
                   {status === 'start' && <BookPlusIcon className="size-4 min-h-4 min-w-4 text-red-500" />}
                   {status === 'end' && <BookCheckIcon className="size-4 min-h-4 min-w-4 text-green-400" />}
                   <img className="size-6" src={`https://${GANYMEDE_HOST}/images/icon_quest.png`} />
-                  <span className="text-balance text-base">{questName}</span>
+                  <span className="text-base text-balance">{questName}</span>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

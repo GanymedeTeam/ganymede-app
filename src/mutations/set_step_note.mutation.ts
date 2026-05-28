@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
 import { StepNotes } from '@/ipc/bindings.ts'
 import { setStepNote } from '@/ipc/step_notes.ts'
 import { stepNotesQuery } from '@/queries/step_notes.query.ts'

@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react'
+
 import dofusIconPng from '@/assets/logos/dofus.png'
 import wakfuIconPng from '@/assets/logos/wakfu.png'
 import { GameType } from '@/ipc/bindings.ts'

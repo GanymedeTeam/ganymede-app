@@ -24,7 +24,7 @@ function TabsTrigger({
   return (
     <TabsPrimitive.Trigger
       className={cn(
-        'line-clamp-1 block w-full grow text-ellipsis whitespace-nowrap px-2 py-1 font-medium text-xs xs:text-sm leading-5 ring-offset-background transition-all first-tab:rounded-bl-md last-tab:rounded-br-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=inactive]:bg-surface-inset data-[state=inactive]:text-foreground/75',
+        'line-clamp-1 block w-full grow px-2 py-1 text-xs leading-5 font-medium text-ellipsis whitespace-nowrap ring-offset-background transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=inactive]:bg-surface-inset data-[state=inactive]:text-foreground/75 xs:text-sm first-tab:rounded-bl-md last-tab:rounded-br-md',
         className,
       )}
       ref={ref}
@@ -39,7 +39,7 @@ function TabsContent({ className, ref, ...props }: React.ComponentPropsWithRef<t
   return (
     <TabsPrimitive.Content
       className={cn(
-        'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none',
         className,
       )}
       ref={ref}

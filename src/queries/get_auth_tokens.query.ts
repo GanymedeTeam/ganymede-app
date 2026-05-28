@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
+
 import { AuthTokens } from '@/ipc/bindings.ts'
 import { GetAuthTokensError, getAuthTokens } from '@/ipc/oauth.ts'
 

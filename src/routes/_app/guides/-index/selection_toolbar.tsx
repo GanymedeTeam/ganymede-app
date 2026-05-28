@@ -2,11 +2,13 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'sonner'
+
 import { Button } from '@/components/ui/button.tsx'
 import { GuideOrFolderToDelete, GuidesOrFolder } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder } from '@/ipc/ipc.ts'
 import { useDeleteGuidesInSystem } from '@/mutations/delete_guides_in_system.mutation.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
+
 import { DeleteGuidesDialog } from './delete_guides_dialog.tsx'
 
 type GuideWithFolder = Extract<GuidesOrFolder, { type: 'guide' }> & Pick<GuideWithStepsWithFolder, 'folder'>
@@ -64,7 +66,7 @@ export function SelectionToolbar({ selectedItems, onCancel, onDeleteComplete }: 
   }
 
   return (
-    <div className="-mx-2 mask-gradient-to-top sticky top-0 z-50 flex gap-2 px-2 py-2 backdrop-blur-sm">
+    <div className="sticky top-0 z-50 -mx-2 flex gap-2 mask-gradient-to-top px-2 py-2 backdrop-blur-sm">
       <DeleteGuidesDialog
         onConfirm={onDeleteGuidesInSystem}
         onOpenChange={setDeleteDialogOpen}
