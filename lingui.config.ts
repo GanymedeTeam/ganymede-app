@@ -1,4 +1,5 @@
 import { LinguiConfig } from '@lingui/conf'
+import { formatter } from '@lingui/format-po'
 
 export default {
   locales: ['en', 'es', 'fr', 'pt'],
@@ -9,5 +10,5 @@ export default {
       include: ['src'],
     },
   ],
-  format: 'po',
+  format: formatter(),
 } satisfies LinguiConfig
