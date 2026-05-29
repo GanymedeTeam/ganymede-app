@@ -89,18 +89,18 @@ const AppDownloadsStatusRoute = AppDownloadsStatusRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AppIndexRoute
   '/app-old-version': typeof AppOldVersionRoute
   '/image-viewer': typeof ImageViewerRoute
   '/auto-pilot': typeof AppAutoPilotRoute
   '/settings': typeof AppSettingsRoute
-  '/': typeof AppIndexRoute
   '/downloads/$status': typeof AppDownloadsStatusRoute
   '/guides/$id': typeof AppGuidesIdRoute
   '/notes/create': typeof AppNotesCreateRoute
   '/oauth/waiting': typeof AppOauthWaitingRoute
-  '/downloads': typeof AppDownloadsIndexRoute
-  '/guides': typeof AppGuidesIndexRoute
-  '/notes': typeof AppNotesIndexRoute
+  '/downloads/': typeof AppDownloadsIndexRoute
+  '/guides/': typeof AppGuidesIndexRoute
+  '/notes/': typeof AppNotesIndexRoute
 }
 export interface FileRoutesByTo {
   '/app-old-version': typeof AppOldVersionRoute
@@ -135,18 +135,18 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/app-old-version'
     | '/image-viewer'
     | '/auto-pilot'
     | '/settings'
-    | '/'
     | '/downloads/$status'
     | '/guides/$id'
     | '/notes/create'
     | '/oauth/waiting'
-    | '/downloads'
-    | '/guides'
-    | '/notes'
+    | '/downloads/'
+    | '/guides/'
+    | '/notes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/app-old-version'
@@ -203,7 +203,7 @@ declare module '@tanstack/react-router' {
     '/_app': {
       id: '/_app'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -231,21 +231,21 @@ declare module '@tanstack/react-router' {
     '/_app/notes/': {
       id: '/_app/notes/'
       path: '/notes'
-      fullPath: '/notes'
+      fullPath: '/notes/'
       preLoaderRoute: typeof AppNotesIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/guides/': {
       id: '/_app/guides/'
       path: '/guides'
-      fullPath: '/guides'
+      fullPath: '/guides/'
       preLoaderRoute: typeof AppGuidesIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/downloads/': {
       id: '/_app/downloads/'
       path: '/downloads'
-      fullPath: '/downloads'
+      fullPath: '/downloads/'
       preLoaderRoute: typeof AppDownloadsIndexRouteImport
       parentRoute: typeof AppRoute
     }
