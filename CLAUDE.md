@@ -148,6 +148,7 @@ impl ApiName for ApiNameImpl { ... }
 - Do not commit directly to `main` branch
 - Do not include a Test Plan section when generating PRs
 - Pull Request descriptions should be in English
+- The `pre-commit` hook runs `rustfmt` (`stage_fixed: true`). If rustfmt reformats more than intended, it is not a problem: after committing, check `git status` and `git commit --amend` to fold in the extra formatting rustfmt produced.
 
 ### Translations
 - French is the source language (msgid)
