@@ -1,4 +1,4 @@
-use std::{collections::HashMap, fmt, fs, path::PathBuf, vec};
+use std::{collections::{HashMap, HashSet}, fmt, fs, path::PathBuf, vec};
 
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
@@ -9,6 +9,7 @@ use tauri_plugin_opener::OpenerExt;
 use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
 
 pub const DEFAULT_GUIDE_ID: u32 = 1074;
+const MAX_RECENT_GUIDES: usize = 50;
 
 // ================================================================================================
 // Enums
@@ -615,9 +616,10 @@ fn register_guide_open<R: Runtime>(
     let profile_guides = recent_guides.entry(profile_id).or_default();
 
     if !profile_guides.contains(&guide_id) {
-        profile_guides.insert(0, guide_id);
-        if profile_guides.len() > 6 {
-            profile_guides.pop();
+        profile_guides.push(guide_id);
+        if profile_guides.len() > MAX_RECENT_GUIDES {
+            let overflow = profile_guides.len() - MAX_RECENT_GUIDES;
+            profile_guides.drain(0..overflow);
         }
 
         write_recent_guides_file(&recent_guides_path, &recent_guides)?;
@@ -655,13 +657,33 @@ fn get_recent_guides<R: Runtime>(
 
     let recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
     let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?.guides;
+    let guide_ids_in_system = guides_in_system.iter().map(|guide| guide.id).collect::<HashSet<_>>();
 
     let mut profile_guides = recent_guides.get(&profile_id).cloned().unwrap_or_default();
 
     // remove any guide IDs that are no longer in the system since the last session
-    profile_guides.retain(|id| guides_in_system.iter().any(|g| g.id == *id));
+    profile_guides.retain(|id| guide_ids_in_system.contains(id));
 
-    Ok(profile_guides)
+    Ok(sanitize_recent_guides(profile_guides))
+}
+
+fn set_recent_guides<R: Runtime>(
+    app_handle: AppHandle<R>,
+    profile_id: String,
+    guide_ids: Vec<u32>,
+) -> Result<(), Error> {
+    debug!(
+        "[Guides] set_recent_guides for profile {profile_id}: {:?}",
+        guide_ids
+    );
+
+    let recent_guides_path = app_handle.path().app_recent_guides_file();
+    let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
+
+    recent_guides.insert(profile_id, sanitize_recent_guides(guide_ids));
+    write_recent_guides_file(&recent_guides_path, &recent_guides)?;
+
+    Ok(())
 }
 
 fn remove_profile_from_recent_guides<R: Runtime>(
@@ -685,8 +707,9 @@ fn write_recent_guides_file(
     recent_guides_path: &PathBuf,
     recent_guides: &RecentGuides,
 ) -> Result<(), Error> {
+    let recent_guides = sanitize_recent_guides_by_profile(recent_guides);
     let json =
-        crate::json::serialize_pretty(recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
+        crate::json::serialize_pretty(&recent_guides).map_err(Error::SerializeRecentGuidesFile)?;
 
     debug!(
         "[Guides] writing recent guides file: {:?}",
@@ -697,6 +720,58 @@ fn write_recent_guides_file(
         .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
 
     Ok(())
+}
+
+fn sanitize_recent_guides_by_profile(recent_guides: &RecentGuides) -> RecentGuides {
+    recent_guides
+        .iter()
+        .map(|(profile_id, guide_ids)| {
+            (
+                profile_id.clone(),
+                sanitize_recent_guides(guide_ids.clone()),
+            )
+        })
+        .collect()
+}
+
+fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
+    let mut sanitized = Vec::with_capacity(guide_ids.len().min(MAX_RECENT_GUIDES));
+    let mut seen = HashSet::with_capacity(guide_ids.len().min(MAX_RECENT_GUIDES));
+
+    for guide_id in guide_ids {
+        if seen.insert(guide_id) {
+            sanitized.push(guide_id);
+        }
+    }
+
+    if sanitized.len() > MAX_RECENT_GUIDES {
+        let overflow = sanitized.len() - MAX_RECENT_GUIDES;
+        sanitized.drain(0..overflow);
+    }
+
+    sanitized
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{sanitize_recent_guides, MAX_RECENT_GUIDES};
+
+    #[test]
+    fn sanitize_recent_guides_removes_duplicates_preserving_order() {
+        let guide_ids = vec![3, 1, 3, 2, 1, 4];
+
+        assert_eq!(sanitize_recent_guides(guide_ids), vec![3, 1, 2, 4]);
+    }
+
+    #[test]
+    fn sanitize_recent_guides_caps_to_limit() {
+        let guide_ids = (1..=(MAX_RECENT_GUIDES as u32 + 10)).collect::<Vec<_>>();
+        let sanitized = sanitize_recent_guides(guide_ids);
+
+        assert_eq!(sanitized.len(), MAX_RECENT_GUIDES);
+        assert_eq!(sanitized.first(), Some(&11));
+        assert_eq!(sanitized.last(), Some(&(MAX_RECENT_GUIDES as u32 + 10)));
+    }
 }
 
 fn read_recent_guides_file(
@@ -1205,6 +1280,12 @@ pub trait GuidesApi {
         app_handle: AppHandle<R>,
         profile_id: String,
     ) -> Result<Vec<u32>, Error>;
+    #[taurpc(alias = "setRecentGuides")]
+    async fn set_recent_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
+        profile_id: String,
+        guide_ids: Vec<u32>,
+    ) -> Result<(), Error>;
     #[taurpc(alias = "removeProfileFromRecentGuides")]
     async fn remove_profile_from_recent_guides<R: Runtime>(
         app_handle: AppHandle<R>,
@@ -1326,6 +1407,15 @@ impl GuidesApi for GuidesApiImpl {
         profile_id: String,
     ) -> Result<Vec<u32>, Error> {
         get_recent_guides(app_handle, profile_id)
+    }
+
+    async fn set_recent_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        profile_id: String,
+        guide_ids: Vec<u32>,
+    ) -> Result<(), Error> {
+        set_recent_guides(app_handle, profile_id, guide_ids)
     }
 
     async fn remove_profile_from_recent_guides<R: Runtime>(

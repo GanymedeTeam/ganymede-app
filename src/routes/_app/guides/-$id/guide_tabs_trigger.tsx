@@ -3,8 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { debug } from '@tauri-apps/plugin-log'
 import { XIcon } from 'lucide-react'
-import { useEffect } from 'react'
-
+import { type PointerEvent as ReactPointerEvent, useEffect } from 'react'
 import { GuideNodeImage } from '@/components/guide_node_image.tsx'
 import {
   ContextMenu,
@@ -20,11 +19,20 @@ import { useProfile } from '@/hooks/use_profile.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { getStepOr } from '@/lib/progress.ts'
+import { OpenedGuideDropPosition } from '@/lib/tabs.ts'
 import { cn } from '@/lib/utils.ts'
 import { useRegisterGuideClose } from '@/mutations/register_guide_close.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 
-export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: number }) {
+type GuideTabsTriggerProps = {
+  id: number
+  currentId: number
+  dropPosition: OpenedGuideDropPosition | null
+  isDragging: boolean
+  onTabPointerDown: (evt: ReactPointerEvent<HTMLDivElement>, id: number) => void
+}
+
+export function GuideTabsTrigger({ id, currentId, dropPosition, isDragging, onTabPointerDown }: GuideTabsTriggerProps) {
   const guide = useGuideOrUndefined(id)
   const removeTab = useTabs((s) => s.removeTab)
   const setTabs = useTabs((s) => s.setTabs)
@@ -52,6 +60,22 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
   const positionInList = tabs.findIndex((tab) => tab === id)
   const hasTabsToRight = positionInList !== -1 && positionInList < tabs.length - 1
   const hasOtherTabs = tabs.length > 1
+
+  const onOpenTab = async () => {
+    if (currentId === id) {
+      return
+    }
+
+    await navigate({
+      to: '/guides/$id',
+      params: {
+        id,
+      },
+      search: {
+        step: getStepOr(profile, id, 0),
+      },
+    })
+  }
 
   const onCloseTab = async () => {
     try {
@@ -151,13 +175,34 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
         <ContextMenu>
           <TooltipTrigger asChild>
             <ContextMenuTrigger asChild>
-              <div className="relative flex shrink-0 pb-1">
+              <div
+                className={cn(
+                  'relative flex shrink-0 cursor-grab pb-1 active:cursor-grabbing',
+                  isDragging && 'opacity-60',
+                )}
+                data-guide-id={id}
+                data-guide-tab="true"
+                onPointerDown={(evt) => onTabPointerDown(evt, id)}
+              >
+                {dropPosition && (
+                  <span
+                    className={cn(
+                      'pointer-events-none absolute top-0 bottom-1 z-10 w-0.5 rounded-full bg-primary',
+                      dropPosition === 'before' ? 'left-0' : 'right-0',
+                    )}
+                  />
+                )}
                 <TabsTrigger
                   asChild
                   className={cn(
-                    'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden rounded-lg bg-surface-inset text-xs font-medium whitespace-nowrap text-foreground/75 transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50',
+                    'group/tab relative m-0 flex max-w-40 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-lg bg-surface-inset font-medium text-foreground/75 text-xs transition-none data-[state=active]:bg-surface-page data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-surface-page/50',
                     !isSmallGuide && 'xs:text-sm lg:max-w-62',
                   )}
+                  onClick={async (evt) => {
+                    evt.preventDefault()
+
+                    await onOpenTab()
+                  }}
                   onMouseDown={(evt) => {
                     if (evt.button === 1) {
                       evt.preventDefault()
@@ -167,9 +212,12 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                   }}
                   value={id.toString()}
                 >
-                  <div>
+                  <div draggable={false}>
                     <GuideNodeImage guide={guide} />
-                    <span className={cn('hidden -translate-y-0.5 truncate', !isSmallGuide && 'xs:inline')}>
+                    <span
+                      className={cn('-translate-y-0.5 hidden truncate', !isSmallGuide && 'xs:inline')}
+                      draggable={false}
+                    >
                       {guide.name}
                     </span>
                     {/* Progress bar */}
@@ -185,9 +233,12 @@ export function GuideTabsTrigger({ id, currentId }: { id: number; currentId: num
                       className={cn(
                         'group/close invisible absolute top-0 right-0 z-0 cursor-pointer bg-surface-page text-primary-foreground transition-none group-hover/tab:visible',
                         !isSmallGuide &&
-                          'xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-6 xs:items-center xs:justify-end xs:pr-1.5 xs:mask-gradient-to-left',
+                          'xs:mask-gradient-to-left xs:top-0 xs:bottom-0.5 xs:flex xs:h-[calc(100%-0.125rem)] xs:w-6 xs:items-center xs:justify-end xs:pr-1.5',
                       )}
+                      data-no-tab-drag="true"
+                      draggable={false}
                       onClick={async (evt) => {
+                        evt.preventDefault()
                         evt.stopPropagation()
 
                         await onCloseTab()

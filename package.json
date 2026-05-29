@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && lingui extract && vite build",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "tauri": "tauri",
     "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
