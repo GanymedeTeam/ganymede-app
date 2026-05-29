@@ -2,8 +2,8 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { Link } from '@tanstack/react-router'
 import { cva } from 'class-variance-authority'
 import { FileDownIcon, PinIcon, PinOffIcon, ThumbsDownIcon, ThumbsUpIcon, VerifiedIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
 import { toast } from 'sonner'
-
 import { DownloadImage } from '@/components/download_image.tsx'
 import { FlagPerLang } from '@/components/flag_per_lang.tsx'
 import { GameIcon } from '@/components/game_icon.tsx'
@@ -81,6 +81,24 @@ function GoldChevron({ className }: { className?: string }) {
   )
 }
 
+function GuideOpenLink({
+  children,
+  className,
+  guideId,
+  step,
+}: {
+  children: ReactNode
+  className?: string
+  guideId: number
+  step: number
+}) {
+  return (
+    <Link className={className} draggable={false} params={{ id: guideId }} search={{ step }} to="/guides/$id">
+      {children}
+    </Link>
+  )
+}
+
 // Shared icon + flag component
 function GuideIcon({
   id,
@@ -122,7 +140,7 @@ function GuideIcon({
 }
 
 const guideItemVariants = cva(
-  'flex gap-3 rounded-xl border border-border-muted bg-surface-card p-2 shadow-[0_0.3125rem_0.875rem_rgba(0,0,0,0.5)] transition-colors hover:bg-surface-inset/70 xs:gap-3',
+  'flex gap-3 xs:gap-3 p-2 hover:bg-surface-inset/70 transition-colors bg-surface-card rounded-xl border border-border-muted shadow-[0_0.3125rem_0.875rem_rgba(0,0,0,0.5)]',
   {
     variants: {
       variant: {
@@ -152,6 +170,45 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
   const step = clamp(currentStepIndex + 1, 1, totalSteps)
   const percentage = Math.round((step / totalSteps) * 100)
   const isFinished = guide.currentStep !== null && guide.currentStep >= totalSteps - 1
+  const guideContent = (
+    <>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <h3 className="line-clamp-2 w-full font-semibold text-sm leading-tight">{guide.name}</h3>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[250px]" side="top">
+            {guide.name}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <div className="flex w-full items-center gap-2">
+        {/* Mobile: percentage badge with progress */}
+        <div className="relative flex xs:hidden h-4 w-full min-w-[48px] items-center justify-center overflow-hidden rounded-md border border-border-inset bg-surface-inset">
+          <div
+            className={cn('absolute inset-y-0 left-0', isFinished ? 'bg-success' : 'bg-success/80')}
+            style={{ width: `${percentage}%` }}
+          />
+          <span className="relative z-10 select-none px-1.5 font-medium text-white text-xs drop-shadow-md">
+            {percentage}%
+          </span>
+        </div>
+        {/* Larger screens: full progress bar */}
+        <div className="relative xs:flex hidden h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] border border-border-inset bg-surface-inset">
+          <div
+            className={cn(
+              'absolute inset-y-0 left-0 transition-all duration-300',
+              isFinished ? 'bg-success' : 'bg-success/80',
+            )}
+            style={{ width: `${percentage}%` }}
+          />
+          <span className="relative z-10 select-none font-medium text-white text-xs drop-shadow-md">
+            {isFinished ? '100% - Terminé' : `${percentage}% - (${step}/${totalSteps})`}
+          </span>
+        </div>
+      </div>
+    </>
+  )
 
   const onTogglePin = () => {
     if (!isPinned && pinnedCount >= MAX_PINNED_PER_PROFILE) {
@@ -179,7 +236,7 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
         }
       }}
     >
-      <li>
+      <li data-overlay-interactive={isSelectMode ? 'true' : undefined}>
         <GuideIcon
           gameType={guide.game_type}
           id={guide.id}
@@ -188,43 +245,17 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
           nodeImage={guide.node_image}
         />
 
-        <div className="flex min-w-0 grow flex-col justify-center gap-1.5">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <h3 className="line-clamp-2 w-full cursor-default text-sm leading-tight font-semibold">{guide.name}</h3>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-[250px]" side="top">
-                {guide.name}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <div className="flex w-full items-center gap-2">
-            {/* Mobile: percentage badge with progress */}
-            <div className="relative flex h-4 w-full min-w-[48px] items-center justify-center overflow-hidden rounded-md border border-border-inset bg-surface-inset xs:hidden">
-              <div
-                className={cn('absolute inset-y-0 left-0', isFinished ? 'bg-success' : 'bg-success/80')}
-                style={{ width: `${percentage}%` }}
-              />
-              <span className="relative z-10 px-1.5 text-xs font-medium text-white drop-shadow-md select-none">
-                {percentage}%
-              </span>
-            </div>
-            {/* Larger screens: full progress bar */}
-            <div className="relative hidden h-5 w-full max-w-[200px] items-center justify-center overflow-hidden rounded-[6px] border border-border-inset bg-surface-inset xs:flex">
-              <div
-                className={cn(
-                  'absolute inset-y-0 left-0 transition-all duration-300',
-                  isFinished ? 'bg-success' : 'bg-success/80',
-                )}
-                style={{ width: `${percentage}%` }}
-              />
-              <span className="relative z-10 text-xs font-medium text-white drop-shadow-md select-none">
-                {isFinished ? '100% - Terminé' : `${percentage}% - (${step}/${totalSteps})`}
-              </span>
-            </div>
-          </div>
-        </div>
+        {isSelectMode ? (
+          <div className="flex min-w-0 grow flex-col justify-center gap-1.5">{guideContent}</div>
+        ) : (
+          <GuideOpenLink
+            className="flex min-w-0 grow flex-col justify-center gap-1.5"
+            guideId={guide.id}
+            step={currentStepIndex}
+          >
+            {guideContent}
+          </GuideOpenLink>
+        )}
 
         {!isSelectMode && (
           <div className="flex items-center gap-1 pl-1">
@@ -262,14 +293,9 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            <Link
-              className="flex items-center"
-              params={{ id: guide.id }}
-              search={{ step: currentStepIndex }}
-              to="/guides/$id"
-            >
+            <GuideOpenLink className="flex items-center" guideId={guide.id} step={currentStepIndex}>
               <GoldChevron />
-            </Link>
+            </GuideOpenLink>
           </div>
         )}
       </li>
@@ -303,97 +329,116 @@ function LocalGuideItem({ guide, isSelected, onSelect, isSelectMode, isPinned, p
 }
 
 function ServerGuideItem({ guide, intl, isGuideDownloaded, currentStep }: ServerGuideItemProps) {
+  const mobileContent = (
+    <>
+      <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
+      <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-xxs">
+        <span className="flex items-center gap-1">
+          {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
+          <FileDownIcon className="size-3" />
+        </span>
+        <span className="flex items-center gap-1">
+          {intl.format(guide.likes)}
+          <ThumbsUpIcon className="size-3" />
+        </span>
+        <span className="flex items-center gap-1">
+          {intl.format(guide.dislikes)}
+          <ThumbsDownIcon className="size-3" />
+        </span>
+      </div>
+      <p className="inline-flex items-center gap-1 text-xs">
+        <Trans>
+          de <span className="font-semibold text-blue-400">{guide.user.name}</span>
+        </Trans>
+        {guide.user.is_certified === 1 && <VerifiedIcon className="size-4 shrink-0 text-orange-300" />}
+      </p>
+    </>
+  )
+  const desktopContent = (
+    <>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <h3 className="line-clamp-2 font-semibold text-sm leading-tight">{guide.name}</h3>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-[250px]" side="top">
+            {guide.name}
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <div className="flex items-center gap-3 text-muted-foreground text-xxs">
+        <span className="flex items-center gap-1">
+          {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
+          <FileDownIcon className="size-3" />
+        </span>
+        <span className="flex items-center gap-1">
+          {intl.format(guide.likes)}
+          <ThumbsUpIcon className="size-3" />
+        </span>
+        <span className="flex items-center gap-1">
+          {intl.format(guide.dislikes)}
+          <ThumbsDownIcon className="size-3" />
+        </span>
+      </div>
+      <p className="inline-flex items-center gap-1 text-xs">
+        <Trans>
+          de <span className="font-semibold text-blue-400">{guide.user.name}</span>
+        </Trans>
+        {guide.user.is_certified === 1 && <VerifiedIcon className="size-3 xs:size-4 text-orange-300" />}
+      </p>
+    </>
+  )
+
   return (
     <Card className={guideItemVariants({ variant: 'server' })} key={guide.id}>
       <GoldGradientDefs />
       {/* Mobile Layout */}
-      <div className="grid w-full grid-cols-[auto_1fr] gap-2 xs:hidden">
+      <div className="grid xs:hidden w-full grid-cols-[auto_1fr] gap-2">
         <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
-        <div className="flex min-w-0 flex-col gap-1 pr-16">
-          <h3 className="line-clamp-2 text-sm leading-tight font-semibold">{guide.name}</h3>
-          <div className="flex flex-wrap items-center gap-2 text-xxs text-muted-foreground">
-            <span className="flex items-center gap-1">
-              {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
-              <FileDownIcon className="size-3" />
-            </span>
-            <span className="flex items-center gap-1">
-              {intl.format(guide.likes)}
-              <ThumbsUpIcon className="size-3" />
-            </span>
-            <span className="flex items-center gap-1">
-              {intl.format(guide.dislikes)}
-              <ThumbsDownIcon className="size-3" />
-            </span>
-          </div>
-          <p className="inline-flex items-center gap-1 text-xs">
-            <Trans>
-              de <span className="font-semibold text-blue-400">{guide.user.name}</span>
-            </Trans>
-            {guide.user.is_certified === 1 && <VerifiedIcon className="size-4 shrink-0 text-orange-300" />}
-          </p>
-        </div>
+        {isGuideDownloaded ? (
+          <GuideOpenLink className="flex min-w-0 flex-col gap-1 pr-16" guideId={guide.id} step={currentStep}>
+            {mobileContent}
+          </GuideOpenLink>
+        ) : (
+          <div className="flex min-w-0 flex-col gap-1 pr-16">{mobileContent}</div>
+        )}
         <div className="absolute top-2 right-2 flex items-center gap-1">
           <GuideDownloadButton guide={guide} />
-          <Link
+          <GuideOpenLink
             className={cn('flex items-center', !isGuideDownloaded && 'pointer-events-none opacity-40')}
-            draggable={false}
-            params={{ id: guide.id }}
-            search={{ step: currentStep }}
-            to="/guides/$id"
+            guideId={guide.id}
+            step={currentStep}
           >
             <GoldChevron />
-          </Link>
+          </GuideOpenLink>
         </div>
       </div>
 
       {/* Larger screens */}
-      <div className="hidden w-full xs:flex xs:items-center xs:gap-3">
+      <div className="xs:flex hidden w-full xs:items-center xs:gap-3">
         <GuideIcon gameType={guide.game_type} id={guide.id} lang={guide.lang} nodeImage={guide.node_image} />
 
-        <div className="flex min-w-0 grow flex-col justify-center gap-1">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <h3 className="line-clamp-2 cursor-default text-sm leading-tight font-semibold">{guide.name}</h3>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-[250px]" side="top">
-                {guide.name}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <div className="flex items-center gap-3 text-xxs text-muted-foreground">
-            <span className="flex items-center gap-1">
-              {guide.downloads !== null ? intl.format(guide.downloads) : 'N/A'}
-              <FileDownIcon className="size-3" />
-            </span>
-            <span className="flex items-center gap-1">
-              {intl.format(guide.likes)}
-              <ThumbsUpIcon className="size-3" />
-            </span>
-            <span className="flex items-center gap-1">
-              {intl.format(guide.dislikes)}
-              <ThumbsDownIcon className="size-3" />
-            </span>
-          </div>
-          <p className="inline-flex items-center gap-1 text-xs">
-            <Trans>
-              de <span className="font-semibold text-blue-400">{guide.user.name}</span>
-            </Trans>
-            {guide.user.is_certified === 1 && <VerifiedIcon className="size-3 text-orange-300 xs:size-4" />}
-          </p>
-        </div>
+        {isGuideDownloaded ? (
+          <GuideOpenLink
+            className="flex min-w-0 grow flex-col justify-center gap-1"
+            guideId={guide.id}
+            step={currentStep}
+          >
+            {desktopContent}
+          </GuideOpenLink>
+        ) : (
+          <div className="flex min-w-0 grow flex-col justify-center gap-1">{desktopContent}</div>
+        )}
 
         <div className="flex items-center gap-1 pl-1">
           <GuideDownloadButton guide={guide} />
-          <Link
+          <GuideOpenLink
             className={cn('flex items-center', !isGuideDownloaded && 'pointer-events-none opacity-40')}
-            draggable={false}
-            params={{ id: guide.id }}
-            search={{ step: currentStep }}
-            to="/guides/$id"
+            guideId={guide.id}
+            step={currentStep}
           >
             <GoldChevron />
-          </Link>
+          </GuideOpenLink>
         </div>
       </div>
     </Card>

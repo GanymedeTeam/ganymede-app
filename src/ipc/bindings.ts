@@ -16,7 +16,7 @@ export type AuthTokens = { access_token: string; refresh_token: string | null; e
 
 export type AutoPilot = { name: string; position: string }
 
-export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts }
+export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; overlayMode?: boolean; shortcuts?: Shortcuts }
 
 export type ConfError = { Malformed: JsonError } | { CreateConfDir: string } | { ConfDir: string } | { SerializeConf: JsonError } | { UnhandledIo: string } | { SaveConf: string } | "GetProfileInUse" | { ResetConf: ConfError }
 
@@ -55,6 +55,11 @@ export type GuidesError = { Pattern: string } | { ReadGuidesDirGlob: string } | 
 export type GuidesOrFolder = ({ type: "guide" } & GuideWithSteps) | ({ type: "folder" } & Folder)
 
 export type ImageError = { RequestImage: string } | { ConvertToBytes: string }
+
+/**
+ * Rectangle expressed in physical pixels, matching the coordinates used by the native window.
+ */
+export type InteractiveRegion = { x: number; y: number; width: number; height: number }
 
 export type IsOld = { from: string; to: string; isOld: boolean }
 
@@ -122,7 +127,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'dofusdb':'{"openHunt":["lang"],"openMap":["lang"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'dofusdb':'{"openHunt":["lang"],"openMap":["lang"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'overlay':'{"setInteractiveRegions":["interactive_regions"]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>, 
@@ -166,6 +171,7 @@ startOAuthFlow: () => Promise<null>},
 "pinnedGuides": {get: () => Promise<PinnedGuides>, 
 pinGuide: (profileId: string, guideId: number) => Promise<null>, 
 unpinGuide: (profileId: string, guideId: number) => Promise<null>},
+"overlay": {setInteractiveRegions: (interactiveRegions: InteractiveRegion[]) => Promise<null>},
 "report": {send_report: (payload: ReportPayload) => Promise<null>},
 "security": {getWhiteList: () => Promise<string[]>},
 "shortcuts": {reregister: () => Promise<null>},
