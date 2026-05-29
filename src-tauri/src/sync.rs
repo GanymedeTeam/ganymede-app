@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use log::{debug, error, info, warn};
+use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
