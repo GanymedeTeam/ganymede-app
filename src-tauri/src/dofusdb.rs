@@ -6,6 +6,9 @@ use crate::window_manager::WindowManager;
 pub trait DofusDbApi {
     #[taurpc(alias = "openHunt")]
     async fn open_hunt<R: Runtime>(app_handle: AppHandle<R>, lang: String) -> Result<(), String>;
+
+    #[taurpc(alias = "openMap")]
+    async fn open_map<R: Runtime>(app_handle: AppHandle<R>, lang: String) -> Result<(), String>;
 }
 
 #[derive(Clone)]
@@ -22,5 +25,16 @@ impl DofusDbApi for DofusDbApiImpl {
             .state::<WindowManager>()
             .inner()
             .open_dofusdb_hunt_window(&app_handle, lang)
+    }
+
+    async fn open_map<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        lang: String,
+    ) -> Result<(), String> {
+        app_handle
+            .state::<WindowManager>()
+            .inner()
+            .open_dofusdb_map_window(&app_handle, lang)
     }
 }

@@ -32,6 +32,7 @@ import { getLang } from '@/lib/conf.ts'
 import { isInImageViewerPath } from '@/lib/image_viewer.ts'
 import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
 import { useOpenDofusDbHunt } from '@/mutations/open_dofusdb_hunt.mutation.ts'
+import { useOpenDofusDbMap } from '@/mutations/open_dofusdb_map.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
@@ -51,6 +52,7 @@ export function TitleBar() {
   const cleanAuthTokens = useCleanAuthTokens()
   const conf = useQuery(confQuery)
   const openDofusDbHunt = useOpenDofusDbHunt()
+  const openDofusDbMap = useOpenDofusDbMap()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
   const isImageViewer = isInImageViewerPath(location.pathname)
@@ -131,11 +133,15 @@ export function TitleBar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="gap-2">
-              <Link draggable={false} to="/dofusdb/map">
-                <MapIcon />
-                <Trans>Carte</Trans>
-              </Link>
+            <DropdownMenuItem
+              className="gap-2"
+              disabled={openDofusDbMap.isPending}
+              onClick={() => {
+                openDofusDbMap.mutate(getLang(conf.data?.lang).toLowerCase())
+              }}
+            >
+              <MapIcon />
+              <Trans>Carte</Trans>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="gap-2"

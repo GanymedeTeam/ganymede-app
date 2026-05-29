@@ -6,6 +6,38 @@ use tauri::{
     AppHandle, LogicalPosition, LogicalSize, Manager, Runtime, WebviewUrl, WebviewWindowBuilder,
 };
 
+// Injected before page parsing, runs in the page's own context (unlike an iframe),
+// so we can hide the floating reCAPTCHA badge that overlaps the tool.
+const RESTYLE_HUNT_PAGE: &str = r#"(function () {
+  if (!location.hostname.endsWith('dofusdb.fr')) return;
+  function inject() {
+    var style = document.createElement('style');
+    style.textContent = '.grecaptcha-badge{visibility:hidden!important;} .q-header,.q-field__bottom,.q-field__append, .full-width.q-mb-sm, .pip-button { display: none; } .q-field { margin-inline: 2px !important; } .q-field, :where(.q-page) button:has(.q-focus-helper), .q-field__control, .treasure-hunt-direction-icon.q-icon { font-size: 1rem !important; } .q-field__control { padding: 0 2px !important; min-width: 1rem; } .q-mt-xs > span { font-size: 1.5rem; } .treasure-hunt-direction { height: 25px !important; width: 25px !important; padding: 0; display: flex; justify-content: center; align-items: center; }';
+    document.head.appendChild(style);
+  }
+  if (document.head) {
+    inject();
+  } else {
+    document.addEventListener('DOMContentLoaded', inject);
+  }
+})();"#;
+
+// Injected before page parsing to hide the floating reCAPTCHA badge and the
+// site header so the map fills the tool window.
+const RESTYLE_MAP_PAGE: &str = r#"(function () {
+  if (!location.hostname.endsWith('dofusdb.fr')) return;
+  function inject() {
+    var style = document.createElement('style');
+    style.textContent = '.grecaptcha-badge{visibility:hidden!important;} .q-header{display:none;}';
+    document.head.appendChild(style);
+  }
+  if (document.head) {
+    inject();
+  } else {
+    document.addEventListener('DOMContentLoaded', inject);
+  }
+})();"#;
+
 pub struct WindowMetadata {
     pub label: String,
 }
@@ -102,8 +134,40 @@ impl WindowManager {
         app: &AppHandle<R>,
         lang: String,
     ) -> Result<(), String> {
-        let label = "dofusdb-hunt";
+        self.open_dofusdb_window(
+            app,
+            "dofusdb-hunt",
+            "tools/treasure-hunt",
+            "Chasse au trésor — DofusDB",
+            &lang,
+            RESTYLE_HUNT_PAGE,
+        )
+    }
 
+    pub fn open_dofusdb_map_window<R: Runtime>(
+        &self,
+        app: &AppHandle<R>,
+        lang: String,
+    ) -> Result<(), String> {
+        self.open_dofusdb_window(
+            app,
+            "dofusdb-map",
+            "tools/map",
+            "Carte — DofusDB",
+            &lang,
+            RESTYLE_MAP_PAGE,
+        )
+    }
+
+    fn open_dofusdb_window<R: Runtime>(
+        &self,
+        app: &AppHandle<R>,
+        label: &str,
+        path: &str,
+        title: &str,
+        lang: &str,
+        init_script: &str,
+    ) -> Result<(), String> {
         if let Some(window) = app.get_webview_window(label) {
             window
                 .set_focus()
@@ -111,44 +175,25 @@ impl WindowManager {
             return Ok(());
         }
 
-        let url = format!(
-            "https://dofusdb.fr/{}/tools/treasure-hunt",
-            lang.to_lowercase()
-        );
+        let url = format!("https://dofusdb.fr/{}/{}", lang.to_lowercase(), path);
         let url = url
             .parse()
             .map_err(|e| format!("Invalid dofusdb url: {}", e))?;
 
         let (position, size) = self.get_main_window_geometry(app)?;
 
-        // Injected before page parsing, runs in the page's own context (unlike an iframe),
-        // so we can hide the floating reCAPTCHA badge that overlaps the tool.
-        const RESTYLE_HUNT_PAGE: &str = r#"(function () {
-  if (!location.hostname.endsWith('dofusdb.fr')) return;
-  function inject() {
-    var style = document.createElement('style');
-    style.textContent = '.grecaptcha-badge{visibility:hidden!important;} .q-header,.q-field__bottom,.q-field__append, .full-width.q-mb-sm, .pip-button { display: none; } .q-field { margin-inline: 2px !important; } .q-field, :where(.q-page) button:has(.q-focus-helper), .q-field__control, .treasure-hunt-direction-icon.q-icon { font-size: 1rem !important; } .q-field__control { padding: 0 2px !important; min-width: 1rem; } .q-mt-xs > span { font-size: 1.5rem; } .treasure-hunt-direction { height: 25px !important; width: 25px !important; padding: 0; display: flex; justify-content: center; align-items: center; }';
-    document.head.appendChild(style);
-  }
-  if (document.head) {
-    inject();
-  } else {
-    document.addEventListener('DOMContentLoaded', inject);
-  }
-})();"#;
-
         WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
-            .title("Chasse au trésor — DofusDB")
+            .title(title)
             .inner_size(size.width, size.height)
             .min_inner_size(250.0, 300.0)
             .position(position.x + 15f64, position.y + 15f64)
             .resizable(true)
             .always_on_top(true)
-            .initialization_script(RESTYLE_HUNT_PAGE)
+            .initialization_script(init_script)
             .build()
             .map_err(|e| format!("Failed to create dofusdb window: {}", e))?;
 
-        info!("[WindowManager] DofusDB hunt window created");
+        info!("[WindowManager] DofusDB window created: {}", label);
         Ok(())
     }
 
