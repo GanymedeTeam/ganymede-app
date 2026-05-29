@@ -28,10 +28,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { useIsBodyLockedFromDialog } from '@/hooks/use_is_body_locked_from_dialog.ts'
+import { getLang } from '@/lib/conf.ts'
 import { isInImageViewerPath } from '@/lib/image_viewer.ts'
 import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
+import { useOpenDofusDbHunt } from '@/mutations/open_dofusdb_hunt.mutation.ts'
 import { useOpenUrlInBrowser } from '@/mutations/open_url_in_browser.ts'
 import { useStartOAuthFlow } from '@/mutations/start_oauth_flow.mutation.ts'
+import { confQuery } from '@/queries/conf.query.ts'
 import { getAuthTokensQuery } from '@/queries/get_auth_tokens.query.ts'
 
 import { KoFiIcon } from './icons/ko_fi_icon.tsx'
@@ -46,6 +49,8 @@ export function TitleBar() {
   const startOAuthFlow = useStartOAuthFlow()
   const authTokens = useQuery(getAuthTokensQuery)
   const cleanAuthTokens = useCleanAuthTokens()
+  const conf = useQuery(confQuery)
+  const openDofusDbHunt = useOpenDofusDbHunt()
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
   const isImageViewer = isInImageViewerPath(location.pathname)
@@ -132,11 +137,15 @@ export function TitleBar() {
                 <Trans>Carte</Trans>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild className="gap-2">
-              <Link draggable={false} to="/dofusdb/hunt">
-                <CrosshairIcon />
-                <Trans>Chasse au trésor</Trans>
-              </Link>
+            <DropdownMenuItem
+              className="gap-2"
+              disabled={openDofusDbHunt.isPending}
+              onClick={() => {
+                openDofusDbHunt.mutate(getLang(conf.data?.lang).toLowerCase())
+              }}
+            >
+              <CrosshairIcon />
+              <Trans>Chasse au trésor</Trans>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

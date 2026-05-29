@@ -3,6 +3,7 @@ use crate::api::{Api, ApiImpl};
 use crate::base::{BaseApi, BaseApiImpl};
 use crate::conf::{ConfApi, ConfApiImpl};
 use crate::deep_link::{DeepLinkApi, DeepLinkApiImpl};
+use crate::dofusdb::{DofusDbApi, DofusDbApiImpl};
 use crate::first_start::handle_first_start_setup;
 use crate::guides::{GuidesApi, GuidesApiImpl};
 use crate::image::{ImageApi, ImageApiImpl};
@@ -31,6 +32,7 @@ mod api;
 mod base;
 mod conf;
 mod deep_link;
+mod dofusdb;
 mod event;
 mod first_start;
 mod guides;
@@ -169,6 +171,7 @@ pub fn run() {
         .merge(ConfApiImpl.into_handler())
         .merge(ReportApiImpl.into_handler())
         .merge(DeepLinkApiImpl.into_handler())
+        .merge(DofusDbApiImpl.into_handler())
         .merge(NotificationApiImpl.into_handler())
         .merge(OAuthApiImpl.into_handler())
         .merge(UserApiImpl.into_handler())

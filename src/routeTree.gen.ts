@@ -23,7 +23,6 @@ import { Route as AppNotesCreateRouteImport } from './routes/_app/notes.create'
 import { Route as AppGuidesIdRouteImport } from './routes/_app/guides/$id'
 import { Route as AppDownloadsStatusRouteImport } from './routes/_app/downloads/$status'
 import { Route as AppDofusdbMapRouteImport } from './routes/_app/dofusdb/map'
-import { Route as AppDofusdbHuntRouteImport } from './routes/_app/dofusdb/hunt'
 
 const ImageViewerRoute = ImageViewerRouteImport.update({
   id: '/image-viewer',
@@ -94,11 +93,6 @@ const AppDofusdbMapRoute = AppDofusdbMapRouteImport.update({
   path: '/dofusdb/map',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDofusdbHuntRoute = AppDofusdbHuntRouteImport.update({
-  id: '/dofusdb/hunt',
-  path: '/dofusdb/hunt',
-  getParentRoute: () => AppRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/app-old-version': typeof AppOldVersionRoute
@@ -106,7 +100,6 @@ export interface FileRoutesByFullPath {
   '/auto-pilot': typeof AppAutoPilotRoute
   '/settings': typeof AppSettingsRoute
   '/': typeof AppIndexRoute
-  '/dofusdb/hunt': typeof AppDofusdbHuntRoute
   '/dofusdb/map': typeof AppDofusdbMapRoute
   '/downloads/$status': typeof AppDownloadsStatusRoute
   '/guides/$id': typeof AppGuidesIdRoute
@@ -122,7 +115,6 @@ export interface FileRoutesByTo {
   '/auto-pilot': typeof AppAutoPilotRoute
   '/settings': typeof AppSettingsRoute
   '/': typeof AppIndexRoute
-  '/dofusdb/hunt': typeof AppDofusdbHuntRoute
   '/dofusdb/map': typeof AppDofusdbMapRoute
   '/downloads/$status': typeof AppDownloadsStatusRoute
   '/guides/$id': typeof AppGuidesIdRoute
@@ -140,7 +132,6 @@ export interface FileRoutesById {
   '/_app/auto-pilot': typeof AppAutoPilotRoute
   '/_app/settings': typeof AppSettingsRoute
   '/_app/': typeof AppIndexRoute
-  '/_app/dofusdb/hunt': typeof AppDofusdbHuntRoute
   '/_app/dofusdb/map': typeof AppDofusdbMapRoute
   '/_app/downloads/$status': typeof AppDownloadsStatusRoute
   '/_app/guides/$id': typeof AppGuidesIdRoute
@@ -158,7 +149,6 @@ export interface FileRouteTypes {
     | '/auto-pilot'
     | '/settings'
     | '/'
-    | '/dofusdb/hunt'
     | '/dofusdb/map'
     | '/downloads/$status'
     | '/guides/$id'
@@ -174,7 +164,6 @@ export interface FileRouteTypes {
     | '/auto-pilot'
     | '/settings'
     | '/'
-    | '/dofusdb/hunt'
     | '/dofusdb/map'
     | '/downloads/$status'
     | '/guides/$id'
@@ -191,7 +180,6 @@ export interface FileRouteTypes {
     | '/_app/auto-pilot'
     | '/_app/settings'
     | '/_app/'
-    | '/_app/dofusdb/hunt'
     | '/_app/dofusdb/map'
     | '/_app/downloads/$status'
     | '/_app/guides/$id'
@@ -308,13 +296,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDofusdbMapRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/dofusdb/hunt': {
-      id: '/_app/dofusdb/hunt'
-      path: '/dofusdb/hunt'
-      fullPath: '/dofusdb/hunt'
-      preLoaderRoute: typeof AppDofusdbHuntRouteImport
-      parentRoute: typeof AppRoute
-    }
   }
 }
 
@@ -322,7 +303,6 @@ interface AppRouteChildren {
   AppAutoPilotRoute: typeof AppAutoPilotRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
-  AppDofusdbHuntRoute: typeof AppDofusdbHuntRoute
   AppDofusdbMapRoute: typeof AppDofusdbMapRoute
   AppDownloadsStatusRoute: typeof AppDownloadsStatusRoute
   AppGuidesIdRoute: typeof AppGuidesIdRoute
@@ -337,7 +317,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppAutoPilotRoute: AppAutoPilotRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
-  AppDofusdbHuntRoute: AppDofusdbHuntRoute,
   AppDofusdbMapRoute: AppDofusdbMapRoute,
   AppDownloadsStatusRoute: AppDownloadsStatusRoute,
   AppGuidesIdRoute: AppGuidesIdRoute,
