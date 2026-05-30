@@ -18,6 +18,15 @@ export class SetStepNoteError extends Error {
   }
 }
 
-export function setStepNote(profileId: string, guideId: number, stepIndex: number, note: string | null) {
-  return fromPromise(taurpc.stepNotes.setStepNote(profileId, guideId, stepIndex, note), SetStepNoteError.from)
+export function setStepNote(
+  profileId: string,
+  guideId: number,
+  stepIndex: number,
+  note: string | null,
+  isReminder: boolean,
+) {
+  return fromPromise(
+    taurpc.stepNotes.setStepNote(profileId, guideId, stepIndex, note, isReminder),
+    SetStepNoteError.from,
+  )
 }

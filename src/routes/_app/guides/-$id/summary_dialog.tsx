@@ -1,8 +1,7 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro'
 import { useQuery } from '@tanstack/react-query'
-import debounce from 'debounce-fn'
 import { BookTextIcon } from 'lucide-react'
-import { useCallback, useState, useSyncExternalStore } from 'react'
+import { useCallback, useState } from 'react'
 
 import { CopyOnClick } from '@/components/copy_on_click.tsx'
 import { GenericLoader } from '@/components/generic_loader.tsx'
@@ -14,49 +13,10 @@ import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Skeleton } from '@/components/ui/skeleton.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useGuideOrUndefined } from '@/hooks/use_guide.ts'
+import { useHasVerticalScroll } from '@/hooks/use_has_vertical_scroll.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { rankList } from '@/lib/rank.ts'
 import { summaryQuery } from '@/queries/summary.query.ts'
-
-function useHasVerticalScroll(element: HTMLElement | null) {
-  const subscribe = useCallback(
-    (onStoreChange: () => void) => {
-      if (!element) {
-        return () => {
-          // noop
-        }
-      }
-
-      const onResize = debounce(onStoreChange, { wait: 500 })
-
-      window.addEventListener('resize', onResize)
-
-      let observer: MutationObserver | null = null
-
-      if (element) {
-        observer = new MutationObserver(onStoreChange)
-        observer.observe(element, { attributes: true, childList: true, subtree: true })
-      }
-
-      return () => {
-        window.removeEventListener('resize', onResize)
-
-        observer?.disconnect()
-      }
-    },
-    [element],
-  )
-
-  const getSnapshot = useCallback(() => {
-    if (!element) {
-      return false
-    }
-
-    return element.scrollHeight > element.clientHeight
-  }, [element])
-
-  return useSyncExternalStore(subscribe, getSnapshot)
-}
 
 export function SummaryDialogTrigger({ onClick }: { onClick: () => void }) {
   return (
@@ -117,13 +77,13 @@ export function SummaryDialog({
 
   return (
     <Dialog onOpenChange={onOpenChange} open={open}>
-      <DialogContent className="flex h-full max-h-[90vh] flex-col">
+      <DialogContent className="flex h-full max-h-[89vh] flex-col px-3 sm:px-6">
         <DialogHeader>
           <div className="flex items-center gap-2">
             <GuideNodeImage guide={guide} />
             <DialogTitle>{guide.name}</DialogTitle>
           </div>
-          <DialogDescription>
+          <DialogDescription className="sr-only">
             <span className="relative">
               <Trans>Sommaire</Trans>
               {!summary.isLoading && summary.isFetching && (

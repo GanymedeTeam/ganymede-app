@@ -33,8 +33,15 @@ pub enum Error {
 
 #[derive(Debug)]
 #[taurpc::ipc_type]
+pub struct StepNote {
+    pub content: String,
+    pub is_reminder: bool,
+}
+
+#[derive(Debug)]
+#[taurpc::ipc_type]
 pub struct GuideStepNotes {
-    pub steps: HashMap<u32, String>,
+    pub steps: HashMap<u32, StepNote>,
 }
 
 #[derive(Debug)]
@@ -134,6 +141,7 @@ fn upsert_note(
     guide_id: u32,
     step_index: u32,
     note: Option<String>,
+    is_reminder: bool,
 ) {
     let trimmed = note
         .as_deref()
@@ -142,7 +150,7 @@ fn upsert_note(
         .map(|s| s.chars().take(MAX_NOTE_LEN).collect::<String>());
 
     match trimmed {
-        Some(value) => {
+        Some(content) => {
             notes
                 .profiles
                 .entry(profile_id)
@@ -151,7 +159,13 @@ fn upsert_note(
                 .entry(guide_id)
                 .or_insert_with(GuideStepNotes::default)
                 .steps
-                .insert(step_index, value);
+                .insert(
+                    step_index,
+                    StepNote {
+                        content,
+                        is_reminder,
+                    },
+                );
         }
         None => {
             if let Some(profile_entry) = notes.profiles.get_mut(&profile_id) {
@@ -181,6 +195,7 @@ pub trait StepNotesApi {
         guide_id: u32,
         step_index: u32,
         note: Option<String>,
+        is_reminder: bool,
     ) -> Result<(), Error>;
 }
 
@@ -200,18 +215,27 @@ impl StepNotesApi for StepNotesApiImpl {
         guide_id: u32,
         step_index: u32,
         note: Option<String>,
+        is_reminder: bool,
     ) -> Result<(), Error> {
         debug!(
-            "[StepNotes] set_step_note: profile_id: {}, guide_id: {}, step_index: {}, has_note: {}",
+            "[StepNotes] set_step_note: profile_id: {}, guide_id: {}, step_index: {}, has_note: {}, is_reminder: {}",
             profile_id,
             guide_id,
             step_index,
-            note.is_some()
+            note.is_some(),
+            is_reminder
         );
 
         let mut notes = get_step_notes(&app)?;
 
-        upsert_note(&mut notes, profile_id, guide_id, step_index, note);
+        upsert_note(
+            &mut notes,
+            profile_id,
+            guide_id,
+            step_index,
+            note,
+            is_reminder,
+        );
 
         save_step_notes(&notes, &app)
     }

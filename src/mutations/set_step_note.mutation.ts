@@ -15,19 +15,21 @@ export function useSetStepNote() {
       guideId,
       stepIndex,
       note,
+      isReminder,
     }: {
       profileId: string
       guideId: number
       stepIndex: number
       note: string | null
+      isReminder: boolean
     }) => {
-      const result = await setStepNote(profileId, guideId, stepIndex, note)
+      const result = await setStepNote(profileId, guideId, stepIndex, note, isReminder)
 
       if (result.isErr()) {
         throw result.error
       }
     },
-    onMutate({ profileId, guideId, stepIndex, note }) {
+    onMutate({ profileId, guideId, stepIndex, note, isReminder }) {
       const previous = queryClient.getQueryData(stepNotesQuery.queryKey)
       const base: StepNotes = previous ?? { profiles: {} }
 
@@ -44,7 +46,7 @@ export function useSetStepNote() {
       if (trimmed === '') {
         delete guideEntry.steps[stepIndex]
       } else {
-        guideEntry.steps[stepIndex] = trimmed.slice(0, MAX_NOTE_LEN)
+        guideEntry.steps[stepIndex] = { content: trimmed.slice(0, MAX_NOTE_LEN), is_reminder: isReminder }
       }
 
       if (Object.keys(guideEntry.steps).length === 0) {
