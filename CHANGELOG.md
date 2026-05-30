@@ -1,5 +1,24 @@
 # ganymede-app
 
+## 1.19.0
+
+### Minor Changes
+
+- beac2c0: Filtre par défaut la langue de l'app sur les pages de téléchargement « certifiés » et « principaux ».
+- 0b41ac6: Permet de copier le nom d'une quête depuis le sommaire d'un guide en cliquant dessus.
+- 9f37556: Ajout d'un paramètre d'affichage des guides : dynamique (selon la fenêtre) ou compact (toujours).
+- d60b86f: Permet de changer d'étape avec Maj+Molette sur la barre de progression du guide.
+- e5b3a29: Ajoute un menu contextuel (clic droit) sur les onglets de guides pour fermer, fermer à droite, fermer les autres ou tout fermer. Réduit la taille du bouton de fermeture.
+- 0a163a0: Ajoutez une note personnelle sur une étape d'un guide (en local, non synchronisé sur nos serveurs). Choisissez le guide et l'étape ciblés, et marquez la note comme rappel pour recevoir une notification lorsque vous atteignez cette étape.
+- 9b80d12: Possibilité d'épingler des guides en haut de la liste (clic droit sur un guide). Limité à 50 épingles par profil, par sous-dossier courant.
+- 2eb2245: La carte DofusDB s'ouvre désormais dans une fenêtre dédiée (au lieu d'une iframe), comme la chasse au trésor.
+- f77d4bd: Montée de Vite vers la v8 (bundler Rolldown/Oxc). Mise à jour des plugins associés : `@vitejs/plugin-react` v6, suite Lingui v6, Tailwind 4.3, TanStack Router. Les macros Lingui passent désormais par `@rolldown/plugin-babel` avec `linguiTransformerBabelPreset`.
+
+### Patch Changes
+
+- 20534e7: Sur Linux : correction du Ctrl+Clic sur les liens et d'un écran blanc au démarrage avec certaines configurations graphiques.
+- a487b00: Corrige l'ordre des guides récents au lancement et au changement de profil : les onglets sont désormais restaurés dans le même ordre qu'à la fermeture.
+
 ## 1.18.0
 
 ### Minor Changes
