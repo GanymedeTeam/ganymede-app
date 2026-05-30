@@ -1,10 +1,10 @@
-import { StepNotes } from '@/ipc/bindings.ts'
+import { StepNote, StepNotes } from '@/ipc/bindings.ts'
 
 export function getStepNote(
   notes: StepNotes,
   profileId: string,
   guideId: number,
   stepIndex: number,
-): string | undefined {
+): StepNote | undefined {
   return notes.profiles[profileId]?.guides[guideId]?.steps[stepIndex]
 }

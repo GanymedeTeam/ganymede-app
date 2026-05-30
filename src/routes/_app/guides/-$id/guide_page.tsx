@@ -10,6 +10,7 @@ import { Position } from '@/components/position.tsx'
 import { StepProgress } from '@/components/step_progress/step_progress.tsx'
 import { useGuide } from '@/hooks/use_guide.ts'
 import { useScrollToTop } from '@/hooks/use_scroll_to_top.ts'
+import { useStepNoteReminder } from '@/hooks/use_step_note_reminder.tsx'
 import { onCopyCurrentGuideStep } from '@/ipc/guides.ts'
 import { getProfile } from '@/lib/profile.ts'
 import { queueProgressSync } from '@/lib/sync_progress_queue.ts'
@@ -50,6 +51,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
   const showReport = guide.status === 'gp' || guide.status === 'certified'
 
   useScrollToTop(scrollableRef, [step])
+  useStepNoteReminder(guide.id, index)
 
   const changeStep = async (nextStep: number) => {
     const clampedStep = nextStep < 0 ? 0 : nextStep >= guide.steps.length ? stepMax : nextStep
