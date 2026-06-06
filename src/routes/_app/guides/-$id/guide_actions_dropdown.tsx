@@ -33,14 +33,14 @@ export function GuideActionsDropdown({
 }) {
   const conf = useSuspenseQuery(confQuery)
   const stepNotes = useSuspenseQuery(stepNotesQuery)
-  const currentNote = getStepNote(stepNotes.data, conf.data.profileInUse, guideId, stepIndex) ?? ''
+  const currentNote = getStepNote(stepNotes.data, conf.data.profileInUse, guideId, stepIndex)?.content ?? ''
   const hasNote = currentNote.trim() !== ''
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="[&_svg]:size-4" size="icon-sm" variant="ghost">
-          <CircleEllipsisIcon />
+          <CircleEllipsisIcon className={cn(hasNote && 'text-yellow-400')} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
