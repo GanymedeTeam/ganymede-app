@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && lingui extract && vite build",
+    "test": "vitest run",
     "tauri": "tauri",
     "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
@@ -91,12 +92,14 @@
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^6.0.2",
     "dotenv-cli": "^11.0.0",
+    "happy-dom": "^20.9.0",
     "lefthook": "^2.1.8",
     "oxfmt": "^0.52.0",
     "oxlint": "^1.67.0",
     "tailwindcss": "4.3.0",
     "typescript": "^5.9.2",
-    "vite": "^8.0.14"
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
   },
   "packageManager": "pnpm@10.17.1",
   "pnpm": {
