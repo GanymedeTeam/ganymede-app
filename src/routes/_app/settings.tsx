@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
-import { ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
+import { AutoTravelStepSource, ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -98,6 +98,7 @@ function Settings() {
   const switchProfile = useSwitchProfile()
   const [opacity, setOpacity] = useState(conf.data.opacity)
   const opacityDebounced = useDebounce(opacity, 300)
+  const autoTravelCopyOnStepChange = conf.data.autoTravelCopyOnStepChange ?? false
 
   // oxlint-disable react-hooks/exhaustive-deps -- no need more deps
   useEffect(() => {
@@ -154,6 +155,53 @@ function Settings() {
                   }}
                 />
               </div>
+            </SettingCardSection>
+            <SettingCardSection id="section-auto-travel-copy-on-step-change">
+              <div className="flex items-center justify-between gap-2">
+                <Label className="text-xs" htmlFor="auto-travel-copy-on-step-change">
+                  <Trans>Copie automatique au changement d'étape</Trans>
+                </Label>
+                <Switch
+                  checked={autoTravelCopyOnStepChange}
+                  id="auto-travel-copy-on-step-change"
+                  onCheckedChange={(checked) => {
+                    setConf.mutate({
+                      ...conf.data,
+                      autoTravelCopyOnStepChange: checked,
+                    })
+                  }}
+                />
+              </div>
+            </SettingCardSection>
+            <SettingCardSection id="section-auto-travel-step-source">
+              <Label
+                className={cn('text-xs', !autoTravelCopyOnStepChange && 'text-muted-foreground')}
+                htmlFor="auto-travel-step-source"
+              >
+                <Trans>Source de la copie automatique</Trans>
+              </Label>
+              <Select
+                disabled={!autoTravelCopyOnStepChange}
+                onValueChange={(value) => {
+                  setConf.mutate({
+                    ...conf.data,
+                    autoTravelStepSource: value as AutoTravelStepSource,
+                  })
+                }}
+                value={conf.data.autoTravelStepSource ?? 'Current'}
+              >
+                <SelectTrigger className="text-xs" disabled={!autoTravelCopyOnStepChange} id="auto-travel-step-source">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Current">
+                    <Trans>Étape actuelle</Trans>
+                  </SelectItem>
+                  <SelectItem value="Next">
+                    <Trans>Étape suivante</Trans>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </SettingCardSection>
             <SettingCardSection id="section-show-done-guides">
               <div className="flex items-center justify-between gap-2">

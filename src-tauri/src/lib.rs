@@ -67,15 +67,22 @@ const LOG_TARGETS: [Target; 2] = [
 ];
 
 fn formatter(file: &std::path::Path) -> std::io::Result<()> {
-    std::process::Command::new("pnpm")
-        .arg("oxfmt")
-        .arg(file)
-        .output()
-        .map(|_| ())
-        .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
+    let content = std::fs::read_to_string(file)?;
+    let had_final_newline = content.ends_with('\n') || content.ends_with('\r');
+    let mut formatted = content
+        .lines()
+        .map(|line| line.trim_end_matches(|ch| ch == ' ' || ch == '\t'))
+        .collect::<Vec<_>>()
+        .join("\n");
+
+    if had_final_newline {
+        formatted.push('\n');
+    }
+
+    std::fs::write(file, formatted)
 }
 
-// Asserts that the formatter function matches the expected signature
+// Asserts that the formatter function matches the expected signature.
 const _: specta_typescript::FormatterFn = formatter;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
