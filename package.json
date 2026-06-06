@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && lingui extract && vite build",
-    "test": "tsx --test \"src/**/*.test.ts\"",
+    "test": "vitest run",
     "tauri": "tauri",
     "tauri:dev": "dotenv -e .env.local -- pnpm tauri dev",
     "i18n:extract": "lingui extract",
@@ -97,7 +97,8 @@
     "oxlint": "^1.67.0",
     "tailwindcss": "4.3.0",
     "typescript": "^5.9.2",
-    "vite": "^8.0.14"
+    "vite": "^8.0.14",
+    "vitest": "4.1.7"
   },
   "packageManager": "pnpm@10.17.1",
   "pnpm": {
