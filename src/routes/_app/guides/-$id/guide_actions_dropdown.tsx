@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { BookTextIcon, BugIcon, CircleEllipsisIcon, StickyNoteIcon } from 'lucide-react'
+import { BookTextIcon, BugIcon, CircleEllipsisIcon, ListIcon, StickyNoteIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button.tsx'
 import {
@@ -20,6 +20,7 @@ export function GuideActionsDropdown({
   showSummary,
   showReport,
   onOpenNote,
+  onOpenGuideNotes,
   onOpenSummary,
   onOpenReport,
 }: {
@@ -28,6 +29,7 @@ export function GuideActionsDropdown({
   showSummary: boolean
   showReport: boolean
   onOpenNote: () => void
+  onOpenGuideNotes: () => void
   onOpenSummary: () => void
   onOpenReport: () => void
 }) {
@@ -47,6 +49,10 @@ export function GuideActionsDropdown({
         <DropdownMenuItem onSelect={onOpenNote}>
           <StickyNoteIcon className={cn(hasNote && 'text-yellow-400')} />
           {hasNote ? <Trans>Modifier la note</Trans> : <Trans>Ajouter une note</Trans>}
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={onOpenGuideNotes}>
+          <ListIcon />
+          <Trans>Voir les notes du guide</Trans>
         </DropdownMenuItem>
         {showSummary && (
           <DropdownMenuItem onSelect={onOpenSummary}>

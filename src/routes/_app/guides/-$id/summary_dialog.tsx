@@ -61,7 +61,7 @@ export function SummaryDialog({
       setElementRef(null)
     }
   }, [])
-  const hasScroll = useHasVerticalScroll(!open ? null : elementRef)
+  const hasScroll = useHasVerticalScroll(elementRef)
 
   const filteredQuests = summary.isSuccess
     ? rankList({
@@ -79,9 +79,9 @@ export function SummaryDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="flex h-full max-h-[89vh] flex-col px-3 sm:px-6">
         <DialogHeader>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pr-7">
             <GuideNodeImage guide={guide} />
-            <DialogTitle>{guide.name}</DialogTitle>
+            <DialogTitle className="min-w-0 truncate">{guide.name}</DialogTitle>
           </div>
           <DialogDescription className="sr-only">
             <span className="relative">
