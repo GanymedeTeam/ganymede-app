@@ -672,17 +672,17 @@ msgid "Étape suivante"
 msgstr "Passo seguinte"
 
 #: src/components/title_bar.tsx:205
-#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:261
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:262
 #: src/routes/_app/guides/-$id/report_dialog.tsx:144
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:73
 msgid "Fermer"
 msgstr "Fechar"
 
-#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:264
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:265
 msgid "Fermer à droite"
 msgstr "Fechar à direita"
 
-#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:267
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:268
 msgid "Fermer les autres"
 msgstr "Fechar os outros"
 
@@ -1408,7 +1408,7 @@ msgstr "Todos"
 msgid "Tous les guides ont été mis à jour"
 msgstr "Todos os guias foram atualizados"
 
-#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:271
+#: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:272
 msgid "Tout fermer"
 msgstr "Fechar tudo"
 
