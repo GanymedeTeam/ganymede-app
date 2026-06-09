@@ -225,7 +225,7 @@ function Settings() {
             </SettingCardSection>
             <SettingCardSection id="section-guide-display">
               <p className="text-xs leading-none font-medium">
-                <Trans>Affichage des guides</Trans>
+                <Trans>Taille des onglets de guides</Trans>
               </p>
               <Select
                 onValueChange={(value) => {

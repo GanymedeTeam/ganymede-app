@@ -41,8 +41,8 @@ msgid "Accueil"
 msgstr "Accueil"
 
 #: src/routes/_app/settings.tsx:228
-msgid "Affichage des guides"
-msgstr "Affichage des guides"
+msgid "Taille des onglets de guides"
+msgstr "Taille des onglets de guides"
 
 #: src/routes/_app/settings.tsx:161
 msgid "Afficher les guides terminés"
