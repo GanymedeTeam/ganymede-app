@@ -1,5 +1,5 @@
 use crate::{api::GANYMEDE_API, tauri_api_ext::ViewedNotificationsPathExt};
-use log::{debug, error, info};
+use log::{debug, info};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::fs;

@@ -158,6 +158,16 @@ export function registerGuideClose(guideId: number, profileId: string) {
   return fromPromise(taurpc.guides.registerGuideClose(guideId, profileId), RegisterGuideCloseError.from)
 }
 
+export class SetRecentGuidesError extends Error {
+  static from(error: unknown) {
+    return new SetRecentGuidesError('Failed to save recent guides', { cause: error })
+  }
+}
+
+export function setRecentGuides(profileId: string, guideIds: number[]) {
+  return fromPromise(taurpc.guides.setRecentGuides(profileId, guideIds), SetRecentGuidesError.from)
+}
+
 export class RemoveProfileFromRecentGuidesError extends Error {
   static from(error: unknown) {
     return new RemoveProfileFromRecentGuidesError('Failed to remove profile from recent guides', { cause: error })
