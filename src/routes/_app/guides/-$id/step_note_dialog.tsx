@@ -58,7 +58,7 @@ export function StepNoteDialog({
   const [selectedGuideId, setSelectedGuideId] = useState(guideId)
   const [selectedStepIndex, setSelectedStepIndex] = useState(stepIndex)
   const [draft, setDraft] = useState('')
-  const [reminder, setReminder] = useState(false)
+  const [reminder, setReminder] = useState(true)
   const [guideSelectOpen, setGuideSelectOpen] = useState(false)
 
   const selectedGuide = guides.data.find((guide) => guide.id === selectedGuideId)
