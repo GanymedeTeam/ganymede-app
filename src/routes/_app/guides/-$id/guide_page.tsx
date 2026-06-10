@@ -19,8 +19,9 @@ import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { GuideActionsDropdown } from '@/routes/_app/guides/-$id/guide_actions_dropdown.tsx'
 
+import { GuideNotesDialog, GuideNotesMenuTrigger } from './guide_notes_dialog.tsx'
 import { ReportDialog, ReportDialogTrigger } from './report_dialog.tsx'
-import { StepNoteDialog, StepNoteDialogTrigger } from './step_note_dialog.tsx'
+import { StepNoteDialog } from './step_note_dialog.tsx'
 import { SummaryDialog, SummaryDialogTrigger } from './summary_dialog.tsx'
 
 const useOnCopyStep = (cb: () => void) => {
@@ -44,6 +45,8 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
   const setConf = useSetConf()
   const navigate = useNavigate()
   const [noteOpen, setNoteOpen] = useState(false)
+  const [noteStepIndex, setNoteStepIndex] = useState(index)
+  const [guideNotesOpen, setGuideNotesOpen] = useState(false)
   const [summaryOpen, setSummaryOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
 
@@ -140,6 +143,22 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
     return true
   }
 
+  const handleOpenNote = () => {
+    setNoteStepIndex(index)
+    setNoteOpen(true)
+  }
+
+  const handleEditStep = (step: number) => {
+    setGuideNotesOpen(false)
+    setNoteStepIndex(step)
+    setNoteOpen(true)
+  }
+
+  const handleGoToStep = (step: number) => {
+    setGuideNotesOpen(false)
+    onChangeStep(step)
+  }
+
   useOnCopyStep(() => {
     toast
       .promise(writeText((index + 1).toString()), {
@@ -188,14 +207,20 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
 
               {/* Right Side - Fixed width to maintain center balance */}
               <div className="hidden w-20 shrink-0 items-center justify-end pr-1 xs:flex sm:w-24">
-                <StepNoteDialogTrigger guideId={guide.id} onClick={() => setNoteOpen(true)} stepIndex={index} />
+                <GuideNotesMenuTrigger
+                  guideId={guide.id}
+                  onOpenGuideNotes={() => setGuideNotesOpen(true)}
+                  onOpenNote={handleOpenNote}
+                  stepIndex={index}
+                />
                 {showSummary && <SummaryDialogTrigger onClick={() => setSummaryOpen(true)} />}
                 {showReport && <ReportDialogTrigger onClick={() => setReportOpen(true)} />}
               </div>
               <div className="flex w-fit shrink-0 items-center justify-end pr-1 xs:hidden">
                 <GuideActionsDropdown
                   guideId={guide.id}
-                  onOpenNote={() => setNoteOpen(true)}
+                  onOpenGuideNotes={() => setGuideNotesOpen(true)}
+                  onOpenNote={handleOpenNote}
                   onOpenReport={() => setReportOpen(true)}
                   onOpenSummary={() => setSummaryOpen(true)}
                   showReport={showReport}
@@ -207,7 +232,14 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
           )}
         </div>
       </header>
-      <StepNoteDialog guideId={guide.id} onOpenChange={setNoteOpen} open={noteOpen} stepIndex={index} />
+      <StepNoteDialog guideId={guide.id} onOpenChange={setNoteOpen} open={noteOpen} stepIndex={noteStepIndex} />
+      <GuideNotesDialog
+        guideId={guide.id}
+        onEditStep={handleEditStep}
+        onGoToStep={handleGoToStep}
+        onOpenChange={setGuideNotesOpen}
+        open={guideNotesOpen}
+      />
       {showSummary && (
         <SummaryDialog
           guideId={guide.id}

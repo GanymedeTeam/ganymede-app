@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { CheckIcon, ChevronsUpDownIcon, SaveIcon, StickyNoteIcon, TrashIcon } from 'lucide-react'
+import { CheckIcon, ChevronsUpDownIcon, SaveIcon, TrashIcon } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
@@ -27,7 +27,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ScrollArea } from '@/components/ui/scroll_area.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { Textarea } from '@/components/ui/textarea.tsx'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useHasVerticalScroll } from '@/hooks/use_has_vertical_scroll.ts'
 import { getStepNote } from '@/lib/step_notes.ts'
 import { cn } from '@/lib/utils.ts'
@@ -37,40 +36,6 @@ import { guidesQuery } from '@/queries/guides.query.ts'
 import { stepNotesQuery } from '@/queries/step_notes.query.ts'
 
 const MAX_NOTE_LEN = 1000
-
-function useHasNote(guideId: number, stepIndex: number) {
-  const conf = useSuspenseQuery(confQuery)
-  const stepNotes = useSuspenseQuery(stepNotesQuery)
-  const profileId = conf.data.profileInUse
-  const currentNote = getStepNote(stepNotes.data, profileId, guideId, stepIndex)?.content ?? ''
-
-  return { profileId, hasNote: currentNote.trim() !== '' }
-}
-
-export function StepNoteDialogTrigger({
-  guideId,
-  stepIndex,
-  onClick,
-}: {
-  guideId: number
-  stepIndex: number
-  onClick: () => void
-}) {
-  const { hasNote } = useHasNote(guideId, stepIndex)
-
-  return (
-    <TooltipProvider delayDuration={400}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button className="size-6 sm:size-8" onClick={onClick} size="icon" variant="ghost">
-            <StickyNoteIcon className={cn(hasNote && 'text-yellow-400')} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{hasNote ? <Trans>Modifier la note</Trans> : <Trans>Ajouter une note</Trans>}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
-}
 
 export function StepNoteDialog({
   guideId,
@@ -93,7 +58,7 @@ export function StepNoteDialog({
   const [selectedGuideId, setSelectedGuideId] = useState(guideId)
   const [selectedStepIndex, setSelectedStepIndex] = useState(stepIndex)
   const [draft, setDraft] = useState('')
-  const [reminder, setReminder] = useState(false)
+  const [reminder, setReminder] = useState(true)
   const [guideSelectOpen, setGuideSelectOpen] = useState(false)
 
   const selectedGuide = guides.data.find((guide) => guide.id === selectedGuideId)
@@ -174,7 +139,7 @@ export function StepNoteDialog({
     })
     onOpenChange(false)
   }
-  const hasScroll = useHasVerticalScroll(!open ? null : elementRef)
+  const hasScroll = useHasVerticalScroll(elementRef)
 
   return (
     <AlertDialog onOpenChange={onOpenChange} open={open}>
