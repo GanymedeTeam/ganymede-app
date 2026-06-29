@@ -1,7 +1,7 @@
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise, ResultAsync } from 'neverthrow'
 
-import { GuideOrFolderToDelete, Status } from '@/ipc/bindings.ts'
+import { GuideOrFolderToDelete, RemovedGuideFile, Status } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder, taurpc } from '@/ipc/ipc.ts'
 
 export class GetGuidesError extends Error {
@@ -116,6 +116,10 @@ export function deleteGuidesFromSystem(guides: GuideOrFolderToDelete[]) {
 
 export function onCopyCurrentGuideStep() {
   return taurpc.guides.copyCurrentGuideStep
+}
+
+export function onMalformedGuidesRemoved(callback: (files: RemovedGuideFile[]) => void) {
+  return taurpc.guides.malformedGuidesRemoved.on(callback)
 }
 
 export class GuideExistsError extends Error {
