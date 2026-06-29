@@ -1,5 +1,29 @@
 # ganymede-app
 
+## 1.19.0
+
+### Minor Changes
+
+- beac2c0: Filtre par défaut la langue de l'app sur les pages de téléchargement « certifiés » et « principaux ».
+- 0b41ac6: Permet de copier le nom d'une quête depuis le sommaire d'un guide en cliquant dessus.
+- 9f37556: Ajout d'un paramètre d'affichage des guides : dynamique (selon la fenêtre) ou compact (toujours).
+- d60b86f: Permet de changer d'étape avec Maj+Molette sur la barre de progression du guide.
+- e5b3a29: Ajoute un menu contextuel (clic droit) sur les onglets de guides pour fermer, fermer à droite, fermer les autres ou tout fermer. Réduit la taille du bouton de fermeture.
+- 0a163a0: Ajoutez une note personnelle sur une étape d'un guide (en local, non synchronisé sur nos serveurs). Choisissez le guide et l'étape ciblés, et marquez la note comme rappel pour recevoir une notification lorsque vous atteignez cette étape.
+- 9b80d12: Possibilité d'épingler des guides en haut de la liste (clic droit sur un guide). Limité à 50 épingles par profil, par sous-dossier courant.
+- 2eb2245: La carte DofusDB s'ouvre désormais dans une fenêtre dédiée (au lieu d'une iframe), comme la chasse au trésor.
+- f77d4bd: Montée de Vite vers la v8 (bundler Rolldown/Oxc). Mise à jour des plugins associés : `@vitejs/plugin-react` v6, suite Lingui v6, Tailwind 4.3, TanStack Router. Les macros Lingui passent désormais par `@rolldown/plugin-babel` avec `linguiTransformerBabelPreset`.
+- 77ad4de: Réorganiser les onglets est désormais possible dans les guides. Les onglets sont réordonnables par glisser-déposer.
+- 0fcaab5: Ajout d'une vue listant toutes les notes d'un guide. Le bouton « Notes » est un menu (Ajouter/Modifier une note · Voir les notes du guide) ouvrant un dialog dédié pour consulter, éditer, supprimer les notes et naviguer vers l'étape concernée.
+
+### Patch Changes
+
+- 20534e7: Sur Linux : correction du Ctrl+Clic sur les liens et d'un écran blanc au démarrage avec certaines configurations graphiques.
+- a487b00: Corrige l'ordre des guides récents au lancement et au changement de profil : les onglets sont désormais restaurés dans le même ordre qu'à la fermeture.
+- c8cec7a: Ignore et supprime automatiquement les fichiers guides corrompus (JSON vide ou invalide) au lieu de faire échouer tout le chargement des guides. Un toast informe des guides supprimés.
+- fd72e17: Corrige l'impossibilité de vider le champ "Étape" dans la boîte de dialogue de note d'étape, ainsi que l'impossibilité de faire défiler la liste du sélecteur de guide à la molette.
+- 7e0c3a0: Corrige le dialogue de notifications qui pouvait bloquer toute interaction : le bouton « Marquer comme lu » reste désormais toujours visible même quand la fenêtre est réduite (footer fixe, contenu scrollable). Le minuteur est fiabilisé pour toujours débloquer le bouton, et un message au format invalide n'empêche plus de fermer le dialogue. La barre de titre (déplacement, réduction, fermeture de la fenêtre) reste cliquable lorsqu'un dialogue est ouvert.
+
 ## 1.18.0
 
 ### Minor Changes
