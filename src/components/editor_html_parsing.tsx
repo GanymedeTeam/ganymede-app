@@ -27,6 +27,16 @@ import { confQuery } from '@/queries/conf.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { whiteListQuery } from '@/queries/white_list.query.ts'
 
+function parseHttpUrl(value: string): URL | undefined {
+  if (!value.startsWith('http')) return undefined
+
+  try {
+    return new URL(value)
+  } catch {
+    return undefined
+  }
+}
+
 export function EditorHtmlParsing({
   html,
   guideId,
@@ -58,12 +68,10 @@ export function EditorHtmlParsing({
     replace: (domNode) => {
       // #region positions
       if (domNode.type === 'text') {
-        const href = domNode.data
-        const isHrefHttp = href !== '' && href.startsWith('http')
-        const url = isHrefHttp ? new URL(href) : undefined
+        const url = parseHttpUrl(domNode.data)
         const isValid = url !== undefined ? whiteList.data.includes(`${url.protocol}//${url.hostname}`) : false
 
-        if (isHrefHttp && !isValid) {
+        if (url !== undefined && !isValid) {
           return <Trans>lien masqué</Trans>
         }
 
@@ -402,8 +410,8 @@ export function EditorHtmlParsing({
         // #region a
         if (domNode.name === 'a') {
           const href = domNode.attribs.href ?? ''
-          const isHrefHttp = href !== '' && href.startsWith('http')
-          const url = isHrefHttp ? new URL(href) : undefined
+          const url = parseHttpUrl(href)
+          const isHrefHttp = url !== undefined
           const isValid = url !== undefined ? whiteList.data.includes(`${url.protocol}//${url.hostname}`) : false
 
           if (isHrefHttp && !isValid) {
