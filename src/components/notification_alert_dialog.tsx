@@ -8,9 +8,10 @@ import 'dayjs/locale/es'
 import 'dayjs/locale/pt'
 import dayjs from 'dayjs'
 import { EyeIcon } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { EditorHtmlParsing } from '@/components/editor_html_parsing.tsx'
+import { ErrorBoundary } from '@/components/error_boundary.tsx'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,39 +28,34 @@ import { useMarkNotificationViewed } from '@/mutations/mark_notification_viewed.
 import { confQuery } from '@/queries/conf.query.ts'
 import { unviewedNotificationsQuery } from '@/queries/notifications.query.ts'
 
-function useTimer(seconds = 2) {
-  const [count, setCount] = useState(0)
-  const [isActive, setIsActive] = useState(false)
+function useCountdown(seconds = 2) {
+  const [remaining, setRemaining] = useState(0)
+  const deadlineRef = useRef(0)
 
   const start = useCallback(() => {
-    setCount(seconds)
-    setIsActive(true)
+    deadlineRef.current = Date.now() + seconds * 1000
+    setRemaining(seconds)
   }, [seconds])
 
   useEffect(() => {
-    if (!isActive || count <= 0) return
+    if (remaining <= 0) return
 
-    const timer = setTimeout(() => {
-      setCount((prev) => prev - 1)
-    }, 1000)
+    const interval = setInterval(() => {
+      const next = Math.max(0, Math.ceil((deadlineRef.current - Date.now()) / 1000))
+      setRemaining(next)
+      if (next <= 0) clearInterval(interval)
+    }, 200)
 
-    return () => clearTimeout(timer)
-  }, [isActive, count])
+    return () => clearInterval(interval)
+  }, [remaining])
 
-  useEffect(() => {
-    if (count <= 0) {
-      setIsActive(false)
-    }
-  }, [count])
-
-  return { count, start }
+  return { remaining, start }
 }
 
 export function NotificationAlertDialog() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
-  const [totalNotifications, setTotalNotifications] = useState(0)
-  const [allNotifications, setAllNotifications] = useState<Notification[]>([])
+  const [batch, setBatch] = useState<Notification[]>([])
   const location = useLocation()
 
   const unviewedNotifications = useQuery({
@@ -71,10 +67,11 @@ export function NotificationAlertDialog() {
     enabled: !isInImageViewerPath(location.pathname),
   })
   const markAsViewed = useMarkNotificationViewed()
-  const { count, start } = useTimer(2)
+  const { remaining, start } = useCountdown(2)
 
   const notifications = useMemo(() => unviewedNotifications.data ?? [], [unviewedNotifications.data])
-  const currentNotification = allNotifications[currentIndex]
+  const totalNotifications = batch.length
+  const currentNotification = batch[currentIndex]
 
   const getLocale = (lang: ReturnType<typeof getLang>) => {
     switch (lang) {
@@ -91,53 +88,44 @@ export function NotificationAlertDialog() {
     }
   }
 
+  const close = useCallback(() => {
+    setIsOpen(false)
+    setCurrentIndex(0)
+    setBatch([])
+  }, [])
+
   useEffect(() => {
     if (notifications.length > 0 && !isOpen) {
       setCurrentIndex(0)
-      setTotalNotifications(notifications.length)
-      setAllNotifications(notifications.slice().reverse())
+      setBatch(notifications.slice().reverse())
       setIsOpen(true)
-      start()
     } else if (notifications.length === 0 && isOpen) {
-      setIsOpen(false)
-      setCurrentIndex(0)
-      setTotalNotifications(0)
-      setAllNotifications([])
+      close()
     }
-  }, [notifications, isOpen, start])
+  }, [notifications, isOpen, close])
 
   useEffect(() => {
     if (currentNotification && isOpen) {
       start()
     }
-  }, [isOpen, start, currentNotification])
+  }, [currentNotification, isOpen, start])
 
-  const handleMarkAsRead = async (evt: React.MouseEvent<HTMLButtonElement>) => {
-    evt.stopPropagation()
-    evt.preventDefault()
-
+  const handleMarkAsRead = async () => {
     if (!currentNotification) return
 
     try {
       await markAsViewed.mutateAsync(currentNotification.id)
 
       const newIndex = currentIndex + 1
-      setCurrentIndex(newIndex)
 
       if (newIndex >= totalNotifications) {
-        setTimeout(() => {
-          setIsOpen(false)
-          setCurrentIndex(0)
-          setTotalNotifications(0)
-          setAllNotifications([])
-        }, 500)
+        close()
+      } else {
+        setCurrentIndex(newIndex)
       }
     } catch (err) {
       error(`Failed to mark notification as viewed: ${err instanceof Error ? err.message : 'Unknown error'}`)
-      setIsOpen(false)
-      setCurrentIndex(0)
-      setTotalNotifications(0)
-      setAllNotifications([])
+      close()
     }
   }
 
@@ -145,13 +133,16 @@ export function NotificationAlertDialog() {
     return null
   }
 
-  const isDisabled = count > 0 || markAsViewed.isPending
+  const isDisabled = remaining > 0 || markAsViewed.isPending
   const locale = getLocale(getLang(conf.data.lang))
 
   return (
-    <AlertDialog onOpenChange={setIsOpen} open={isOpen}>
-      <AlertDialogContent className="flex h-full max-h-[90vh] flex-col">
-        <AlertDialogHeader aria-describedby={undefined}>
+    <AlertDialog open={isOpen}>
+      <AlertDialogContent
+        className="flex h-full max-h-[calc(100vh-var(--spacing-titlebar)*2)] flex-col overflow-hidden"
+        onEscapeKeyDown={(evt) => evt.preventDefault()}
+      >
+        <AlertDialogHeader aria-describedby={undefined} className="shrink-0">
           <AlertDialogTitle>
             <Plural
               one="Message de l'équipe"
@@ -163,19 +154,28 @@ export function NotificationAlertDialog() {
             {dayjs(currentNotification.displayAt).locale(locale).format('DD MMMM YYYY à HH:mm')}
           </p>
         </AlertDialogHeader>
-        <ScrollArea className="h-full" type="auto">
-          <EditorHtmlParsing disabled={isDisabled} html={currentNotification.text} />
+        <ScrollArea className="min-h-0 flex-1" type="auto">
+          <ErrorBoundary
+            fallback={
+              <p className="text-sm text-muted-foreground">
+                <Trans>Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu.</Trans>
+              </p>
+            }
+            onError={(err) => error(`Failed to render notification ${currentNotification.id}: ${err.message}`)}
+          >
+            <EditorHtmlParsing disabled={isDisabled} html={currentNotification.text} />
+          </ErrorBoundary>
         </ScrollArea>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="shrink-0">
           <AlertDialogAction className="[&_svg]:size-4" disabled={isDisabled} onClick={handleMarkAsRead}>
             {markAsViewed.isPending ? (
               <Trans>En cours...</Trans>
             ) : (
               <>
                 <Trans>Marquer comme lu</Trans>
-                {count > 0 ? (
+                {remaining > 0 ? (
                   <span className="flex size-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
-                    {count}
+                    {remaining}
                   </span>
                 ) : (
                   <EyeIcon />

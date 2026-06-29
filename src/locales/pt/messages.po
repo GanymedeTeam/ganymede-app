@@ -18,13 +18,13 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
-#: src/components/editor_html_parsing.tsx:89
+#: src/components/editor_html_parsing.tsx:97
 #: src/components/position.tsx:16
 msgid "{content} copié"
 msgstr "{content} copiado"
 
 #. placeholder {0}: currentIndex + 1
-#: src/components/notification_alert_dialog.tsx:156
+#: src/components/notification_alert_dialog.tsx:147
 msgid "{totalNotifications, plural, one {Message de l'équipe} other {Messages de l'équipe {0}/{totalNotifications}}}"
 msgstr "{totalNotifications, plural, one {Mensagem da equipa} other {Mensagens da equipa {0}/{totalNotifications}}}"
 
@@ -161,6 +161,10 @@ msgstr "Categorias"
 msgid "Causée par"
 msgstr "Causado por"
 
+#: src/components/notification_alert_dialog.tsx:161
+msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
+msgstr "Não foi possível apresentar esta mensagem. Pode marcá-la como lida."
+
 #: src/routes/_app.tsx:120
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Alguns dados locais são inválidos e estão a bloquear a sincronização."
@@ -197,43 +201,43 @@ msgstr "Escolher um guia"
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
-#: src/components/editor_html_parsing.tsx:296
+#: src/components/editor_html_parsing.tsx:304
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:300
+#: src/components/editor_html_parsing.tsx:308
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:297
+#: src/components/editor_html_parsing.tsx:305
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:301
+#: src/components/editor_html_parsing.tsx:309
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:308
+#: src/components/editor_html_parsing.tsx:316
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. ⌘+clique para abrir no dofusdb. ⌥+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:309
+#: src/components/editor_html_parsing.tsx:317
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb. Alt+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:292
+#: src/components/editor_html_parsing.tsx:300
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:293
+#: src/components/editor_html_parsing.tsx:301
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:304
+#: src/components/editor_html_parsing.tsx:312
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:305
+#: src/components/editor_html_parsing.tsx:313
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
@@ -241,11 +245,11 @@ msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 msgid "Cliquez pour enregistrer"
 msgstr "Clique para gravar"
 
-#: src/components/editor_html_parsing.tsx:424
+#: src/components/editor_html_parsing.tsx:432
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
-#: src/components/editor_html_parsing.tsx:396
+#: src/components/editor_html_parsing.tsx:404
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Clique para abrir numa janela nova"
 
@@ -814,7 +818,7 @@ msgstr "Não é possível enviar o relatório: servidor inacessível."
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Não é possível obter o sistema de actualização"
 
-#: src/components/editor_html_parsing.tsx:388
+#: src/components/editor_html_parsing.tsx:396
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Não é possível abrir a janela, abrindo no navegador"
 
@@ -1025,7 +1029,7 @@ msgstr "Guias em processo de escrita"
 msgid "Les guides partagés par la communauté"
 msgstr "Guias partilhados pela comunidade"
 
-#: src/components/editor_html_parsing.tsx:67
+#: src/components/editor_html_parsing.tsx:75
 msgid "lien masqué"
 msgstr "link oculto"
 

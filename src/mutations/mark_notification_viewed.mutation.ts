@@ -15,7 +15,10 @@ export function useMarkNotificationViewed() {
       }
       return result.value
     },
-    onSuccess: () => {
+    onSuccess: (_data, notificationId) => {
+      queryClient.setQueryData(unviewedNotificationsQuery.queryKey, (old) =>
+        old?.filter((notification) => notification.id !== notificationId),
+      )
       queryClient.invalidateQueries(unviewedNotificationsQuery)
     },
     onError: (error) => {

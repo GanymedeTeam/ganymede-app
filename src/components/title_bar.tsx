@@ -59,7 +59,7 @@ export function TitleBar() {
   const title = location.search.title || 'Ganymède'
 
   return (
-    <div className="sticky top-0 z-60 flex h-titlebar items-center bg-surface-inset text-primary-foreground">
+    <div className="pointer-events-auto sticky top-0 z-60 flex h-titlebar items-center bg-surface-inset text-primary-foreground">
       {!linksAreDisabled && !isImageViewer && (
         <DropdownMenu>
           <DropdownMenuTrigger className="h-full px-2 outline-hidden" disabled={isBodyLocked}>
