@@ -1588,6 +1588,7 @@ dependencies = [
  "tauri-plugin-updater",
  "tauri-plugin-window-state",
  "taurpc",
+ "tempfile",
  "thiserror 2.0.16",
  "tokio",
  "urlencoding",

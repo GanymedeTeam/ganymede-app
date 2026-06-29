@@ -1,4 +1,9 @@
-use std::{collections::{HashMap, HashSet}, fmt, fs, path::PathBuf, vec};
+use std::{
+    collections::{HashMap, HashSet},
+    fmt, fs,
+    path::{Path, PathBuf},
+    vec,
+};
 
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
@@ -204,6 +209,12 @@ pub struct Guides {
 #[serde(rename_all = "camelCase")]
 pub struct Folder {
     pub name: String,
+}
+
+#[taurpc::ipc_type]
+pub struct RemovedGuideFile {
+    pub id: Option<u32>,
+    pub file_name: String,
 }
 
 #[derive(Debug)]
@@ -412,6 +423,7 @@ fn get_guides_or_folder_from_handle<R: Runtime>(
     println!("[Guides] get_guides_or_folder in {:?}", guide_folder);
 
     let mut result = vec![];
+    let mut removed = vec![];
 
     for entry in fs::read_dir(guide_folder).map_err(|err| Error::ReadGuidesDir(err.to_string()))? {
         let entry = entry.map_err(|err| Error::ReadGuidesDir(err.to_string()))?;
@@ -421,31 +433,82 @@ fn get_guides_or_folder_from_handle<R: Runtime>(
         if path.is_dir() {
             result.push(GuidesOrFolder::Folder(Folder { name: file_name }));
         } else if path.is_file() {
-            let extension = path.extension();
-
-            if let Some(ext) = extension {
+            if let Some(ext) = path.extension() {
                 if ext == "json" {
-                    let file = fs::read_to_string(&path)
-                        .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
-                    let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
-                        .map_err(Error::GuideMalformed)?;
-
-                    guide.folder = Some(if path.is_dir() {
-                        path
-                    } else {
-                        path.parent().unwrap().to_path_buf()
-                    });
-
-                    result.push(GuidesOrFolder::Guide(guide));
+                    if let Some(guide) = parse_guide_or_remove(&path, &mut removed)? {
+                        result.push(GuidesOrFolder::Guide(guide));
+                    }
                 }
             }
         }
     }
 
+    emit_malformed_guides_removed(app, removed);
+
     Ok(result)
 }
 
-fn get_guides_from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
+/// Parse a guide file. On a JSON parse error (e.g. empty or corrupted file), the
+/// file is removed from disk and recorded so a single malformed guide does not
+/// break loading the whole list. See issue #200.
+fn parse_guide_or_remove(
+    file_path: &Path,
+    removed: &mut Vec<RemovedGuideFile>,
+) -> Result<Option<GuideWithSteps>, Error> {
+    let content =
+        fs::read_to_string(file_path).map_err(|err| Error::ReadGuideFile(err.to_string()))?;
+
+    match crate::json::from_str::<GuideWithSteps>(content.as_str()) {
+        Ok(mut guide) => {
+            guide.folder = Some(file_path.parent().unwrap().to_path_buf());
+            Ok(Some(guide))
+        }
+        Err(err) => {
+            warn!(
+                "[Guides] removing malformed guide file {:?}: {}",
+                file_path, err
+            );
+
+            if let Err(remove_err) = fs::remove_file(file_path) {
+                warn!(
+                    "[Guides] failed to remove malformed guide file {:?}: {}",
+                    file_path, remove_err
+                );
+            }
+
+            removed.push(RemovedGuideFile {
+                id: file_path
+                    .file_stem()
+                    .and_then(|stem| stem.to_str())
+                    .and_then(|stem| stem.parse::<u32>().ok()),
+                file_name: file_path
+                    .file_name()
+                    .and_then(|name| name.to_str())
+                    .unwrap_or_default()
+                    .to_string(),
+            });
+
+            Ok(None)
+        }
+    }
+}
+
+fn emit_malformed_guides_removed<R: Runtime>(app: &AppHandle<R>, removed: Vec<RemovedGuideFile>) {
+    if removed.is_empty() {
+        return;
+    }
+
+    let trigger = GuidesEventTrigger::new(app.clone());
+
+    if let Err(err) = trigger.malformed_guides_removed(removed) {
+        warn!(
+            "[Guides] failed to emit malformed_guides_removed event: {:?}",
+            err
+        );
+    }
+}
+
+fn get_guides_from_path(path_buf: &PathBuf) -> Result<(Guides, Vec<RemovedGuideFile>), Error> {
     info!("[Guides] get_guides in {:?}", path_buf);
 
     let options = glob::MatchOptions {
@@ -458,21 +521,14 @@ fn get_guides_from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
         .map_err(|err| Error::Pattern(err.to_string()))?;
 
     let mut guides = vec![];
+    let mut removed = vec![];
 
     for entry in files {
         let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
 
-        let file = fs::read_to_string(file_path.to_str().unwrap())
-            .map_err(|err| Error::ReadGuideFile(err.to_string()))?;
-
-        let mut guide = crate::json::from_str::<GuideWithSteps>(file.as_str())
-            .map_err(Error::GuideMalformed)?;
-
-        guide.folder = Some(if file_path.is_dir() {
-            file_path
-        } else {
-            file_path.parent().unwrap().to_path_buf()
-        });
+        let Some(guide) = parse_guide_or_remove(&file_path, &mut removed)? else {
+            continue;
+        };
 
         if guides.iter().any(|g: &GuideWithSteps| g.id == guide.id) {
             continue;
@@ -481,7 +537,7 @@ fn get_guides_from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
         guides.push(guide);
     }
 
-    Ok(Guides { guides })
+    Ok((Guides { guides }, removed))
 }
 
 fn get_guides_from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Result<Guides, Error> {
@@ -491,7 +547,11 @@ fn get_guides_from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Res
         guides_dir = guides_dir.join(folder);
     }
 
-    get_guides_from_path(&guides_dir)
+    let (guides, removed) = get_guides_from_path(&guides_dir)?;
+
+    emit_malformed_guides_removed(app, removed);
+
+    Ok(guides)
 }
 
 fn write_guides<R: Runtime>(guides: &Guides, app: &AppHandle<R>) -> Result<(), Error> {
@@ -657,7 +717,10 @@ fn get_recent_guides<R: Runtime>(
 
     let recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
     let guides_in_system = get_guides_from_handle(&app_handle, "".to_string())?.guides;
-    let guide_ids_in_system = guides_in_system.iter().map(|guide| guide.id).collect::<HashSet<_>>();
+    let guide_ids_in_system = guides_in_system
+        .iter()
+        .map(|guide| guide.id)
+        .collect::<HashSet<_>>();
 
     let mut profile_guides = recent_guides.get(&profile_id).cloned().unwrap_or_default();
 
@@ -754,7 +817,31 @@ fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
 
 #[cfg(test)]
 mod tests {
-    use super::{sanitize_recent_guides, MAX_RECENT_GUIDES};
+    use super::{get_guides_from_path, sanitize_recent_guides, MAX_RECENT_GUIDES};
+
+    #[test]
+    fn get_guides_from_path_skips_and_removes_malformed_files() {
+        use std::fs;
+
+        let dir = tempfile::tempdir().unwrap();
+        let valid = r#"{"id":42,"name":"Valid","status":"public","likes":0,"dislikes":0,"lang":"fr","order":0,"user":{"id":1,"name":"u","is_admin":0,"is_certified":0},"steps":[]}"#;
+
+        fs::write(dir.path().join("42.json"), valid).unwrap();
+        fs::write(dir.path().join("2022.json"), "").unwrap();
+
+        let (guides, removed) = get_guides_from_path(&dir.path().to_path_buf()).unwrap();
+
+        assert_eq!(guides.guides.len(), 1);
+        assert_eq!(guides.guides[0].id, 42);
+
+        assert_eq!(removed.len(), 1);
+        assert_eq!(removed[0].id, Some(2022));
+        assert_eq!(removed[0].file_name, "2022.json");
+
+        // the malformed file is deleted while the valid one is kept
+        assert!(!dir.path().join("2022.json").exists());
+        assert!(dir.path().join("42.json").exists());
+    }
 
     #[test]
     fn sanitize_recent_guides_removes_duplicates_preserving_order() {
@@ -1258,6 +1345,8 @@ pub trait GuidesApi {
     ) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
     async fn copy_current_guide_step<R: Runtime>(app_handle: AppHandle<R>);
+    #[taurpc(event, alias = "malformedGuidesRemoved")]
+    async fn malformed_guides_removed(files: Vec<RemovedGuideFile>);
     #[taurpc(alias = "guideExists")]
     async fn guide_exists<R: Runtime>(
         app_handle: AppHandle<R>,

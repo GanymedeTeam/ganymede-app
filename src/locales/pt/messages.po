@@ -63,7 +63,7 @@ msgstr "Ir para a etapa"
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:104
 #: src/routes/_app/guides/-$id/report_dialog.tsx:152
 #: src/routes/_app/guides/-$id/report_dialog.tsx:189
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:233
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:242
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:105
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:81
 msgid "Annuler"
@@ -94,7 +94,7 @@ msgstr "Nenhum guia de Dofus{langLabel} encontrado"
 msgid "Aucun guide Dofus{langLabel} trouvé avec {term}"
 msgstr "Nenhum guia de Dofus{langLabel} encontrado com {term}"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:175
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:183
 msgid "Aucun guide trouvé."
 msgstr "Nenhum guia encontrado."
 
@@ -188,7 +188,7 @@ msgstr "Campo em falta: {0}"
 msgid "Chasse au trésor"
 msgstr "Caça ao tesouro"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:166
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:174
 msgid "Choisir un guide"
 msgstr "Escolher um guia"
 
@@ -402,7 +402,7 @@ msgstr "Dinâmica (conforme a janela)"
 msgid "Échec de l'échange de tokens"
 msgstr "Falha na troca de tokens"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:215
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:224
 msgid "Écrivez votre note ici…"
 msgstr "Escreve aqui a tua nota…"
 
@@ -423,7 +423,7 @@ msgstr "Em andamento"
 msgid "En cours..."
 msgstr "Em progresso..."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:245
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:254
 msgid "Enregistrer"
 msgstr "Guardar"
 
@@ -660,7 +660,7 @@ msgstr "Erro de utilizador"
 msgid "Erreur utilisateur inconnue"
 msgstr "Erro de utilizador desconhecido"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:198
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:206
 msgid "Étape"
 msgstr "Etapa"
 
@@ -727,7 +727,7 @@ msgstr "Geral"
 msgid "Grande"
 msgstr "Grande"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:156
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:164
 msgid "Guide"
 msgstr "Guia"
 
@@ -761,6 +761,10 @@ msgstr "Guias {0}"
 #: src/routes/_app/downloads/index.tsx:126
 msgid "Guides certifiés"
 msgstr "Guias certificados"
+
+#: src/hooks/use_malformed_guides_handler.ts:16
+msgid "Guides corrompus supprimés : {labels}"
+msgstr "Guias corrompidos removidos: {labels}"
 
 #: src/routes/_app/downloads/$status.tsx:104
 #: src/routes/_app/downloads/index.tsx:142
@@ -1037,7 +1041,7 @@ msgstr "Lista de guias mal formada"
 msgid "Marquer comme lu"
 msgstr "Marcar como lido"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:221
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:230
 msgid "Me notifier sur cette étape"
 msgstr "Notificar-me nesta etapa"
 
@@ -1115,11 +1119,11 @@ msgstr "Normal"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Nota: Os atalhos já utilizados por outras aplicações (AMD Adrenalin, Nvidia App, etc.) não podem ser registados. Remova-os primeiro nessas aplicações."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:226
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:235
 msgid "Note locale, non synchronisée avec le serveur."
 msgstr "Nota local, não sincronizada com o servidor."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:149
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:157
 msgid "Note personnelle"
 msgstr "Nota pessoal"
 
@@ -1257,7 +1261,7 @@ msgstr "Resumo da mensagem"
 msgid "Rechercher un guide"
 msgstr "Pesquisar um guia"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:172
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:180
 msgid "Rechercher un guide…"
 msgstr "Procurar um guia…"
 
@@ -1360,7 +1364,7 @@ msgstr "Eliminar"
 msgid "Supprimer de la liste"
 msgstr "Remover da lista"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:238
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:247
 msgid "Supprimer la note"
 msgstr "Eliminar a nota"
 

@@ -63,7 +63,7 @@ msgstr "Go to step"
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:104
 #: src/routes/_app/guides/-$id/report_dialog.tsx:152
 #: src/routes/_app/guides/-$id/report_dialog.tsx:189
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:233
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:242
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:105
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:81
 msgid "Annuler"
@@ -94,7 +94,7 @@ msgstr "No Dofus guide{langLabel} found"
 msgid "Aucun guide Dofus{langLabel} trouvé avec {term}"
 msgstr "No Dofus guide{langLabel} found with {term}"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:175
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:183
 msgid "Aucun guide trouvé."
 msgstr "No guide found."
 
@@ -188,7 +188,7 @@ msgstr "Missing field: {0}"
 msgid "Chasse au trésor"
 msgstr "Hunt"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:166
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:174
 msgid "Choisir un guide"
 msgstr "Choose a guide"
 
@@ -402,7 +402,7 @@ msgstr "Dynamic (based on window)"
 msgid "Échec de l'échange de tokens"
 msgstr "Token exchange failed"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:215
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:224
 msgid "Écrivez votre note ici…"
 msgstr "Write your note here…"
 
@@ -423,7 +423,7 @@ msgstr "In progress"
 msgid "En cours..."
 msgstr "In progress..."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:245
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:254
 msgid "Enregistrer"
 msgstr "Save"
 
@@ -660,7 +660,7 @@ msgstr "User error"
 msgid "Erreur utilisateur inconnue"
 msgstr "Unknown user error"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:198
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:206
 msgid "Étape"
 msgstr "Step"
 
@@ -727,7 +727,7 @@ msgstr "General"
 msgid "Grande"
 msgstr "Large"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:156
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:164
 msgid "Guide"
 msgstr "Guide"
 
@@ -761,6 +761,10 @@ msgstr "Guides {0}"
 #: src/routes/_app/downloads/index.tsx:126
 msgid "Guides certifiés"
 msgstr "Certified guides"
+
+#: src/hooks/use_malformed_guides_handler.ts:16
+msgid "Guides corrompus supprimés : {labels}"
+msgstr "Corrupted guides removed: {labels}"
 
 #: src/routes/_app/downloads/$status.tsx:104
 #: src/routes/_app/downloads/index.tsx:142
@@ -1037,7 +1041,7 @@ msgstr "Malformed guide list"
 msgid "Marquer comme lu"
 msgstr "Mark as read"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:221
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:230
 msgid "Me notifier sur cette étape"
 msgstr "Notify me on this step"
 
@@ -1115,11 +1119,11 @@ msgstr "Normal"
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Note: Shortcuts already used by other applications (AMD Adrenalin, Nvidia App, etc.) cannot be registered. Remove them first in those applications."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:226
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:235
 msgid "Note locale, non synchronisée avec le serveur."
 msgstr "Local note, not synced with the server."
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:149
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:157
 msgid "Note personnelle"
 msgstr "Personal note"
 
@@ -1257,7 +1261,7 @@ msgstr "Message summary"
 msgid "Rechercher un guide"
 msgstr "Search a guide"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:172
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:180
 msgid "Rechercher un guide…"
 msgstr "Search for a guide…"
 
@@ -1360,7 +1364,7 @@ msgstr "Delete"
 msgid "Supprimer de la liste"
 msgstr "Remove from list"
 
-#: src/routes/_app/guides/-$id/step_note_dialog.tsx:238
+#: src/routes/_app/guides/-$id/step_note_dialog.tsx:247
 msgid "Supprimer la note"
 msgstr "Delete note"
 
