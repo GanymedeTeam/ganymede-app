@@ -57,6 +57,7 @@ export function StepNoteDialog({
 
   const [selectedGuideId, setSelectedGuideId] = useState(guideId)
   const [selectedStepIndex, setSelectedStepIndex] = useState(stepIndex)
+  const [stepInputValue, setStepInputValue] = useState(() => String(stepIndex + 1))
   const [draft, setDraft] = useState('')
   const [reminder, setReminder] = useState(true)
   const [guideSelectOpen, setGuideSelectOpen] = useState(false)
@@ -82,6 +83,7 @@ export function StepNoteDialog({
     if (open && !prevOpen.current) {
       setSelectedGuideId(guideId)
       setSelectedStepIndex(stepIndex)
+      setStepInputValue(String(stepIndex + 1))
 
       const note = getStepNote(stepNotes.data, profileId, guideId, stepIndex)
       setDraft(note?.content ?? '')
@@ -97,6 +99,7 @@ export function StepNoteDialog({
     const note = getStepNote(stepNotes.data, profileId, selectedGuideId, selectedStepIndex)
     setDraft(note?.content ?? '')
     setReminder(note?.is_reminder ?? false)
+    setStepInputValue(String(selectedStepIndex + 1))
   }, [selectedGuideId, selectedStepIndex])
   // oxlint-enable react-hooks/exhaustive-deps
 
@@ -105,13 +108,18 @@ export function StepNoteDialog({
     const nextMaxStep = guide ? guide.steps.length - 1 : 0
 
     setSelectedGuideId(id)
-    setSelectedStepIndex((step) => Math.min(step, nextMaxStep))
+    const nextStep = Math.min(selectedStepIndex, nextMaxStep)
+    setSelectedStepIndex(nextStep)
+    setStepInputValue(String(nextStep + 1))
     setGuideSelectOpen(false)
   }
 
   const handleChangeStep = (value: string) => {
-    const parsed = Number.parseInt(value, 10)
+    setStepInputValue(value)
 
+    if (value.trim() === '') return
+
+    const parsed = Number.parseInt(value, 10)
     if (Number.isNaN(parsed)) return
 
     const clamped = Math.max(0, Math.min(maxStep, parsed - 1))
@@ -170,7 +178,7 @@ export function StepNoteDialog({
                 <PopoverContent align="start" className="w-(--radix-popover-trigger-width) p-0">
                   <Command>
                     <CommandInput placeholder={t`Rechercher un guide…`} />
-                    <CommandList>
+                    <CommandList onWheel={(evt) => evt.stopPropagation()}>
                       <CommandEmpty>
                         <Trans>Aucun guide trouvé.</Trans>
                       </CommandEmpty>
@@ -201,9 +209,10 @@ export function StepNoteDialog({
                 id="step-note-step"
                 max={maxStep + 1}
                 min={1}
+                onBlur={() => setStepInputValue(String(selectedStepIndex + 1))}
                 onChange={(evt) => handleChangeStep(evt.currentTarget.value)}
                 type="number"
-                value={selectedStepIndex + 1}
+                value={stepInputValue}
               />
             </div>
             <Textarea
