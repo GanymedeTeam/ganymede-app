@@ -15,6 +15,10 @@ use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
 
 pub const DEFAULT_GUIDE_ID: u32 = 1074;
 const MAX_RECENT_GUIDES: usize = 50;
+/// Extension appended to quarantine a malformed guide file. Renaming (instead of
+/// deleting) preserves the data while excluding it from scans, since it no longer
+/// ends with `.json`. See issues #200 and #209.
+const CORRUPTED_GUIDE_SUFFIX: &str = "corrupted";
 
 // ================================================================================================
 // Enums
@@ -212,7 +216,7 @@ pub struct Folder {
 }
 
 #[taurpc::ipc_type]
-pub struct RemovedGuideFile {
+pub struct QuarantinedGuideFile {
     pub id: Option<u32>,
     pub file_name: String,
 }
@@ -423,7 +427,6 @@ fn get_guides_or_folder_from_handle<R: Runtime>(
     println!("[Guides] get_guides_or_folder in {:?}", guide_folder);
 
     let mut result = vec![];
-    let mut removed = vec![];
 
     for entry in fs::read_dir(guide_folder).map_err(|err| Error::ReadGuidesDir(err.to_string()))? {
         let entry = entry.map_err(|err| Error::ReadGuidesDir(err.to_string()))?;
@@ -435,7 +438,7 @@ fn get_guides_or_folder_from_handle<R: Runtime>(
         } else if path.is_file() {
             if let Some(ext) = path.extension() {
                 if ext == "json" {
-                    if let Some(guide) = parse_guide_or_remove(&path, &mut removed)? {
+                    if let Some(guide) = parse_guide_or_quarantine(&path)? {
                         result.push(GuidesOrFolder::Guide(guide));
                     }
                 }
@@ -443,18 +446,15 @@ fn get_guides_or_folder_from_handle<R: Runtime>(
         }
     }
 
-    emit_malformed_guides_removed(app, removed);
-
     Ok(result)
 }
 
 /// Parse a guide file. On a JSON parse error (e.g. empty or corrupted file), the
-/// file is removed from disk and recorded so a single malformed guide does not
-/// break loading the whole list. See issue #200.
-fn parse_guide_or_remove(
-    file_path: &Path,
-    removed: &mut Vec<RemovedGuideFile>,
-) -> Result<Option<GuideWithSteps>, Error> {
+/// file is quarantined by renaming it with a `.corrupted` suffix so a single
+/// malformed guide does not break loading the whole list. Quarantined files are
+/// skipped by later scans and surfaced through `list_corrupted_guides`, which
+/// powers the toast letting the user delete them. See issues #200 and #209.
+fn parse_guide_or_quarantine(file_path: &Path) -> Result<Option<GuideWithSteps>, Error> {
     let content =
         fs::read_to_string(file_path).map_err(|err| Error::ReadGuideFile(err.to_string()))?;
 
@@ -465,50 +465,117 @@ fn parse_guide_or_remove(
         }
         Err(err) => {
             warn!(
-                "[Guides] removing malformed guide file {:?}: {}",
+                "[Guides] quarantining malformed guide file {:?}: {}",
                 file_path, err
             );
 
-            if let Err(remove_err) = fs::remove_file(file_path) {
+            let mut quarantine_name = file_path.file_name().unwrap_or_default().to_os_string();
+            quarantine_name.push(".");
+            quarantine_name.push(CORRUPTED_GUIDE_SUFFIX);
+            let quarantine_path = file_path.with_file_name(quarantine_name);
+
+            if let Err(rename_err) = fs::rename(file_path, &quarantine_path) {
                 warn!(
-                    "[Guides] failed to remove malformed guide file {:?}: {}",
-                    file_path, remove_err
+                    "[Guides] failed to quarantine malformed guide file {:?}: {}",
+                    file_path, rename_err
                 );
             }
-
-            removed.push(RemovedGuideFile {
-                id: file_path
-                    .file_stem()
-                    .and_then(|stem| stem.to_str())
-                    .and_then(|stem| stem.parse::<u32>().ok()),
-                file_name: file_path
-                    .file_name()
-                    .and_then(|name| name.to_str())
-                    .unwrap_or_default()
-                    .to_string(),
-            });
 
             Ok(None)
         }
     }
 }
 
-fn emit_malformed_guides_removed<R: Runtime>(app: &AppHandle<R>, removed: Vec<RemovedGuideFile>) {
-    if removed.is_empty() {
-        return;
+/// Scan all guides (quarantining any newly malformed one) then list the
+/// quarantined `*.corrupted` files still present on disk. Pull-based so the toast
+/// is reliably shown on startup, unlike a fire-and-forget event that can be
+/// emitted before the frontend listener is registered. See issue #209.
+fn list_corrupted_guides<R: Runtime>(
+    app_handle: &AppHandle<R>,
+) -> Result<Vec<QuarantinedGuideFile>, Error> {
+    // A full scan quarantines any malformed guide before we list the results.
+    get_guides_from_handle(app_handle, "".to_string())?;
+
+    let guides_dir = app_handle.path().app_guides_dir();
+
+    let options = glob::MatchOptions {
+        case_sensitive: false,
+        require_literal_separator: false,
+        require_literal_leading_dot: false,
+    };
+
+    let suffix = format!(".{}", CORRUPTED_GUIDE_SUFFIX);
+    let pattern = format!("**/*{}", suffix);
+    let files = glob::glob_with(guides_dir.join(pattern).to_str().unwrap(), options)
+        .map_err(|err| Error::Pattern(err.to_string()))?;
+
+    let mut corrupted = vec![];
+
+    for entry in files {
+        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
+
+        if !file_path.is_file() {
+            continue;
+        }
+
+        let file_name = file_path
+            .file_name()
+            .and_then(|name| name.to_str())
+            .unwrap_or_default()
+            .to_string();
+
+        // Strip the quarantine suffix to recover the original name (e.g. `42.json`).
+        let original = file_name.strip_suffix(&suffix).unwrap_or(&file_name);
+
+        let id = Path::new(original)
+            .file_stem()
+            .and_then(|stem| stem.to_str())
+            .and_then(|stem| stem.parse::<u32>().ok());
+
+        corrupted.push(QuarantinedGuideFile {
+            id,
+            file_name: original.to_string(),
+        });
     }
 
-    let trigger = GuidesEventTrigger::new(app.clone());
-
-    if let Err(err) = trigger.malformed_guides_removed(removed) {
-        warn!(
-            "[Guides] failed to emit malformed_guides_removed event: {:?}",
-            err
-        );
-    }
+    Ok(corrupted)
 }
 
-fn get_guides_from_path(path_buf: &PathBuf) -> Result<(Guides, Vec<RemovedGuideFile>), Error> {
+/// Delete all quarantined guide files (`*.corrupted`) under the guides directory.
+/// Triggered by the "delete" action of the malformed guides toast. See issue #209.
+fn delete_corrupted_guides<R: Runtime>(app_handle: &AppHandle<R>) -> Result<(), Error> {
+    let guides_dir = app_handle.path().app_guides_dir();
+
+    info!(
+        "[Guides] deleting quarantined guide files in {:?}",
+        guides_dir
+    );
+
+    let options = glob::MatchOptions {
+        case_sensitive: false,
+        require_literal_separator: false,
+        require_literal_leading_dot: false,
+    };
+
+    let pattern = format!("**/*.{}", CORRUPTED_GUIDE_SUFFIX);
+    let files = glob::glob_with(guides_dir.join(pattern).to_str().unwrap(), options)
+        .map_err(|err| Error::Pattern(err.to_string()))?;
+
+    for entry in files {
+        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
+
+        if file_path.is_file() {
+            info!("[Guides] deleting quarantined guide file {:?}", file_path);
+
+            fs::remove_file(&file_path)
+                .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
+        }
+    }
+
+    Ok(())
+}
+
+fn get_guides_from_path(path_buf: &PathBuf) -> Result<Guides, Error> {
     info!("[Guides] get_guides in {:?}", path_buf);
 
     let options = glob::MatchOptions {
@@ -521,12 +588,11 @@ fn get_guides_from_path(path_buf: &PathBuf) -> Result<(Guides, Vec<RemovedGuideF
         .map_err(|err| Error::Pattern(err.to_string()))?;
 
     let mut guides = vec![];
-    let mut removed = vec![];
 
     for entry in files {
         let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
 
-        let Some(guide) = parse_guide_or_remove(&file_path, &mut removed)? else {
+        let Some(guide) = parse_guide_or_quarantine(&file_path)? else {
             continue;
         };
 
@@ -537,7 +603,7 @@ fn get_guides_from_path(path_buf: &PathBuf) -> Result<(Guides, Vec<RemovedGuideF
         guides.push(guide);
     }
 
-    Ok((Guides { guides }, removed))
+    Ok(Guides { guides })
 }
 
 fn get_guides_from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Result<Guides, Error> {
@@ -547,11 +613,7 @@ fn get_guides_from_handle<R: Runtime>(app: &AppHandle<R>, folder: String) -> Res
         guides_dir = guides_dir.join(folder);
     }
 
-    let (guides, removed) = get_guides_from_path(&guides_dir)?;
-
-    emit_malformed_guides_removed(app, removed);
-
-    Ok(guides)
+    get_guides_from_path(&guides_dir)
 }
 
 fn write_guides<R: Runtime>(guides: &Guides, app: &AppHandle<R>) -> Result<(), Error> {
@@ -820,7 +882,7 @@ mod tests {
     use super::{get_guides_from_path, sanitize_recent_guides, MAX_RECENT_GUIDES};
 
     #[test]
-    fn get_guides_from_path_skips_and_removes_malformed_files() {
+    fn get_guides_from_path_skips_and_quarantines_malformed_files() {
         use std::fs;
 
         let dir = tempfile::tempdir().unwrap();
@@ -829,18 +891,20 @@ mod tests {
         fs::write(dir.path().join("42.json"), valid).unwrap();
         fs::write(dir.path().join("2022.json"), "").unwrap();
 
-        let (guides, removed) = get_guides_from_path(&dir.path().to_path_buf()).unwrap();
+        let guides = get_guides_from_path(&dir.path().to_path_buf()).unwrap();
 
         assert_eq!(guides.guides.len(), 1);
         assert_eq!(guides.guides[0].id, 42);
 
-        assert_eq!(removed.len(), 1);
-        assert_eq!(removed[0].id, Some(2022));
-        assert_eq!(removed[0].file_name, "2022.json");
-
-        // the malformed file is deleted while the valid one is kept
+        // the malformed file is quarantined (renamed) while the valid one is kept
         assert!(!dir.path().join("2022.json").exists());
+        assert!(dir.path().join("2022.json.corrupted").exists());
         assert!(dir.path().join("42.json").exists());
+
+        // a second scan skips the quarantined file and keeps the valid one
+        let guides = get_guides_from_path(&dir.path().to_path_buf()).unwrap();
+
+        assert_eq!(guides.guides.len(), 1);
     }
 
     #[test]
@@ -1343,10 +1407,14 @@ pub trait GuidesApi {
         app_handle: AppHandle<R>,
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error>;
+    #[taurpc(alias = "getCorruptedGuides")]
+    async fn get_corrupted_guides<R: Runtime>(
+        app_handle: AppHandle<R>,
+    ) -> Result<Vec<QuarantinedGuideFile>, Error>;
+    #[taurpc(alias = "deleteCorruptedGuides")]
+    async fn delete_corrupted_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
     async fn copy_current_guide_step<R: Runtime>(app_handle: AppHandle<R>);
-    #[taurpc(event, alias = "malformedGuidesRemoved")]
-    async fn malformed_guides_removed(files: Vec<RemovedGuideFile>);
     #[taurpc(alias = "guideExists")]
     async fn guide_exists<R: Runtime>(
         app_handle: AppHandle<R>,
@@ -1462,6 +1530,20 @@ impl GuidesApi for GuidesApiImpl {
         guides_or_folders_to_delete: Vec<GuideOrFolderToDelete>,
     ) -> Result<(), Error> {
         delete_guides_and_folders(&app_handle, guides_or_folders_to_delete)
+    }
+
+    async fn get_corrupted_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+    ) -> Result<Vec<QuarantinedGuideFile>, Error> {
+        list_corrupted_guides(&app_handle)
+    }
+
+    async fn delete_corrupted_guides<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+    ) -> Result<(), Error> {
+        delete_corrupted_guides(&app_handle)
     }
 
     async fn guide_exists<R: Runtime>(

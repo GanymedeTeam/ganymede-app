@@ -82,13 +82,13 @@ export type ProfileStepNotes = { guides: Partial<{ [key in number]: GuideStepNot
 
 export type Progress = { id: number; currentStep: number; steps: Partial<{ [key in number]: ConfStep }>; updatedAt?: string | null }
 
+export type QuarantinedGuideFile = { id: number | null; file_name: string }
+
 export type QuestError = { RequestQuest: string } | { RequestQuestContent: string } | { DofusDbQuestMalformed: JsonError }
 
 export type QuestSummary = { name: string; statuses: SummaryQuestStatus[] }
 
 export type RemoteProfile = { id: number; uuid: string | null; name: string; progresses: SyncProgressPayload[] }
-
-export type RemovedGuideFile = { id: number | null; file_name: string }
 
 export type ReportError = { Server: string } | { Status: [number, string] } | "NetworkUnavailable"
 
@@ -126,7 +126,7 @@ export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: s
 
 export type ViewedNotifications = { viewed_ids: number[] }
 
-const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'dofusdb':'{"openHunt":["lang"],"openMap":["lang"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"malformedGuidesRemoved":["files"],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"setRecentGuides":["profile_id","guide_ids"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note","is_reminder"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
+const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'dofusdb':'{"openHunt":["lang"],"openMap":["lang"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteCorruptedGuides":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getCorruptedGuides":[],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"setRecentGuides":["profile_id","guide_ids"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note","is_reminder"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},
 "api": {isAppVersionOld: () => Promise<IsOld>},
 "base": {isProduction: () => Promise<boolean>,
@@ -141,8 +141,10 @@ toggleGuideCheckbox: (guideId: number, stepIndex: number, checkboxIndex: number)
 "dofusdb": {openHunt: (lang: string) => Promise<null>,
 openMap: (lang: string) => Promise<null>},
 "guides": {copyCurrentGuideStep: () => Promise<void>,
+deleteCorruptedGuides: () => Promise<null>,
 deleteGuidesFromSystem: (guidesOrFoldersToDelete: GuideOrFolderToDelete[]) => Promise<null>,
 downloadGuideFromServer: (guideId: number, folder: string) => Promise<Guides>,
+getCorruptedGuides: () => Promise<QuarantinedGuideFile[]>,
 getFlatGuides: (folder: string) => Promise<GuideWithSteps[]>,
 getGuideFromServer: (guideId: number) => Promise<GuideWithSteps>,
 getGuideSummary: (guideId: number) => Promise<Summary>,
@@ -151,7 +153,6 @@ getGuidesFromServer: (status: Status | null) => Promise<Guide[]>,
 getRecentGuides: (profileId: string) => Promise<number[]>,
 guideExists: (guideId: number) => Promise<boolean>,
 hasGuidesNotUpdated: () => Promise<boolean>,
-malformedGuidesRemoved: (files: RemovedGuideFile[]) => Promise<void>,
 openGuidesFolder: () => Promise<null>,
 registerGuideClose: (guideId: number, profileId: string) => Promise<null>,
 registerGuideOpen: (guideId: number, profileId: string) => Promise<null>,

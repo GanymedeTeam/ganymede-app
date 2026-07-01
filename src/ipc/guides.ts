@@ -1,7 +1,7 @@
 import { error } from '@tauri-apps/plugin-log'
 import { fromPromise, ResultAsync } from 'neverthrow'
 
-import { GuideOrFolderToDelete, RemovedGuideFile, Status } from '@/ipc/bindings.ts'
+import { GuideOrFolderToDelete, Status } from '@/ipc/bindings.ts'
 import { GuideWithStepsWithFolder, taurpc } from '@/ipc/ipc.ts'
 
 export class GetGuidesError extends Error {
@@ -114,12 +114,28 @@ export function deleteGuidesFromSystem(guides: GuideOrFolderToDelete[]) {
   return fromPromise(taurpc.guides.deleteGuidesFromSystem(guides), DeleteGuidesInSystemError.from)
 }
 
-export function onCopyCurrentGuideStep() {
-  return taurpc.guides.copyCurrentGuideStep
+export class GetCorruptedGuidesError extends Error {
+  static from(error: unknown) {
+    return new GetCorruptedGuidesError('Failed to get corrupted guides', { cause: error })
+  }
 }
 
-export function onMalformedGuidesRemoved(callback: (files: RemovedGuideFile[]) => void) {
-  return taurpc.guides.malformedGuidesRemoved.on(callback)
+export function getCorruptedGuides() {
+  return fromPromise(taurpc.guides.getCorruptedGuides(), GetCorruptedGuidesError.from)
+}
+
+export class DeleteCorruptedGuidesError extends Error {
+  static from(error: unknown) {
+    return new DeleteCorruptedGuidesError('Failed to delete corrupted guides', { cause: error })
+  }
+}
+
+export function deleteCorruptedGuides() {
+  return fromPromise(taurpc.guides.deleteCorruptedGuides(), DeleteCorruptedGuidesError.from)
+}
+
+export function onCopyCurrentGuideStep() {
+  return taurpc.guides.copyCurrentGuideStep
 }
 
 export class GuideExistsError extends Error {

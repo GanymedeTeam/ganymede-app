@@ -766,9 +766,13 @@ msgstr "Guides {0}"
 msgid "Guides certifiés"
 msgstr "Guides certifiés"
 
-#: src/hooks/use_malformed_guides_handler.ts:16
-msgid "Guides corrompus supprimés : {labels}"
-msgstr "Guides corrompus supprimés : {labels}"
+#: src/hooks/use_malformed_guides_handler.ts:26
+msgid "Guides corrompus détectés : {labels}"
+msgstr "Guides corrompus détectés : {labels}"
+
+#: src/hooks/use_malformed_guides_handler.ts:42
+msgid "Guides corrompus supprimés."
+msgstr "Guides corrompus supprimés."
 
 #: src/routes/_app/downloads/$status.tsx:104
 #: src/routes/_app/downloads/index.tsx:142
@@ -968,6 +972,10 @@ msgstr "Informations supplémentaires : {0}"
 #: src/routes/_app/downloads/$status.tsx:343
 msgid "J'ai compris"
 msgstr "J'ai compris"
+
+#: src/hooks/use_malformed_guides_handler.ts:37
+msgid "La suppression des guides corrompus a échoué."
+msgstr "La suppression des guides corrompus a échoué."
 
 #: src/routes/_app.tsx:119
 #: src/routes/_app/oauth/waiting.tsx:62
@@ -1355,6 +1363,7 @@ msgstr "Suppression des guides"
 msgid "Suppression du profil. Cette action est irréversible."
 msgstr "Suppression du profil. Cette action est irréversible."
 
+#: src/hooks/use_malformed_guides_handler.ts:30
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:47
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:189
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:215
