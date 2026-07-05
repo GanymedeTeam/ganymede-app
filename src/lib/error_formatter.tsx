@@ -192,7 +192,9 @@ function isQuestError(error: Record<string, unknown>): boolean {
 }
 
 function isUpdateError(error: Record<string, unknown>): boolean {
-  return 'CheckUpdateError' in error || 'GetUpdaterError' in error
+  return (
+    'CheckUpdateError' in error || 'GetUpdaterError' in error || 'DownloadError' in error || 'InstallError' in error
+  )
 }
 
 function isImageError(error: Record<string, unknown>): boolean {
@@ -790,6 +792,22 @@ function formatUpdateError(error: UpdateError): FormattedError {
         type: t`Erreur de mise à jour`,
         message: t`Impossible d'obtenir le système de mise à jour`,
         details: error.GetUpdaterError,
+      }
+    }
+
+    if ('DownloadError' in error) {
+      return {
+        type: t`Erreur de mise à jour`,
+        message: t`Impossible de télécharger la mise à jour`,
+        details: error.DownloadError,
+      }
+    }
+
+    if ('InstallError' in error) {
+      return {
+        type: t`Erreur de mise à jour`,
+        message: t`Impossible d'installer la mise à jour`,
+        details: error.InstallError,
       }
     }
   }

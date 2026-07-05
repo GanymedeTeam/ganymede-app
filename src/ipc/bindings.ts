@@ -118,7 +118,7 @@ export type SyncResponse = { profiles: RemoteProfile[] }
 
 export type UpdateAllAtOnceResult = { type: "success" } | { type: "failure"; message: string } | { type: "offline" }
 
-export type UpdateError = { CheckUpdateError: string } | { GetUpdaterError: string }
+export type UpdateError = { CheckUpdateError: string } | { GetUpdaterError: string } | { DownloadError: string } | { InstallError: string }
 
 export type User = { id: number; name: string; is_admin: number; is_certified: number; lang: string }
 

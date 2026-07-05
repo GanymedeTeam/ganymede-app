@@ -6,6 +6,7 @@ export type AvailableEvent =
   | 'update-started'
   | 'update-finished'
   | 'update-in-progress'
+  | 'update-error'
 
 export type PayloadByEvent = {
   'go-to-next-guide-step': null
@@ -13,6 +14,7 @@ export type PayloadByEvent = {
   'update-started': null
   'update-finished': null
   'update-in-progress': [number, number | null]
+  'update-error': string
 }
 
 export function webviewEvent<Evt extends AvailableEvent>(

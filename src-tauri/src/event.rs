@@ -4,6 +4,7 @@ pub enum Event {
     UpdateStarted,
     UpdateInProgress,
     UpdateFinished,
+    UpdateError,
 }
 
 impl Into<&str> for Event {
@@ -14,6 +15,7 @@ impl Into<&str> for Event {
             Event::UpdateStarted => "update-started",
             Event::UpdateInProgress => "update-in-progress",
             Event::UpdateFinished => "update-finished",
+            Event::UpdateError => "update-error",
         }
     }
 }

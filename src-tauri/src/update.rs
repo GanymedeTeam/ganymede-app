@@ -1,5 +1,5 @@
 use crate::event::Event;
-use log::{debug, info};
+use log::{debug, error, info};
 use serde::Serialize;
 use tauri::{AppHandle, Emitter, Runtime};
 use tauri_plugin_updater::UpdaterExt;
@@ -11,6 +11,10 @@ pub enum Error {
     CheckUpdateError(String),
     #[error("Failed to get updater: {0}")]
     GetUpdaterError(String),
+    #[error("Failed to download update: {0}")]
+    DownloadError(String),
+    #[error("Failed to install update: {0}")]
+    InstallError(String),
 }
 
 #[taurpc::procedures(path = "update", export_to = "../src/ipc/bindings.ts")]
@@ -26,7 +30,7 @@ pub struct UpdateApiImpl;
 impl UpdateApi for UpdateApiImpl {
     async fn start_update<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<(), Error> {
         #[cfg(not(debug_assertions))]
-        use tauri_plugin_sentry::sentry::{add_breadcrumb, Breadcrumb};
+        use tauri_plugin_sentry::sentry::{add_breadcrumb, capture_error, Breadcrumb};
 
         debug!("[Update] starting update check");
 
@@ -60,7 +64,7 @@ impl UpdateApi for UpdateApiImpl {
             let mut downloaded = 0;
 
             // alternatively we could also call update.download() and update.install() separately
-            let bytes = update
+            let bytes = match update
                 .download(
                     |chunk_length, content_length| {
                         downloaded += chunk_length;
@@ -82,7 +86,18 @@ impl UpdateApi for UpdateApiImpl {
                     },
                 )
                 .await
-                .unwrap();
+            {
+                Ok(bytes) => bytes,
+                Err(err) => {
+                    let message = err.to_string();
+                    error!("[Update] download failed: {message}");
+                    let _ = app_handle.emit(Event::UpdateError.into(), message.clone());
+                    let error = Error::DownloadError(message);
+                    #[cfg(not(debug_assertions))]
+                    capture_error(&error);
+                    return Err(error);
+                }
+            };
 
             debug!("[Update] downloaded");
 
@@ -94,7 +109,15 @@ impl UpdateApi for UpdateApiImpl {
                 ..Default::default()
             });
 
-            update.install(bytes).unwrap();
+            if let Err(err) = update.install(bytes) {
+                let message = err.to_string();
+                error!("[Update] install failed: {message}");
+                let _ = app_handle.emit(Event::UpdateError.into(), message.clone());
+                let error = Error::InstallError(message);
+                #[cfg(not(debug_assertions))]
+                capture_error(&error);
+                return Err(error);
+            }
 
             info!("[Update] update installed");
 
