@@ -165,7 +165,7 @@ msgstr "Causado por"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "Não foi possível apresentar esta mensagem. Pode marcá-la como lida."
 
-#: src/routes/_app.tsx:120
+#: src/routes/_app.tsx:123
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Alguns dados locais são inválidos e estão a bloquear a sincronização."
 
@@ -369,6 +369,10 @@ msgstr "Descubra e adicione novos guias à sua lista."
 #: src/routes/_app/guides/-$id/report_dialog.tsx:117
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Descreva o problema encontrado. O passo e o guia serão incluídos automaticamente."
+
+#: src/routes/_app.tsx:142
+msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
+msgstr "Mova a aplicação para a pasta Aplicações e reinicie-a."
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:161
 msgid "Des mises à jour sont disponibles"
@@ -725,6 +729,10 @@ msgstr "Formato de dados incorrecto"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganimedes - Não afiliado à Ankama Games"
 
+#: src/routes/_app.tsx:139
+msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
+msgstr "O Ganymède não está instalado na pasta Aplicações, o que pode impedir as atualizações automáticas."
+
 #: src/routes/_app/settings.tsx:123
 msgid "Général"
 msgstr "Geral"
@@ -991,13 +999,13 @@ msgstr "A atualização automática falhou. Descarregue e instale manualmente a 
 msgid "La suppression des guides corrompus a échoué."
 msgstr "Falha ao eliminar os guias corrompidos."
 
-#: src/routes/_app.tsx:119
+#: src/routes/_app.tsx:122
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "A sincronização falhou: dados inválidos."
 
 #: src/lib/sync_progress_queue.ts:27
-#: src/routes/_app.tsx:126
+#: src/routes/_app.tsx:129
 #: src/routes/_app/oauth/waiting.tsx:64
 msgid "La synchronisation a échoué."
 msgstr "A sincronização falhou."

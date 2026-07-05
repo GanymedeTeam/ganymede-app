@@ -165,7 +165,7 @@ msgstr "Causée par"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 
-#: src/routes/_app.tsx:120
+#: src/routes/_app.tsx:123
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Certaines données locales sont invalides et bloquent la synchronisation."
 
@@ -369,6 +369,10 @@ msgstr "Découvrez et ajoutez de nouveaux guides à votre liste."
 #: src/routes/_app/guides/-$id/report_dialog.tsx:117
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
+
+#: src/routes/_app.tsx:142
+msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
+msgstr "Déplacez l'application dans le dossier Applications, puis relancez-la."
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:161
 msgid "Des mises à jour sont disponibles"
@@ -725,6 +729,10 @@ msgstr "Format de données incorrect"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Non affilié à Ankama Games"
 
+#: src/routes/_app.tsx:139
+msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
+msgstr "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
+
 #: src/routes/_app/settings.tsx:123
 msgid "Général"
 msgstr "Général"
@@ -991,13 +999,13 @@ msgstr "La mise à jour automatique a échoué. Téléchargez et installez manue
 msgid "La suppression des guides corrompus a échoué."
 msgstr "La suppression des guides corrompus a échoué."
 
-#: src/routes/_app.tsx:119
+#: src/routes/_app.tsx:122
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La synchronisation a échoué : données invalides."
 
 #: src/lib/sync_progress_queue.ts:27
-#: src/routes/_app.tsx:126
+#: src/routes/_app.tsx:129
 #: src/routes/_app/oauth/waiting.tsx:64
 msgid "La synchronisation a échoué."
 msgstr "La synchronisation a échoué."

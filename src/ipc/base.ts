@@ -31,3 +31,13 @@ class NewIdError extends Error {
 export function newId() {
   return fromPromise(taurpc.base.newId(), NewIdError.from)
 }
+
+class GetInstallLocationError extends Error {
+  static from(err: unknown) {
+    return new GetInstallLocationError('Failed to get install location', { cause: err })
+  }
+}
+
+export function getInstallLocation() {
+  return fromPromise(taurpc.base.getInstallLocation(), GetInstallLocationError.from)
+}

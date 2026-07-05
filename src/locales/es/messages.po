@@ -165,7 +165,7 @@ msgstr "Causado por"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "No se ha podido mostrar este mensaje. Puedes marcarlo como leído."
 
-#: src/routes/_app.tsx:120
+#: src/routes/_app.tsx:123
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Algunos datos locales no son válidos y bloquean la sincronización."
 
@@ -369,6 +369,10 @@ msgstr "Descubre y añade nuevas guías a tu lista."
 #: src/routes/_app/guides/-$id/report_dialog.tsx:117
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe el problema encontrado. El paso y la guía se incluirán automáticamente."
+
+#: src/routes/_app.tsx:142
+msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
+msgstr "Mueve la aplicación a la carpeta Aplicaciones y vuelve a iniciarla."
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:161
 msgid "Des mises à jour sont disponibles"
@@ -725,6 +729,10 @@ msgstr "Formato de datos incorrecto"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymede - No afiliado a Ankama Games"
 
+#: src/routes/_app.tsx:139
+msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
+msgstr "Ganymède no está instalado en la carpeta Aplicaciones, lo que puede impedir las actualizaciones automáticas."
+
 #: src/routes/_app/settings.tsx:123
 msgid "Général"
 msgstr "General"
@@ -991,13 +999,13 @@ msgstr "La actualización automática ha fallado. Descarga e instala manualmente
 msgid "La suppression des guides corrompus a échoué."
 msgstr "No se pudieron eliminar las guías corruptas."
 
-#: src/routes/_app.tsx:119
+#: src/routes/_app.tsx:122
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La sincronización ha fallado: datos no válidos."
 
 #: src/lib/sync_progress_queue.ts:27
-#: src/routes/_app.tsx:126
+#: src/routes/_app.tsx:129
 #: src/routes/_app/oauth/waiting.tsx:64
 msgid "La synchronisation a échoué."
 msgstr "La sincronización ha fallado."

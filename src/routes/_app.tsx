@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/react/macro'
 import type { QueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { debug, info } from '@tauri-apps/plugin-log'
 import { useEffect } from 'react'
@@ -11,6 +12,7 @@ import { syncProfiles } from '@/ipc/sync.ts'
 import { getProfile } from '@/lib/profile.ts'
 import { getProgress } from '@/lib/progress.ts'
 import { confQuery } from '@/queries/conf.query.ts'
+import { installLocationQuery } from '@/queries/install_location.query.ts'
 import { isAppOldVersionQuery } from '@/queries/is_old_version.query.ts'
 import { recentGuidesQuery } from '@/queries/recent_guides.query.ts'
 
@@ -113,6 +115,7 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
 
 function AppLayout() {
   const showReconnectToast = useReconnectToast()
+  const installLocation = useQuery(installLocationQuery)
 
   useEffect(() => {
     if (pendingSyncError === 'validation') {
@@ -127,6 +130,23 @@ function AppLayout() {
     }
     pendingSyncError = null
   }, [showReconnectToast])
+
+  // On macOS, an app run from outside the Applications folder (e.g. Downloads, or a
+  // read-only App Translocation path) can't apply auto-updates in place.
+  useEffect(() => {
+    if (installLocation.data === 'NotInApplications' || installLocation.data === 'Translocated') {
+      toast.warning(
+        <Trans>
+          Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques.
+        </Trans>,
+        {
+          id: 'install-location',
+          description: <Trans>Déplacez l'application dans le dossier Applications, puis relancez-la.</Trans>,
+          duration: Infinity,
+        },
+      )
+    }
+  }, [installLocation.data])
 
   return <Outlet />
 }

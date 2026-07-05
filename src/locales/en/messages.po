@@ -165,7 +165,7 @@ msgstr "Caused by"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "This message could not be displayed. You can still mark it as read."
 
-#: src/routes/_app.tsx:120
+#: src/routes/_app.tsx:123
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Some local data is invalid and is blocking synchronisation."
 
@@ -369,6 +369,10 @@ msgstr "Discover and add new guides to your list."
 #: src/routes/_app/guides/-$id/report_dialog.tsx:117
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
+
+#: src/routes/_app.tsx:142
+msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
+msgstr "Move the app to the Applications folder, then relaunch it."
 
 #: src/routes/_app/guides/-index/actions_toolbar.tsx:161
 msgid "Des mises à jour sont disponibles"
@@ -725,6 +729,10 @@ msgstr "Incorrect data format"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Not affiliated with Ankama Games"
 
+#: src/routes/_app.tsx:139
+msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
+msgstr "Ganymède isn't installed in the Applications folder, which can prevent automatic updates."
+
 #: src/routes/_app/settings.tsx:123
 msgid "Général"
 msgstr "General"
@@ -991,13 +999,13 @@ msgstr "The automatic update failed. Download and install the latest version man
 msgid "La suppression des guides corrompus a échoué."
 msgstr "Failed to delete corrupted guides."
 
-#: src/routes/_app.tsx:119
+#: src/routes/_app.tsx:122
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "Synchronisation failed: invalid data."
 
 #: src/lib/sync_progress_queue.ts:27
-#: src/routes/_app.tsx:126
+#: src/routes/_app.tsx:129
 #: src/routes/_app/oauth/waiting.tsx:64
 msgid "La synchronisation a échoué."
 msgstr "Synchronisation failed."
