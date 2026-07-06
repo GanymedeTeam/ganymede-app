@@ -203,3 +203,4 @@ src/ipc/deep_link.ts               # Frontend IPC wrapper
 - TauRPC automatically generates TypeScript bindings from Rust traits
 - **Parallelize the maximum of tasks. You can Update multiple files at once to be faster.**
 - Git: Changesets for this project must be in French.
+- Git: do not use `--no-verify` and `--no-gpg-sign` to commit.

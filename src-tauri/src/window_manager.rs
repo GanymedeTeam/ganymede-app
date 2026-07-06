@@ -8,11 +8,13 @@ use tauri::{
 
 // Injected before page parsing, runs in the page's own context (unlike an iframe),
 // so we can hide the floating reCAPTCHA badge that overlaps the tool.
+// Direction arrows are resized only below the sm breakpoint (<640px);
+// DofusDB default sizes apply above.
 const RESTYLE_HUNT_PAGE: &str = r#"(function () {
   if (!location.hostname.endsWith('dofusdb.fr')) return;
   function inject() {
     var style = document.createElement('style');
-    style.textContent = '.grecaptcha-badge{visibility:hidden!important;} .q-header,.q-field__bottom,.q-field__append, .full-width.q-mb-sm, .pip-button { display: none; } .q-field { margin-inline: 2px !important; } .q-field, :where(.q-page) button:has(.q-focus-helper), .q-field__control, .treasure-hunt-direction-icon.q-icon { font-size: 1rem !important; } .q-field__control { padding: 0 2px !important; min-width: 1rem; } .q-mt-xs > span { font-size: 1.5rem; } .treasure-hunt-direction { height: 25px !important; width: 25px !important; padding: 0; display: flex; justify-content: center; align-items: center; }';
+    style.textContent = '.grecaptcha-badge{visibility:hidden!important;} .q-header,.q-field__bottom,.q-field__append, .full-width.q-mb-sm, .pip-button { display: none; } .q-field { margin-inline: 2px !important; } .q-field, :where(.q-page) button:has(.q-focus-helper), .q-field__control { font-size: 1rem !important; } .q-field__control { padding: 0 2px !important; min-width: 1rem; } .q-mt-xs > span { font-size: 1.5rem; } @media (max-width: 639px) { .treasure-hunt-direction-icon.q-icon { font-size: 1.5rem !important; } .treasure-hunt-direction { height: 40px !important; width: 40px !important; padding: 0; display: flex; justify-content: center; align-items: center; } }';
     document.head.appendChild(style);
   }
   if (document.head) {
