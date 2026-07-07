@@ -204,6 +204,10 @@ pub fn run() {
         app.manage(http_client.clone());
         app.manage(WindowManager::new());
 
+        if let Some(main_window) = app.get_webview_window("main") {
+            window_manager::apply_overlay_collection_behavior(&main_window);
+        }
+
         #[cfg(not(debug_assertions))]
         add_breadcrumb(Breadcrumb {
             category: Some("sentry.transaction".into()),

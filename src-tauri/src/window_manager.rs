@@ -112,6 +112,8 @@ impl WindowManager {
             .build()
             .map_err(|e| format!("Failed to create image viewer window: {}", e))?;
 
+        apply_overlay_collection_behavior(&window);
+
         let window_label = window.label().to_string();
         let app_handle = app.clone();
 
@@ -184,7 +186,7 @@ impl WindowManager {
 
         let (position, size) = self.get_main_window_geometry(app)?;
 
-        WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
+        let window = WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
             .title(title)
             .inner_size(size.width, size.height)
             .min_inner_size(250.0, 300.0)
@@ -194,6 +196,8 @@ impl WindowManager {
             .initialization_script(init_script)
             .build()
             .map_err(|e| format!("Failed to create dofusdb window: {}", e))?;
+
+        apply_overlay_collection_behavior(&window);
 
         info!("[WindowManager] DofusDB window created: {}", label);
         Ok(())
@@ -259,3 +263,48 @@ impl Default for WindowManager {
         Self::new()
     }
 }
+
+// An always-on-top window is excluded from macOS fullscreen Spaces: AppKit only
+// shows it above a fullscreen app (e.g. Dofus in native fullscreen) when its
+// collection behavior includes `FullScreenAuxiliary`. `CanJoinAllSpaces` keeps
+// the overlay visible on every Space, matching the topmost behavior on Windows.
+#[cfg(target_os = "macos")]
+pub fn apply_overlay_collection_behavior<R: Runtime>(window: &tauri::WebviewWindow<R>) {
+    let win = window.clone();
+    let result = window.run_on_main_thread(move || {
+        use objc2_app_kit::{NSWindow, NSWindowCollectionBehavior};
+
+        let ns_window = match win.ns_window() {
+            Ok(ptr) => ptr,
+            Err(err) => {
+                warn!(
+                    "[WindowManager] Failed to get NSWindow for {}: {}",
+                    win.label(),
+                    err
+                );
+                return;
+            }
+        };
+        // Safety: the pointer comes from a live Tauri window and we are on the
+        // main thread, as required by AppKit.
+        unsafe {
+            let ns_window = &*(ns_window as *const NSWindow);
+            ns_window.setCollectionBehavior(
+                ns_window.collectionBehavior()
+                    | NSWindowCollectionBehavior::CanJoinAllSpaces
+                    | NSWindowCollectionBehavior::FullScreenAuxiliary,
+            );
+        }
+    });
+
+    if let Err(err) = result {
+        warn!(
+            "[WindowManager] Failed to schedule collection behavior update for {}: {}",
+            window.label(),
+            err
+        );
+    }
+}
+
+#[cfg(not(target_os = "macos"))]
+pub fn apply_overlay_collection_behavior<R: Runtime>(_window: &tauri::WebviewWindow<R>) {}
