@@ -124,7 +124,7 @@ pub struct Profile {
     pub server_id: Option<u32>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 #[taurpc::ipc_type]
 pub struct ConfStep {
     pub checkboxes: Vec<u32>,

@@ -1,7 +1,11 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fmt};
 
+use chrono::{DateTime, Utc};
 use log::{debug, info, warn};
-use serde::{Deserialize, Serialize};
+use serde::{
+    de::{self, MapAccess, SeqAccess, Visitor},
+    Deserialize, Deserializer, Serialize,
+};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
 
@@ -79,7 +83,13 @@ struct CreateProfileResponse {
 struct RemoteProgressResponse {
     id: u32,
     current_step: u32,
-    steps: Vec<ConfStep>,
+    #[serde(deserialize_with = "deserialize_steps")]
+    steps: HashMap<u32, ConfStep>,
+    updated_at: String,
+}
+
+#[derive(Deserialize)]
+struct UpdateProgressResponse {
     updated_at: String,
 }
 
@@ -97,6 +107,111 @@ struct SyncServerResponse {
 }
 
 // Functions
+
+/// The server stores steps as a JSON column: it echoes back an object keyed by step index
+/// (`{"3": {...}}`) when indices are sparse, and a plain list when they are contiguous from 0.
+fn deserialize_steps<'de, D>(deserializer: D) -> Result<HashMap<u32, ConfStep>, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    struct StepsVisitor;
+
+    impl<'de> Visitor<'de> for StepsVisitor {
+        type Value = HashMap<u32, ConfStep>;
+
+        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+            formatter.write_str("a list of steps or a map of step index to step")
+        }
+
+        fn visit_unit<E: de::Error>(self) -> Result<Self::Value, E> {
+            Ok(HashMap::new())
+        }
+
+        fn visit_none<E: de::Error>(self) -> Result<Self::Value, E> {
+            Ok(HashMap::new())
+        }
+
+        fn visit_seq<A: SeqAccess<'de>>(self, mut seq: A) -> Result<Self::Value, A::Error> {
+            let mut steps = HashMap::new();
+            let mut index = 0u32;
+
+            while let Some(step) = seq.next_element::<ConfStep>()? {
+                steps.insert(index, step);
+                index += 1;
+            }
+
+            Ok(steps)
+        }
+
+        fn visit_map<A: MapAccess<'de>>(self, mut map: A) -> Result<Self::Value, A::Error> {
+            let mut steps = HashMap::new();
+
+            while let Some((key, step)) = map.next_entry::<String, ConfStep>()? {
+                let index = key
+                    .parse::<u32>()
+                    .map_err(|_| de::Error::custom(format!("invalid step index: {}", key)))?;
+
+                steps.insert(index, step);
+            }
+
+            Ok(steps)
+        }
+    }
+
+    deserializer.deserialize_any(StepsVisitor)
+}
+
+fn parse_timestamp(value: &str) -> Option<DateTime<Utc>> {
+    DateTime::parse_from_rfc3339(value)
+        .ok()
+        .map(|date| date.with_timezone(&Utc))
+}
+
+fn is_remote_newer(local: Option<&String>, remote: &str) -> bool {
+    let Some(local) = local else {
+        return true;
+    };
+
+    match (parse_timestamp(local), parse_timestamp(remote)) {
+        (Some(local), Some(remote)) => remote > local,
+        _ => remote > local.as_str(),
+    }
+}
+
+/// Aligns the local timestamp with the one the server assigned to the pushed progress, so a
+/// later full sync does not consider the remote copy newer and overwrite untouched local data.
+fn mark_progress_synced<R: Runtime>(
+    app: &AppHandle<R>,
+    server_id: u32,
+    guide_id: u32,
+    current_step: u32,
+    steps: &HashMap<u32, ConfStep>,
+    updated_at: &str,
+) -> Result<(), Error> {
+    let mut conf = conf::get_conf(app).map_err(Error::Conf)?;
+
+    let Some(profile) = conf
+        .profiles
+        .iter_mut()
+        .find(|p| p.server_id == Some(server_id))
+    else {
+        return Ok(());
+    };
+
+    let Some(progress) = profile.progresses.iter_mut().find(|p| p.id == guide_id) else {
+        return Ok(());
+    };
+
+    // The local progress changed while the request was in flight: keep its own timestamp so the
+    // pending change is still pushed on the next sync.
+    if progress.current_step != current_step || &progress.steps != steps {
+        return Ok(());
+    }
+
+    progress.updated_at = Some(updated_at.to_owned());
+
+    conf::save_conf(&mut conf, app).map_err(Error::Conf)
+}
 
 async fn create_profile_on_server<R: Runtime>(
     http_client: &reqwest::Client,
@@ -160,7 +275,7 @@ async fn sync_progress_on_server<R: Runtime>(
     current_step: u32,
     steps: &HashMap<u32, ConfStep>,
     app: &AppHandle<R>,
-) -> Result<(), Error> {
+) -> Result<Option<String>, Error> {
     debug!(
         "[Sync] Syncing progress for profile {} guide {} - current_step: {}, steps: {:?}",
         server_id, guide_id, current_step, steps
@@ -220,7 +335,65 @@ async fn sync_progress_on_server<R: Runtime>(
         server_id, guide_id
     );
 
-    Ok(())
+    let updated_at = match response.text().await {
+        Ok(text) => json::from_str::<UpdateProgressResponse>(&text)
+            .ok()
+            .map(|parsed| parsed.updated_at),
+        Err(err) => {
+            warn!("[Sync] Could not read progress sync response: {}", err);
+
+            None
+        }
+    };
+
+    Ok(updated_at)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{is_remote_newer, RemoteProgressResponse};
+
+    #[test]
+    fn deserializes_steps_sent_back_as_an_indexed_map() {
+        let json = r#"{"id":42,"current_step":3,"steps":{"3":{"checkboxes":[0,2]}},"updated_at":"2026-07-24T10:06:40.000000Z"}"#;
+
+        let progress: RemoteProgressResponse = serde_json::from_str(json).unwrap();
+
+        assert_eq!(progress.steps.len(), 1);
+        assert_eq!(progress.steps[&3].checkboxes, vec![0, 2]);
+    }
+
+    #[test]
+    fn deserializes_steps_sent_back_as_a_list() {
+        let json = r#"{"id":42,"current_step":1,"steps":[{"checkboxes":[]},{"checkboxes":[1]}],"updated_at":"2026-07-24T10:06:40.000000Z"}"#;
+
+        let progress: RemoteProgressResponse = serde_json::from_str(json).unwrap();
+
+        assert_eq!(progress.steps.len(), 2);
+        assert_eq!(progress.steps[&1].checkboxes, vec![1]);
+    }
+
+    #[test]
+    fn deserializes_missing_steps() {
+        let json =
+            r#"{"id":42,"current_step":0,"steps":null,"updated_at":"2026-07-24T10:06:40.000000Z"}"#;
+
+        let progress: RemoteProgressResponse = serde_json::from_str(json).unwrap();
+
+        assert!(progress.steps.is_empty());
+    }
+
+    #[test]
+    fn compares_timestamps_written_in_different_formats() {
+        let local = "2026-07-24T10:06:40.123456789+00:00".to_string();
+
+        assert!(is_remote_newer(Some(&local), "2026-07-24T10:06:41.000000Z"));
+        assert!(!is_remote_newer(
+            Some(&local),
+            "2026-07-24T10:06:40.000000Z"
+        ));
+        assert!(is_remote_newer(None, "2026-07-24T10:06:40.000000Z"));
+    }
 }
 
 // TauRPC API
@@ -364,34 +537,26 @@ impl SyncApi for SyncApiImpl {
                 }
 
                 for remote_progress in &remote_profile.progresses {
-                    let remote_steps: HashMap<u32, ConfStep> = remote_progress
-                        .steps
-                        .iter()
-                        .enumerate()
-                        .map(|(i, s)| (i as u32, s.clone()))
-                        .collect();
-
                     if let Some(local_progress) = local_profile
                         .progresses
                         .iter_mut()
                         .find(|p| p.id == remote_progress.id)
                     {
-                        let should_update =
-                            match (&local_progress.updated_at, &remote_progress.updated_at) {
-                                (Some(local_ts), remote_ts) => remote_ts > local_ts,
-                                (None, _) => true,
-                            };
+                        let should_update = is_remote_newer(
+                            local_progress.updated_at.as_ref(),
+                            &remote_progress.updated_at,
+                        );
 
                         if should_update {
                             local_progress.current_step = remote_progress.current_step;
-                            local_progress.steps = remote_steps;
+                            local_progress.steps = remote_progress.steps.clone();
                             local_progress.updated_at = Some(remote_progress.updated_at.clone());
                         }
                     } else {
                         local_profile.progresses.push(conf::Progress {
                             id: remote_progress.id,
                             current_step: remote_progress.current_step,
-                            steps: remote_steps,
+                            steps: remote_progress.steps.clone(),
                             updated_at: Some(remote_progress.updated_at.clone()),
                         });
                     }
@@ -415,12 +580,7 @@ impl SyncApi for SyncApiImpl {
                         .map(|p| conf::Progress {
                             id: p.id,
                             current_step: p.current_step,
-                            steps: p
-                                .steps
-                                .iter()
-                                .enumerate()
-                                .map(|(i, s)| (i as u32, s.clone()))
-                                .collect(),
+                            steps: p.steps.clone(),
                             updated_at: Some(p.updated_at.clone()),
                         })
                         .collect(),
@@ -447,12 +607,7 @@ impl SyncApi for SyncApiImpl {
                         .map(|prog| SyncProgressPayload {
                             id: prog.id,
                             current_step: prog.current_step,
-                            steps: prog
-                                .steps
-                                .into_iter()
-                                .enumerate()
-                                .map(|(i, s)| (i as u32, s))
-                                .collect(),
+                            steps: prog.steps,
                             updated_at: prog.updated_at,
                         })
                         .collect(),
@@ -560,7 +715,7 @@ impl SyncApi for SyncApiImpl {
         let (http_client, access_token) =
             check_auth!(app, Error::TokenExpired, Error::TokensNotFound);
 
-        sync_progress_on_server(
+        let updated_at = sync_progress_on_server(
             &http_client,
             &access_token,
             server_id,
@@ -569,6 +724,21 @@ impl SyncApi for SyncApiImpl {
             &steps,
             &app,
         )
-        .await
+        .await?;
+
+        if let Some(updated_at) = updated_at {
+            // Best effort: the progress is already pushed, a local timestamp mismatch must not
+            // surface as a sync failure.
+            if let Err(err) =
+                mark_progress_synced(&app, server_id, guide_id, current_step, &steps, &updated_at)
+            {
+                warn!(
+                    "[Sync] Could not store the synced timestamp locally: {}",
+                    err
+                );
+            }
+        }
+
+        Ok(())
     }
 }
