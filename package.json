@@ -100,16 +100,5 @@
     "vite": "^8.0.14",
     "vitest": "4.1.7"
   },
-  "packageManager": "pnpm@10.17.1",
-  "pnpm": {
-    "overrides": {
-      "@types/react": "^19.0.8",
-      "@types/react-dom": "^19.0.3"
-    },
-    "onlyBuiltDependencies": [
-      "@sentry/cli",
-      "@tailwindcss/oxide",
-      "esbuild"
-    ]
-  }
+  "packageManager": "pnpm@10.17.1"
 }
