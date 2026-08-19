@@ -7,7 +7,7 @@ use std::{
 
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
-use tauri::{AppHandle, Manager, Runtime};
+use tauri::{AppHandle, Manager, Runtime, Wry};
 use tauri_plugin_http::reqwest;
 use tauri_plugin_opener::OpenerExt;
 
@@ -319,6 +319,15 @@ pub async fn update_all_guides_at_launch(app: &AppHandle) {
             warn!("[Guides] update_all_guides_at_launch failed: {}", err);
         }
     }
+
+    // The frontend boots while this runs, so it has to be told when the guides on disk
+    // changed, most notably the ones recovered from quarantine. See issue #223.
+    if let Err(err) = GuidesEventTrigger::new(app.clone()).guides_updated_at_launch::<Wry>() {
+        warn!(
+            "[Guides] failed to emit the guides_updated_at_launch event: {}",
+            err
+        );
+    }
 }
 
 /// Fetch a guide from the server by its ID
@@ -486,6 +495,53 @@ fn parse_guide_or_quarantine(file_path: &Path) -> Result<Option<GuideWithSteps>,
     }
 }
 
+/// List the quarantined `*.corrupted` files still present under a guides directory.
+fn find_quarantined_guide_files(guides_dir: &Path) -> Result<Vec<PathBuf>, Error> {
+    let options = glob::MatchOptions {
+        case_sensitive: false,
+        require_literal_separator: false,
+        require_literal_leading_dot: false,
+    };
+
+    let pattern = format!("**/*.{}", CORRUPTED_GUIDE_SUFFIX);
+    let files = glob::glob_with(guides_dir.join(pattern).to_str().unwrap(), options)
+        .map_err(|err| Error::Pattern(err.to_string()))?;
+
+    let mut quarantined = vec![];
+
+    for entry in files {
+        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
+
+        if file_path.is_file() {
+            quarantined.push(file_path);
+        }
+    }
+
+    Ok(quarantined)
+}
+
+/// Strip the quarantine suffix to recover the original name (e.g. `42.json`).
+fn quarantined_guide_file_name(file_path: &Path) -> String {
+    let suffix = format!(".{}", CORRUPTED_GUIDE_SUFFIX);
+    let file_name = file_path
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or_default();
+
+    file_name
+        .strip_suffix(&suffix)
+        .unwrap_or(file_name)
+        .to_string()
+}
+
+/// Guide id of a quarantined file, when its name is still a plain `{id}.json`.
+fn quarantined_guide_id(file_path: &Path) -> Option<u32> {
+    Path::new(&quarantined_guide_file_name(file_path))
+        .file_stem()
+        .and_then(|stem| stem.to_str())
+        .and_then(|stem| stem.parse::<u32>().ok())
+}
+
 /// Scan all guides (quarantining any newly malformed one) then list the
 /// quarantined `*.corrupted` files still present on disk. Pull-based so the toast
 /// is reliably shown on startup, unlike a fire-and-forget event that can be
@@ -498,45 +554,13 @@ fn list_corrupted_guides<R: Runtime>(
 
     let guides_dir = app_handle.path().app_guides_dir();
 
-    let options = glob::MatchOptions {
-        case_sensitive: false,
-        require_literal_separator: false,
-        require_literal_leading_dot: false,
-    };
-
-    let suffix = format!(".{}", CORRUPTED_GUIDE_SUFFIX);
-    let pattern = format!("**/*{}", suffix);
-    let files = glob::glob_with(guides_dir.join(pattern).to_str().unwrap(), options)
-        .map_err(|err| Error::Pattern(err.to_string()))?;
-
-    let mut corrupted = vec![];
-
-    for entry in files {
-        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
-
-        if !file_path.is_file() {
-            continue;
-        }
-
-        let file_name = file_path
-            .file_name()
-            .and_then(|name| name.to_str())
-            .unwrap_or_default()
-            .to_string();
-
-        // Strip the quarantine suffix to recover the original name (e.g. `42.json`).
-        let original = file_name.strip_suffix(&suffix).unwrap_or(&file_name);
-
-        let id = Path::new(original)
-            .file_stem()
-            .and_then(|stem| stem.to_str())
-            .and_then(|stem| stem.parse::<u32>().ok());
-
-        corrupted.push(QuarantinedGuideFile {
-            id,
-            file_name: original.to_string(),
-        });
-    }
+    let corrupted = find_quarantined_guide_files(&guides_dir)?
+        .iter()
+        .map(|file_path| QuarantinedGuideFile {
+            id: quarantined_guide_id(file_path),
+            file_name: quarantined_guide_file_name(file_path),
+        })
+        .collect();
 
     Ok(corrupted)
 }
@@ -551,25 +575,11 @@ fn delete_corrupted_guides<R: Runtime>(app_handle: &AppHandle<R>) -> Result<(), 
         guides_dir
     );
 
-    let options = glob::MatchOptions {
-        case_sensitive: false,
-        require_literal_separator: false,
-        require_literal_leading_dot: false,
-    };
+    for file_path in find_quarantined_guide_files(&guides_dir)? {
+        info!("[Guides] deleting quarantined guide file {:?}", file_path);
 
-    let pattern = format!("**/*.{}", CORRUPTED_GUIDE_SUFFIX);
-    let files = glob::glob_with(guides_dir.join(pattern).to_str().unwrap(), options)
-        .map_err(|err| Error::Pattern(err.to_string()))?;
-
-    for entry in files {
-        let file_path = entry.map_err(|err| Error::ReadGuidesDirGlob(err.to_string()))?;
-
-        if file_path.is_file() {
-            info!("[Guides] deleting quarantined guide file {:?}", file_path);
-
-            fs::remove_file(&file_path)
-                .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
-        }
+        fs::remove_file(&file_path)
+            .map_err(|err| Error::DeleteGuideFileInSystem(err.to_string()))?;
     }
 
     Ok(())
@@ -879,7 +889,22 @@ fn sanitize_recent_guides(guide_ids: Vec<u32>) -> Vec<u32> {
 
 #[cfg(test)]
 mod tests {
-    use super::{get_guides_from_path, sanitize_recent_guides, MAX_RECENT_GUIDES};
+    use std::path::Path;
+
+    use super::{
+        delete_recovered_quarantined_files, find_quarantined_guide_files, get_guides_from_path,
+        quarantined_guide_file_name, quarantined_guide_id, sanitize_recent_guides, GuideWithSteps,
+        Guides, UpdateAllAtOnceResult, MAX_RECENT_GUIDES,
+    };
+
+    fn guide_with_id(id: u32) -> GuideWithSteps {
+        let json = format!(
+            r#"{{"id":{},"name":"Valid","status":"public","likes":0,"dislikes":0,"lang":"fr","order":0,"user":{{"id":1,"name":"u","is_admin":0,"is_certified":0}},"steps":[]}}"#,
+            id
+        );
+
+        crate::json::from_str::<GuideWithSteps>(&json).unwrap()
+    }
 
     #[test]
     fn get_guides_from_path_skips_and_quarantines_malformed_files() {
@@ -905,6 +930,78 @@ mod tests {
         let guides = get_guides_from_path(&dir.path().to_path_buf()).unwrap();
 
         assert_eq!(guides.guides.len(), 1);
+    }
+
+    #[test]
+    fn find_quarantined_guide_files_scans_subfolders() {
+        use std::fs;
+
+        let dir = tempfile::tempdir().unwrap();
+        let subfolder = dir.path().join("subfolder");
+
+        fs::create_dir_all(&subfolder).unwrap();
+        fs::write(dir.path().join("42.json"), "").unwrap();
+        fs::write(dir.path().join("2022.json.corrupted"), "").unwrap();
+        fs::write(subfolder.join("7.json.corrupted"), "").unwrap();
+
+        let mut quarantined = find_quarantined_guide_files(dir.path()).unwrap();
+        quarantined.sort();
+
+        assert_eq!(
+            quarantined,
+            vec![
+                dir.path().join("2022.json.corrupted"),
+                subfolder.join("7.json.corrupted"),
+            ]
+        );
+    }
+
+    #[test]
+    fn quarantined_guide_id_reads_the_original_file_name() {
+        let renamed = Path::new("my guide.json.corrupted");
+
+        assert_eq!(
+            quarantined_guide_file_name(Path::new("42.json.corrupted")),
+            "42.json"
+        );
+        assert_eq!(
+            quarantined_guide_id(Path::new("42.json.corrupted")),
+            Some(42)
+        );
+
+        assert_eq!(quarantined_guide_file_name(renamed), "my guide.json");
+        assert_eq!(quarantined_guide_id(renamed), None);
+    }
+
+    #[test]
+    fn delete_recovered_quarantined_files_keeps_the_ones_not_downloaded() {
+        use std::{collections::HashMap, fs};
+
+        let dir = tempfile::tempdir().unwrap();
+        let recovered = dir.path().join("42.json.corrupted");
+        let failed = dir.path().join("7.json.corrupted");
+
+        fs::write(&recovered, "").unwrap();
+        fs::write(&failed, "").unwrap();
+
+        let guides = Guides {
+            guides: vec![guide_with_id(42)],
+        };
+        let quarantined = vec![(42, recovered.clone()), (7, failed.clone())];
+        let results = HashMap::from([
+            (42, UpdateAllAtOnceResult::Success),
+            (
+                7,
+                UpdateAllAtOnceResult::Failure {
+                    message: "guide not found: 7".to_string(),
+                },
+            ),
+        ]);
+
+        delete_recovered_quarantined_files(&guides, &quarantined, &results);
+
+        assert!(!recovered.exists());
+        assert!(failed.exists());
     }
 
     #[test]
@@ -1206,9 +1303,36 @@ async fn update_all_guides_batch<R: Runtime>(
     info!("[Guides] update_all_guides_batch");
 
     let mut guides = get_guides_from_handle(app_handle, "".to_string())?;
-    let guide_ids: Vec<u32> = guides.guides.iter().map(|g| g.id).collect();
+    let mut guide_ids: Vec<u32> = guides.guides.iter().map(|g| g.id).collect();
+
+    // Quarantined guides are downloaded again so a local corruption heals itself on
+    // the next update instead of waiting for a manual delete. See issues #209 and #223.
+    let quarantined = quarantined_guides_to_recover(app_handle)?;
+
+    for (id, file_path) in &quarantined {
+        info!(
+            "[Guides] recovering quarantined guide {} from {:?}",
+            id, file_path
+        );
+
+        if !guide_ids.contains(id) {
+            guide_ids.push(*id);
+        }
+    }
 
     let result = download_guides_by_ids(app_handle, &mut guides, guide_ids.clone()).await;
+
+    // A recovered guide is unknown to the local list, so it inherits the folder of the
+    // quarantined file it replaces instead of landing back in the guides root.
+    for (id, file_path) in &quarantined {
+        if let Some(guide) = guides
+            .guides
+            .iter_mut()
+            .find(|guide| guide.id == *id && guide.folder.is_none())
+        {
+            guide.folder = file_path.parent().map(|parent| parent.to_path_buf());
+        }
+    }
 
     let mut results = HashMap::new();
 
@@ -1267,7 +1391,54 @@ async fn update_all_guides_batch<R: Runtime>(
 
     write_guides(&guides, app_handle)?;
 
+    delete_recovered_quarantined_files(&guides, &quarantined, &results);
+
     Ok(results)
+}
+
+/// Quarantined files (see #209) whose name still carries a guide id, so the guide can
+/// be downloaded again from the server. Files renamed by hand are left untouched, the
+/// corrupted guides toast remains the only way to get rid of them. See issue #223.
+fn quarantined_guides_to_recover<R: Runtime>(
+    app_handle: &AppHandle<R>,
+) -> Result<Vec<(u32, PathBuf)>, Error> {
+    let guides_dir = app_handle.path().app_guides_dir();
+
+    let to_recover = find_quarantined_guide_files(&guides_dir)?
+        .into_iter()
+        .filter_map(|file_path| quarantined_guide_id(&file_path).map(|id| (id, file_path)))
+        .collect();
+
+    Ok(to_recover)
+}
+
+/// Drop the quarantined files whose guide is now on disk again. A failed download keeps
+/// its file so the corrupted guides toast still surfaces it. See issue #223.
+fn delete_recovered_quarantined_files(
+    guides: &Guides,
+    quarantined: &[(u32, PathBuf)],
+    results: &HashMap<u32, UpdateAllAtOnceResult>,
+) {
+    for (id, file_path) in quarantined {
+        let recovered = matches!(results.get(id), Some(UpdateAllAtOnceResult::Success))
+            && guides.guides.iter().any(|guide| guide.id == *id);
+
+        if !recovered {
+            continue;
+        }
+
+        info!(
+            "[Guides] deleting recovered quarantined guide file {:?}",
+            file_path
+        );
+
+        if let Err(err) = fs::remove_file(file_path) {
+            warn!(
+                "[Guides] failed to delete recovered quarantined guide file {:?}: {}",
+                file_path, err
+            );
+        }
+    }
 }
 
 fn check_guides_need_update<R: Runtime>(
@@ -1415,6 +1586,8 @@ pub trait GuidesApi {
     async fn delete_corrupted_guides<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
     #[taurpc(event, alias = "copyCurrentGuideStep")]
     async fn copy_current_guide_step<R: Runtime>(app_handle: AppHandle<R>);
+    #[taurpc(event, alias = "guidesUpdatedAtLaunch")]
+    async fn guides_updated_at_launch<R: Runtime>(app_handle: AppHandle<R>);
     #[taurpc(alias = "guideExists")]
     async fn guide_exists<R: Runtime>(
         app_handle: AppHandle<R>,

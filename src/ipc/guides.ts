@@ -138,6 +138,10 @@ export function onCopyCurrentGuideStep() {
   return taurpc.guides.copyCurrentGuideStep
 }
 
+export function onGuidesUpdatedAtLaunch() {
+  return taurpc.guides.guidesUpdatedAtLaunch
+}
+
 export class GuideExistsError extends Error {
   static from(error: unknown) {
     return new GuideExistsError('Failed to check if guide exists', { cause: error })

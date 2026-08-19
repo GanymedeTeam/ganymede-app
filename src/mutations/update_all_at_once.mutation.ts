@@ -2,6 +2,7 @@ import { UseMutationOptions, useMutation, useQueryClient } from '@tanstack/react
 import { ResultAsync } from 'neverthrow'
 
 import { updateAllAtOnce } from '@/ipc/guides.ts'
+import { corruptedGuidesQuery } from '@/queries/corrupted_guides.query.ts'
 import { guidesQuery } from '@/queries/guides.query.ts'
 import { hasGuidesNotUpdatedQuery } from '@/queries/has_guides_not_updated.query.ts'
 import { summaryQuery } from '@/queries/summary.query.ts'
@@ -36,6 +37,8 @@ export function useUpdateAllAtOnce(
 
       await queryClient.invalidateQueries(guidesQuery())
       await queryClient.invalidateQueries(hasGuidesNotUpdatedQuery)
+      // the update downloads again the guides quarantined after a local corruption
+      await queryClient.invalidateQueries(corruptedGuidesQuery())
       await queryClient.invalidateQueries({
         queryKey: ['guides', 'summary'],
       })

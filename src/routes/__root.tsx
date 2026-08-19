@@ -7,6 +7,7 @@ import { DeepLinkGuideDownloadDialog } from '@/components/deep_link_guide_downlo
 import { NotificationAlertDialog } from '@/components/notification_alert_dialog.tsx'
 import { TitleBar } from '@/components/title_bar.tsx'
 import { Toaster } from '@/components/ui/sonner.tsx'
+import { useGuidesUpdatedAtLaunchHandler } from '@/hooks/use_guides_updated_at_launch_handler.ts'
 import { useJwtExpiredHandler } from '@/hooks/use_jwt_expired_handler.ts'
 import { useMalformedGuidesHandler } from '@/hooks/use_malformed_guides_handler.ts'
 import { taurpc } from '@/ipc/ipc.ts'
@@ -21,6 +22,7 @@ export const Route = createRootRouteWithContext<{
 function Root() {
   useJwtExpiredHandler()
   useMalformedGuidesHandler()
+  useGuidesUpdatedAtLaunchHandler()
   const location = useLocation()
   const isImageViewer = useRef(isInImageViewerPath(location.pathname)) // only check on first mount
 
