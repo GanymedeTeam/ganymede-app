@@ -139,6 +139,11 @@ pub struct Progress {
     pub steps: HashMap<u32, ConfStep>,
     #[serde(default)]
     pub updated_at: Option<String>,
+    /// Set as soon as the progress changes locally, cleared once the server acknowledged the push.
+    /// It survives an app restart, so a change made just before closing is neither lost nor
+    /// overwritten by the stale server copy.
+    #[serde(default)]
+    pub sync_pending: bool,
 }
 
 #[derive(Debug)]
@@ -199,6 +204,7 @@ fn create_progress(id: u32) -> Progress {
         current_step: 0,
         steps: HashMap::new(),
         updated_at: Some(chrono::Utc::now().to_rfc3339()),
+        sync_pending: false,
     }
 }
 
@@ -439,6 +445,7 @@ impl ConfApi for ConfApiImpl {
 
         add_or_update_progress_step(progress, step, step_index);
         progress.updated_at = Some(chrono::Utc::now().to_rfc3339());
+        progress.sync_pending = true;
 
         save_conf(conf, &app)?;
 

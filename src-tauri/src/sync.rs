@@ -178,15 +178,97 @@ fn is_remote_newer(local: Option<&String>, remote: &str) -> bool {
     }
 }
 
-/// Aligns the local timestamp with the one the server assigned to the pushed progress, so a
-/// later full sync does not consider the remote copy newer and overwrite untouched local data.
+/// A progress changed locally and never acknowledged by the server must win over the remote copy,
+/// otherwise checkboxes ticked right before closing the app are wiped on the next start. A progress
+/// without a timestamp has never been pushed either: it predates the sync feature.
+fn has_local_pending_changes(progress: &conf::Progress) -> bool {
+    progress.sync_pending || progress.updated_at.is_none()
+}
+
+fn merge_remote_profiles(conf: &mut conf::Conf, remote_profiles: &[RemoteProfileResponse]) {
+    for remote_profile in remote_profiles {
+        let Some(ref uuid) = remote_profile.uuid else {
+            continue;
+        };
+
+        let Some(local_profile) = conf.profiles.iter_mut().find(|p| &p.id == uuid) else {
+            continue;
+        };
+
+        local_profile.server_id = Some(remote_profile.id);
+        if local_profile.name != remote_profile.name {
+            local_profile.name = remote_profile.name.clone();
+        }
+
+        for remote_progress in &remote_profile.progresses {
+            if let Some(local_progress) = local_profile
+                .progresses
+                .iter_mut()
+                .find(|p| p.id == remote_progress.id)
+            {
+                if has_local_pending_changes(local_progress) {
+                    continue;
+                }
+
+                let should_update = is_remote_newer(
+                    local_progress.updated_at.as_ref(),
+                    &remote_progress.updated_at,
+                );
+
+                if should_update {
+                    local_progress.current_step = remote_progress.current_step;
+                    local_progress.steps = remote_progress.steps.clone();
+                    local_progress.updated_at = Some(remote_progress.updated_at.clone());
+                }
+            } else {
+                local_profile.progresses.push(conf::Progress {
+                    id: remote_progress.id,
+                    current_step: remote_progress.current_step,
+                    steps: remote_progress.steps.clone(),
+                    updated_at: Some(remote_progress.updated_at.clone()),
+                    sync_pending: false,
+                });
+            }
+        }
+    }
+
+    // Add new server profiles not in local
+    for remote_profile in remote_profiles {
+        let Some(ref uuid) = remote_profile.uuid else {
+            continue;
+        };
+        if !conf.profiles.iter().any(|p| &p.id == uuid) {
+            conf.profiles.push(conf::Profile {
+                id: uuid.clone(),
+                name: remote_profile.name.clone(),
+                level: 200,
+                progresses: remote_profile
+                    .progresses
+                    .iter()
+                    .map(|p| conf::Progress {
+                        id: p.id,
+                        current_step: p.current_step,
+                        steps: p.steps.clone(),
+                        updated_at: Some(p.updated_at.clone()),
+                        sync_pending: false,
+                    })
+                    .collect(),
+                server_id: Some(remote_profile.id),
+            });
+        }
+    }
+}
+
+/// Clears the pending flag and aligns the local timestamp with the one the server assigned to the
+/// pushed progress, so a later full sync does not consider the remote copy newer and overwrite
+/// untouched local data.
 fn mark_progress_synced<R: Runtime>(
     app: &AppHandle<R>,
     server_id: u32,
     guide_id: u32,
     current_step: u32,
     steps: &HashMap<u32, ConfStep>,
-    updated_at: &str,
+    updated_at: Option<&str>,
 ) -> Result<(), Error> {
     let mut conf = conf::get_conf(app).map_err(Error::Conf)?;
 
@@ -202,13 +284,20 @@ fn mark_progress_synced<R: Runtime>(
         return Ok(());
     };
 
-    // The local progress changed while the request was in flight: keep its own timestamp so the
-    // pending change is still pushed on the next sync.
+    // The local progress changed while the request was in flight: keep it pending so the newer
+    // change is still pushed on the next sync.
     if progress.current_step != current_step || &progress.steps != steps {
         return Ok(());
     }
 
-    progress.updated_at = Some(updated_at.to_owned());
+    // The server accepted the push but did not echo a timestamp: fall back to the local clock so
+    // the progress is not seen as never synced and pushed again on every start.
+    progress.updated_at = Some(
+        updated_at
+            .map(str::to_owned)
+            .unwrap_or_else(|| chrono::Utc::now().to_rfc3339()),
+    );
+    progress.sync_pending = false;
 
     conf::save_conf(&mut conf, app).map_err(Error::Conf)
 }
@@ -349,9 +438,203 @@ async fn sync_progress_on_server<R: Runtime>(
     Ok(updated_at)
 }
 
+/// Uploads the progresses the server never acknowledged, typically ticked checkboxes the debounced
+/// sync could not push before the app was closed.
+async fn push_pending_progresses<R: Runtime>(
+    http_client: &reqwest::Client,
+    access_token: &str,
+    app: &AppHandle<R>,
+) -> Result<(), Error> {
+    let conf = conf::get_conf(app).map_err(Error::Conf)?;
+
+    let pending: Vec<(u32, u32, u32, HashMap<u32, ConfStep>)> = conf
+        .profiles
+        .iter()
+        .filter_map(|profile| Some((profile.server_id?, profile)))
+        .flat_map(|(server_id, profile)| {
+            profile
+                .progresses
+                .iter()
+                .filter(|progress| has_local_pending_changes(progress))
+                .map(move |progress| {
+                    (
+                        server_id,
+                        progress.id,
+                        progress.current_step,
+                        progress.steps.clone(),
+                    )
+                })
+        })
+        .collect();
+
+    if pending.is_empty() {
+        return Ok(());
+    }
+
+    info!("[Sync] Pushing {} pending progresses", pending.len());
+
+    for (server_id, guide_id, current_step, steps) in pending {
+        let updated_at = match sync_progress_on_server(
+            http_client,
+            access_token,
+            server_id,
+            guide_id,
+            current_step,
+            &steps,
+            app,
+        )
+        .await
+        {
+            Ok(updated_at) => updated_at,
+            Err(err) => {
+                warn!(
+                    "[Sync] Could not push pending progress for guide {}: {}",
+                    guide_id, err
+                );
+
+                continue;
+            }
+        };
+
+        if let Err(err) = mark_progress_synced(
+            app,
+            server_id,
+            guide_id,
+            current_step,
+            &steps,
+            updated_at.as_deref(),
+        ) {
+            warn!(
+                "[Sync] Could not store the synced timestamp locally: {}",
+                err
+            );
+        }
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{is_remote_newer, RemoteProgressResponse};
+    use std::collections::HashMap;
+
+    use super::{
+        is_remote_newer, merge_remote_profiles, RemoteProfileResponse, RemoteProgressResponse,
+    };
+    use crate::conf::{Conf, ConfStep, Profile, Progress};
+
+    const REMOTE_WITHOUT_CHECKBOXES: &str = r#"[{"id":1,"uuid":"local-uuid","name":"Player","progresses":[{"id":42,"current_step":0,"steps":{},"updated_at":"2026-07-25T10:00:00.000000Z"}]}]"#;
+
+    fn local_progress(updated_at: Option<&str>, sync_pending: bool) -> Progress {
+        let mut steps = HashMap::new();
+        steps.insert(
+            3,
+            ConfStep {
+                checkboxes: vec![0, 2],
+            },
+        );
+
+        Progress {
+            id: 42,
+            current_step: 3,
+            steps,
+            updated_at: updated_at.map(str::to_owned),
+            sync_pending,
+        }
+    }
+
+    fn conf_with(progress: Progress) -> Conf {
+        Conf {
+            profiles: vec![Profile {
+                id: "local-uuid".to_owned(),
+                name: "Player".to_owned(),
+                level: 200,
+                progresses: vec![progress],
+                server_id: Some(1),
+            }],
+            profile_in_use: "local-uuid".to_owned(),
+            ..Conf::default()
+        }
+    }
+
+    fn merge(conf: &mut Conf, remote: &str) {
+        let remote_profiles: Vec<RemoteProfileResponse> = serde_json::from_str(remote).unwrap();
+
+        merge_remote_profiles(conf, &remote_profiles);
+    }
+
+    #[test]
+    fn keeps_local_checkboxes_when_the_push_is_still_pending() {
+        let mut conf = conf_with(local_progress(Some("2026-07-24T10:00:00.000000Z"), true));
+
+        merge(&mut conf, REMOTE_WITHOUT_CHECKBOXES);
+
+        let progress = &conf.profiles[0].progresses[0];
+
+        assert_eq!(progress.steps[&3].checkboxes, vec![0, 2]);
+        assert_eq!(progress.current_step, 3);
+        assert!(progress.sync_pending);
+    }
+
+    #[test]
+    fn keeps_local_checkboxes_when_the_progress_was_never_synced() {
+        let mut conf = conf_with(local_progress(None, false));
+
+        merge(&mut conf, REMOTE_WITHOUT_CHECKBOXES);
+
+        assert_eq!(
+            conf.profiles[0].progresses[0].steps[&3].checkboxes,
+            vec![0, 2]
+        );
+    }
+
+    #[test]
+    fn applies_the_remote_progress_when_it_is_newer_and_nothing_is_pending() {
+        let mut conf = conf_with(local_progress(Some("2026-07-24T10:00:00.000000Z"), false));
+
+        merge(&mut conf, REMOTE_WITHOUT_CHECKBOXES);
+
+        let progress = &conf.profiles[0].progresses[0];
+
+        assert!(progress.steps.is_empty());
+        assert_eq!(progress.current_step, 0);
+        assert_eq!(
+            progress.updated_at.as_deref(),
+            Some("2026-07-25T10:00:00.000000Z")
+        );
+    }
+
+    #[test]
+    fn keeps_the_local_progress_when_the_remote_is_older() {
+        let mut conf = conf_with(local_progress(Some("2026-07-26T10:00:00.000000Z"), false));
+
+        merge(&mut conf, REMOTE_WITHOUT_CHECKBOXES);
+
+        assert_eq!(
+            conf.profiles[0].progresses[0].steps[&3].checkboxes,
+            vec![0, 2]
+        );
+    }
+
+    #[test]
+    fn adds_profiles_and_progresses_only_known_by_the_server() {
+        let mut conf = conf_with(local_progress(Some("2026-07-26T10:00:00.000000Z"), false));
+
+        merge(
+            &mut conf,
+            r#"[{"id":2,"uuid":"remote-uuid","name":"Alt","progresses":[{"id":7,"current_step":1,"steps":{"1":{"checkboxes":[4]}},"updated_at":"2026-07-25T10:00:00.000000Z"}]}]"#,
+        );
+
+        let profile = conf
+            .profiles
+            .iter()
+            .find(|p| p.id == "remote-uuid")
+            .expect("remote profile should have been added");
+
+        assert_eq!(profile.server_id, Some(2));
+        assert_eq!(profile.progresses[0].steps[&1].checkboxes, vec![4]);
+        assert!(!profile.progresses[0].sync_pending);
+    }
 
     #[test]
     fn deserializes_steps_sent_back_as_an_indexed_map() {
@@ -526,70 +809,13 @@ impl SyncApi for SyncApiImpl {
         // Merge server data into local conf
         let mut conf = conf::get_conf(&app).map_err(Error::Conf)?;
 
-        for remote_profile in &server_response.profiles {
-            let Some(ref uuid) = remote_profile.uuid else {
-                continue;
-            };
-            if let Some(local_profile) = conf.profiles.iter_mut().find(|p| &p.id == uuid) {
-                local_profile.server_id = Some(remote_profile.id);
-                if local_profile.name != remote_profile.name {
-                    local_profile.name = remote_profile.name.clone();
-                }
-
-                for remote_progress in &remote_profile.progresses {
-                    if let Some(local_progress) = local_profile
-                        .progresses
-                        .iter_mut()
-                        .find(|p| p.id == remote_progress.id)
-                    {
-                        let should_update = is_remote_newer(
-                            local_progress.updated_at.as_ref(),
-                            &remote_progress.updated_at,
-                        );
-
-                        if should_update {
-                            local_progress.current_step = remote_progress.current_step;
-                            local_progress.steps = remote_progress.steps.clone();
-                            local_progress.updated_at = Some(remote_progress.updated_at.clone());
-                        }
-                    } else {
-                        local_profile.progresses.push(conf::Progress {
-                            id: remote_progress.id,
-                            current_step: remote_progress.current_step,
-                            steps: remote_progress.steps.clone(),
-                            updated_at: Some(remote_progress.updated_at.clone()),
-                        });
-                    }
-                }
-            }
-        }
-
-        // Add new server profiles not in local
-        for remote_profile in &server_response.profiles {
-            let Some(ref uuid) = remote_profile.uuid else {
-                continue;
-            };
-            if !conf.profiles.iter().any(|p| &p.id == uuid) {
-                conf.profiles.push(conf::Profile {
-                    id: uuid.clone(),
-                    name: remote_profile.name.clone(),
-                    level: 200,
-                    progresses: remote_profile
-                        .progresses
-                        .iter()
-                        .map(|p| conf::Progress {
-                            id: p.id,
-                            current_step: p.current_step,
-                            steps: p.steps.clone(),
-                            updated_at: Some(p.updated_at.clone()),
-                        })
-                        .collect(),
-                    server_id: Some(remote_profile.id),
-                });
-            }
-        }
+        merge_remote_profiles(&mut conf, &server_response.profiles);
 
         conf::save_conf(&mut conf, &app).map_err(Error::Conf)?;
+
+        // Uploads are best effort: the local copy is already safe and a failed one is retried on
+        // the next sync, so only reading the conf back can fail here.
+        push_pending_progresses(&http_client, &access_token, &app).await?;
 
         info!("[Sync] Initial sync completed successfully");
 
@@ -726,17 +952,20 @@ impl SyncApi for SyncApiImpl {
         )
         .await?;
 
-        if let Some(updated_at) = updated_at {
-            // Best effort: the progress is already pushed, a local timestamp mismatch must not
-            // surface as a sync failure.
-            if let Err(err) =
-                mark_progress_synced(&app, server_id, guide_id, current_step, &steps, &updated_at)
-            {
-                warn!(
-                    "[Sync] Could not store the synced timestamp locally: {}",
-                    err
-                );
-            }
+        // Best effort: the progress is already pushed, a local timestamp mismatch must not
+        // surface as a sync failure.
+        if let Err(err) = mark_progress_synced(
+            &app,
+            server_id,
+            guide_id,
+            current_step,
+            &steps,
+            updated_at.as_deref(),
+        ) {
+            warn!(
+                "[Sync] Could not store the synced timestamp locally: {}",
+                err
+            );
         }
 
         Ok(())

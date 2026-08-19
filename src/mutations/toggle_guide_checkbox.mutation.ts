@@ -46,6 +46,7 @@ export function useToggleGuideCheckbox() {
       }
 
       progress.steps[stepIndex] = step
+      progress.syncPending = true
 
       const progressInProfile = profile.progresses.find((p) => p.id === guideId)
 

@@ -6,6 +6,7 @@ export function newProgress(guideId: number): Progress {
     currentStep: 0,
     steps: {},
     updatedAt: new Date().toISOString(),
+    syncPending: true,
   }
 }
 

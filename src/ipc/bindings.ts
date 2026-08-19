@@ -82,7 +82,13 @@ export type ProfilePinnedGuides = { guides: number[] }
 
 export type ProfileStepNotes = { guides: Partial<{ [key in number]: GuideStepNotes }> }
 
-export type Progress = { id: number; currentStep: number; steps: Partial<{ [key in number]: ConfStep }>; updatedAt?: string | null }
+export type Progress = { id: number; currentStep: number; steps: Partial<{ [key in number]: ConfStep }>; updatedAt?: string | null;
+/**
+ * Set as soon as the progress changes locally, cleared once the server acknowledged the push.
+ * It survives an app restart, so a change made just before closing is neither lost nor
+ * overwritten by the stale server copy.
+ */
+syncPending?: boolean }
 
 export type QuarantinedGuideFile = { id: number | null; file_name: string }
 

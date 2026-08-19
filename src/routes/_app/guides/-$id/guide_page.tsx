@@ -75,6 +75,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
                       ...progress,
                       currentStep: clampedStep,
                       updatedAt,
+                      syncPending: true,
                     }
                   }
 
@@ -87,6 +88,7 @@ export function GuidePage({ id, stepIndex: index }: { id: number; stepIndex: num
                     currentStep: clampedStep,
                     steps: {},
                     updatedAt,
+                    syncPending: true,
                   },
                 ],
           }
