@@ -54,7 +54,7 @@ msgid "Ajouter une note"
 msgstr "Add a note"
 
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:163
-#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:202
+#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:203
 msgid "Aller à l'étape"
 msgstr "Go to step"
 
@@ -370,7 +370,7 @@ msgstr "Discover and add new guides to your list."
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
 
-#: src/routes/_app.tsx:142
+#: src/routes/_app.tsx:144
 msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
 msgstr "Move the app to the Applications folder, then relaunch it."
 
@@ -1106,7 +1106,7 @@ msgstr "Update completed with errors"
 
 #: src/routes/_app/-settings/profile_edit_name_dialog.tsx:107
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:173
-#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:206
+#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:207
 msgid "Modifier"
 msgstr "Edit"
 
@@ -1383,8 +1383,8 @@ msgstr "Deleting profile. This action is irreversible."
 
 #: src/hooks/use_malformed_guides_handler.ts:30
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:47
-#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:189
-#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:215
+#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:190
+#: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:216
 #: src/routes/_app/guides/-index/delete_guides_dialog.tsx:108
 #: src/routes/_app/guides/-index/selection_toolbar.tsx:77
 msgid "Supprimer"

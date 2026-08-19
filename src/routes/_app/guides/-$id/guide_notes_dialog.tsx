@@ -176,13 +176,14 @@ export function GuideNotesDialog({
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button
+                                className="text-destructive-light hover:bg-destructive hover:text-destructive-foreground"
                                 onClick={() =>
                                   setStepNote.mutate({ profileId, guideId, stepIndex, note: null, isReminder: false })
                                 }
                                 size="icon-sm"
                                 variant="ghost"
                               >
-                                <TrashIcon className="text-destructive" />
+                                <TrashIcon />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -206,7 +207,7 @@ export function GuideNotesDialog({
                               <Trans>Modifier</Trans>
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              className="text-destructive focus:text-destructive"
+                              className="text-destructive-light focus:bg-destructive focus:text-destructive-foreground"
                               onSelect={() =>
                                 setStepNote.mutate({ profileId, guideId, stepIndex, note: null, isReminder: false })
                               }
