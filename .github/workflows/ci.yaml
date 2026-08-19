@@ -4,10 +4,14 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # never cancel a main run: it is the one populating the caches the pull requests restore
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   checks:
@@ -88,6 +92,11 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: 'src-tauri -> target'
+          # A cache is only readable from the branch that wrote it and from the default
+          # branch, so a pull request can never restore another pull request's cache.
+          # Only main writes it, and every pull request restores it from there.
+          shared-key: 'tauri-linux'
+          save-if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: install frontend dependencies
         run: pnpm i --frozen-lockfile
