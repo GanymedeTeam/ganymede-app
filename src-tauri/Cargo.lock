@@ -1608,7 +1608,6 @@ dependencies = [
  "base64 0.22.1",
  "chrono",
  "chrono-tz",
- "cocoa",
  "glob",
  "log",
  "machine-uid",
