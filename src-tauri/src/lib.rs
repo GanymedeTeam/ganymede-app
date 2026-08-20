@@ -42,6 +42,7 @@ mod item;
 mod json;
 mod notifications;
 mod oauth;
+mod overlay;
 mod pinned_guides;
 mod quest;
 mod report;
@@ -119,10 +120,16 @@ pub fn run() {
 
     #[cfg(desktop)]
     {
-        builder = builder.plugin(tauri_plugin_single_instance::init(|_app, argv, _cwd| {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, argv, _cwd| {
           info!("a new app instance was opened with {argv:?} and the deep link event was already triggered");
           // when defining deep link schemes at runtime, you must also check `argv` here
+          window_manager::show_main_window(app);
         }));
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        builder = builder.plugin(tauri_nspanel::init());
     }
 
     let app = builder
@@ -203,6 +210,10 @@ pub fn run() {
 
         app.manage(http_client.clone());
         app.manage(WindowManager::new());
+
+        if let Some(main_window) = app.get_webview_window("main") {
+            overlay::float_above_fullscreen(&main_window);
+        }
 
         #[cfg(not(debug_assertions))]
         add_breadcrumb(Breadcrumb {
@@ -286,6 +297,12 @@ pub fn run() {
         Ok(())
     })
     .invoke_handler(router.into_handler())
-    .run(tauri::generate_context!())
-    .expect("[Lib] error while running tauri application");
+    .build(tauri::generate_context!())
+    .expect("[Lib] error while running tauri application")
+    .run(|_app_handle, _event| {
+        #[cfg(target_os = "macos")]
+        if let tauri::RunEvent::Reopen { .. } = _event {
+            window_manager::show_main_window(_app_handle);
+        }
+    });
 }
