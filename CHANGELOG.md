@@ -1,5 +1,20 @@
 # ganymede-app
 
+## 1.19.1
+
+### Patch Changes
+
+- 14e1443: Correction de la mise à jour automatique qui restait bloquée sur « l'application va redémarrer » sans rien faire (surtout macOS). Les erreurs de téléchargement/installation sont désormais remontées au lieu de faire paniquer l'app en silence, et un lien de téléchargement manuel (selon l'OS) est proposé en cas d'échec.
+
+  Sur macOS, un avertissement prévient désormais lorsque l'application n'est pas lancée depuis le dossier Applications (ex. Downloads ou emplacement en lecture seule via App Translocation), ce qui empêche les mises à jour automatiques de s'appliquer.
+
+- 0d46507: Chasse au trésor DofusDB : les flèches de direction sont agrandies (40px au lieu de 25px) pour les petites fenêtres (< 640px), et reprennent la taille DofusDB par défaut au-delà.
+- b844356: L'application ne reste plus sur une page blanche au démarrage : la vérification de version et la synchronisation initiale sont déplacées en arrière-plan, l'interface s'affiche immédiatement. Les guides récents sont également réouverts même si la vérification de version échoue.
+- ce6381f: Notes du guide : le bouton « Supprimer » de la liste des notes utilise désormais un rouge lisible sur les fonds sombres (icône et entrée du menu), avec un fond rouge au survol/focus.
+- b69a650: Synchronisation : les cases à cocher sont de nouveau enregistrées lorsque vous êtes connecté. La synchronisation échouait dès qu'une case était cochée ailleurs qu'aux premières étapes d'un guide, et une progression distante obsolète pouvait écraser les cases cochées localement.
+- 5ffd420: Les guides mis en quarantaine après une corruption locale sont désormais retéléchargés lors de la mise à jour des guides, puis leur fichier corrompu est supprimé.
+- 3f7bcb1: Correction de la perte des cases cochées au redémarrage lorsque la synchronisation est activée. Une progression modifiée localement est désormais marquée comme non synchronisée : elle n'est plus écrasée par la copie du serveur au démarrage, et elle est envoyée au serveur lors de la synchronisation suivante, même si l'application a été fermée avant l'envoi.
+
 ## 1.19.0
 
 ### Minor Changes
