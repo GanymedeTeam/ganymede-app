@@ -5,8 +5,12 @@ import { err, ok } from 'neverthrow'
 import { GetIsAppOldVersionError, isAppOldVersion } from '@/ipc/api.ts'
 import { errorToObject } from '@/lib/error.ts'
 
+const VERSION_CHECK_INTERVAL_MS = 1000 * 60 * 10 // 10 minutes
+
 export const isAppOldVersionQuery = queryOptions({
   queryKey: ['version', 'is-app-old-version'],
+  staleTime: VERSION_CHECK_INTERVAL_MS,
+  refetchInterval: VERSION_CHECK_INTERVAL_MS,
   queryFn: async () => {
     const res = await isAppOldVersion()
 
