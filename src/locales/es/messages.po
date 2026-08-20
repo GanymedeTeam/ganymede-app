@@ -165,7 +165,7 @@ msgstr "Causado por"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "No se ha podido mostrar este mensaje. Puedes marcarlo como leído."
 
-#: src/routes/_app.tsx:123
+#: src/routes/_app.tsx:116
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Algunos datos locales no son válidos y bloquean la sincronización."
 
@@ -298,7 +298,7 @@ msgid "Copie d'autopilote"
 msgstr "Copia del piloto automático"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:167
+#: src/routes/_app/guides/-$id/guide_page.tsx:169
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copiando el número del paso ({0})..."
 
@@ -370,7 +370,7 @@ msgstr "Descubre y añade nuevas guías a tu lista."
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe el problema encontrado. El paso y la guía se incluirán automáticamente."
 
-#: src/routes/_app.tsx:144
+#: src/routes/_app.tsx:185
 msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
 msgstr "Mueve la aplicación a la carpeta Aplicaciones y vuelve a iniciarla."
 
@@ -616,7 +616,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Error JSON desconocido"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:166
+#: src/routes/_app/guides/-$id/guide_page.tsx:168
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error al copiar el número del paso ({0})."
 
@@ -729,7 +729,7 @@ msgstr "Formato de datos incorrecto"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymede - No afiliado a Ankama Games"
 
-#: src/routes/_app.tsx:139
+#: src/routes/_app.tsx:180
 msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
 msgstr "Ganymède no está instalado en la carpeta Aplicaciones, lo que puede impedir las actualizaciones automáticas."
 
@@ -999,7 +999,7 @@ msgstr "La actualización automática ha fallado. Descarga e instala manualmente
 msgid "La suppression des guides corrompus a échoué."
 msgstr "No se pudieron eliminar las guías corruptas."
 
-#: src/routes/_app.tsx:122
+#: src/routes/_app.tsx:115
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La sincronización ha fallado: datos no válidos."
@@ -1035,7 +1035,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "El nombre del perfil no puede estar vacío."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:165
+#: src/routes/_app/guides/-$id/guide_page.tsx:167
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "El número del paso ({0}) ha sido copiado al portapapeles."
 

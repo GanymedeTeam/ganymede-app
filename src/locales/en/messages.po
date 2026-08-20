@@ -165,7 +165,7 @@ msgstr "Caused by"
 msgid "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgstr "This message could not be displayed. You can still mark it as read."
 
-#: src/routes/_app.tsx:123
+#: src/routes/_app.tsx:116
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Some local data is invalid and is blocking synchronisation."
 
@@ -298,7 +298,7 @@ msgid "Copie d'autopilote"
 msgstr "Autopilot copy"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:167
+#: src/routes/_app/guides/-$id/guide_page.tsx:169
 msgid "Copie du numéro de l'étape ({0})..."
 msgstr "Copying step number ({0})..."
 
@@ -370,7 +370,7 @@ msgstr "Discover and add new guides to your list."
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Describe the issue encountered. The step and guide will be automatically included."
 
-#: src/routes/_app.tsx:144
+#: src/routes/_app.tsx:185
 msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
 msgstr "Move the app to the Applications folder, then relaunch it."
 
@@ -616,7 +616,7 @@ msgid "Erreur JSON inconnue"
 msgstr "Unknown JSON error"
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:166
+#: src/routes/_app/guides/-$id/guide_page.tsx:168
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error copying step number ({0})."
 
@@ -729,7 +729,7 @@ msgstr "Incorrect data format"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Not affiliated with Ankama Games"
 
-#: src/routes/_app.tsx:139
+#: src/routes/_app.tsx:180
 msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
 msgstr "Ganymède isn't installed in the Applications folder, which can prevent automatic updates."
 
@@ -999,7 +999,7 @@ msgstr "The automatic update failed. Download and install the latest version man
 msgid "La suppression des guides corrompus a échoué."
 msgstr "Failed to delete corrupted guides."
 
-#: src/routes/_app.tsx:122
+#: src/routes/_app.tsx:115
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "Synchronisation failed: invalid data."
@@ -1035,7 +1035,7 @@ msgid "Le nom du profil ne peut pas être vide."
 msgstr "Profile name cannot be empty."
 
 #. placeholder {0}: index + 1
-#: src/routes/_app/guides/-$id/guide_page.tsx:165
+#: src/routes/_app/guides/-$id/guide_page.tsx:167
 msgid "Le numéro de l'étape ({0}) a été copié dans le presse-papiers."
 msgstr "The step number ({0}) has been copied to the clipboard."
 
