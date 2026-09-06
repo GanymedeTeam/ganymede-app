@@ -85,11 +85,64 @@ fn formatter(file: &std::path::Path) -> std::io::Result<()> {
 // Asserts that the formatter function matches the expected signature.
 const _: specta_typescript::FormatterFn = formatter;
 
+// When running from an AppImage under Wayland, the bundled libwayland-client
+// can be older than what the host's Mesa/libEGL expects, making EGL
+// initialization fail with EGL_BAD_PARAMETER (blank window). Re-exec the
+// AppImage with the host's libwayland-client preloaded so the dynamic linker
+// uses it instead of the bundled copy.
+#[cfg(target_os = "linux")]
+fn preload_system_libwayland() {
+    use std::os::unix::process::CommandExt;
+
+    const GUARD: &str = "GANYMEDE_LIBWAYLAND_PRELOAD";
+
+    if std::env::var_os(GUARD).is_some() {
+        return;
+    }
+
+    let Some(appimage) = std::env::var_os("APPIMAGE") else {
+        return;
+    };
+
+    if std::env::var_os("WAYLAND_DISPLAY").is_none() {
+        return;
+    }
+
+    let lib = [
+        "/usr/lib64/libwayland-client.so.0",
+        "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0",
+        "/usr/lib/libwayland-client.so.0",
+    ]
+    .into_iter()
+    .find(|path| std::path::Path::new(path).exists());
+
+    let Some(lib) = lib else {
+        return;
+    };
+
+    let ld_preload = match std::env::var("LD_PRELOAD") {
+        Ok(existing) if !existing.is_empty() => format!("{lib}:{existing}"),
+        _ => lib.to_string(),
+    };
+
+    let err = std::process::Command::new(appimage)
+        .args(std::env::args_os().skip(1))
+        .env(GUARD, "1")
+        .env("LD_PRELOAD", ld_preload)
+        .exec();
+
+    eprintln!("Failed to re-exec with system libwayland preloaded: {err}");
+}
+
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     #[cfg(target_os = "linux")]
-    std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+    preload_system_libwayland();
+    #[cfg(target_os = "linux")]
+    if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
+        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+    }
     #[cfg(not(debug_assertions))]
     use tauri_plugin_sentry::{
         init_with_no_injection, minidump,
