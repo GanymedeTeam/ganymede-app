@@ -1,0 +1,74 @@
+[
+  {
+    "source": "https://ganymede-app.com/guides/30",
+    "step": 2,
+    "map": "Douze",
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [11,10]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Coin des Bouftous</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps en bas</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">6 maps à droite</span></p></div></li></ul><p></p>",
+    "chains": 1,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/2",
+    "step": 20,
+    "map": "Incarnam",
+    "html": "<p>Ensuite, <span style=\"color: rgb(98, 172, 255);\">allez en [-1,-3]</span></p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers la <span style=\"color: rgb(98, 172, 255);\">Route des âmes</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/2",
+    "step": 35,
+    "map": "Incarnam",
+    "html": "<p>Ensuite, <span style=\"color: rgb(98, 172, 255);\">allez en [2,-2]</span></p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Pâturages</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps en bas</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/374",
+    "step": 34,
+    "map": "Douze",
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [7,25]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaapi </span><span style=\"color: rgb(255, 255, 255);\">vers </span>le <span style=\"color: rgb(98, 172, 255);\">Quai de la Bricole</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à gauche</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/374",
+    "step": 43,
+    "map": "Douze",
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [7,16]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Sortez</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Rivage Sufokien</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">6 maps en haut</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/3",
+    "step": 17,
+    "map": "Douze",
+    "html": "<p>Ensuite<span style=\"color: rgb(98, 172, 255);\"> allez en</span> [23,-4]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">2 maps en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à droite </span>pour débloquer le <span style=\"color: rgb(98, 172, 255);\">Zaap</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">2 maps à gauche</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 0
+  },
+  {
+    "source": "https://ganymede-app.com/guides/374",
+    "step": 2,
+    "map": null,
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [0,0] en <span style=\"color: rgb(98, 172, 255);\">Incarnam</span>.</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à droite</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Portail vers Incarnam</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">4 maps à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps en bas</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/374",
+    "step": 8,
+    "map": "Incarnam",
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-4,-24]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">4 maps à droite</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Portail vers Astrub</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Sortez</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Porkass</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à droite</span></p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  },
+  {
+    "source": "https://ganymede-app.com/guides/113",
+    "step": 2,
+    "map": null,
+    "html": "<p>Pour ceux ayant déjà le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du château de Harebourg</span>, allez en [-68,-78] puis à l'<span style=\"color: rgb(255, 255, 0);\">étape suivante</span>.</p><p></p><p>Sinon <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-68,-75]</p><p></p><ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span data-type=\"custom-tag\" data-id=\"11994\" class=\"tag-item\" id=\"5703\" type=\"item\" name=\"Paire de skis rustiques jetables\" imageurl=\"https://api.dofusdb.fr/img/items/24908.png\" dofusdbid=\"11994\"><img src=\"https://api.dofusdb.fr/img/items/24908.png\" alt=\"item\"><span>Paire de skis rustiques jetables</span></span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Transporteur frigostien</span> vers le <span style=\"color: rgb(98, 172, 255);\">Mont Torrideau</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">3 maps à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">2 maps à gauche</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map en haut</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">2 maps à droite</span></p></div></li><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Montez</span> les <span style=\"color: rgb(98, 172, 255);\">escaliers</span> de gauche</p></div></li></ul><p></p>",
+    "chains": 0,
+    "zaaps": 1
+  }
+]

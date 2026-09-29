@@ -1,0 +1,327 @@
+[
+  {
+    "id": 2837,
+    "name": "Village des Dopeuls",
+    "x": -34,
+    "y": -8,
+    "worldMapId": 1
+  },
+  {
+    "id": 2838,
+    "name": "Bord de la forêt maléfique",
+    "x": -1,
+    "y": 13,
+    "worldMapId": 1,
+    "aliases": ["Bords de la forêt maléfique"]
+  },
+  {
+    "id": 2839,
+    "name": "Coin des Bouftous",
+    "x": 5,
+    "y": 7,
+    "worldMapId": 1
+  },
+  {
+    "id": 2840,
+    "name": "Village d'Amakna",
+    "x": -2,
+    "y": 0,
+    "worldMapId": 1,
+    "aliases": ["Village d’Amkana", "Village Amakna"]
+  },
+  {
+    "id": 2841,
+    "name": "Port de Madrestam",
+    "x": 7,
+    "y": -4,
+    "worldMapId": 1
+  },
+  {
+    "id": 2842,
+    "name": "Montagne des Craqueleurs",
+    "x": -5,
+    "y": -8,
+    "worldMapId": 1
+  },
+  {
+    "id": 2843,
+    "name": "Cité d'Astrub",
+    "x": 5,
+    "y": -18,
+    "worldMapId": 1
+  },
+  {
+    "id": 2849,
+    "name": "Île de la Cawotte",
+    "x": 25,
+    "y": -4,
+    "worldMapId": 1
+  },
+  {
+    "id": 2850,
+    "name": "Tainéla",
+    "x": 1,
+    "y": -32,
+    "worldMapId": 1
+  },
+  {
+    "id": 2851,
+    "name": "Château d'Amakna",
+    "x": 3,
+    "y": -5,
+    "worldMapId": 1
+  },
+  {
+    "id": 2968,
+    "name": "Rivage sufokien",
+    "x": 10,
+    "y": 22,
+    "worldMapId": 1
+  },
+  {
+    "id": 3026,
+    "name": "Village côtier",
+    "x": -46,
+    "y": 18,
+    "worldMapId": 1
+  },
+  {
+    "id": 3029,
+    "name": "Village de Pandala",
+    "x": 20,
+    "y": -29,
+    "worldMapId": 1,
+    "aliases": ["Pandala"]
+  },
+  {
+    "id": 3030,
+    "name": "La Cuirasse",
+    "x": -26,
+    "y": 37,
+    "worldMapId": 1,
+    "aliases": ["Brâkmar"]
+  },
+  {
+    "id": 3031,
+    "name": "Cœur immaculé",
+    "x": -31,
+    "y": -56,
+    "worldMapId": 1,
+    "aliases": ["Bonta"]
+  },
+  {
+    "id": 3032,
+    "name": "Plaines Rocheuses",
+    "x": -17,
+    "y": -47,
+    "worldMapId": 1
+  },
+  {
+    "id": 3033,
+    "name": "Routes Rocailleuses",
+    "x": -20,
+    "y": -20,
+    "worldMapId": 1
+  },
+  {
+    "id": 3035,
+    "name": "Plaine des Scarafeuilles",
+    "x": -1,
+    "y": 24,
+    "worldMapId": 1
+  },
+  {
+    "id": 3036,
+    "name": "Plage de la Tortue",
+    "x": 35,
+    "y": 12,
+    "worldMapId": 1,
+    "aliases": ["Île de Moon"]
+  },
+  {
+    "id": 3038,
+    "name": "Village des Éleveurs",
+    "x": -16,
+    "y": 1,
+    "worldMapId": 1,
+    "aliases": ["Eleveurs"]
+  },
+  {
+    "id": 3101,
+    "name": "La Bourgade",
+    "x": -78,
+    "y": -41,
+    "worldMapId": 1
+  },
+  {
+    "id": 3153,
+    "name": "Village enseveli",
+    "x": -77,
+    "y": -73,
+    "worldMapId": 1,
+    "aliases": ["Village ensevelli"]
+  },
+  {
+    "id": 3183,
+    "name": "Massif de Cania",
+    "x": -13,
+    "y": -28,
+    "worldMapId": 1
+  },
+  {
+    "id": 3201,
+    "name": "Sufokia",
+    "x": 13,
+    "y": 26,
+    "worldMapId": 1
+  },
+  {
+    "id": 3219,
+    "name": "Plaine des Porkass",
+    "x": -5,
+    "y": -23,
+    "worldMapId": 1
+  },
+  {
+    "id": 3222,
+    "x": -67,
+    "y": -77,
+    "worldMapId": 12,
+    "name": "Entrée du château de Harebourg"
+  },
+  {
+    "id": 3235,
+    "name": "Temple des alliances",
+    "x": 13,
+    "y": 35,
+    "worldMapId": 1
+  },
+  {
+    "id": 3240,
+    "name": "Laboratoires abandonnés",
+    "x": 27,
+    "y": -14,
+    "worldMapId": 1
+  },
+  {
+    "id": 3284,
+    "x": -54,
+    "y": 16,
+    "worldMapId": 10,
+    "name": "Village de la Canopée"
+  },
+  {
+    "id": 3285,
+    "name": "Village des Kanigs",
+    "x": 0,
+    "y": -56,
+    "worldMapId": 1
+  },
+  {
+    "id": 3297,
+    "name": "Champs de Cania",
+    "x": -27,
+    "y": -36,
+    "worldMapId": 1
+  },
+  {
+    "id": 3351,
+    "x": 3,
+    "y": 0,
+    "worldMapId": 2,
+    "name": "Cimetière"
+  },
+  {
+    "id": 3352,
+    "x": 2,
+    "y": -5,
+    "worldMapId": 2,
+    "name": "Pâturages"
+  },
+  {
+    "id": 3353,
+    "x": -1,
+    "y": -3,
+    "worldMapId": 2,
+    "name": "Route des âmes"
+  },
+  {
+    "id": 3384,
+    "name": "Lac de Cania",
+    "x": -3,
+    "y": -42,
+    "worldMapId": 1
+  },
+  {
+    "id": 3387,
+    "name": "Dunes des ossements",
+    "x": 15,
+    "y": -58,
+    "worldMapId": 1,
+    "aliases": ["Dune des ossements"]
+  },
+  {
+    "id": 3412,
+    "name": "Terres Désacrées",
+    "x": -15,
+    "y": 25,
+    "worldMapId": 1
+  },
+  {
+    "id": 3413,
+    "name": "Route des Roulottes",
+    "x": -25,
+    "y": 12,
+    "worldMapId": 1
+  },
+  {
+    "id": 3480,
+    "x": -83,
+    "y": -15,
+    "worldMapId": 22,
+    "name": "Crocuzko"
+  },
+  {
+    "id": 3484,
+    "name": "Arche de Vili",
+    "x": 15,
+    "y": -20,
+    "worldMapId": 1
+  },
+  {
+    "id": 3617,
+    "name": "Futaie enneigée",
+    "x": 39,
+    "y": -82,
+    "worldMapId": 1,
+    "aliases": ["Futaie enneigé"]
+  },
+  {
+    "id": 3627,
+    "name": "Foire du Trool",
+    "x": -11,
+    "y": -36,
+    "worldMapId": 1
+  },
+  {
+    "id": 3653,
+    "name": "Cimetière primitif",
+    "x": -12,
+    "y": 19,
+    "worldMapId": 1
+  },
+  {
+    "id": 3654,
+    "name": "Mont des Tombeaux",
+    "x": 40,
+    "y": -44,
+    "worldMapId": 1
+  },
+  {
+    "id": 3655,
+    "name": "Nimotopia",
+    "x": -67,
+    "y": 29,
+    "worldMapId": 1
+  }
+]

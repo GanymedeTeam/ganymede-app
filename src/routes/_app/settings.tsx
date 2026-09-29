@@ -28,7 +28,10 @@ import { useReregisterShortcuts } from '@/mutations/reregister_shortcuts.mutatio
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { Page } from '@/routes/-page.tsx'
+import { ChainedCommandsSetting } from '@/routes/_app/-settings/chained_commands_setting.tsx'
 import { Profiles } from '@/routes/_app/-settings/profiles.tsx'
+import { ZaapCopySetting } from '@/routes/_app/-settings/zaap_copy_setting.tsx'
+import { ZaapSurchargeSetting } from '@/routes/_app/-settings/zaap_surcharge_setting.tsx'
 
 import { BackButtonLink } from './downloads/-back_button_link.tsx'
 
@@ -171,6 +174,18 @@ function Settings() {
                   }}
                 />
               </div>
+            </SettingCardSection>
+
+            <SettingCardSection id="section-zaap-copy">
+              <ZaapCopySetting />
+            </SettingCardSection>
+
+            <SettingCardSection id="section-zaap-surcharge">
+              <ZaapSurchargeSetting />
+            </SettingCardSection>
+
+            <SettingCardSection id="section-chained-commands">
+              <ChainedCommandsSetting />
             </SettingCardSection>
           </SettingCard>
           <SettingCard id="section-appearance" title={<Trans>Apparence</Trans>}>

@@ -1,11 +1,9 @@
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 
+export function getPositionCopyText(posX: number, posY: number, autoTravelCopy: boolean): string {
+  return autoTravelCopy ? `/travel ${posX},${posY}` : `[${posX},${posY}]`
+}
+
 export async function copyPosition(posX: number, posY: number, autoTravelCopy: boolean): Promise<void> {
-  let copy = `[${posX},${posY}]`
-
-  if (autoTravelCopy) {
-    copy = `/travel ${posX},${posY}`
-  }
-
-  await writeText(copy)
+  await writeText(getPositionCopyText(posX, posY, autoTravelCopy))
 }

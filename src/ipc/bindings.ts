@@ -16,7 +16,7 @@ export type AuthTokens = { access_token: string; refresh_token: string | null; e
 
 export type AutoPilot = { name: string; position: string }
 
-export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts }
+export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts; zaapCopyMode?: ZaapCopyMode; useChainedCommands?: boolean; allowZaapSurcharge?: boolean }
 
 export type ConfError = { Malformed: JsonError } | { CreateConfDir: string } | { ConfDir: string } | { SerializeConf: JsonError } | { UnhandledIo: string } | { SaveConf: string } | "GetProfileInUse" | { ResetConf: ConfError }
 
@@ -133,6 +133,8 @@ export type User = { id: number; name: string; is_admin: number; is_certified: n
 export type UserError = "TokensNotFound" | "NotConnected" | { FailedToGetUser: string } | { InvalidUserResponse: string }
 
 export type ViewedNotifications = { viewed_ids: number[] }
+
+export type ZaapCopyMode = "Name" | "Position" | "Command"
 
 const ARGS_MAP = { 'almanax':'{"get":["level","date"]}', 'api':'{"isAppVersionOld":[]}', 'base':'{"getInstallLocation":[],"isProduction":[],"newId":[],"openUrl":["url"],"startup":[]}', 'conf':'{"get":[],"reset":[],"set":["conf"],"toggleGuideCheckbox":["guide_id","step_index","checkbox_index"]}', 'deep_link':'{"openGuideRequest":["guide_id","step"]}', 'dofusdb':'{"openHunt":["lang"],"openMap":["lang"]}', 'guides':'{"copyCurrentGuideStep":[],"deleteCorruptedGuides":[],"deleteGuidesFromSystem":["guides_or_folders_to_delete"],"downloadGuideFromServer":["guide_id","folder"],"getCorruptedGuides":[],"getFlatGuides":["folder"],"getGuideFromServer":["guide_id"],"getGuideSummary":["guide_id"],"getGuides":["folder"],"getGuidesFromServer":["status"],"getRecentGuides":["profile_id"],"guideExists":["guide_id"],"guidesUpdatedAtLaunch":[],"hasGuidesNotUpdated":[],"openGuidesFolder":[],"registerGuideClose":["guide_id","profile_id"],"registerGuideOpen":["guide_id","profile_id"],"removeProfileFromRecentGuides":["profile_id"],"setRecentGuides":["profile_id","guide_ids"],"updateAllAtOnce":[]}', 'image':'{"fetchImage":["url"]}', 'image_viewer':'{"closeImageViewer":["window_label"],"openImageViewer":["image_url","title"]}', 'notifications':'{"getUnviewedNotifications":[],"getViewedNotifications":[],"markNotificationAsViewed":["notification_id"]}', 'oauth':'{"cleanAuthTokens":[],"getAuthTokens":[],"onJwtExpired":[],"onOAuthFlowEnd":[],"startOAuthFlow":[]}', 'pinnedGuides':'{"get":[],"pinGuide":["profile_id","guide_id"],"unpinGuide":["profile_id","guide_id"]}', 'report':'{"send_report":["payload"]}', 'security':'{"getWhiteList":[]}', 'shortcuts':'{"reregister":[]}', 'stepNotes':'{"get":[],"setStepNote":["profile_id","guide_id","step_index","note","is_reminder"]}', 'sync':'{"createProfile":["name","uuid"],"deleteProfile":["server_id"],"renameProfile":["server_id","name"],"syncProfiles":[],"syncProgress":["server_id","guide_id","current_step","steps"]}', 'update':'{"startUpdate":[]}', 'user':'{"getMe":[]}' }
 export type Router = { "almanax": {get: (level: number, date: string) => Promise<AlmanaxReward>},

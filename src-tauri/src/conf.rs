@@ -18,6 +18,10 @@ const fn default_auto_open_guides() -> bool {
     true
 }
 
+const fn default_use_chained_commands() -> bool {
+    true
+}
+
 fn default_reset_conf_shortcut() -> String {
     "Alt+Shift+P".to_string()
 }
@@ -63,6 +67,14 @@ pub enum ConfLang {
     Fr,
     Es,
     Pt,
+}
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, taurpc::specta::Type)]
+pub enum ZaapCopyMode {
+    Name,
+    Position,
+    #[default]
+    Command,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, taurpc::specta::Type)]
@@ -183,6 +195,12 @@ pub struct Conf {
     pub auto_open_guides: bool,
     #[serde(default)]
     pub shortcuts: Shortcuts,
+    #[serde(default)]
+    pub zaap_copy_mode: ZaapCopyMode,
+    #[serde(default = "default_use_chained_commands")]
+    pub use_chained_commands: bool,
+    #[serde(default)]
+    pub allow_zaap_surcharge: bool,
 }
 
 // Functions
@@ -342,6 +360,9 @@ impl Default for Conf {
             opacity: 0.98,
             auto_open_guides: true,
             shortcuts: Shortcuts::default(),
+            zaap_copy_mode: ZaapCopyMode::default(),
+            use_chained_commands: default_use_chained_commands(),
+            allow_zaap_surcharge: false,
         }
     }
 }
@@ -383,6 +404,57 @@ pub fn ensure_conf_file(app_handle: &AppHandle) -> Result<(), Error> {
     }
 
     Ok(())
+}
+
+#[cfg(test)]
+mod travel_copy_tests {
+    use super::{Conf, ZaapCopyMode};
+
+    #[test]
+    fn existing_configuration_keeps_autopilot_and_defaults_new_preferences() {
+        let defaults = Conf::default();
+
+        assert!(matches!(defaults.zaap_copy_mode, ZaapCopyMode::Command));
+        assert!(defaults.use_chained_commands);
+        assert!(!defaults.allow_zaap_surcharge);
+
+        let mut value = serde_json::to_value(defaults).unwrap();
+        value.as_object_mut().unwrap().remove("zaapCopyMode");
+        value.as_object_mut().unwrap().remove("useChainedCommands");
+        value.as_object_mut().unwrap().remove("allowZaapSurcharge");
+        value["autoTravelCopy"] = serde_json::json!(false);
+
+        let restored: Conf = serde_json::from_value(value).unwrap();
+
+        assert!(!restored.auto_travel_copy);
+        assert!(matches!(restored.zaap_copy_mode, ZaapCopyMode::Command));
+        assert!(restored.use_chained_commands);
+        assert!(!restored.allow_zaap_surcharge);
+    }
+
+    #[test]
+    fn new_preferences_survive_serialization_in_every_mode() {
+        for mode in [
+            ZaapCopyMode::Name,
+            ZaapCopyMode::Position,
+            ZaapCopyMode::Command,
+        ] {
+            for enabled in [false, true] {
+                let conf = Conf {
+                    zaap_copy_mode: mode.clone(),
+                    use_chained_commands: enabled,
+                    allow_zaap_surcharge: enabled,
+                    ..Conf::default()
+                };
+
+                let value = serde_json::to_value(&conf).unwrap();
+
+                let restored: Conf = serde_json::from_value(value.clone()).unwrap();
+
+                assert_eq!(serde_json::to_value(restored).unwrap(), value);
+            }
+        }
+    }
 }
 
 // TauRPC API

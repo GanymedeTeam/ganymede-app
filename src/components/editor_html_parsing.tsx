@@ -2,20 +2,22 @@ import { Trans, useLingui } from '@lingui/react/macro'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
-import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
+import { type DOMNode, domToReact, htmlToDOM, type HTMLReactParserOptions } from 'html-react-parser'
 import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment, type ReactNode, useMemo } from 'react'
 import { toast } from 'sonner'
 
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { DownloadImage } from '@/components/download_image.tsx'
+import { GuideCopyButton } from '@/components/guide_copy_button.tsx'
+import { renderGuideZaapParagraph } from '@/components/guide_zaap_paragraph.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useGuideIfDefined } from '@/hooks/use_guide.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { clamp } from '@/lib/clamp.ts'
-import { copyPosition } from '@/lib/copy_position.ts'
 import { getGuideById } from '@/lib/guide.ts'
+import { analyzeGuideTravel, getTravelCopyText } from '@/lib/guide_travel_action.ts'
 import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
@@ -62,6 +64,24 @@ export function EditorHtmlParsing({
   const toggleGuideCheckbox = useToggleGuideCheckbox()
   const currentGuide = useGuideIfDefined(guideId)
 
+  const nodes = useMemo(() => htmlToDOM(html), [html])
+  const map = stepIndex !== undefined ? currentGuide?.steps[stepIndex]?.map : undefined
+  const game = currentGuide?.game_type ?? (currentGuide ? 'dofus' : undefined)
+  const surchargeWarning = !conf.data.allowZaapSurcharge
+    ? t`Surtaxe possible de 1000k lors de l'utilisation de ce zaap depuis un autre monde`
+    : undefined
+
+  const travel = useMemo(
+    () =>
+      analyzeGuideTravel(nodes, {
+        game,
+        guideName: currentGuide?.name,
+        lang: currentGuide?.lang,
+        map,
+      }),
+    [nodes, game, currentGuide?.name, currentGuide?.lang, map],
+  )
+
   let checkboxesCount = 0
 
   const options: HTMLReactParserOptions = {
@@ -78,6 +98,11 @@ export function EditorHtmlParsing({
         const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|.|,|:|;|'|")\s]*)/gu
 
         let elems: ReactNode[] = []
+        let parent = domNode.parent
+
+        while (parent && parent.type === 'tag' && parent.name !== 'p') parent = parent.parent
+
+        const route = parent ? travel.destinations.get(parent as DOMNode) : undefined
 
         for (const groups of domNode.data.matchAll(posReg)) {
           const [, prefix, posX, posY, suffix] = groups
@@ -87,20 +112,13 @@ export function EditorHtmlParsing({
             <Fragment key={`${prefix ?? ''}-${posX ?? ''}-${posY ?? ''}`}>
               {prefix}
               {posX !== undefined && posY !== undefined && (
-                <button
-                  className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
+                <GuideCopyButton
+                  className="text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
+                  content={getTravelCopyText(Number(posX), Number(posY), conf.data, route)}
                   disabled={disabled}
-                  id={`copy-position-${posX}-${posY}`}
-                  onClick={async () => {
-                    await copyPosition(Number.parseInt(posX, 10), Number.parseInt(posY, 10), conf.data.autoTravelCopy)
-                    const content = conf.data.autoTravelCopy ? `/travel ${posX},${posY}` : `[${posX},${posY}]`
-                    toast(t`${content} copié`)
-                  }}
-                  title={conf.data.autoTravelCopy ? 'Copier la commande autopilote' : 'Copier la position'}
-                  type="button"
                 >
                   [{posX},{posY}]
-                </button>
+                </GuideCopyButton>
               )}
               {suffix}
             </Fragment>,
@@ -116,6 +134,21 @@ export function EditorHtmlParsing({
       // #endregion
 
       if (domNode.type === 'tag') {
+        const mention = travel.inlineZaapNodes.get(domNode)
+        const zaap = mention?.zaap ?? travel.zaapNodes.get(domNode)
+
+        if (zaap) {
+          return renderGuideZaapParagraph({
+            node: domNode,
+            zaap,
+            mention,
+            mode: conf.data.zaapCopyMode,
+            disabled,
+            warning: travel.surchargeZaapNodes.has(domNode) ? surchargeWarning : undefined,
+            options,
+          })
+        }
+
         const {
           attribs: { className: _domClassName, ...attribs },
         } = domNode
@@ -486,5 +519,5 @@ export function EditorHtmlParsing({
     },
   }
 
-  return <div className={cn('select-text **:select-text', className)}>{parse(html, options)}</div>
+  return <div className={cn('select-text **:select-text', className)}>{domToReact(nodes, options)}</div>
 }

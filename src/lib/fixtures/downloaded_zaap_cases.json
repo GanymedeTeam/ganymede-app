@@ -1,0 +1,3234 @@
+[
+  {
+    "guide": 104,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span></p></div></li></ul>",
+    "text": "Zaap du Village des Eleveurs",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 104,
+    "step": 3,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village côtier</span></p></div></li></ul>",
+    "text": "Zaap du Village côtier",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 104,
+    "step": 3,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>Faites un <span style=\"color: rgb(255, 255, 0);\">Double clic</span> en <span style=\"color: rgb(255, 255, 0);\">[-54,16] </span>pour vous rendre au <span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du</span><span style=\"color: rgb(98, 172, 255);\"> Village de la Canopée </span><span style=\"color: rgb(255, 255, 255);\">en </span><span style=\"color: rgb(255, 255, 0);\">autopilote </span><span style=\"color: rgb(255, 255, 255);\">afin de le mémoriser.</span></p></div></li></ul>",
+    "text": "Faites un Double clic en [-54,16] pour vous rendre au Zaap du Village de la Canopée en autopilote afin de le mémoriser.",
+    "expected": null
+  },
+  {
+    "guide": 104,
+    "step": 4,
+    "map": "Canopee",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 104,
+    "step": 6,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 104,
+    "step": 7,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 104,
+    "step": 10,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 104,
+    "step": 15,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village de Pandala</span></p></div></li></ul>",
+    "text": "Zaap du Village de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 104,
+    "step": 23,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village enseveli</span></p></div></li></ul>",
+    "text": "Zaap du Village enseveli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 104,
+    "step": 25,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Mont des Tombeaux</span></p></div></li></ul>",
+    "text": "Zaap du Mont des Tombeaux",
+    "expected": {
+      "id": 3654,
+      "x": 40,
+      "y": -44
+    }
+  },
+  {
+    "guide": 104,
+    "step": 29,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village de la Canopée</span></p></div></li></ul>",
+    "text": "Zaap du Village de la Canopée",
+    "expected": {
+      "id": 3284,
+      "x": -54,
+      "y": 16
+    }
+  },
+  {
+    "guide": 112,
+    "step": 5,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village enseveli</span></p></div></li></ul>",
+    "text": "Zaap du Village enseveli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 112,
+    "step": 15,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 112,
+    "step": 16,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 112,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Village de Pandala</span></p></div></li></ul>",
+    "text": "Zaap du Village de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 112,
+    "step": 18,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Route des Roulottes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des Roulottes",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 112,
+    "step": 20,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Village enseveli</span></p></div></li></ul>",
+    "text": "Zaap du Village enseveli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 112,
+    "step": 33,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 112,
+    "step": 37,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 112,
+    "step": 40,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Village enseveli</span></p></div></li></ul>",
+    "text": "Zaap du Village enseveli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 112,
+    "step": 45,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 112,
+    "step": 80,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 113,
+    "step": 2,
+    "map": null,
+    "html": "<p>Pour ceux ayant déjà le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du château de Harebourg</span>, allez en [-68,-78] puis à l'<span style=\"color: rgb(255, 255, 0);\">étape suivante</span>.</p>",
+    "text": "Pour ceux ayant déjà le Zaap de l'Entrée du château de Harebourg, allez en [-68,-78] puis à l'étape suivante.",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 113,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 113,
+    "step": 7,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du château de Harebourg</span></p></div></li></ul>",
+    "text": "Zaap de l'Entrée du château de Harebourg",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 113,
+    "step": 26,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 113,
+    "step": 32,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du château de Harebourg</span></p></div></li></ul>",
+    "text": "Zaap de l'Entrée du château de Harebourg",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 113,
+    "step": 35,
+    "map": "Harebourg",
+    "html": "<p>Allez au <span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span> et allez en [-62,-10]</p>",
+    "text": "Allez au Zaap du Village Côtier et allez en [-62,-10]",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 113,
+    "step": 75,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 113,
+    "step": 85,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du Château de Harebourg</span></p></div></li></ul>",
+    "text": "Zaap de l'Entrée du Château de Harebourg",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 113,
+    "step": 90,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 113,
+    "step": 93,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Port de Madrestam</span></p></div></li></ul>",
+    "text": "Zaap du Port de Madrestam",
+    "expected": {
+      "id": 2841,
+      "x": 7,
+      "y": -4
+    }
+  },
+  {
+    "guide": 113,
+    "step": 98,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du Château de Harebourg</span></p></div></li></ul>",
+    "text": "Zaap de l'Entrée du Château de Harebourg",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 113,
+    "step": 107,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 113,
+    "step": 119,
+    "map": "Harebourg",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Entrée du château de Harebourg</span></p></div></li></ul>",
+    "text": "Zaap de l'Entrée du château de Harebourg",
+    "expected": {
+      "id": 3222,
+      "x": -67,
+      "y": -77
+    }
+  },
+  {
+    "guide": 131,
+    "step": 4,
+    "map": "Douze",
+    "html": "<p>Prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span> et allez dans les <span style=\"color: rgb(98, 172, 255);\">Marécages nauséabonds</span> en [-6,-3]</p>",
+    "text": "Prenez le Zaap du Village des Eleveurs et allez dans les Marécages nauséabonds en [-6,-3]",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 131,
+    "step": 5,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 131,
+    "step": 7,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 131,
+    "step": 8,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Routes Rocailleuses</span></p></div></li></ul>",
+    "text": "Zaap des Routes Rocailleuses",
+    "expected": {
+      "id": 3033,
+      "x": -20,
+      "y": -20
+    }
+  },
+  {
+    "guide": 131,
+    "step": 21,
+    "map": "Douze",
+    "html": "<p>Prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span> et allez dans les <span style=\"color: rgb(98, 172, 255);\">Marécages nauséabonds</span> en [-6,-3].</p>",
+    "text": "Prenez le Zaap du Village des Eleveurs et allez dans les Marécages nauséabonds en [-6,-3].",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 131,
+    "step": 24,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Ressortez </span>et prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span> et allez dans les <span style=\"color: rgb(98, 172, 255);\">Marécages nauséabonds</span> en [-6,-3]</p>",
+    "text": "Ressortez et prenez le Zaap du Village des Eleveurs et allez dans les Marécages nauséabonds en [-6,-3]",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 131,
+    "step": 25,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 131,
+    "step": 37,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 131,
+    "step": 45,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 131,
+    "step": 46,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Route des Roulottes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des Roulottes",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 131,
+    "step": 66,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span></p></div></li></ul>",
+    "text": "Zaap du Village Côtier",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 131,
+    "step": 72,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Route des âmes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des âmes",
+    "expected": {
+      "id": 3353,
+      "x": -1,
+      "y": -3
+    }
+  },
+  {
+    "guide": 131,
+    "step": 74,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Dopeuls</span></p></div></li></ul>",
+    "text": "Zaap du Village des Dopeuls",
+    "expected": {
+      "id": 2837,
+      "x": -34,
+      "y": -8
+    }
+  },
+  {
+    "guide": 131,
+    "step": 76,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village ensevelli</span></p></div></li></ul>",
+    "text": "Zaap du Village ensevelli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 3,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 7,
+    "map": "Xelorium",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 8,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du</span><span style=\"color: rgb(98, 172, 255);\"> Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 12,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 13,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 14,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">des </span><span style=\"color: rgb(98, 172, 255);\">Routes rocailleuses</span></p></div></li></ul>",
+    "text": "Zaap des Routes rocailleuses",
+    "expected": {
+      "id": 3033,
+      "x": -20,
+      "y": -20
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Routes rocailleuses</span></p></div></li></ul>",
+    "text": "Zaap des Routes rocailleuses",
+    "expected": {
+      "id": 3033,
+      "x": -20,
+      "y": -20
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 18,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Massif de Cania</span></p></div></li></ul>",
+    "text": "Zaap du Massif de Cania",
+    "expected": {
+      "id": 3183,
+      "x": -13,
+      "y": -28
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 21,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 24,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Tainela</span></p></div></li></ul>",
+    "text": "Zaap de Tainela",
+    "expected": {
+      "id": 2850,
+      "x": 1,
+      "y": -32
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 25,
+    "map": "Douze",
+    "html": "<p>Cliquez sur le <span style=\"color: rgb(255, 255, 0);\">Zaap</span> pour<span style=\"color: rgb(255, 255, 0);\"> Suivre Entropix et entrer dans l'anomalie</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Cliquez sur le Zaap pour Suivre Entropix et entrer dans l'anomalie.",
+    "expected": null
+  },
+  {
+    "guide": 1714,
+    "step": 25,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">- Si vous perdez, retournez </span><span style=\"color: rgb(255, 255, 0);\">chercher Entropix</span><span style=\"color: rgb(255, 255, 255);\"> en [2,1] puis revenez au </span><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Tainela </span><span style=\"color: rgb(255, 255, 255);\">pour pouvoir </span><span style=\"color: rgb(255, 255, 0);\">relancer </span><span style=\"color: rgb(255, 255, 255);\">le </span><span style=\"color: rgb(255, 255, 0);\">combat</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "- Si vous perdez, retournez chercher Entropix en [2,1] puis revenez au Zaap de Tainela pour pouvoir relancer le combat.",
+    "expected": {
+      "id": 2850,
+      "x": 1,
+      "y": -32
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 27,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la</span><span style=\"color: rgb(98, 172, 255);\"> Route des Roulottes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des Roulottes",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 34,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Plaine des scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 37,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Dune des ossements</span></p></div></li></ul>",
+    "text": "Zaap de la Dune des ossements",
+    "expected": {
+      "id": 3387,
+      "x": 15,
+      "y": -58
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 42,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">des </span><span style=\"color: rgb(98, 172, 255);\">Champs de Cania</span></p></div></li></ul>",
+    "text": "Zaap des Champs de Cania",
+    "expected": {
+      "id": 3297,
+      "x": -27,
+      "y": -36
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 50,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Foire du Trool</span></p></div></li></ul>",
+    "text": "Zaap de la Foire du Trool",
+    "expected": {
+      "id": 3627,
+      "x": -11,
+      "y": -36
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 53,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du</span><span style=\"color: rgb(98, 172, 255);\"> Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 54,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la</span><span style=\"color: rgb(98, 172, 255);\"> Montagne des craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 56,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village de Pandala</span></p></div></li></ul>",
+    "text": "Zaap du Village de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 57,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Arche de Vili</span></p></div></li></ul>",
+    "text": "Zaap de l'Arche de Vili",
+    "expected": {
+      "id": 3484,
+      "x": 15,
+      "y": -20
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 59,
+    "map": "Songes",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Tainela</span></p></div></li></ul>",
+    "text": "Zaap de Tainela",
+    "expected": {
+      "id": 2850,
+      "x": 1,
+      "y": -32
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 60,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 61,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la Forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la Forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 62,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village de la canopée</span></p></div></li></ul>",
+    "text": "Zaap du Village de la canopée",
+    "expected": {
+      "id": 3284,
+      "x": -54,
+      "y": 16
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 63,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">La Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 68,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 72,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Montagne des craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 75,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">Cliquez sur le </span><span style=\"color: rgb(255, 255, 0);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">et choisissez de</span><span style=\"color: rgb(255, 255, 0);\"> Voyager dans le temps</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Cliquez sur le Zaap et choisissez de Voyager dans le temps.",
+    "expected": null
+  },
+  {
+    "guide": 1714,
+    "step": 84,
+    "map": "Servitude",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 85,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de l'</span><span style=\"color: rgb(98, 172, 255);\">Arche de Vili</span></p></div></li></ul>",
+    "text": "Zaap de l'Arche de Vili",
+    "expected": {
+      "id": 3484,
+      "x": 15,
+      "y": -20
+    }
+  },
+  {
+    "guide": 1714,
+    "step": 86,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de l'</span><span style=\"color: rgb(98, 172, 255);\">Île de Moon</span></p></div></li></ul>",
+    "text": "Zaap de l'Île de Moon",
+    "expected": {
+      "id": 3036,
+      "x": 35,
+      "y": 12
+    }
+  },
+  {
+    "guide": 183,
+    "step": 2,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">Depuis le</span><span style=\"color: rgb(98, 172, 255);\"> Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> Sufokia</span><span style=\"color: rgb(255, 255, 255);\"> :</span></p>",
+    "text": "Depuis le Zaap de Sufokia :",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 183,
+    "step": 2,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">Si vous n'avez pas le </span><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Sufokia </span><span style=\"color: rgb(255, 255, 255);\">:</span></p>",
+    "text": "Si vous n'avez pas le Zaap de Sufokia :",
+    "expected": null
+  },
+  {
+    "guide": 183,
+    "step": 4,
+    "map": "Douze",
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-46,18] pour débloquer le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>.</p>",
+    "text": "Ensuite allez en [-46,18] pour débloquer le Zaap du Village Côtier.",
+    "expected": null
+  },
+  {
+    "guide": 186,
+    "step": 1,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village côtier</span></p></div></li></ul>",
+    "text": "Zaap du Village côtier",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 1867,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village de Pandala</span></p></div></li></ul>",
+    "text": "Zaap du Village de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 1867,
+    "step": 25,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Village de Pandala</span></p></div></li></ul>",
+    "text": "Zaap du Village de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 189,
+    "step": 3,
+    "map": "Douze",
+    "html": "<p>Depuis le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village de Pandala</span>, <span style=\"color: rgb(255, 255, 0);\">achetez </span>une <span data-type=\"custom-tag\" data-id=\"23180\" class=\"tag-item\" id=\"14803\" type=\"item\" name=\"Pandaporo\" imageurl=\"https://api.dofusdb.fr/img/items/79179.png\" dofusdbid=\"23180\"><img src=\"https://api.dofusdb.fr/img/items/79179.png\" alt=\"item\"><span>Pandaporo</span></span> à <span style=\"color: rgb(255, 255, 0);\">Hintikou</span>.</p>",
+    "text": "Depuis le Zaap du Village de Pandala, achetez une Pandaporo à Hintikou.",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 189,
+    "step": 8,
+    "map": "Douze",
+    "html": "<p>- Si vous <span style=\"color: rgb(255, 255, 0);\">n'avez pas</span> le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Mont des Tombeaux</span>, <span style=\"color: rgb(255, 255, 0);\">prenez </span>le avant la suite.</p>",
+    "text": "- Si vous n'avez pas le Zaap du Mont des Tombeaux, prenez le avant la suite.",
+    "expected": null
+  },
+  {
+    "guide": 2042,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 10,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 12,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 18,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 48,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 50,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 64,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amkana</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amkana",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 66,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 81,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Champs de Cania</span></p></div></li></ul>",
+    "text": "Zaap des Champs de Cania",
+    "expected": {
+      "id": 3297,
+      "x": -27,
+      "y": -36
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 91,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 96,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Porkass</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Porkass",
+    "expected": {
+      "id": 3219,
+      "x": -5,
+      "y": -23
+    }
+  },
+  {
+    "guide": 2042,
+    "step": 99,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Futaie enneigé</span></p></div></li></ul>",
+    "text": "Zaap de la Futaie enneigé",
+    "expected": {
+      "id": 3617,
+      "x": 39,
+      "y": -82
+    }
+  },
+  {
+    "guide": 24,
+    "step": 2,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">Île de la Cawotte</span></p></div></li></ul>",
+    "text": "Zaap de l'Île de la Cawotte",
+    "expected": {
+      "id": 2849,
+      "x": 25,
+      "y": -4
+    }
+  },
+  {
+    "guide": 24,
+    "step": 14,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de l'<span style=\"color: rgb(98, 172, 255);\">Île de la Cawotte</span></p></div></li></ul>",
+    "text": "Zaap de l'Île de la Cawotte",
+    "expected": {
+      "id": 2849,
+      "x": 25,
+      "y": -4
+    }
+  },
+  {
+    "guide": 24,
+    "step": 40,
+    "map": "Douze",
+    "html": "<p>Prenez la <span style=\"color: rgb(98, 172, 255);\">porte en haut à gauche</span> <span style=\"color: rgb(255, 255, 255);\">pour</span> <span style=\"color: rgb(255, 255, 255);\">débloquer</span> le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Laboratoires abandonnés</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Prenez la porte en haut à gauche pour débloquer le Zaap des Laboratoires abandonnés.",
+    "expected": null
+  },
+  {
+    "guide": 24,
+    "step": 47,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Laboratoires abandonnés</span></p></div></li></ul>",
+    "text": "Zaap des Laboratoires abandonnés",
+    "expected": {
+      "id": 3240,
+      "x": 27,
+      "y": -14
+    }
+  },
+  {
+    "guide": 24,
+    "step": 64,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">- Le succès </span><span style=\"color: rgb(255, 255, 0);\">Wabbits mutants</span><span style=\"color: rgb(255, 255, 255);\"> se réalise en tuant les monstres dans la zone du </span><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Laboratoires abandonnés</span>.</p>",
+    "text": "- Le succès Wabbits mutants se réalise en tuant les monstres dans la zone du Zaap des Laboratoires abandonnés.",
+    "expected": null
+  },
+  {
+    "guide": 25,
+    "step": 1,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Port de Madrestam</span></p></div></li></ul>",
+    "text": "Zaap du Port de Madrestam",
+    "expected": {
+      "id": 2841,
+      "x": 7,
+      "y": -4
+    }
+  },
+  {
+    "guide": 25,
+    "step": 26,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Futaie enneigée</span></p></div></li></ul>",
+    "text": "Zaap de la Futaie enneigée",
+    "expected": {
+      "id": 3617,
+      "x": 39,
+      "y": -82
+    }
+  },
+  {
+    "guide": 25,
+    "step": 29,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Futaie enneigée</span></p></div></li></ul>",
+    "text": "Zaap de la Futaie enneigée",
+    "expected": {
+      "id": 3617,
+      "x": 39,
+      "y": -82
+    }
+  },
+  {
+    "guide": 2673,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: #62ACFF\">Zaap </span>du <span style=\"color: #62ACFF\">Port de Madrestam</span></p></div></li></ul>",
+    "text": "Zaap du Port de Madrestam",
+    "expected": {
+      "id": 2841,
+      "x": 7,
+      "y": -4
+    }
+  },
+  {
+    "guide": 2673,
+    "step": 91,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaa</span><span style=\"color: rgb(98, 172, 255);\">p </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 7,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(255, 255, 0);\">Débloquez </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Cité d'Astrub</span>.</p></div></li></ul>",
+    "text": "Débloquez le Zaap de la Cité d'Astrub.",
+    "expected": null
+  },
+  {
+    "guide": 2747,
+    "step": 7,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(255, 255, 0);\">Débloquez </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Plaine des Porkass</span><span style=\"color: rgb(255, 255, 255);\"> en [-5,-23].</span></p></div></li></ul>",
+    "text": "Débloquez le Zaap de la Plaine des Porkass en [-5,-23].",
+    "expected": null
+  },
+  {
+    "guide": 2747,
+    "step": 20,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(255, 255, 0);\">Réalisez </span>l'<span data-type=\"custom-tag\" data-id=\"138\" class=\"tag-dungeon\" id=\"120\" type=\"dungeon\" name=\"Akadémie des Gobs\" imageurl=\"https://ganymede-app.com/images/icon_dungeon.png\" dofusdbid=\"138\"><img src=\"https://ganymede-app.com/images/icon_dungeon.png\" alt=\"dungeon\"><span>Akadémie des Gobs</span></span>1️⃣ en [-5,3] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la forêt maléfique</span>).</p>",
+    "text": "Réalisez l'Akadémie des Gobs1️⃣ en [-5,3] (Zaap du Bord de la forêt maléfique).",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 25,
+    "map": null,
+    "html": "<p>1️⃣ Vous accédez à l'<span style=\"color: rgb(98, 172, 255);\">Île d'Otomaï</span> pour <span style=\"color: rgb(255, 255, 0);\">débloquer </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>.</p>",
+    "text": "1️⃣ Vous accédez à l'Île d'Otomaï pour débloquer le Zaap du Village Côtier.",
+    "expected": null
+  },
+  {
+    "guide": 2747,
+    "step": 38,
+    "map": null,
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-29,-47]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span>) e<span style=\"color: rgb(255, 255, 255);\">t parlez à </span><span style=\"color: rgb(255, 255, 0);\">Chris de Naire </span><span style=\"color: rgb(255, 255, 255);\">pour lancer </span><span data-type=\"custom-tag\" data-id=\"155\" class=\"tag-quest\" id=\"84\" type=\"quest\" name=\"Un juge hystérique\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"155\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Un juge hystérique</span></span>.</p>",
+    "text": "Ensuite allez en [-29,-47] (Zaap de Bonta) et parlez à Chris de Naire pour lancer Un juge hystérique.",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 40,
+    "map": null,
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-16,2] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span> pour finir <span data-type=\"custom-tag\" data-id=\"907\" class=\"tag-quest\" id=\"633\" type=\"quest\" name=\"Chéri fais-moi peur\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"907\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Chéri fais-moi peur</span></span>.</p>",
+    "text": "Ensuite allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur pour finir Chéri fais-moi peur.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 41,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-16,2]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span> pour finir <span data-type=\"custom-tag\" data-id=\"908\" class=\"tag-quest\" id=\"634\" type=\"quest\" name=\"Histoire de chiens\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"908\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Histoire de chiens</span></span>.</p>",
+    "text": "Allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur pour finir Histoire de chiens.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 44,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-16,2] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span> pour finir <span data-type=\"custom-tag\" data-id=\"909\" class=\"tag-quest\" id=\"635\" type=\"quest\" name=\"Le fossile et le marteau\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"909\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Le fossile et le marteau</span></span>.</p>",
+    "text": "Allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur pour finir Le fossile et le marteau.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 45,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-16,2]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span> pour finir <span data-type=\"custom-tag\" data-id=\"1431\" class=\"tag-quest\" id=\"1142\" type=\"quest\" name=\"Un défilé de Wobots\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"1431\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Un défilé de Wobots</span></span>.</p>",
+    "text": "Allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur pour finir Un défilé de Wobots.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 47,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-16,2]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span> pour finir <span data-type=\"custom-tag\" data-id=\"2507\" class=\"tag-quest\" id=\"1950\" type=\"quest\" name=\"C'est du bateau\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"2507\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>C'est du bateau</span></span>.</p>",
+    "text": "Allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur pour finir C'est du bateau.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 48,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-16,2] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Eleveurs</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Thelma Geur</span>.</p>",
+    "text": "Allez en [-16,2] (Zaap des Eleveurs) et parlez à Thelma Geur.",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 48,
+    "map": null,
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-45,19] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire </span>pour finir<span style=\"color: rgb(255, 255, 0);\"> </span><span data-type=\"custom-tag\" data-id=\"2508\" class=\"tag-quest\" id=\"1951\" type=\"quest\" name=\"Le spectacle vivant\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"2508\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Le spectacle vivant</span></span>.</p>",
+    "text": "Ensuite allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Le spectacle vivant.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 49,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) <span style=\"color: rgb(255, 255, 255);\">et</span> parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> pour finir <span data-type=\"custom-tag\" data-id=\"2509\" class=\"tag-quest\" id=\"1952\" type=\"quest\" name=\"Tour du propriétaire\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"2509\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour du propriétaire</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Tour du propriétaire.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 50,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-29,-47]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span>) <span style=\"color: rgb(255, 255, 255);\">et parlez à </span><span style=\"color: rgb(255, 255, 0);\">Chris de Naire</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Allez en [-29,-47] (Zaap de Bonta) et parlez à Chris de Naire.",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 53,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> pour finir <span data-type=\"custom-tag\" data-id=\"2510\" class=\"tag-quest\" id=\"1953\" type=\"quest\" name=\"Tour d'honneur\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"2510\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour d'honneur</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Tour d'honneur.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 54,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p>A l'<span style=\"color: rgb(255, 255, 0);\">étape 13</span> du guide <span data-type=\"guide-step\" class=\"guide-step\" guideid=\"430\" stepid=\"0\" stepnumber=\"1\" guidename=\"[GP23] Justiciers et plus\" label=\"[GP23] Justiciers et plus \" baseurl=\"https://ganymede-app.com\"><img src=\"https://ganymede-app.com/images/texteditor/guides.png\" alt=\"GuideStep\">[GP23] Justiciers et plus </span>, pensez à <span style=\"color: rgb(255, 255, 0);\">débloquer </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span>.</p></div></li></ul>",
+    "text": "A l'étape 13 du guide [GP23] Justiciers et plus , pensez à débloquer le Zaap de La Bourgade.",
+    "expected": null
+  },
+  {
+    "guide": 2747,
+    "step": 54,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) <span style=\"color: rgb(255, 255, 255);\">et</span> parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> pour finir <span data-type=\"custom-tag\" data-id=\"1432\" class=\"tag-quest\" id=\"1143\" type=\"quest\" name=\"Tour de marionnettes\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"1432\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour de marionnettes</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Tour de marionnettes.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 55,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19]<span style=\"color: rgb(255, 255, 0);\"> </span>(<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) <span style=\"color: rgb(255, 255, 255);\">et</span> parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> pour finir <span data-type=\"custom-tag\" data-id=\"910\" class=\"tag-quest\" id=\"636\" type=\"quest\" name=\"Tour d'horizon\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"910\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour d'horizon</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Tour d'horizon.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 56,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-29,-47] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span>) <span style=\"color: rgb(255, 255, 255);\">et parlez à </span><span style=\"color: rgb(255, 255, 0);\">Chris de Naire</span>.</p>",
+    "text": "Allez en [-29,-47] (Zaap de Bonta) et parlez à Chris de Naire.",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 60,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-29,-47] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span>) <span style=\"color: rgb(255, 255, 255);\">et parlez à </span><span style=\"color: rgb(255, 255, 0);\">Chris de Naire</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Allez en [-29,-47] (Zaap de Bonta) et parlez à Chris de Naire.",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 64,
+    "map": null,
+    "html": "<p>Ensuite <span style=\"color: rgb(98, 172, 255);\">allez en</span> [-19,30] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Kal Vissi</span> pour finir <span data-type=\"custom-tag\" data-id=\"155\" class=\"tag-quest\" id=\"84\" type=\"quest\" name=\"Un juge hystérique\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"155\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Un juge hystérique</span></span>.</p>",
+    "text": "Ensuite allez en [-19,30] (Zaap de Brâkmar) et parlez à Kal Vissi pour finir Un juge hystérique.",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 65,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-19,30] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Kal Vissi</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Allez en [-19,30] (Zaap de Brâkmar) et parlez à Kal Vissi.",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 69,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-19,30] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Kal Vissi</span>.</p>",
+    "text": "Allez en [-19,30] (Zaap de Brâkmar) et parlez à Kal Vissi.",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 72,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) <span style=\"color: rgb(255, 255, 255);\">et</span> parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> pour finir <span data-type=\"custom-tag\" data-id=\"911\" class=\"tag-quest\" id=\"637\" type=\"quest\" name=\"Tour à tour\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"911\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour à tour</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour finir Tour à tour.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 74,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-45,19] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Côtier</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Anne Ullaire</span> <span style=\"color: rgb(255, 255, 255);\">pour mettre à jour</span> <span data-type=\"custom-tag\" data-id=\"912\" class=\"tag-quest\" id=\"638\" type=\"quest\" name=\"Tour de table\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"912\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Tour de table</span></span>.</p>",
+    "text": "Allez en [-45,19] (Zaap du Village Côtier) et parlez à Anne Ullaire pour mettre à jour Tour de table.",
+    "expected": {
+      "id": 3026,
+      "x": -46,
+      "y": 18
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 78,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(98, 172, 255);\">Allez en</span> [-19,30] (<span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span>) et parlez à <span style=\"color: rgb(255, 255, 0);\">Kal Vissi.</span></p>",
+    "text": "Allez en [-19,30] (Zaap de Brâkmar) et parlez à Kal Vissi.",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 2747,
+    "step": 104,
+    "map": null,
+    "html": "<p>2️⃣ <span style=\"color: rgb(255, 255, 0);\">Débloquez </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du</span><span style=\"color: rgb(98, 172, 255);\"> Village enseveli</span> en [-77,-73] après avoir réalisé le donjon.</p>",
+    "text": "2️⃣ Débloquez le Zaap du Village enseveli en [-77,-73] après avoir réalisé le donjon.",
+    "expected": null
+  },
+  {
+    "guide": 28,
+    "step": 23,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 28,
+    "step": 28,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Rivage Sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage Sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 28,
+    "step": 32,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Rivage sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 28,
+    "step": 33,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 3,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à droite </span>pour débloquer le <span style=\"color: rgb(98, 172, 255);\">Zaap</span></p></div></li></ul>",
+    "text": "1 map à droite pour débloquer le Zaap",
+    "expected": null
+  },
+  {
+    "guide": 3,
+    "step": 25,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span></p></div></li></ul>",
+    "text": "Zaap du Village des Eleveurs",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 306,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 306,
+    "step": 3,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 306,
+    "step": 18,
+    "map": "Douze",
+    "html": "<p>- Si vous <span style=\"color: rgb(255, 255, 0);\">mourrez</span>, <span style=\"color: rgb(98, 172, 255);\">revenez en</span> [-28,20] depuis le <span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Route des roulottes</span> et <span style=\"color: rgb(255, 255, 0);\">sauvegardez </span>le si besoin.</p>",
+    "text": "- Si vous mourrez, revenez en [-28,20] depuis le Zaap de la Route des roulottes et sauvegardez le si besoin.",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 306,
+    "step": 19,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la<span style=\"color: rgb(98, 172, 255);\"> Route des Roulottes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des Roulottes",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 307,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brakmar</span></p></div></li></ul>",
+    "text": "Zaap de Brakmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 307,
+    "step": 8,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Route des Roulottes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des Roulottes",
+    "expected": {
+      "id": 3413,
+      "x": -25,
+      "y": 12
+    }
+  },
+  {
+    "guide": 307,
+    "step": 35,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Brakmar</span></p></div></li></ul>",
+    "text": "Zaap de Brakmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 309,
+    "step": 1,
+    "map": null,
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">Optionnellement, il permet aussi d'</span><span style=\"color: rgb(255, 255, 0);\">accéder </span>au <span style=\"color: rgb(98, 172, 255);\">Cimetière primitif</span><span style=\"color: rgb(255, 255, 255);\"> pour débloquer le </span><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Cimetière primitif</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Optionnellement, il permet aussi d'accéder au Cimetière primitif pour débloquer le Zaap du Cimetière primitif.",
+    "expected": null
+  },
+  {
+    "guide": 309,
+    "step": 2,
+    "map": null,
+    "html": "<p>Si vous n'avez pas <span style=\"color: rgb(255, 255, 0);\">accès </span>au <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Cimetière primitif</span>, droppez ou achetez :</p>",
+    "text": "Si vous n'avez pas accès au Zaap du Cimetière primitif, droppez ou achetez :",
+    "expected": null
+  },
+  {
+    "guide": 309,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Éleveurs</span></p></div></li></ul>",
+    "text": "Zaap du Village des Éleveurs",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 309,
+    "step": 4,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Éleveurs</span></p></div></li></ul>",
+    "text": "Zaap du Village des Éleveurs",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 309,
+    "step": 5,
+    "map": "Douze",
+    "html": "<p>- Prévoyez  7 <span data-type=\"custom-tag\" data-id=\"7904\" class=\"tag-item\" id=\"2643\" type=\"item\" name=\"Fleur de Kaliptus\" imageurl=\"https://api.dofusdb.fr/img/items/35001.png\" dofusdbid=\"7904\"><img src=\"https://api.dofusdb.fr/img/items/35001.png\" alt=\"item\"><span>Fleur de Kaliptus</span></span> au total si vous n'avez <span style=\"color: rgb(255, 255, 0);\">pas accès</span> au <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Cimetière Primitif</span>.</p>",
+    "text": "- Prévoyez  7 Fleur de Kaliptus au total si vous n'avez pas accès au Zaap du Cimetière Primitif.",
+    "expected": null
+  },
+  {
+    "guide": 309,
+    "step": 7,
+    "map": "Douze",
+    "html": "<p>Pensez à <span style=\"color: rgb(255, 255, 0);\">débloquer </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Cimetière primitif</span> en [-12,19].</p>",
+    "text": "Pensez à débloquer le Zaap du Cimetière primitif en [-12,19].",
+    "expected": null
+  },
+  {
+    "guide": 310,
+    "step": 2,
+    "map": "Douze",
+    "html": "<p>Sur la map du <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span>, parlez à <span style=\"color: rgb(255, 255, 0);\">Océane </span><span style=\"color: rgb(255, 255, 255);\">et </span><span style=\"color: rgb(255, 255, 0);\">Accepter </span><span style=\"color: rgb(255, 255, 255);\">pour lancer la quête </span><span data-type=\"custom-tag\" data-id=\"950\" class=\"tag-quest\" id=\"676\" type=\"quest\" name=\"Promenade sur les quais\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"950\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Promenade sur les quais</span></span>.</p>",
+    "text": "Sur la map du Zaap de Sufokia, parlez à Océane et Accepter pour lancer la quête Promenade sur les quais.",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 310,
+    "step": 17,
+    "map": "Douze",
+    "html": "<p>- En suivant le <span style=\"color: rgb(255, 255, 0);\">chemin </span>ci-dessous, pensez à <span style=\"color: rgb(255, 255, 0);\">sauvegarder </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Rivage sufokien</span> pour la suite.</p>",
+    "text": "- En suivant le chemin ci-dessous, pensez à sauvegarder le Zaap du Rivage sufokien pour la suite.",
+    "expected": null
+  },
+  {
+    "guide": 310,
+    "step": 18,
+    "map": "Douze",
+    "html": "<p>- Si vous êtes<span style=\"color: rgb(255, 255, 0);\"> bas niveaux </span>et que vous avez <span style=\"color: rgb(255, 255, 0);\">sauvegardé </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Rivage sufokien</span>, il est <span style=\"color: rgb(255, 255, 0);\">plus rapide</span> d'<span style=\"color: rgb(255, 255, 0);\">abandonner</span> le combat.</p>",
+    "text": "- Si vous êtes bas niveaux et que vous avez sauvegardé le Zaap du Rivage sufokien, il est plus rapide d'abandonner le combat.",
+    "expected": null
+  },
+  {
+    "guide": 310,
+    "step": 22,
+    "map": "Douze",
+    "html": "<p>- Pensez à <span style=\"color: rgb(255, 255, 0);\">sauvegarder </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Scarafeuilles</span>, si vous ne l'avez pas.</p>",
+    "text": "- Pensez à sauvegarder le Zaap de la Plaine des Scarafeuilles, si vous ne l'avez pas.",
+    "expected": null
+  },
+  {
+    "guide": 310,
+    "step": 22,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">1 map à droite </span>(<span style=\"color: rgb(98, 172, 255);\">2 maps </span>si vous êtes allé au <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Scarafeuilles</span>)</p></div></li></ul>",
+    "text": "1 map à droite (2 maps si vous êtes allé au Zaap de la Plaine des Scarafeuilles)",
+    "expected": null
+  },
+  {
+    "guide": 310,
+    "step": 27,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 374,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 374,
+    "step": 8,
+    "map": "Incarnam",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Porkass</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Porkass",
+    "expected": {
+      "id": 3219,
+      "x": -5,
+      "y": -23
+    }
+  },
+  {
+    "guide": 374,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la<span style=\"color: rgb(98, 172, 255);\"> Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 374,
+    "step": 24,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Porkass</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Porkass",
+    "expected": {
+      "id": 3219,
+      "x": -5,
+      "y": -23
+    }
+  },
+  {
+    "guide": 374,
+    "step": 34,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 374,
+    "step": 35,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Rivage Sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage Sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 374,
+    "step": 37,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la<span style=\"color: rgb(98, 172, 255);\"> Plaine des Scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 374,
+    "step": 42,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Lac de Cania</span></p></div></li></ul>",
+    "text": "Zaap du Lac de Cania",
+    "expected": {
+      "id": 3384,
+      "x": -3,
+      "y": -42
+    }
+  },
+  {
+    "guide": 374,
+    "step": 43,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Rivage Sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage Sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 374,
+    "step": 50,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Porkass</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Porkass",
+    "expected": {
+      "id": 3219,
+      "x": -5,
+      "y": -23
+    }
+  },
+  {
+    "guide": 375,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Village d'amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 375,
+    "step": 4,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 375,
+    "step": 27,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 426,
+    "step": 10,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Foire du Trool</span></p></div></li></ul>",
+    "text": "Zaap de la Foire du Trool",
+    "expected": {
+      "id": 3627,
+      "x": -11,
+      "y": -36
+    }
+  },
+  {
+    "guide": 426,
+    "step": 16,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 426,
+    "step": 17,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Plaines Rocheuses</span></p></div></li></ul>",
+    "text": "Zaap des Plaines Rocheuses",
+    "expected": {
+      "id": 3032,
+      "x": -17,
+      "y": -47
+    }
+  },
+  {
+    "guide": 426,
+    "step": 22,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 426,
+    "step": 26,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 426,
+    "step": 27,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Rivage sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 426,
+    "step": 28,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 426,
+    "step": 31,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Lac de Cania</span></p></div></li></ul>",
+    "text": "Zaap du Lac de Cania",
+    "expected": {
+      "id": 3384,
+      "x": -3,
+      "y": -42
+    }
+  },
+  {
+    "guide": 426,
+    "step": 32,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 426,
+    "step": 38,
+    "map": "Maitre Corbac",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span></p></div></li></ul>",
+    "text": "Zaap de Sufokia",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 427,
+    "step": 6,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 427,
+    "step": 8,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> des <span style=\"color: rgb(98, 172, 255);\">Champs de Cania</span></p></div></li></ul>",
+    "text": "Zaap des Champs de Cania",
+    "expected": {
+      "id": 3297,
+      "x": -27,
+      "y": -36
+    }
+  },
+  {
+    "guide": 427,
+    "step": 16,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de<span style=\"color: rgb(98, 172, 255);\"> Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 427,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Bord de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 427,
+    "step": 20,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Nimotopia</span></p></div></li></ul>",
+    "text": "Zaap de Nimotopia",
+    "expected": {
+      "id": 3655,
+      "x": -67,
+      "y": 29
+    }
+  },
+  {
+    "guide": 427,
+    "step": 57,
+    "map": "Srambad",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 427,
+    "step": 58,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Port de Madrestam</span></p></div></li></ul>",
+    "text": "Zaap du Port de Madrestam",
+    "expected": {
+      "id": 2841,
+      "x": 7,
+      "y": -4
+    }
+  },
+  {
+    "guide": 427,
+    "step": 61,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Port de Madrestam</span></p></div></li></ul>",
+    "text": "Zaap du Port de Madrestam",
+    "expected": {
+      "id": 2841,
+      "x": 7,
+      "y": -4
+    }
+  },
+  {
+    "guide": 427,
+    "step": 66,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 427,
+    "step": 76,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du<span style=\"color: rgb(98, 172, 255);\"> Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 427,
+    "step": 79,
+    "map": "Douze",
+    "html": "<p>Utilisez l'<span style=\"color: rgb(255, 255, 0);\">autopilote</span> pour aller en [-55,15] depuis le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Village de la Canopée</span>.</p>",
+    "text": "Utilisez l'autopilote pour aller en [-55,15] depuis le Zaap du Village de la Canopée.",
+    "expected": {
+      "id": 3284,
+      "x": -54,
+      "y": 16
+    }
+  },
+  {
+    "guide": 430,
+    "step": 2,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 430,
+    "step": 7,
+    "map": "Douze",
+    "html": "<p>- Pour le <span style=\"color: rgb(255, 255, 0);\">chemin </span>ci-dessous, si vous n'avez <span style=\"color: rgb(255, 255, 0);\">pas débloqué</span> le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Temple des alliances</span>.</p>",
+    "text": "- Pour le chemin ci-dessous, si vous n'avez pas débloqué le Zaap du Temple des alliances.",
+    "expected": null
+  },
+  {
+    "guide": 430,
+    "step": 7,
+    "map": "Douze",
+    "html": "<p>- Prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Sufokia</span>, puis le <span style=\"color: rgb(98, 172, 255);\">Zaapi </span>vers le <span style=\"color: rgb(98, 172, 255);\">Quai du port </span>enfin le <span style=\"color: rgb(98, 172, 255);\">Bateau vers le temple des alliances</span> en [16,29].</p>",
+    "text": "- Prenez le Zaap de Sufokia, puis le Zaapi vers le Quai du port enfin le Bateau vers le temple des alliances en [16,29].",
+    "expected": {
+      "id": 3201,
+      "x": 13,
+      "y": 26
+    }
+  },
+  {
+    "guide": 430,
+    "step": 7,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Temple des alliances</span></p></div></li></ul>",
+    "text": "Zaap du Temple des alliances",
+    "expected": {
+      "id": 3235,
+      "x": 13,
+      "y": 35
+    }
+  },
+  {
+    "guide": 431,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Routes Rocailleuses</span></p></div></li></ul>",
+    "text": "Zaap des Routes Rocailleuses",
+    "expected": {
+      "id": 3033,
+      "x": -20,
+      "y": -20
+    }
+  },
+  {
+    "guide": 483,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 516,
+    "step": 49,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>des <span style=\"color: rgb(98, 172, 255);\">Plaines Rocheuses</span></p></div></li></ul>",
+    "text": "Zaap des Plaines Rocheuses",
+    "expected": {
+      "id": 3032,
+      "x": -17,
+      "y": -47
+    }
+  },
+  {
+    "guide": 516,
+    "step": 60,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Foire du Trool</span></p></div></li></ul>",
+    "text": "Zaap de la Foire du Trool",
+    "expected": {
+      "id": 3627,
+      "x": -11,
+      "y": -36
+    }
+  },
+  {
+    "guide": 516,
+    "step": 66,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Lac de Cania</span></p></div></li></ul>",
+    "text": "Zaap du Lac de Cania",
+    "expected": {
+      "id": 3384,
+      "x": -3,
+      "y": -42
+    }
+  },
+  {
+    "guide": 516,
+    "step": 91,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Coin des bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 516,
+    "step": 92,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 97,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 516,
+    "step": 149,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers le <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span></p></div></li></ul>",
+    "text": "Zaap vers le Village des Eleveurs",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 516,
+    "step": 151,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers <span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap vers Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 159,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap vers Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 516,
+    "step": 162,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Plage de la Tortue</span></p></div></li></ul>",
+    "text": "Zaap de la Plage de la Tortue",
+    "expected": {
+      "id": 3036,
+      "x": 35,
+      "y": 12
+    }
+  },
+  {
+    "guide": 516,
+    "step": 169,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de<span style=\"color: rgb(98, 172, 255);\"> Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 181,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> vers la <span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap vers la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 516,
+    "step": 219,
+    "map": "Douze",
+    "html": "<p>- <span style=\"color: rgb(255, 255, 0);\">Utilisez </span>les <span style=\"color: rgb(255, 255, 0);\">Zaaps </span>pour vous téléporter plus proche à chaque fois !</p>",
+    "text": "- Utilisez les Zaaps pour vous téléporter plus proche à chaque fois !",
+    "expected": null
+  },
+  {
+    "guide": 516,
+    "step": 246,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 516,
+    "step": 264,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers le <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap vers le Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 516,
+    "step": 272,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la <span style=\"color: rgb(98, 172, 255);\">Plaine des Scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 516,
+    "step": 281,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Pandala</span></p></div></li></ul>",
+    "text": "Zaap de Pandala",
+    "expected": {
+      "id": 3029,
+      "x": 20,
+      "y": -29
+    }
+  },
+  {
+    "guide": 516,
+    "step": 325,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 516,
+    "step": 360,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de l'<span style=\"color: rgb(98, 172, 255);\">île de la Cawotte</span></p><p></p></div></li></ul>",
+    "text": "Zaap de l'île de la Cawotte",
+    "expected": {
+      "id": 2849,
+      "x": 25,
+      "y": -4
+    }
+  },
+  {
+    "guide": 516,
+    "step": 385,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Kanigs</span></p></div></li></ul>",
+    "text": "Zaap du Village des Kanigs",
+    "expected": {
+      "id": 3285,
+      "x": 0,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 416,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap de Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 443,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village Enseveli</span></p></div></li></ul>",
+    "text": "Zaap du Village Enseveli",
+    "expected": {
+      "id": 3153,
+      "x": -77,
+      "y": -73
+    }
+  },
+  {
+    "guide": 516,
+    "step": 444,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bords de la forêt maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bords de la forêt maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 516,
+    "step": 457,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Massif de Cania</span></p></div></li></ul>",
+    "text": "Zaap du Massif de Cania",
+    "expected": {
+      "id": 3183,
+      "x": -13,
+      "y": -28
+    }
+  },
+  {
+    "guide": 516,
+    "step": 459,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">Brâkmar</span></p></div></li></ul>",
+    "text": "Zaap de Brâkmar",
+    "expected": {
+      "id": 3030,
+      "x": -26,
+      "y": 37
+    }
+  },
+  {
+    "guide": 516,
+    "step": 475,
+    "map": "Xelorium",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Rivage sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 516,
+    "step": 521,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaapi </span>vers le <span style=\"color: rgb(98, 172, 255);\">Zaap</span></p></div></li></ul>",
+    "text": "Zaapi vers le Zaap",
+    "expected": null
+  },
+  {
+    "guide": 516,
+    "step": 583,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Plaine des Scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 516,
+    "step": 587,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Cimetière primitif</span></p></div></li></ul>",
+    "text": "Zaap du Cimetière primitif",
+    "expected": {
+      "id": 3653,
+      "x": -12,
+      "y": 19
+    }
+  },
+  {
+    "guide": 516,
+    "step": 594,
+    "map": "Srambad",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 631,
+    "map": "Srambad",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de<span style=\"color: rgb(98, 172, 255);\"> Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 516,
+    "step": 632,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>vers le <span style=\"color: rgb(98, 172, 255);\">Quai de la bricole</span></p></div></li></ul>",
+    "text": "Zaap vers le Quai de la bricole",
+    "expected": null
+  },
+  {
+    "guide": 516,
+    "step": 713,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Bourgade</span></p></div></li></ul>",
+    "text": "Zaap de la Bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 516,
+    "step": 750,
+    "map": "Abysses",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 552,
+    "step": 9,
+    "map": null,
+    "html": "<p>Pensez à récupérer le <span style=\"color: #62ACFF\">Zaap d'Astrub </span><span style=\"color: #FFFFFF\">en partant</span> et le <span style=\"color: #62ACFF\">Zaap de la Plaine des Porkass </span><span style=\"color: #FFFFFF\">en arrivant.</span></p>",
+    "text": "Pensez à récupérer le Zaap d'Astrub en partant et le Zaap de la Plaine des Porkass en arrivant.",
+    "expected": null
+  },
+  {
+    "guide": 552,
+    "step": 20,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: #62ACFF\">Téléportez vous au Zaap du Village d'Amakna</span></p></div></li></ul>",
+    "text": "Téléportez vous au Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 552,
+    "step": 116,
+    "map": null,
+    "html": "<p>Continuez et terminez donc <span data-type=\"guide-step\" class=\"guide-step\" guideid=\"98\" stepid=\"0\" stepnumber=\"1\" guidename=\"[GP30] DDG-FRIGOST 1\" label=\"[GP30] DDG-FRIGOST 1\" baseurl=\"https://ganymede-app.com\"><img src=\"https://ganymede-app.com/images/texteditor/guides.png\" alt=\"GuideStep\">[GP30] DDG-FRIGOST 1</span> puis passez mémoriser le <span style=\"color: #62ACFF\">Zaap </span><span style=\"color: #FFFFFF\">du</span><span style=\"color: #62ACFF\"> Village enseveli</span> en<span style=\"color: #FFFF00\"> [-77,-73]</span>.</p>",
+    "text": "Continuez et terminez donc [GP30] DDG-FRIGOST 1 puis passez mémoriser le Zaap du Village enseveli en [-77,-73].",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 27,
+    "map": "Douze",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Colonel Oneuil</span> et <span style=\"color: rgb(255, 255, 0);\">En savoir plus...</span> puis <span style=\"color: rgb(255, 255, 0);\">Proposer votre aide</span><span style=\"color: rgb(255, 255, 255);\"> pour lancer la quête </span><span data-type=\"custom-tag\" data-id=\"1571\" class=\"tag-quest\" id=\"1280\" type=\"quest\" name=\"Le maître des zaaps\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"1571\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Le maître des zaaps</span></span>.</p>",
+    "text": "Parlez au Colonel Oneuil et En savoir plus... puis Proposer votre aide pour lancer la quête Le maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 28,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(255, 255, 0);\">Demander à rencontrer le maître des zaaps.</span></p></div></li></ul>",
+    "text": "Demander à rencontrer le maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 29,
+    "map": "Douze",
+    "html": "<p>Parlez <span style=\"color: rgb(255, 255, 255);\">au </span><span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span><span style=\"color: rgb(255, 255, 255);\"> pour lancer un </span><span style=\"color: rgb(250, 0, 0);\">combat</span><span style=\"color: rgb(255, 255, 255);\"> faisable à </span><span style=\"color: rgb(255, 255, 0);\">plusieurs</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Parlez au Maître des zaaps pour lancer un combat faisable à plusieurs.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 30,
+    "map": "Douze",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span>.</p>",
+    "text": "Parlez au Maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 31,
+    "map": "Douze",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Major Qiu </span><span style=\"color: rgb(255, 255, 255);\">pour </span><span style=\"color: rgb(255, 255, 0);\">Lui présenter le maître des zaaps</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Parlez au Major Qiu pour Lui présenter le maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 32,
+    "map": "Xelorium",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span> pour terminer la quête <span data-type=\"custom-tag\" data-id=\"1571\" class=\"tag-quest\" id=\"1280\" type=\"quest\" name=\"Le maître des zaaps\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"1571\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Le maître des zaaps</span></span>.</p>",
+    "text": "Parlez au Maître des zaaps pour terminer la quête Le maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 36,
+    "map": "Xelorium",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span>.</p>",
+    "text": "Parlez au Maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 37,
+    "map": "Xelorium",
+    "html": "<p>Parlez <span style=\"color: rgb(255, 255, 0);\">2 fois</span> au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span>.</p>",
+    "text": "Parlez 2 fois au Maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 38,
+    "map": "Xelorium",
+    "html": "<p>Parlez à <span style=\"color: rgb(255, 255, 0);\">Doc Emiette Borgne</span> et <span style=\"color: rgb(255, 255, 0);\">Raconter ce qui est arrivé au maître des zaaps</span> pour finir la quête <span data-type=\"custom-tag\" data-id=\"1572\" class=\"tag-quest\" id=\"1281\" type=\"quest\" name=\"Énergie renouvelable\" imageurl=\"https://ganymede-app.com/images/icon_quest.png\" dofusdbid=\"1572\"><img src=\"https://ganymede-app.com/images/icon_quest.png\" alt=\"quest\"><span>Énergie renouvelable</span></span>.</p>",
+    "text": "Parlez à Doc Emiette Borgne et Raconter ce qui est arrivé au maître des zaaps pour finir la quête Énergie renouvelable.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 39,
+    "map": "Xelorium",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span> pour <span style=\"color: rgb(255, 255, 0);\">Pointer l'électrofoudre...</span></p>",
+    "text": "Parlez au Maître des zaaps pour Pointer l'électrofoudre...",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 40,
+    "map": "Xelorium",
+    "html": "<p>Parlez au <span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span> et <span style=\"color: rgb(255, 255, 0);\">Lui donner un bon coup...</span><span style=\"color: rgb(255, 255, 255);\"> pour lancer un </span><span style=\"color: rgb(250, 0, 0);\">combat</span><span style=\"color: rgb(255, 255, 255);\"> </span><span style=\"color: rgb(255, 255, 0);\">seul</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Parlez au Maître des zaaps et Lui donner un bon coup... pour lancer un combat seul.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 40,
+    "map": "Xelorium",
+    "html": "<p><span style=\"color: rgb(255, 255, 255);\">Une fois vaincu, </span>parlez <span style=\"color: rgb(255, 255, 255);\">au </span><span style=\"color: rgb(255, 255, 0);\">Maître des zaaps</span><span style=\"color: rgb(255, 255, 255);\">.</span></p>",
+    "text": "Une fois vaincu, parlez au Maître des zaaps.",
+    "expected": null
+  },
+  {
+    "guide": 62,
+    "step": 46,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du<span style=\"color: rgb(98, 172, 255);\"> Rivage sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 62,
+    "step": 84,
+    "map": "Xelorium",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Village d'Amakna",
+    "expected": {
+      "id": 2840,
+      "x": -2,
+      "y": 0
+    }
+  },
+  {
+    "guide": 65,
+    "step": 24,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la <span style=\"color: rgb(98, 172, 255);\">Dune des ossements</span></p></div></li></ul>",
+    "text": "Zaap de la Dune des ossements",
+    "expected": {
+      "id": 3387,
+      "x": 15,
+      "y": -58
+    }
+  },
+  {
+    "guide": 65,
+    "step": 29,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de la<span style=\"color: rgb(98, 172, 255);\"> Dune des ossements</span></p></div></li></ul>",
+    "text": "Zaap de la Dune des ossements",
+    "expected": {
+      "id": 3387,
+      "x": 15,
+      "y": -58
+    }
+  },
+  {
+    "guide": 65,
+    "step": 75,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Dune des ossements</span></p></div></li></ul>",
+    "text": "Zaap de la Dune des ossements",
+    "expected": {
+      "id": 3387,
+      "x": 15,
+      "y": -58
+    }
+  },
+  {
+    "guide": 66,
+    "step": 14,
+    "map": "Douze",
+    "html": "<p>Une fois <span style=\"color: rgb(98, 172, 255);\">téléporté</span>, prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span> et allez dans les <span style=\"color: rgb(98, 172, 255);\">Marécages nauséabonds</span> en [-6,-3]</p>",
+    "text": "Une fois téléporté, prenez le Zaap du Village des Eleveurs et allez dans les Marécages nauséabonds en [-6,-3]",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 66,
+    "step": 23,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Plaine des Scarafeuilles</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Scarafeuilles",
+    "expected": {
+      "id": 3035,
+      "x": -1,
+      "y": 24
+    }
+  },
+  {
+    "guide": 66,
+    "step": 28,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du</span><span style=\"color: rgb(98, 172, 255);\"> Rivage sufokien</span></p></div></li></ul>",
+    "text": "Zaap du Rivage sufokien",
+    "expected": {
+      "id": 2968,
+      "x": 10,
+      "y": 22
+    }
+  },
+  {
+    "guide": 66,
+    "step": 29,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de </span><span style=\"color: rgb(98, 172, 255);\">Bonta</span></p></div></li></ul>",
+    "text": "Zaap de Bonta",
+    "expected": {
+      "id": 3031,
+      "x": -31,
+      "y": -56
+    }
+  },
+  {
+    "guide": 66,
+    "step": 34,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 66,
+    "step": 35,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la</span><span style=\"color: rgb(98, 172, 255);\"> Montagne des Craqueleurs</span></p></div></li></ul>",
+    "text": "Zaap de la Montagne des Craqueleurs",
+    "expected": {
+      "id": 2842,
+      "x": -5,
+      "y": -8
+    }
+  },
+  {
+    "guide": 66,
+    "step": 41,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la</span><span style=\"color: rgb(98, 172, 255);\"> Cité d'Astrub</span></p></div></li></ul>",
+    "text": "Zaap de la Cité d'Astrub",
+    "expected": {
+      "id": 2843,
+      "x": 5,
+      "y": -18
+    }
+  },
+  {
+    "guide": 66,
+    "step": 43,
+    "map": "Incarnam",
+    "html": "<p>Prenez le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village des Eleveurs</span> et allez dans les <span style=\"color: rgb(98, 172, 255);\">Marécages nauséabonds</span> en [-6,-3]</p>",
+    "text": "Prenez le Zaap du Village des Eleveurs et allez dans les Marécages nauséabonds en [-6,-3]",
+    "expected": {
+      "id": 3038,
+      "x": -16,
+      "y": 1
+    }
+  },
+  {
+    "guide": 66,
+    "step": 46,
+    "map": "Incarnam",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">du </span><span style=\"color: rgb(98, 172, 255);\">Cimetière</span></p></div></li></ul>",
+    "text": "Zaap du Cimetière",
+    "expected": {
+      "id": 3351,
+      "x": 3,
+      "y": 0
+    }
+  },
+  {
+    "guide": 66,
+    "step": 49,
+    "map": "Incarnam",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">de la </span><span style=\"color: rgb(98, 172, 255);\">Route des âmes</span></p></div></li></ul>",
+    "text": "Zaap de la Route des âmes",
+    "expected": {
+      "id": 3353,
+      "x": -1,
+      "y": -3
+    }
+  },
+  {
+    "guide": 704,
+    "step": 4,
+    "map": "Douze",
+    "html": "<p>Cliquez sur le <span style=\"color: rgb(255, 255, 0);\">Zaap </span>puis <span style=\"color: rgb(255, 255, 0);\">Entrer dans l'anomalie invisible avec Entropix</span>.</p>",
+    "text": "Cliquez sur le Zaap puis Entrer dans l'anomalie invisible avec Entropix.",
+    "expected": null
+  },
+  {
+    "guide": 704,
+    "step": 8,
+    "map": "Xelorium",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Coin des Bouftous</span></p></div></li></ul>",
+    "text": "Zaap du Coin des Bouftous",
+    "expected": {
+      "id": 2839,
+      "x": 5,
+      "y": 7
+    }
+  },
+  {
+    "guide": 704,
+    "step": 17,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Crocuzko</span></p></div></li></ul>",
+    "text": "Zaap de Crocuzko",
+    "expected": {
+      "id": 3480,
+      "x": -83,
+      "y": -15
+    }
+  },
+  {
+    "guide": 704,
+    "step": 20,
+    "map": "Songes",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Crocuzko</span></p></div></li></ul>",
+    "text": "Zaap de Crocuzko",
+    "expected": {
+      "id": 3480,
+      "x": -83,
+      "y": -15
+    }
+  },
+  {
+    "guide": 704,
+    "step": 24,
+    "map": "Crocuzko",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">Crocuzko</span></p></div></li></ul>",
+    "text": "Zaap de Crocuzko",
+    "expected": {
+      "id": 3480,
+      "x": -83,
+      "y": -15
+    }
+  },
+  {
+    "guide": 704,
+    "step": 33,
+    "map": "Songes",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Bord de la Forêt Maléfique</span></p></div></li></ul>",
+    "text": "Zaap du Bord de la Forêt Maléfique",
+    "expected": {
+      "id": 2838,
+      "x": -1,
+      "y": 13
+    }
+  },
+  {
+    "guide": 704,
+    "step": 34,
+    "map": "Douze",
+    "html": "<p>- Depuis le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Village de la Canopée</span>, mettez l'<span style=\"color: rgb(255, 255, 0);\">autopilote</span> en [-55,15].</p>",
+    "text": "- Depuis le Zaap du Village de la Canopée, mettez l'autopilote en [-55,15].",
+    "expected": {
+      "id": 3284,
+      "x": -54,
+      "y": 16
+    }
+  },
+  {
+    "guide": 704,
+    "step": 41,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Plaine des Porkass</span></p></div></li></ul>",
+    "text": "Zaap de la Plaine des Porkass",
+    "expected": {
+      "id": 3219,
+      "x": -5,
+      "y": -23
+    }
+  },
+  {
+    "guide": 736,
+    "step": 2,
+    "map": null,
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>du <span style=\"color: rgb(98, 172, 255);\">Château d'Amakna</span></p></div></li></ul>",
+    "text": "Zaap du Château d'Amakna",
+    "expected": {
+      "id": 2851,
+      "x": 3,
+      "y": -5
+    }
+  },
+  {
+    "guide": 736,
+    "step": 3,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Plage de la Tortue</span></p></div></li></ul>",
+    "text": "Zaap de la Plage de la Tortue",
+    "expected": {
+      "id": 3036,
+      "x": 35,
+      "y": 12
+    }
+  },
+  {
+    "guide": 736,
+    "step": 26,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span><span style=\"color: rgb(255, 255, 255);\">des </span><span style=\"color: rgb(98, 172, 255);\">Plaines rocheuses</span></p></div></li></ul>",
+    "text": "Zaap des Plaines rocheuses",
+    "expected": {
+      "id": 3032,
+      "x": -17,
+      "y": -47
+    }
+  },
+  {
+    "guide": 88,
+    "step": 118,
+    "map": "Douze",
+    "html": "<p>En passant par le <span style=\"color: rgb(98, 172, 255);\">Zaap</span>, <span style=\"color: rgb(255, 255, 0);\">achetez </span>à <span style=\"color: rgb(255, 255, 0);\">Hintikou </span>une <span data-type=\"custom-tag\" data-id=\"23180\" class=\"tag-item\" id=\"14803\" type=\"item\" name=\"Pandaporo\" imageurl=\"https://api.dofusdb.fr/img/items/79179.png\" dofusdbid=\"23180\"><img src=\"https://api.dofusdb.fr/img/items/79179.png\" alt=\"item\"><span>Pandaporo</span></span>.</p>",
+    "text": "En passant par le Zaap, achetez à Hintikou une Pandaporo.",
+    "expected": null
+  },
+  {
+    "guide": 98,
+    "step": 6,
+    "map": "Douze",
+    "html": "<p><span style=\"color: rgb(255, 255, 0);\">Sauvegardez </span>le <span style=\"color: rgb(98, 172, 255);\">Zaap </span>de <span style=\"color: rgb(98, 172, 255);\">La Bourgade</span> pour <span style=\"color: rgb(255, 255, 0);\">utiliser </span>les <span data-type=\"custom-tag\" data-id=\"548\" class=\"tag-item\" id=\"267\" type=\"item\" name=\"Potion de Rappel\" imageurl=\"https://api.dofusdb.fr/img/items/12017.png\" dofusdbid=\"548\"><img src=\"https://api.dofusdb.fr/img/items/12017.png\" alt=\"item\"><span>Potion de Rappel</span></span>.</p>",
+    "text": "Sauvegardez le Zaap de La Bourgade pour utiliser les Potion de Rappel.",
+    "expected": null
+  },
+  {
+    "guide": 98,
+    "step": 37,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap</span> de <span style=\"color: rgb(98, 172, 255);\">La bourgade</span></p></div></li></ul>",
+    "text": "Zaap de La bourgade",
+    "expected": {
+      "id": 3101,
+      "x": -78,
+      "y": -41
+    }
+  },
+  {
+    "guide": 98,
+    "step": 145,
+    "map": "Douze",
+    "html": "<ul data-type=\"taskList\"><li data-checked=\"false\" data-type=\"taskItem\"><label><input type=\"checkbox\"><span></span></label><div><p><span style=\"color: rgb(98, 172, 255);\">Zaap </span>de la<span style=\"color: rgb(98, 172, 255);\"> Foire du Trool</span></p></div></li></ul>",
+    "text": "Zaap de la Foire du Trool",
+    "expected": {
+      "id": 3627,
+      "x": -11,
+      "y": -36
+    }
+  },
+  {
+    "guide": 98,
+    "step": 178,
+    "map": "Douze",
+    "html": "<p>Une fois sur place, <span style=\"color: rgb(255, 255, 0);\">sauvegardez</span> le <span style=\"color: rgb(98, 172, 255);\">Zaap</span> du <span style=\"color: rgb(98, 172, 255);\">Village ensevelie</span>.</p>",
+    "text": "Une fois sur place, sauvegardez le Zaap du Village ensevelie.",
+    "expected": null
+  }
+]
