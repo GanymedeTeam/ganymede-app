@@ -4,19 +4,21 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
 import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment } from 'react'
 import { toast } from 'sonner'
 
 import goToStepIcon from '@/assets/guide-go-to-step.webp'
 import { DownloadImage } from '@/components/download_image.tsx'
+import { ZaapIcon } from '@/components/icons/zaap_icon.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
 import { useGuideIfDefined } from '@/hooks/use_guide.ts'
 import { useProfile } from '@/hooks/use_profile.ts'
 import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { clamp } from '@/lib/clamp.ts'
-import { copyPosition } from '@/lib/copy_position.ts'
+import { copyPosition, copyZaap } from '@/lib/copy_position.ts'
 import { getGuideById } from '@/lib/guide.ts'
 import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
+import { parsePositions } from '@/lib/positions.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
 import { cn } from '@/lib/utils.ts'
 import { useDownloadGuideFromServer } from '@/mutations/download_guide_from_server.mutation.ts'
@@ -75,43 +77,61 @@ export function EditorHtmlParsing({
           return <Trans>lien masqué</Trans>
         }
 
-        const posReg = /(.*?)\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]([(?:\w|\p{L}|.|,|:|;|'|")\s]*)/gu
+        const tokens = parsePositions(domNode.data)
 
-        let elems: ReactNode[] = []
-
-        for (const groups of domNode.data.matchAll(posReg)) {
-          const [, prefix, posX, posY, suffix] = groups
-
-          elems = [
-            ...elems,
-            <Fragment key={`${prefix ?? ''}-${posX ?? ''}-${posY ?? ''}`}>
-              {prefix}
-              {posX !== undefined && posY !== undefined && (
-                <button
-                  className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
-                  disabled={disabled}
-                  id={`copy-position-${posX}-${posY}`}
-                  onClick={async () => {
-                    await copyPosition(Number.parseInt(posX, 10), Number.parseInt(posY, 10), conf.data.autoTravelCopy)
-                    const content = conf.data.autoTravelCopy ? `/travel ${posX},${posY}` : `[${posX},${posY}]`
-                    toast(t`${content} copié`)
-                  }}
-                  title={conf.data.autoTravelCopy ? 'Copier la commande autopilote' : 'Copier la position'}
-                  type="button"
-                >
-                  [{posX},{posY}]
-                </button>
-              )}
-              {suffix}
-            </Fragment>,
-          ]
-        }
-
-        if (elems.length === 0) {
+        if (!tokens.some((token) => token.type === 'position')) {
           return
         }
 
-        return <>{elems}</>
+        return (
+          <>
+            {tokens.map((token, index) => {
+              if (token.type === 'text') {
+                return <Fragment key={index}>{token.value}</Fragment>
+              }
+
+              const { position, zaap } = token
+
+              return (
+                <Fragment key={index}>
+                  {position && (
+                    <button
+                      className="inline-flex cursor-pointer text-yellow-400 hover:saturate-50 focus:saturate-[12.5%]"
+                      disabled={disabled}
+                      id={`copy-position-${position.x}-${position.y}`}
+                      onClick={async () => {
+                        const content = await copyPosition(position.x, position.y, conf.data.autoTravelCopy)
+                        toast(t`${content} copié`)
+                      }}
+                      title={conf.data.autoTravelCopy ? t`Copier la commande autopilote` : t`Copier la position`}
+                      type="button"
+                    >
+                      [{position.x},{position.y}]
+                    </button>
+                  )}
+                  {zaap && (
+                    <button
+                      className={cn(
+                        'inline-flex cursor-pointer align-text-bottom hover:saturate-150 focus:saturate-[25%]',
+                        position && 'ml-1',
+                      )}
+                      disabled={disabled}
+                      id={`copy-zaap-${zaap.x}-${zaap.y}`}
+                      onClick={async () => {
+                        const content = await copyZaap(zaap, position)
+                        toast(t`${content} copié`)
+                      }}
+                      title={position ? t`Copier les commandes zaap et autopilote` : t`Copier la commande zaap`}
+                      type="button"
+                    >
+                      <ZaapIcon />
+                    </button>
+                  )}
+                </Fragment>
+              )
+            })}
+          </>
+        )
       }
       // #endregion
 
