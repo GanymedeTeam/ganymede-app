@@ -5,6 +5,7 @@ import { type KeyboardEvent, useState } from 'react'
 import { Input } from '@/components/ui/input.tsx'
 import { Label } from '@/components/ui/label.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.tsx'
+import { reregisterShortcuts, unregisterAllShortcuts } from '@/ipc/shortcuts.ts'
 
 interface ShortcutInputProps {
   id: string
@@ -30,15 +31,16 @@ function parseKeyEvent(evt: KeyboardEvent<HTMLInputElement>): { shortcut: string
   const key = evt.key
   let hasActualKey = false
 
-  if (key !== 'Control' && key !== 'Alt' && key !== 'Shift' && key !== 'Meta' && key !== 'AltGraph') {
+  if (
+    evt.code !== '' &&
+    key !== 'Control' &&
+    key !== 'Alt' &&
+    key !== 'Shift' &&
+    key !== 'Meta' &&
+    key !== 'AltGraph'
+  ) {
     hasActualKey = true
-    if (key.length === 1) {
-      parts.push(key.toUpperCase())
-    } else if (key === ' ') {
-      parts.push('Space')
-    } else {
-      parts.push(key)
-    }
+    parts.push(evt.code.replace(/^(Key|Digit)/, ''))
   }
 
   const hasModifiers = parts.length > 1 && hasActualKey
@@ -75,11 +77,28 @@ export function ShortcutInput({ id, label, value, onChange, description }: Short
       <Input
         className={recording ? 'cursor-text ring-2 ring-primary' : 'cursor-pointer'}
         id={id}
-        onBlur={() => setRecording(false)}
+        onBlur={async () => {
+          setRecording(false)
+
+          const result = await reregisterShortcuts()
+
+          if (result.isErr()) {
+            console.error(result.error)
+          }
+        }}
         onClick={(evt) => {
           evt.currentTarget.focus()
         }}
-        onFocus={() => setRecording(true)}
+        onFocus={async () => {
+          setRecording(true)
+
+          // Global shortcuts swallow their keys, so they must be released while recording
+          const result = await unregisterAllShortcuts()
+
+          if (result.isErr()) {
+            console.error(result.error)
+          }
+        }}
         onKeyDown={(evt) => {
           evt.preventDefault()
 
