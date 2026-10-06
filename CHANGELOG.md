@@ -1,5 +1,17 @@
 # ganymede-app
 
+## 1.20.0
+
+### Minor Changes
+
+- 0305009: Sur macOS, les fenêtres de Ganymède (fenêtre principale, visionneuse d'images, chasse au trésor et carte DofusDB) restent désormais affichées par-dessus le jeu en plein écran. Cliquer sur l'overlay ne vole plus le focus du jeu, et la fenêtre principale peut être restaurée via l'icône du Dock après avoir été réduite.
+- 4a064a8: Ajout de la commande /zaap : affiche un bouton zaap à droite de certaines positions pour copier l'enchaînement `/zaap x y ; /travel x y`
+
+### Patch Changes
+
+- 34cf494: Correction de l'affichage de la carte DofusDB
+- 2d51d9f: Les raccourcis acceptent désormais les touches du pavé numérique (chiffres, `+`, `-`…) et fonctionnent quelle que soit la disposition du clavier (AZERTY inclus). Les raccourcis sont aussi désactivés pendant leur enregistrement, ce qui permet de réassigner une combinaison déjà utilisée.
+
 ## 1.19.1
 
 ### Patch Changes
