@@ -47,6 +47,8 @@ jobs:
       GANYMEDE_API_KEY: ${{ secrets.GANYMEDE_API_KEY }}
       GANYMEDE_CLIENT_ID: ${{ secrets.GANYMEDE_CLIENT_ID }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
     steps:
       - name: checkout
         uses: actions/checkout@v6
@@ -74,7 +76,8 @@ jobs:
             libssl-dev \
             libgtk-3-dev \
             libappindicator3-dev \
-            librsvg2-dev;
+            librsvg2-dev \
+            libfuse2t64;
 
           sudo apt install -y \
             libwebkit2gtk-4.1-0 \
@@ -93,4 +96,19 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: build (tauri)
-        run: pnpm tauri build --no-bundle
+        run: |
+          if [ -n "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
+            bash scripts/tauri-build.sh build
+          else
+            echo 'No signing key available (fork pull request): building without updater artifacts.'
+            bash scripts/tauri-build.sh build --config '{"bundle":{"createUpdaterArtifacts":false}}'
+          fi
+
+      - name: upload artifact (AppImage)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ganymede-appimage
+          path: |
+            src-tauri/target/release/bundle/appimage/*.AppImage
+            src-tauri/target/release/bundle/appimage/*.AppImage.sig
+          if-no-files-found: error
