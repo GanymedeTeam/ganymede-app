@@ -6,6 +6,8 @@ use tauri::{
     AppHandle, LogicalPosition, LogicalSize, Manager, Runtime, WebviewUrl, WebviewWindowBuilder,
 };
 
+use crate::overlay;
+
 // Injected before page parsing, runs in the page's own context (unlike an iframe),
 // so we can hide the floating reCAPTCHA badge that overlaps the tool.
 // Direction arrows are resized only below the sm breakpoint (<640px);
@@ -112,6 +114,8 @@ impl WindowManager {
             .build()
             .map_err(|e| format!("Failed to create image viewer window: {}", e))?;
 
+        overlay::float_above_fullscreen(&window);
+
         let window_label = window.label().to_string();
         let app_handle = app.clone();
 
@@ -184,7 +188,7 @@ impl WindowManager {
 
         let (position, size) = self.get_main_window_geometry(app)?;
 
-        WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
+        let window = WebviewWindowBuilder::new(app, label, WebviewUrl::External(url))
             .title(title)
             .inner_size(size.width, size.height)
             .min_inner_size(250.0, 300.0)
@@ -194,6 +198,8 @@ impl WindowManager {
             .initialization_script(init_script)
             .build()
             .map_err(|e| format!("Failed to create dofusdb window: {}", e))?;
+
+        overlay::float_above_fullscreen(&window);
 
         info!("[WindowManager] DofusDB window created: {}", label);
         Ok(())
@@ -257,5 +263,25 @@ impl WindowManager {
 impl Default for WindowManager {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+// On macOS the main window is an overlay NSPanel, which AppKit does not
+// restore on Dock click or app reopen like a regular window, so it is
+// restored manually.
+pub fn show_main_window<R: Runtime>(app: &AppHandle<R>) {
+    let Some(window) = app.get_webview_window("main") else {
+        warn!("[WindowManager] main window not found, cannot restore it");
+        return;
+    };
+
+    if let Err(e) = window.unminimize() {
+        warn!("[WindowManager] failed to unminimize main window: {e}");
+    }
+    if let Err(e) = window.show() {
+        warn!("[WindowManager] failed to show main window: {e}");
+    }
+    if let Err(e) = window.set_focus() {
+        warn!("[WindowManager] failed to focus main window: {e}");
     }
 }
