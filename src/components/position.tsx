@@ -11,8 +11,7 @@ export function Position({ pos_x, pos_y }: { pos_x: number; pos_y: number }) {
   const conf = useSuspenseQuery(confQuery)
 
   const onClick = async () => {
-    await copyPosition(pos_x, pos_y, conf.data.autoTravelCopy)
-    const content = conf.data.autoTravelCopy ? `/travel ${pos_x},${pos_y}` : `[${pos_x},${pos_y}]`
+    const content = await copyPosition(pos_x, pos_y, conf.data.autoTravelCopy)
     toast(t`${content} copié`)
   }
 
