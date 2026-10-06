@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider.tsx'
 import { Switch } from '@/components/ui/switch.tsx'
 import { useSwitchProfile } from '@/hooks/use_switch_profile.ts'
-import { ConfLang, FontSize, GuideDisplay } from '@/ipc/bindings.ts'
+import { ConfLang, FontSize, GuideDisplay, type Shortcuts } from '@/ipc/bindings.ts'
 import { createProfileRemote } from '@/ipc/sync.ts'
 import { cn } from '@/lib/utils.ts'
 import { useNewId } from '@/mutations/new_id.mutation.ts'
@@ -111,6 +111,32 @@ function Settings() {
   useEffect(() => {
     window.document.documentElement.style.setProperty('--opacity', `${opacity.toFixed(2)}`)
   }, [opacity])
+
+  const updateShortcut = async (field: keyof Shortcuts, value: string) => {
+    const shortcuts = conf.data.shortcuts ?? {}
+    const isAlreadyUsed = Object.entries(shortcuts).some(
+      ([key, shortcut]) => key !== field && shortcut?.toLowerCase() === value.toLowerCase(),
+    )
+
+    if (isAlreadyUsed) {
+      toast.error(t`Ce raccourci est déjà utilisé`)
+      return
+    }
+
+    try {
+      await setConf.mutateAsync({
+        ...conf.data,
+        shortcuts: {
+          ...shortcuts,
+          [field]: value,
+        },
+      })
+      await reregisterShortcuts.mutateAsync()
+      toast.success(t`Raccourci mis à jour`)
+    } catch {
+      toast.error(t`Erreur lors de la mise à jour du raccourci`)
+    }
+  }
 
   return (
     <Page
@@ -281,81 +307,25 @@ function Settings() {
                 description={t`Efface tous vos profils et paramètres (pas les guides)`}
                 id="reset-conf"
                 label={t`Réinitialiser la configuration`}
-                onChange={async (value) => {
-                  try {
-                    await setConf.mutateAsync({
-                      ...conf.data,
-                      shortcuts: {
-                        ...conf.data.shortcuts,
-                        resetConf: value,
-                      },
-                    })
-                    await reregisterShortcuts.mutateAsync()
-                    toast.success(t`Raccourci mis à jour`)
-                  } catch {
-                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
-                  }
-                }}
+                onChange={(value) => updateShortcut('resetConf', value)}
                 value={conf.data.shortcuts?.resetConf}
               />
               <ShortcutInput
                 id="go-previous-step"
                 label={t`Étape précédente`}
-                onChange={async (value) => {
-                  try {
-                    await setConf.mutateAsync({
-                      ...conf.data,
-                      shortcuts: {
-                        ...conf.data.shortcuts,
-                        goPreviousStep: value,
-                      },
-                    })
-                    await reregisterShortcuts.mutateAsync()
-                    toast.success(t`Raccourci mis à jour`)
-                  } catch {
-                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
-                  }
-                }}
+                onChange={(value) => updateShortcut('goPreviousStep', value)}
                 value={conf.data.shortcuts?.goPreviousStep}
               />
               <ShortcutInput
                 id="go-next-step"
                 label={t`Étape suivante`}
-                onChange={async (value) => {
-                  try {
-                    await setConf.mutateAsync({
-                      ...conf.data,
-                      shortcuts: {
-                        ...conf.data.shortcuts,
-                        goNextStep: value,
-                      },
-                    })
-                    await reregisterShortcuts.mutateAsync()
-                    toast.success(t`Raccourci mis à jour`)
-                  } catch {
-                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
-                  }
-                }}
+                onChange={(value) => updateShortcut('goNextStep', value)}
                 value={conf.data.shortcuts?.goNextStep}
               />
               <ShortcutInput
                 id="copy-current-step"
                 label={t`Copier l'étape actuelle`}
-                onChange={async (value) => {
-                  try {
-                    await setConf.mutateAsync({
-                      ...conf.data,
-                      shortcuts: {
-                        ...conf.data.shortcuts,
-                        copyCurrentStep: value,
-                      },
-                    })
-                    await reregisterShortcuts.mutateAsync()
-                    toast.success(t`Raccourci mis à jour`)
-                  } catch {
-                    toast.error(t`Erreur lors de la mise à jour du raccourci`)
-                  }
-                }}
+                onChange={(value) => updateShortcut('copyCurrentStep', value)}
                 value={conf.data.shortcuts?.copyCurrentStep}
               />
             </SettingCardSection>

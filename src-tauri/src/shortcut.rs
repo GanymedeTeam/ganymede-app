@@ -292,9 +292,21 @@ pub fn reregister_shortcuts<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error>
     Ok(())
 }
 
+pub fn unregister_all_shortcuts<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
+    app.global_shortcut()
+        .unregister_all()
+        .map_err(|e| Error::Unregister(e.to_string()))?;
+
+    info!("[Shortcut] all shortcuts unregistered");
+
+    Ok(())
+}
+
 #[taurpc::procedures(path = "shortcuts", export_to = "../src/ipc/bindings.ts")]
 pub trait ShortcutsApi {
     async fn reregister<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
+    #[taurpc(alias = "unregisterAll")]
+    async fn unregister_all<R: Runtime>(app_handle: AppHandle<R>) -> Result<(), Error>;
 }
 
 #[derive(Clone)]
@@ -304,5 +316,9 @@ pub struct ShortcutsApiImpl;
 impl ShortcutsApi for ShortcutsApiImpl {
     async fn reregister<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<(), Error> {
         reregister_shortcuts(&app_handle)
+    }
+
+    async fn unregister_all<R: Runtime>(self, app_handle: AppHandle<R>) -> Result<(), Error> {
+        unregister_all_shortcuts(&app_handle)
     }
 }
