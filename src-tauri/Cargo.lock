@@ -1603,7 +1603,7 @@ dependencies = [
 
 [[package]]
 name = "ganymede"
-version = "1.20.0"
+version = "1.21.0"
 dependencies = [
  "base64 0.22.1",
  "chrono",
