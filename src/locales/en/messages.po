@@ -41,7 +41,7 @@ msgstr "Visit official website"
 msgid "Accueil"
 msgstr "Home"
 
-#: src/routes/_app/settings.tsx:187
+#: src/routes/_app/settings.tsx:204
 msgid "Afficher les guides terminés"
 msgstr "Display completed guides"
 
@@ -70,7 +70,7 @@ msgstr "Go to step"
 msgid "Annuler"
 msgstr "Cancel"
 
-#: src/routes/_app/settings.tsx:202
+#: src/routes/_app/settings.tsx:219
 msgid "Apparence"
 msgstr "Appearance"
 
@@ -258,7 +258,7 @@ msgstr "Click to open in browser"
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Click to open in a new window"
 
-#: src/routes/_app/settings.tsx:273
+#: src/routes/_app/settings.tsx:290
 msgid "Compact (toujours)"
 msgstr "Compact (always)"
 
@@ -311,7 +311,7 @@ msgstr "Copying step number ({0})..."
 msgid "Copier : {title}"
 msgstr "Copy: {title}"
 
-#: src/routes/_app/settings.tsx:327
+#: src/routes/_app/settings.tsx:344
 msgid "Copier l'étape actuelle"
 msgstr "Copy current step"
 
@@ -339,7 +339,7 @@ msgstr "Copy position"
 msgid "Copier les commandes zaap et autopilote"
 msgstr "Copy zaap and autopilot commands"
 
-#: src/routes/_app/settings.tsx:399
+#: src/routes/_app/settings.tsx:416
 msgid "Créer"
 msgstr "Create"
 
@@ -347,7 +347,7 @@ msgstr "Create"
 msgid "Créer un guide"
 msgstr "Create a guide"
 
-#: src/routes/_app/settings.tsx:341
+#: src/routes/_app/settings.tsx:358
 msgid "Créer un profil"
 msgstr "Create profile"
 
@@ -417,7 +417,11 @@ msgstr "Malformed quest data"
 msgid "Dossier des guides téléchargés rafraichi"
 msgstr "Folder of downloaded guides updated"
 
-#: src/routes/_app/settings.tsx:270
+#: src/routes/_app/settings.tsx:187
+msgid "Doubler la commande zaap"
+msgstr "Double the zaap command"
+
+#: src/routes/_app/settings.tsx:287
 msgid "Dynamique (selon la fenêtre)"
 msgstr "Dynamic (based on window)"
 
@@ -433,7 +437,7 @@ msgstr "Write your note here…"
 msgid "Éditer une note"
 msgstr "Edit a note"
 
-#: src/routes/_app/settings.tsx:307
+#: src/routes/_app/settings.tsx:324
 msgid "Efface tous vos profils et paramètres (pas les guides)"
 msgstr "Deletes all profiles and settings (not guides)"
 
@@ -635,7 +639,7 @@ msgstr "Unknown JSON error"
 msgid "Erreur lors de la copie du numéro de l'étape ({0})."
 msgstr "Error copying step number ({0})."
 
-#: src/routes/_app/settings.tsx:392
+#: src/routes/_app/settings.tsx:409
 msgid "Erreur lors de la création du profil. Vérifiez le nom du profil (nom unique)."
 msgstr "Error creating profile. Check the profile name (must be unique)."
 
@@ -694,11 +698,11 @@ msgstr "Step {current}"
 msgid "Étape {stepNumber}"
 msgstr "Step {stepNumber}"
 
-#: src/routes/_app/settings.tsx:315
+#: src/routes/_app/settings.tsx:332
 msgid "Étape précédente"
 msgstr "Previous step"
 
-#: src/routes/_app/settings.tsx:321
+#: src/routes/_app/settings.tsx:338
 msgid "Étape suivante"
 msgstr "Next step"
 
@@ -749,7 +753,7 @@ msgstr "Ganymède isn't installed in the Applications folder, which can prevent 
 msgid "Général"
 msgstr "General"
 
-#: src/routes/_app/settings.tsx:244
+#: src/routes/_app/settings.tsx:261
 msgid "Grande"
 msgstr "Large"
 
@@ -1153,11 +1157,11 @@ msgstr "Profile name updated successfully."
 msgid "Non commencé"
 msgstr "Not started"
 
-#: src/routes/_app/settings.tsx:241
+#: src/routes/_app/settings.tsx:258
 msgid "Normale"
 msgstr "Normal"
 
-#: src/routes/_app/settings.tsx:297
+#: src/routes/_app/settings.tsx:314
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
 msgstr "Note: Shortcuts already used by other applications (AMD Adrenalin, Nvidia App, etc.) cannot be registered. Remove them first in those applications."
 
@@ -1179,7 +1183,7 @@ msgstr "Notes"
 msgid "Notes du guide"
 msgstr "Guide notes"
 
-#: src/routes/_app/settings.tsx:205
+#: src/routes/_app/settings.tsx:222
 msgid "Opacité"
 msgstr "Opacity"
 
@@ -1214,7 +1218,7 @@ msgstr "Settings"
 msgid "Parcourir le catalogue"
 msgstr "Browse catalog"
 
-#: src/routes/_app/settings.tsx:238
+#: src/routes/_app/settings.tsx:255
 msgid "Petite"
 msgstr "Small"
 
@@ -1254,7 +1258,7 @@ msgstr "Profile \"{0}\""
 msgid "Profil \"{0}\" chargé"
 msgstr "Profile \"{0}\" loaded"
 
-#: src/routes/_app/settings.tsx:388
+#: src/routes/_app/settings.tsx:405
 msgid "Profil créé avec succès"
 msgstr "Profile created successfully"
 
@@ -1262,7 +1266,7 @@ msgstr "Profile created successfully"
 msgid "Profil supprimé avec succès"
 msgstr "Profile deleted successfully"
 
-#: src/routes/_app/settings.tsx:333
+#: src/routes/_app/settings.tsx:350
 msgid "Profils"
 msgstr "Profiles"
 
@@ -1270,7 +1274,7 @@ msgstr "Profiles"
 msgid "Raccourci mis à jour"
 msgstr "Shortcut updated"
 
-#: src/routes/_app/settings.tsx:303
+#: src/routes/_app/settings.tsx:320
 msgid "Raccourcis clavier"
 msgstr "Keyboard shortcuts"
 
@@ -1324,7 +1328,7 @@ msgstr "Retry"
 msgid "Réinitialiser"
 msgstr "Reset"
 
-#: src/routes/_app/settings.tsx:309
+#: src/routes/_app/settings.tsx:326
 msgid "Réinitialiser la configuration"
 msgstr "Reset configuration"
 
@@ -1428,11 +1432,11 @@ msgstr "Synchronising…"
 msgid "Synchronisation réussie."
 msgstr "Synchronisation successful."
 
-#: src/routes/_app/settings.tsx:219
+#: src/routes/_app/settings.tsx:236
 msgid "Taille de texte des guides"
 msgstr "Guides's font size"
 
-#: src/routes/_app/settings.tsx:254
+#: src/routes/_app/settings.tsx:271
 msgid "Taille des onglets de guides"
 msgstr "Guide tabs size"
 
@@ -1482,11 +1486,11 @@ msgstr "All guides have been updated"
 msgid "Tout fermer"
 msgstr "Close all"
 
-#: src/routes/_app/settings.tsx:247
+#: src/routes/_app/settings.tsx:264
 msgid "Très grande"
 msgstr "Extra large"
 
-#: src/routes/_app/settings.tsx:235
+#: src/routes/_app/settings.tsx:252
 msgid "Très petite"
 msgstr "Extra small"
 

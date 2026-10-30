@@ -10,8 +10,12 @@ export async function copyPosition(posX: number, posY: number, autoTravelCopy: b
   return copy
 }
 
-export async function copyZaap(zaap: Coordinates, position?: Coordinates): Promise<string> {
-  const copy = getChainedCommand(zaap, position)
+export async function copyZaap(
+  zaap: Coordinates,
+  position: Coordinates | undefined,
+  doubleZaap: boolean,
+): Promise<string> {
+  const copy = getChainedCommand(zaap, position, doubleZaap)
 
   await writeText(copy)
 

@@ -55,10 +55,15 @@ export function getZaapCommand({ x, y }: Coordinates): string {
   return `/zaap ${x} ${y}`
 }
 
-export function getChainedCommand(zaap: Coordinates, position?: Coordinates): string {
+export function getChainedCommand(zaap: Coordinates, position: Coordinates | undefined, doubleZaap: boolean): string {
   const zaapCommand = getZaapCommand(zaap)
 
-  return position ? `${zaapCommand} ; ${getTravelCommand(position)}` : zaapCommand
+  if (!position) {
+    return zaapCommand
+  }
+
+  // a slow computer can run the commands too fast for the game, so the zaap can be sent twice
+  return `${doubleZaap ? `${zaapCommand} ; ` : ''}${zaapCommand} ; ${getTravelCommand(position)}`
 }
 
 export function getPositionCopyContent(position: Coordinates, autoTravelCopy: boolean): string {

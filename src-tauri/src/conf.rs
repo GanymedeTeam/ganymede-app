@@ -18,6 +18,10 @@ const fn default_auto_open_guides() -> bool {
     true
 }
 
+const fn default_double_zaap() -> bool {
+    true
+}
+
 fn default_reset_conf_shortcut() -> String {
     "Alt+Shift+P".to_string()
 }
@@ -183,6 +187,8 @@ pub struct Conf {
     pub auto_open_guides: bool,
     #[serde(default)]
     pub shortcuts: Shortcuts,
+    #[serde(default = "default_double_zaap")]
+    pub double_zaap: bool,
 }
 
 // Functions
@@ -342,6 +348,7 @@ impl Default for Conf {
             opacity: 0.98,
             auto_open_guides: true,
             shortcuts: Shortcuts::default(),
+            double_zaap: true,
         }
     }
 }

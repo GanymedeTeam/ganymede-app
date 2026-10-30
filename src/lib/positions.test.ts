@@ -64,10 +64,20 @@ describe('getPositionCopyContent', () => {
 
 describe('getChainedCommand', () => {
   test('returns the zaap command alone', () => {
-    expect(getChainedCommand({ x: -20, y: 40 })).toBe('/zaap -20 40')
+    expect(getChainedCommand({ x: -20, y: 40 }, undefined, false)).toBe('/zaap -20 40')
   })
 
   test('chains the zaap and travel commands', () => {
-    expect(getChainedCommand({ x: -20, y: 40 }, { x: -20, y: -58 })).toBe('/zaap -20 40 ; /travel -20 -58')
+    expect(getChainedCommand({ x: -20, y: 40 }, { x: -20, y: -58 }, false)).toBe('/zaap -20 40 ; /travel -20 -58')
+  })
+
+  test('doubles the zaap command when a travel follows', () => {
+    expect(getChainedCommand({ x: -20, y: 40 }, { x: -20, y: -58 }, true)).toBe(
+      '/zaap -20 40 ; /zaap -20 40 ; /travel -20 -58',
+    )
+  })
+
+  test('does not double the zaap command without travel', () => {
+    expect(getChainedCommand({ x: -20, y: 40 }, undefined, true)).toBe('/zaap -20 40')
   })
 })
