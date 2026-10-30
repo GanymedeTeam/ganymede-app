@@ -55,7 +55,7 @@ export function getZaapCommand({ x, y }: Coordinates): string {
   return `/zaap ${x} ${y}`
 }
 
-export function getChainedCommand(zaap: Coordinates, position?: Coordinates, doubleZaap = false): string {
+export function getChainedCommand(zaap: Coordinates, position: Coordinates | undefined, doubleZaap: boolean): string {
   const zaapCommand = getZaapCommand(zaap)
 
   if (!position) {
