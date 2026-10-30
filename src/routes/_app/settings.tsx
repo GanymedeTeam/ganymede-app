@@ -181,6 +181,23 @@ function Settings() {
                 />
               </div>
             </SettingCardSection>
+            <SettingCardSection id="section-double-zaap">
+              <div className="flex items-center justify-between gap-2">
+                <Label className="text-xs" htmlFor="double-zaap">
+                  <Trans>Doubler la commande zaap</Trans>
+                </Label>
+                <Switch
+                  checked={conf.data.doubleZaap}
+                  id="double-zaap"
+                  onCheckedChange={(checked) => {
+                    setConf.mutate({
+                      ...conf.data,
+                      doubleZaap: checked,
+                    })
+                  }}
+                />
+              </div>
+            </SettingCardSection>
             <SettingCardSection id="section-show-done-guides">
               <div className="flex items-center justify-between gap-2">
                 <Label className="text-xs" htmlFor="show-done-guides">

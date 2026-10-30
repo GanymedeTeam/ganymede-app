@@ -118,7 +118,7 @@ export function EditorHtmlParsing({
                       disabled={disabled}
                       id={`copy-zaap-${zaap.x}-${zaap.y}`}
                       onClick={async () => {
-                        const content = await copyZaap(zaap, position)
+                        const content = await copyZaap(zaap, position, conf.data.doubleZaap)
                         toast(t`${content} copié`)
                       }}
                       title={position ? t`Copier les commandes zaap et autopilote` : t`Copier la commande zaap`}

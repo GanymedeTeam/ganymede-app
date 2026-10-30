@@ -70,4 +70,14 @@ describe('getChainedCommand', () => {
   test('chains the zaap and travel commands', () => {
     expect(getChainedCommand({ x: -20, y: 40 }, { x: -20, y: -58 })).toBe('/zaap -20 40 ; /travel -20 -58')
   })
+
+  test('doubles the zaap command when a travel follows', () => {
+    expect(getChainedCommand({ x: -20, y: 40 }, { x: -20, y: -58 }, true)).toBe(
+      '/zaap -20 40 ; /zaap -20 40 ; /travel -20 -58',
+    )
+  })
+
+  test('does not double the zaap command without travel', () => {
+    expect(getChainedCommand({ x: -20, y: 40 }, undefined, true)).toBe('/zaap -20 40')
+  })
 })
