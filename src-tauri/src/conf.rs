@@ -126,6 +126,10 @@ pub struct Profile {
     pub progresses: Vec<Progress>,
     #[serde(default)]
     pub server_id: Option<u32>,
+    #[serde(default)]
+    pub characters_count: Option<u32>,
+    #[serde(default)]
+    pub note: Option<String>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -361,6 +365,8 @@ impl Default for Profile {
             level: 200,
             progresses: vec![],
             server_id: None,
+            characters_count: None,
+            note: None,
         }
     }
 }
@@ -473,5 +479,20 @@ impl ConfApi for ConfApiImpl {
             .expect("[Conf] failed to reload webview");
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn profile_without_metadata_deserializes_with_none() {
+        let profile: Profile =
+            serde_json::from_str(r#"{"id":"a","name":"Player","progresses":[]}"#).unwrap();
+
+        assert_eq!(profile.level, 200);
+        assert_eq!(profile.characters_count, None);
+        assert_eq!(profile.note, None);
     }
 }
