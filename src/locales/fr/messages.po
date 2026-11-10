@@ -37,7 +37,7 @@ msgstr "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</
 msgid "Accéder au site officiel"
 msgstr "Accéder au site officiel"
 
-#: src/components/title_bar.tsx:114
+#: src/components/title_bar.tsx:120
 msgid "Accueil"
 msgstr "Accueil"
 
@@ -140,7 +140,7 @@ msgstr "Aucune quête ne correspond à votre recherche."
 msgid "Aujourd'hui"
 msgstr "Aujourd'hui"
 
-#: src/components/title_bar.tsx:147
+#: src/components/title_bar.tsx:151
 #: src/routes/_app/auto-pilot.tsx:25
 #: src/routes/_app/auto-pilot.tsx:49
 msgid "Autopilotage"
@@ -150,7 +150,7 @@ msgstr "Autopilotage"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bienvenue sur <0>GANYMÈDE</0> !"
 
-#: src/components/title_bar.tsx:165
+#: src/components/title_bar.tsx:169
 msgid "Carte"
 msgstr "Carte"
 
@@ -193,7 +193,7 @@ msgstr "Champ inconnu : {0}"
 msgid "Champ manquant : {0}"
 msgstr "Champ manquant : {0}"
 
-#: src/components/title_bar.tsx:175
+#: src/components/title_bar.tsx:179
 msgid "Chasse au trésor"
 msgstr "Chasse au trésor"
 
@@ -373,7 +373,7 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Début"
 
-#: src/components/title_bar.tsx:84
+#: src/components/title_bar.tsx:90
 msgid "Déconnecté"
 msgstr "Déconnecté"
 
@@ -706,7 +706,7 @@ msgstr "Étape précédente"
 msgid "Étape suivante"
 msgstr "Étape suivante"
 
-#: src/components/title_bar.tsx:226
+#: src/components/title_bar.tsx:230
 #: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:262
 #: src/routes/_app/guides/-$id/report_dialog.tsx:144
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:73
@@ -777,8 +777,7 @@ msgstr "Guide malformé"
 msgid "Guide téléchargé avec succès"
 msgstr "Guide téléchargé avec succès"
 
-#: src/components/title_bar.tsx:121
-#: src/components/title_bar.tsx:133
+#: src/components/title_bar.tsx:66
 #: src/routes/_app/downloads/$status.tsx:110
 msgid "Guides"
 msgstr "Guides"
@@ -1183,7 +1182,7 @@ msgstr "Note locale, non synchronisée avec le serveur."
 msgid "Note personnelle"
 msgstr "Note personnelle"
 
-#: src/components/title_bar.tsx:153
+#: src/components/title_bar.tsx:157
 #: src/routes/_app/notes.index.tsx:32
 #: src/routes/_app/notes.index.tsx:66
 msgid "Notes"
@@ -1218,7 +1217,7 @@ msgstr "Ouvrir les guides à l'ouverture"
 msgid "Ouvrir un guide"
 msgstr "Ouvrir un guide"
 
-#: src/components/title_bar.tsx:204
+#: src/components/title_bar.tsx:208
 #: src/routes/_app/settings.tsx:52
 #: src/routes/_app/settings.tsx:145
 msgid "Paramètres"
@@ -1330,7 +1329,7 @@ msgstr "Rechercher un profil..."
 msgid "Rechercher une quête"
 msgstr "Rechercher une quête"
 
-#: src/components/title_bar.tsx:216
+#: src/components/title_bar.tsx:220
 msgid "Réduire"
 msgstr "Réduire"
 
@@ -1358,12 +1357,12 @@ msgstr "Réponse de token invalide"
 msgid "Réponse GitHub malformée"
 msgstr "Réponse GitHub malformée"
 
-#: src/components/title_bar.tsx:106
+#: src/components/title_bar.tsx:112
 #: src/routes/_app/oauth/waiting.tsx:76
 msgid "Se connecter"
 msgstr "Se connecter"
 
-#: src/components/title_bar.tsx:93
+#: src/components/title_bar.tsx:99
 msgid "Se déconnecter"
 msgstr "Se déconnecter"
 
@@ -1392,7 +1391,7 @@ msgstr "Sommaire"
 msgid "Suivant"
 msgstr "Suivant"
 
-#: src/components/title_bar.tsx:183
+#: src/components/title_bar.tsx:187
 msgid "Supporter Ganymède"
 msgstr "Supporter Ganymède"
 
@@ -1472,7 +1471,7 @@ msgstr "Télécharger la version {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Télécharger le guide"
 
-#: src/components/title_bar.tsx:140
+#: src/components/title_bar.tsx:144
 msgid "Télécharger un guide"
 msgstr "Télécharger un guide"
 
@@ -1520,7 +1519,7 @@ msgstr "Un profil est déjà utilisé avec ce nom."
 msgid "Une erreur est survenue"
 msgstr "Une erreur est survenue"
 
-#: src/components/title_bar.tsx:88
+#: src/components/title_bar.tsx:94
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Une erreur est survenue lors de la déconnexion"
 

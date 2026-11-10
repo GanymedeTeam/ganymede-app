@@ -14,17 +14,12 @@ export const useTabs = create<State>()((set) => ({
   tabs: [],
   activeTab: null,
   setTabs: (tabs) => set({ tabs }),
+  // Keeps the same array when the tab is already opened, so subscribers do not re-render.
   addOrReplaceTab: (tab) =>
-    set((state) => {
-      // if tab.id is already in, override it on the same place
-      const index = state.tabs.findIndex((t) => t === tab)
-
-      if (index === -1) {
-        return { tabs: [...state.tabs, tab], activeTab: tab }
-      }
-
-      return { tabs: state.tabs.map((t) => (t === tab ? tab : t)), activeTab: tab }
-    }),
+    set((state) => ({
+      tabs: state.tabs.includes(tab) ? state.tabs : [...state.tabs, tab],
+      activeTab: tab,
+    })),
   removeTab: (tab) => {
     set((state) => {
       return { tabs: state.tabs.filter((t) => t !== tab) }
