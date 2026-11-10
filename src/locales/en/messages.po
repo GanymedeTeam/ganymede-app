@@ -61,7 +61,7 @@ msgstr "Go to step"
 
 #: src/components/deep_link_guide_download_dialog.tsx:61
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:104
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:167
 #: src/routes/_app/guides/-$id/report_dialog.tsx:152
 #: src/routes/_app/guides/-$id/report_dialog.tsx:189
 #: src/routes/_app/guides/-$id/step_note_dialog.tsx:242
@@ -1046,7 +1046,7 @@ msgstr "Guide #{pendingGuideId} is not downloaded.<0/>Would you like to download
 msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 msgstr "The guide will open at <0>step {0}</0>. <1/>You were at <2>step {1}</2> in your profile <3>\"{2}\"</3>."
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:55
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:65
 msgid "Le nom du profil ne peut pas être vide."
 msgstr "Profile name cannot be empty."
 
@@ -1120,7 +1120,7 @@ msgstr "Update in progress."
 msgid "Mise à jour terminée avec des erreurs"
 msgstr "Update completed with errors"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:107
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:170
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:173
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:207
 msgid "Modifier"
@@ -1140,6 +1140,11 @@ msgstr "My guide is up to date"
 msgid "Motif de recherche invalide"
 msgstr "Invalid search pattern"
 
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:129
+msgid "Niveau"
+msgstr "Level"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:115
 #: src/routes/_app/auto-pilot.tsx:30
 #: src/routes/_app/auto-pilot.tsx:122
 msgid "Nom"
@@ -1149,9 +1154,9 @@ msgstr "Name"
 msgid "Nom de la note"
 msgstr "Note's name"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:81
-msgid "Nom du profil mis à jour avec succès."
-msgstr "Profile name updated successfully."
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:143
+msgid "Nombre de personnages"
+msgstr "Number of characters"
 
 #: src/routes/_app/guides/-index/guide_item.tsx:260
 msgid "Non commencé"
@@ -1160,6 +1165,10 @@ msgstr "Not started"
 #: src/routes/_app/settings.tsx:258
 msgid "Normale"
 msgstr "Normal"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:156
+msgid "Note"
+msgstr "Note"
 
 #: src/routes/_app/settings.tsx:314
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
@@ -1249,7 +1258,7 @@ msgstr "Issue encountered"
 
 #. placeholder {0}: profile.name
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:37
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:87
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:109
 msgid "Profil \"{0}\""
 msgstr "Profile \"{0}\""
 
@@ -1261,6 +1270,10 @@ msgstr "Profile \"{0}\" loaded"
 #: src/routes/_app/settings.tsx:405
 msgid "Profil créé avec succès"
 msgstr "Profile created successfully"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:103
+msgid "Profil mis à jour avec succès."
+msgstr "Profile updated successfully."
 
 #: src/routes/_app/-settings/profiles.tsx:107
 msgid "Profil supprimé avec succès"
@@ -1498,7 +1511,7 @@ msgstr "Extra small"
 msgid "Twitter de Ganymède"
 msgstr "Ganymède's Twitter"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:63
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:73
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "A profile is already using this name."
 
@@ -1562,7 +1575,7 @@ msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "You will be redirected to the Ganymède login page."
 
 #. placeholder {0}: profile?.name ?? ''
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:89
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:111
 msgid "Vous allez modifier le profil \"{0}\""
 msgstr "You are about to edit the profile \"{0}\""
 

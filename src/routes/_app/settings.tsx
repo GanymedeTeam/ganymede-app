@@ -187,7 +187,7 @@ function Settings() {
                   <Trans>Doubler la commande zaap</Trans>
                 </Label>
                 <Switch
-                  checked={conf.data.doubleZaap}
+                  checked={conf.data.doubleZaap ?? true}
                   id="double-zaap"
                   onCheckedChange={(checked) => {
                     setConf.mutate({

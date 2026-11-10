@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils.ts'
 import { useSetConf } from '@/mutations/set_conf.mutation.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { ProfileDeleteDialog } from '@/routes/_app/-settings/profile_delete_dialog.tsx'
-import { ProfileEditNameDialog } from '@/routes/_app/-settings/profile_edit_name_dialog.tsx'
+import { ProfileEditDialog } from '@/routes/_app/-settings/profile_edit_dialog.tsx'
 
 export function Profiles() {
   const { t } = useLingui()
@@ -37,16 +37,16 @@ export function Profiles() {
   const [open, setOpen] = useState(false)
   const [openProfileDeleteDialog, setOpenProfileDeleteDialog] = useState(false)
   const [profileDeletionOpenId, setProfileDeletionOpenId] = useState<string | null>(null)
-  const [profileEditNameId, setEditProfileNameId] = useState<string | null>(null)
-  const [openProfileEditNameDialog, setOpenProfileEditNameDialog] = useState(false)
+  const [profileEditId, setEditProfileId] = useState<string | null>(null)
+  const [openProfileEditDialog, setOpenProfileEditDialog] = useState(false)
 
   return (
     <Popover
       onOpenChange={(open) => {
         setOpen(open)
 
-        if (!openProfileEditNameDialog) {
-          setEditProfileNameId(null)
+        if (!openProfileEditDialog) {
+          setEditProfileId(null)
         }
       }}
       open={open}
@@ -57,18 +57,18 @@ export function Profiles() {
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <ProfileEditNameDialog
+      <ProfileEditDialog
         onOpenChange={(open) => {
           if (!open) {
             setTimeout(() => {
-              setEditProfileNameId(null)
+              setEditProfileId(null)
             }, 500)
           }
 
-          setOpenProfileEditNameDialog(open)
+          setOpenProfileEditDialog(open)
         }}
-        open={openProfileEditNameDialog}
-        profileId={profileEditNameId}
+        open={openProfileEditDialog}
+        profileId={profileEditId}
       />
       <ProfileDeleteDialog
         onDelete={async (profileId) => {
@@ -159,8 +159,8 @@ export function Profiles() {
                         onClick={(e) => {
                           e.preventDefault()
                           e.stopPropagation()
-                          setEditProfileNameId(profile.id)
-                          setOpenProfileEditNameDialog(true)
+                          setEditProfileId(profile.id)
+                          setOpenProfileEditDialog(true)
                         }}
                         size="icon-sm"
                         variant="ghost"

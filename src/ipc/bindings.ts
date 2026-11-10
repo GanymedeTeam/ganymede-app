@@ -16,7 +16,7 @@ export type AuthTokens = { access_token: string; refresh_token: string | null; e
 
 export type AutoPilot = { name: string; position: string }
 
-export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts; doubleZaap: boolean }
+export type Conf = { autoTravelCopy: boolean; showDoneGuides: boolean; lang?: ConfLang; theme?: ConfTheme; fontSize?: FontSize; guideDisplay?: GuideDisplay; profiles: Profile[]; profileInUse: string; autoPilots: AutoPilot[]; notes: Note[]; opacity: number; autoOpenGuides?: boolean; shortcuts?: Shortcuts; doubleZaap?: boolean }
 
 export type ConfError = { Malformed: JsonError } | { CreateConfDir: string } | { ConfDir: string } | { SerializeConf: JsonError } | { UnhandledIo: string } | { SaveConf: string } | "GetProfileInUse" | { ResetConf: ConfError }
 
@@ -76,7 +76,7 @@ export type PinnedGuides = { profiles: Partial<{ [key in string]: ProfilePinnedG
 
 export type PinnedGuidesError = { Malformed: JsonError } | { CreateDir: string } | { ConfDir: string } | { SerializePinnedGuides: JsonError } | { UnhandledIo: string } | { SavePinnedGuides: string } | "LimitReached"
 
-export type Profile = { id: string; name: string; level?: number; progresses: Progress[]; server_id?: number | null }
+export type Profile = { id: string; name: string; level?: number; progresses: Progress[]; server_id?: number | null; characters_count?: number | null; note?: string | null }
 
 export type ProfilePinnedGuides = { guides: number[] }
 
@@ -185,7 +185,8 @@ pinGuide: (profileId: string, guideId: number) => Promise<null>,
 unpinGuide: (profileId: string, guideId: number) => Promise<null>},
 "report": {send_report: (payload: ReportPayload) => Promise<null>},
 "security": {getWhiteList: () => Promise<string[]>},
-"shortcuts": {reregister: () => Promise<null>, unregisterAll: () => Promise<null>},
+"shortcuts": {reregister: () => Promise<null>,
+unregisterAll: () => Promise<null>},
 "stepNotes": {get: () => Promise<StepNotes>,
 setStepNote: (profileId: string, guideId: number, stepIndex: number, note: string | null, isReminder: boolean) => Promise<null>},
 "sync": {createProfile: (name: string, uuid: string) => Promise<number>,

@@ -61,7 +61,7 @@ msgstr "Ir al paso"
 
 #: src/components/deep_link_guide_download_dialog.tsx:61
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:104
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:167
 #: src/routes/_app/guides/-$id/report_dialog.tsx:152
 #: src/routes/_app/guides/-$id/report_dialog.tsx:189
 #: src/routes/_app/guides/-$id/step_note_dialog.tsx:242
@@ -1046,7 +1046,7 @@ msgstr "La guía #{pendingGuideId} no está descargada.<0/>¿Quiere descargarla 
 msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 msgstr "La guía se abrirá en <0>el paso {0}</0>. <1/>Estaba en <2>el paso {1}</2> en su perfil <3>\"{2}\"</3>."
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:55
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:65
 msgid "Le nom du profil ne peut pas être vide."
 msgstr "El nombre del perfil no puede estar vacío."
 
@@ -1120,7 +1120,7 @@ msgstr "Actualización en curso."
 msgid "Mise à jour terminée avec des erreurs"
 msgstr "Actualización completada con errores"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:107
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:170
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:173
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:207
 msgid "Modifier"
@@ -1140,6 +1140,11 @@ msgstr "Mi guía está actualizada"
 msgid "Motif de recherche invalide"
 msgstr "Patrón de búsqueda inválido"
 
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:129
+msgid "Niveau"
+msgstr "Nivel"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:115
 #: src/routes/_app/auto-pilot.tsx:30
 #: src/routes/_app/auto-pilot.tsx:122
 msgid "Nom"
@@ -1149,9 +1154,9 @@ msgstr "Nombre"
 msgid "Nom de la note"
 msgstr "Nombre de la nota"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:81
-msgid "Nom du profil mis à jour avec succès."
-msgstr "Nombre del perfil actualizado correctamente."
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:143
+msgid "Nombre de personnages"
+msgstr "Número de personajes"
 
 #: src/routes/_app/guides/-index/guide_item.tsx:260
 msgid "Non commencé"
@@ -1160,6 +1165,10 @@ msgstr "No iniciado"
 #: src/routes/_app/settings.tsx:258
 msgid "Normale"
 msgstr "Normal"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:156
+msgid "Note"
+msgstr "Nota"
 
 #: src/routes/_app/settings.tsx:314
 msgid "Note : Les raccourcis déjà utilisés par d'autres applications (AMD Adrenalin, Nvidia App, etc.) ne peuvent pas être enregistrés. Supprimez-les d'abord dans ces applications."
@@ -1249,7 +1258,7 @@ msgstr "Problema encontrado"
 
 #. placeholder {0}: profile.name
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:37
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:87
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:109
 msgid "Profil \"{0}\""
 msgstr "Perfil \"{0}\""
 
@@ -1261,6 +1270,10 @@ msgstr "Perfil \"{0}\" cargado"
 #: src/routes/_app/settings.tsx:405
 msgid "Profil créé avec succès"
 msgstr "Perfil creado con éxito"
+
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:103
+msgid "Profil mis à jour avec succès."
+msgstr "Perfil actualizado correctamente."
 
 #: src/routes/_app/-settings/profiles.tsx:107
 msgid "Profil supprimé avec succès"
@@ -1498,7 +1511,7 @@ msgstr "Extra pequeña"
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymede"
 
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:63
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:73
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Ya existe un perfil con este nombre."
 
@@ -1562,7 +1575,7 @@ msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "Será redirigido a la página de inicio de sesión de Ganymède."
 
 #. placeholder {0}: profile?.name ?? ''
-#: src/routes/_app/-settings/profile_edit_name_dialog.tsx:89
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:111
 msgid "Vous allez modifier le profil \"{0}\""
 msgstr "Va a modificar el perfil \"{0}\""
 

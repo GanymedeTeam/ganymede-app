@@ -254,6 +254,8 @@ fn merge_remote_profiles(conf: &mut conf::Conf, remote_profiles: &[RemoteProfile
                     })
                     .collect(),
                 server_id: Some(remote_profile.id),
+                characters_count: None,
+                note: None,
             });
         }
     }
@@ -551,6 +553,8 @@ mod tests {
                 level: 200,
                 progresses: vec![progress],
                 server_id: Some(1),
+                characters_count: None,
+                note: None,
             }],
             profile_in_use: "local-uuid".to_owned(),
             ..Conf::default()
