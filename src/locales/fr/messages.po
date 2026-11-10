@@ -37,7 +37,7 @@ msgstr "<0>Vous trouverez les notes de version sur notre Discord <1>#changelog</
 msgid "Accéder au site officiel"
 msgstr "Accéder au site officiel"
 
-#: src/components/title_bar.tsx:107
+#: src/components/title_bar.tsx:114
 msgid "Accueil"
 msgstr "Accueil"
 
@@ -61,7 +61,7 @@ msgstr "Aller à l'étape"
 
 #: src/components/deep_link_guide_download_dialog.tsx:61
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:44
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:167
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:179
 #: src/routes/_app/guides/-$id/report_dialog.tsx:152
 #: src/routes/_app/guides/-$id/report_dialog.tsx:189
 #: src/routes/_app/guides/-$id/step_note_dialog.tsx:242
@@ -140,7 +140,7 @@ msgstr "Aucune quête ne correspond à votre recherche."
 msgid "Aujourd'hui"
 msgstr "Aujourd'hui"
 
-#: src/components/title_bar.tsx:126
+#: src/components/title_bar.tsx:147
 #: src/routes/_app/auto-pilot.tsx:25
 #: src/routes/_app/auto-pilot.tsx:49
 msgid "Autopilotage"
@@ -150,7 +150,7 @@ msgstr "Autopilotage"
 msgid "Bienvenue sur <0>GANYMÈDE</0> !"
 msgstr "Bienvenue sur <0>GANYMÈDE</0> !"
 
-#: src/components/title_bar.tsx:144
+#: src/components/title_bar.tsx:165
 msgid "Carte"
 msgstr "Carte"
 
@@ -170,7 +170,7 @@ msgstr "Ce message n'a pas pu être affiché. Vous pouvez le marquer comme lu."
 msgid "Ce raccourci est déjà utilisé"
 msgstr "Ce raccourci est déjà utilisé"
 
-#: src/routes/_app.tsx:116
+#: src/routes/_app.tsx:119
 msgid "Certaines données locales sont invalides et bloquent la synchronisation."
 msgstr "Certaines données locales sont invalides et bloquent la synchronisation."
 
@@ -193,7 +193,7 @@ msgstr "Champ inconnu : {0}"
 msgid "Champ manquant : {0}"
 msgstr "Champ manquant : {0}"
 
-#: src/components/title_bar.tsx:154
+#: src/components/title_bar.tsx:175
 msgid "Chasse au trésor"
 msgstr "Chasse au trésor"
 
@@ -373,7 +373,7 @@ msgstr "de <0>{0}</0>"
 msgid "Début"
 msgstr "Début"
 
-#: src/components/title_bar.tsx:77
+#: src/components/title_bar.tsx:84
 msgid "Déconnecté"
 msgstr "Déconnecté"
 
@@ -385,7 +385,7 @@ msgstr "Découvrez et ajoutez de nouveaux guides à votre liste."
 msgid "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 msgstr "Décrivez le problème rencontré. L'étape et le guide seront automatiquement inclus."
 
-#: src/routes/_app.tsx:185
+#: src/routes/_app.tsx:188
 msgid "Déplacez l'application dans le dossier Applications, puis relancez-la."
 msgstr "Déplacez l'application dans le dossier Applications, puis relancez-la."
 
@@ -706,7 +706,7 @@ msgstr "Étape précédente"
 msgid "Étape suivante"
 msgstr "Étape suivante"
 
-#: src/components/title_bar.tsx:205
+#: src/components/title_bar.tsx:226
 #: src/routes/_app/guides/-$id/guide_tabs_trigger.tsx:262
 #: src/routes/_app/guides/-$id/report_dialog.tsx:144
 #: src/routes/_app/guides/-index/guide_update_all_result_dialog.tsx:73
@@ -745,7 +745,7 @@ msgstr "Format de données incorrect"
 msgid "Ganymède - Non affilié à Ankama Games"
 msgstr "Ganymède - Non affilié à Ankama Games"
 
-#: src/routes/_app.tsx:180
+#: src/routes/_app.tsx:183
 msgid "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
 msgstr "Ganymède n'est pas installé dans le dossier Applications, ce qui peut empêcher les mises à jour automatiques."
 
@@ -777,7 +777,8 @@ msgstr "Guide malformé"
 msgid "Guide téléchargé avec succès"
 msgstr "Guide téléchargé avec succès"
 
-#: src/components/title_bar.tsx:113
+#: src/components/title_bar.tsx:121
+#: src/components/title_bar.tsx:133
 #: src/routes/_app/downloads/$status.tsx:110
 msgid "Guides"
 msgstr "Guides"
@@ -1015,13 +1016,13 @@ msgstr "La mise à jour automatique a échoué. Téléchargez et installez manue
 msgid "La suppression des guides corrompus a échoué."
 msgstr "La suppression des guides corrompus a échoué."
 
-#: src/routes/_app.tsx:115
+#: src/routes/_app.tsx:118
 #: src/routes/_app/oauth/waiting.tsx:62
 msgid "La synchronisation a échoué : données invalides."
 msgstr "La synchronisation a échoué : données invalides."
 
 #: src/lib/sync_progress_queue.ts:27
-#: src/routes/_app.tsx:129
+#: src/routes/_app.tsx:132
 #: src/routes/_app/oauth/waiting.tsx:64
 msgid "La synchronisation a échoué."
 msgstr "La synchronisation a échoué."
@@ -1046,7 +1047,7 @@ msgstr "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le t�
 msgid "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 msgstr "Le guide sera ouvert à <0>l'étape {0}</0>. <1/>Vous étiez à <2>l'étape {1}</2> dans votre profil <3>\"{2}\"</3>."
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:65
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:77
 msgid "Le nom du profil ne peut pas être vide."
 msgstr "Le nom du profil ne peut pas être vide."
 
@@ -1120,7 +1121,7 @@ msgstr "Mise à jour en cours."
 msgid "Mise à jour terminée avec des erreurs"
 msgstr "Mise à jour terminée avec des erreurs"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:170
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:183
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:173
 #: src/routes/_app/guides/-$id/guide_notes_dialog.tsx:207
 msgid "Modifier"
@@ -1140,11 +1141,11 @@ msgstr "Mon guide est à jour"
 msgid "Motif de recherche invalide"
 msgstr "Motif de recherche invalide"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:129
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:141
 msgid "Niveau"
 msgstr "Niveau"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:115
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:127
 #: src/routes/_app/auto-pilot.tsx:30
 #: src/routes/_app/auto-pilot.tsx:122
 msgid "Nom"
@@ -1154,7 +1155,7 @@ msgstr "Nom"
 msgid "Nom de la note"
 msgstr "Nom de la note"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:143
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:155
 msgid "Nombre de personnages"
 msgstr "Nombre de personnages"
 
@@ -1166,7 +1167,7 @@ msgstr "Non commencé"
 msgid "Normale"
 msgstr "Normale"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:156
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:168
 msgid "Note"
 msgstr "Note"
 
@@ -1182,7 +1183,7 @@ msgstr "Note locale, non synchronisée avec le serveur."
 msgid "Note personnelle"
 msgstr "Note personnelle"
 
-#: src/components/title_bar.tsx:132
+#: src/components/title_bar.tsx:153
 #: src/routes/_app/notes.index.tsx:32
 #: src/routes/_app/notes.index.tsx:66
 msgid "Notes"
@@ -1217,7 +1218,7 @@ msgstr "Ouvrir les guides à l'ouverture"
 msgid "Ouvrir un guide"
 msgstr "Ouvrir un guide"
 
-#: src/components/title_bar.tsx:183
+#: src/components/title_bar.tsx:204
 #: src/routes/_app/settings.tsx:52
 #: src/routes/_app/settings.tsx:145
 msgid "Paramètres"
@@ -1258,12 +1259,12 @@ msgstr "Problème rencontré"
 
 #. placeholder {0}: profile.name
 #: src/routes/_app/-settings/profile_delete_dialog.tsx:37
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:109
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:121
 msgid "Profil \"{0}\""
 msgstr "Profil \"{0}\""
 
 #. placeholder {0}: newProfile.name
-#: src/hooks/use_switch_profile.ts:24
+#: src/hooks/use_switch_profile.ts:26
 msgid "Profil \"{0}\" chargé"
 msgstr "Profil \"{0}\" chargé"
 
@@ -1271,7 +1272,7 @@ msgstr "Profil \"{0}\" chargé"
 msgid "Profil créé avec succès"
 msgstr "Profil créé avec succès"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:103
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:115
 msgid "Profil mis à jour avec succès."
 msgstr "Profil mis à jour avec succès."
 
@@ -1329,7 +1330,7 @@ msgstr "Rechercher un profil..."
 msgid "Rechercher une quête"
 msgstr "Rechercher une quête"
 
-#: src/components/title_bar.tsx:195
+#: src/components/title_bar.tsx:216
 msgid "Réduire"
 msgstr "Réduire"
 
@@ -1357,12 +1358,12 @@ msgstr "Réponse de token invalide"
 msgid "Réponse GitHub malformée"
 msgstr "Réponse GitHub malformée"
 
-#: src/components/title_bar.tsx:99
+#: src/components/title_bar.tsx:106
 #: src/routes/_app/oauth/waiting.tsx:76
 msgid "Se connecter"
 msgstr "Se connecter"
 
-#: src/components/title_bar.tsx:86
+#: src/components/title_bar.tsx:93
 msgid "Se déconnecter"
 msgstr "Se déconnecter"
 
@@ -1391,7 +1392,7 @@ msgstr "Sommaire"
 msgid "Suivant"
 msgstr "Suivant"
 
-#: src/components/title_bar.tsx:162
+#: src/components/title_bar.tsx:183
 msgid "Supporter Ganymède"
 msgstr "Supporter Ganymède"
 
@@ -1471,7 +1472,7 @@ msgstr "Télécharger la version {toVersion}"
 msgid "Télécharger le guide"
 msgstr "Télécharger le guide"
 
-#: src/components/title_bar.tsx:119
+#: src/components/title_bar.tsx:140
 msgid "Télécharger un guide"
 msgstr "Télécharger un guide"
 
@@ -1511,7 +1512,7 @@ msgstr "Très petite"
 msgid "Twitter de Ganymède"
 msgstr "Twitter de Ganymède"
 
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:73
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:85
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Un profil est déjà utilisé avec ce nom."
 
@@ -1519,7 +1520,7 @@ msgstr "Un profil est déjà utilisé avec ce nom."
 msgid "Une erreur est survenue"
 msgstr "Une erreur est survenue"
 
-#: src/components/title_bar.tsx:81
+#: src/components/title_bar.tsx:88
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Une erreur est survenue lors de la déconnexion"
 
@@ -1575,7 +1576,7 @@ msgid "Vous allez être redirigé vers la page de connexion de Ganymède."
 msgstr "Vous allez être redirigé vers la page de connexion de Ganymède."
 
 #. placeholder {0}: profile?.name ?? ''
-#: src/routes/_app/-settings/profile_edit_dialog.tsx:111
+#: src/routes/_app/-settings/profile_edit_dialog.tsx:123
 msgid "Vous allez modifier le profil \"{0}\""
 msgstr "Vous allez modifier le profil \"{0}\""
 
