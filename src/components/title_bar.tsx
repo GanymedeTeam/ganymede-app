@@ -60,6 +60,12 @@ export function TitleBar() {
   const tabs = useTabs((s) => s.tabs)
   const activeTab = useTabs((s) => s.activeTab)
   const openedGuide = pickStartupGuide(tabs, activeTab)
+  const guidesLabel = (
+    <>
+      <NotebookTextIcon />
+      <Trans>Guides</Trans>
+    </>
+  )
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
   const isImageViewer = isInImageViewerPath(location.pathname)
@@ -117,8 +123,7 @@ export function TitleBar() {
             <DropdownMenuItem asChild className="gap-2">
               {openedGuide === undefined ? (
                 <Link draggable={false} search={{ path: '' }} to="/guides">
-                  <NotebookTextIcon />
-                  <Trans>Guides</Trans>
+                  {guidesLabel}
                 </Link>
               ) : (
                 <Link
@@ -129,8 +134,7 @@ export function TitleBar() {
                   }}
                   to="/guides/$id"
                 >
-                  <NotebookTextIcon />
-                  <Trans>Guides</Trans>
+                  {guidesLabel}
                 </Link>
               )}
             </DropdownMenuItem>
