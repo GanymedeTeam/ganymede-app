@@ -162,6 +162,16 @@ export function getRecentGuides(profileId: string) {
   return fromPromise(taurpc.guides.getRecentGuides(profileId), GetRecentGuidesError.from)
 }
 
+export class GetLastFocusedGuideError extends Error {
+  static from(error: unknown) {
+    return new GetLastFocusedGuideError('Failed to get last focused guide', { cause: error })
+  }
+}
+
+export function getLastFocusedGuide(profileId: string) {
+  return fromPromise(taurpc.guides.getLastFocusedGuide(profileId), GetLastFocusedGuideError.from)
+}
+
 export class RegisterGuideOpenError extends Error {
   static from(error: unknown) {
     return new RegisterGuideOpenError('Failed to register guide open', { cause: error })

@@ -9,9 +9,11 @@ import { toast } from 'sonner'
 import { useAppVersionCheck } from '@/hooks/use_app_version_check.ts'
 import { useReconnectToast } from '@/hooks/use_reconnect_toast.ts'
 import { useTabs } from '@/hooks/use_tabs.ts'
+import { getLastFocusedGuide } from '@/ipc/guides.ts'
 import { syncProfiles } from '@/ipc/sync.ts'
 import { getProfile } from '@/lib/profile.ts'
 import { getProgress } from '@/lib/progress.ts'
+import { pickStartupGuide } from '@/lib/tabs.ts'
 import { confQuery } from '@/queries/conf.query.ts'
 import { installLocationQuery } from '@/queries/install_location.query.ts'
 import { recentGuidesQuery } from '@/queries/recent_guides.query.ts'
@@ -45,22 +47,23 @@ async function handleAutoOpenGuides(queryClient: QueryClient) {
   await debug(`Recent guides: ${recentGuides.join(', ')}`)
 
   const { setTabs } = useTabs.getState()
-  setTabs([...recentGuides].reverse())
+  setTabs(recentGuides)
 
-  const firstRecentGuide = recentGuides.at(0)
+  const lastFocusedGuide = await getLastFocusedGuide(profile.id)
+  const startupGuide = pickStartupGuide(recentGuides, lastFocusedGuide.unwrapOr(null))
 
-  if (!firstRecentGuide) {
+  if (!startupGuide) {
     await debug('No recent guides found, not redirecting. Should not happen.')
     return
   }
 
-  const step = getProgress(profile, firstRecentGuide)?.currentStep ?? 0
+  const step = getProgress(profile, startupGuide)?.currentStep ?? 0
 
-  autoOpenedGuide = { id: firstRecentGuide, step }
+  autoOpenedGuide = { id: startupGuide, step }
 
   throw redirect({
     to: '/guides/$id',
-    params: { id: firstRecentGuide },
+    params: { id: startupGuide },
     search: { step },
   })
 }

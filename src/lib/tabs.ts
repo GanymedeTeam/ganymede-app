@@ -6,6 +6,10 @@ export type OpenedGuide = z.infer<typeof OpenedGuideZod>
 
 export type OpenedGuideDropPosition = 'before' | 'after'
 
+export function pickStartupGuide(tabs: OpenedGuide[], lastFocusedGuide: OpenedGuide | null) {
+  return lastFocusedGuide !== null && tabs.includes(lastFocusedGuide) ? lastFocusedGuide : tabs.at(-1)
+}
+
 export function reorderOpenedGuides(
   tabs: OpenedGuide[],
   draggedGuide: OpenedGuide,
