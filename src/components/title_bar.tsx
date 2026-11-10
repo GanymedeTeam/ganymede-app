@@ -28,8 +28,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown_menu.tsx'
 import { useIsBodyLockedFromDialog } from '@/hooks/use_is_body_locked_from_dialog.ts'
+import { useTabs } from '@/hooks/use_tabs.ts'
 import { getLang } from '@/lib/conf.ts'
 import { isInImageViewerPath } from '@/lib/image_viewer.ts'
+import { getProfile } from '@/lib/profile.ts'
+import { getProgress } from '@/lib/progress.ts'
+import { pickStartupGuide } from '@/lib/tabs.ts'
 import { useCleanAuthTokens } from '@/mutations/clean_auth_tokens.mutation.ts'
 import { useOpenDofusDbHunt } from '@/mutations/open_dofusdb_hunt.mutation.ts'
 import { useOpenDofusDbMap } from '@/mutations/open_dofusdb_map.mutation.ts'
@@ -53,6 +57,9 @@ export function TitleBar() {
   const conf = useQuery(confQuery)
   const openDofusDbHunt = useOpenDofusDbHunt()
   const openDofusDbMap = useOpenDofusDbMap()
+  const tabs = useTabs((s) => s.tabs)
+  const activeTab = useTabs((s) => s.activeTab)
+  const openedGuide = pickStartupGuide(tabs, activeTab)
 
   const linksAreDisabled = location.pathname.includes('app-old-version')
   const isImageViewer = isInImageViewerPath(location.pathname)
@@ -108,10 +115,24 @@ export function TitleBar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="gap-2">
-              <Link draggable={false} search={{ path: '' }} to="/guides">
-                <NotebookTextIcon />
-                <Trans>Guides</Trans>
-              </Link>
+              {openedGuide === undefined ? (
+                <Link draggable={false} search={{ path: '' }} to="/guides">
+                  <NotebookTextIcon />
+                  <Trans>Guides</Trans>
+                </Link>
+              ) : (
+                <Link
+                  draggable={false}
+                  params={{ id: openedGuide }}
+                  search={{
+                    step: conf.data ? (getProgress(getProfile(conf.data), openedGuide)?.currentStep ?? 0) : 0,
+                  }}
+                  to="/guides/$id"
+                >
+                  <NotebookTextIcon />
+                  <Trans>Guides</Trans>
+                </Link>
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="gap-2">
               <Link draggable={false} to="/downloads">

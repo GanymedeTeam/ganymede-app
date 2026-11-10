@@ -4,6 +4,7 @@ import { OpenedGuide } from '@/lib/tabs.ts'
 
 type State = {
   tabs: OpenedGuide[]
+  activeTab: OpenedGuide | null
   setTabs: (tabs: OpenedGuide[]) => void
   addOrReplaceTab: (tab: OpenedGuide) => void
   removeTab: (tab: OpenedGuide) => void
@@ -11,6 +12,7 @@ type State = {
 
 export const useTabs = create<State>()((set) => ({
   tabs: [],
+  activeTab: null,
   setTabs: (tabs) => set({ tabs }),
   addOrReplaceTab: (tab) =>
     set((state) => {
@@ -18,10 +20,10 @@ export const useTabs = create<State>()((set) => ({
       const index = state.tabs.findIndex((t) => t === tab)
 
       if (index === -1) {
-        return { tabs: [...state.tabs, tab] }
+        return { tabs: [...state.tabs, tab], activeTab: tab }
       }
 
-      return { tabs: state.tabs.map((t) => (t === tab ? tab : t)) }
+      return { tabs: state.tabs.map((t) => (t === tab ? tab : t)), activeTab: tab }
     }),
   removeTab: (tab) => {
     set((state) => {
