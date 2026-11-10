@@ -6,8 +6,10 @@ import { toast } from 'sonner'
 
 import { useTabs } from '@/hooks/use_tabs.ts'
 import type { Conf } from '@/ipc/bindings.ts'
+import { getLastFocusedGuide } from '@/ipc/guides.ts'
 import { getProfileById } from '@/lib/profile.ts'
 import { getProgress } from '@/lib/progress.ts'
+import { pickStartupGuide } from '@/lib/tabs.ts'
 import { recentGuidesQuery } from '@/queries/recent_guides.query.ts'
 
 export function useSwitchProfile() {
@@ -25,14 +27,16 @@ export function useSwitchProfile() {
 
       const recentGuides = await queryClient.fetchQuery(recentGuidesQuery(newProfileId))
 
-      setTabs([...recentGuides].reverse())
+      setTabs(recentGuides)
 
-      if (recentGuides.length === 0) {
+      const lastFocusedGuide = await getLastFocusedGuide(newProfileId)
+      const firstGuide = pickStartupGuide(recentGuides, lastFocusedGuide.unwrapOr(null))
+
+      if (firstGuide === undefined) {
         navigate({ to: '/guides', search: { path: '' } })
         return
       }
 
-      const firstGuide = recentGuides[0]
       const progress = getProgress(newProfile, firstGuide)
 
       navigate({

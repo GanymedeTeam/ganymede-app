@@ -1,6 +1,24 @@
 import { describe, expect, test } from 'vitest'
 
-import { reorderOpenedGuides } from './tabs.ts'
+import { pickStartupGuide, reorderOpenedGuides } from './tabs.ts'
+
+describe('pickStartupGuide', () => {
+  test('picks the last focused guide when still opened', () => {
+    expect(pickStartupGuide([1, 2, 3], 2)).toBe(2)
+  })
+
+  test('falls back to the last tab when the last focused guide was closed', () => {
+    expect(pickStartupGuide([1, 2, 3], 4)).toBe(3)
+  })
+
+  test('falls back to the last tab without last focused guide', () => {
+    expect(pickStartupGuide([1, 2, 3], null)).toBe(3)
+  })
+
+  test('returns undefined without tabs', () => {
+    expect(pickStartupGuide([], 1)).toBeUndefined()
+  })
+})
 
 describe('reorderOpenedGuides', () => {
   test('moves a guide before another guide', () => {

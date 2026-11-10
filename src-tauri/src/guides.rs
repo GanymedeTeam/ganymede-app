@@ -237,6 +237,7 @@ pub struct QuestSummary {
 }
 
 pub type RecentGuides = HashMap<String, Vec<u32>>;
+type LastFocusedGuides = HashMap<String, u32>;
 
 #[derive(Deserialize)]
 struct BatchGuideResponse {
@@ -745,6 +746,12 @@ fn register_guide_open<R: Runtime>(
     let recent_guides_path = app_handle.path().app_recent_guides_file();
 
     let mut recent_guides = read_recent_guides_file(&recent_guides_path, &profile_id)?;
+
+    // Only a startup hint: never block registering the tab.
+    if let Err(err) = set_last_focused_guide(&app_handle, &profile_id, guide_id) {
+        warn!("[Guides] cannot save last focused guide: {err}");
+    }
+
     let profile_guides = recent_guides.entry(profile_id).or_default();
 
     if !profile_guides.contains(&guide_id) {
@@ -802,6 +809,32 @@ fn get_recent_guides<R: Runtime>(
     Ok(sanitize_recent_guides(profile_guides))
 }
 
+fn get_last_focused_guide<R: Runtime>(
+    app_handle: AppHandle<R>,
+    profile_id: String,
+) -> Result<Option<u32>, Error> {
+    let path = app_handle.path().app_last_focused_guides_file();
+
+    Ok(read_last_focused_guides_file(&path)?
+        .get(&profile_id)
+        .copied())
+}
+
+fn set_last_focused_guide<R: Runtime>(
+    app_handle: &AppHandle<R>,
+    profile_id: &str,
+    guide_id: u32,
+) -> Result<(), Error> {
+    let path = app_handle.path().app_last_focused_guides_file();
+    let mut last_focused_guides = read_last_focused_guides_file(&path)?;
+
+    if last_focused_guides.insert(profile_id.to_string(), guide_id) != Some(guide_id) {
+        write_last_focused_guides_file(&path, &last_focused_guides)?;
+    }
+
+    Ok(())
+}
+
 fn set_recent_guides<R: Runtime>(
     app_handle: AppHandle<R>,
     profile_id: String,
@@ -835,6 +868,13 @@ fn remove_profile_from_recent_guides<R: Runtime>(
         write_recent_guides_file(&recent_guides_path, &recent_guides)?;
     }
 
+    let last_focused_guides_path = app_handle.path().app_last_focused_guides_file();
+    let mut last_focused_guides = read_last_focused_guides_file(&last_focused_guides_path)?;
+
+    if last_focused_guides.remove(&profile_id).is_some() {
+        write_last_focused_guides_file(&last_focused_guides_path, &last_focused_guides)?;
+    }
+
     Ok(())
 }
 
@@ -855,6 +895,34 @@ fn write_recent_guides_file(
         .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
 
     Ok(())
+}
+
+fn read_last_focused_guides_file(path: &Path) -> Result<LastFocusedGuides, Error> {
+    if !path.exists() {
+        return Ok(HashMap::new());
+    }
+
+    let file = fs::read_to_string(path)
+        .map_err(|err| Error::ReadRecentGuidesFile(format!("last focused guides file: {err}")))?;
+
+    // Only a startup hint: a malformed file must not block the app, it is rewritten on next focus.
+    Ok(
+        crate::json::from_str::<LastFocusedGuides>(&file).unwrap_or_else(|_| {
+            warn!("[Guides] malformed last focused guides file, ignoring it");
+            HashMap::new()
+        }),
+    )
+}
+
+fn write_last_focused_guides_file(
+    path: &Path,
+    last_focused_guides: &LastFocusedGuides,
+) -> Result<(), Error> {
+    let json = crate::json::serialize_pretty(last_focused_guides)
+        .map_err(Error::SerializeRecentGuidesFile)?;
+
+    fs::write(path, json)
+        .map_err(|err| Error::WriteRecentGuidesFile(format!("last focused guides file: {err}")))
 }
 
 fn sanitize_recent_guides_by_profile(recent_guides: &RecentGuides) -> RecentGuides {
@@ -1610,6 +1678,11 @@ pub trait GuidesApi {
         app_handle: AppHandle<R>,
         profile_id: String,
     ) -> Result<Vec<u32>, Error>;
+    #[taurpc(alias = "getLastFocusedGuide")]
+    async fn get_last_focused_guide<R: Runtime>(
+        app_handle: AppHandle<R>,
+        profile_id: String,
+    ) -> Result<Option<u32>, Error>;
     #[taurpc(alias = "setRecentGuides")]
     async fn set_recent_guides<R: Runtime>(
         app_handle: AppHandle<R>,
@@ -1751,6 +1824,14 @@ impl GuidesApi for GuidesApiImpl {
         profile_id: String,
     ) -> Result<Vec<u32>, Error> {
         get_recent_guides(app_handle, profile_id)
+    }
+
+    async fn get_last_focused_guide<R: Runtime>(
+        self,
+        app_handle: AppHandle<R>,
+        profile_id: String,
+    ) -> Result<Option<u32>, Error> {
+        get_last_focused_guide(app_handle, profile_id)
     }
 
     async fn set_recent_guides<R: Runtime>(

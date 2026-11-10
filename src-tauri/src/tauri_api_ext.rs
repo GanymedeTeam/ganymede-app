@@ -6,6 +6,7 @@ use tauri::Runtime;
 const APP_CONFIG_FILE: &str = "conf.json";
 const APP_GUIDES_DIR: &str = "guides";
 const APP_RECENT_GUIDES_FILE: &str = "recent_guides.json";
+const APP_LAST_FOCUSED_GUIDES_FILE: &str = "last_focused_guides.json";
 const APP_FIRST_TIME_START_FILE: &str = "first_time_start.json";
 const APP_VIEWED_NOTIFICATIONS_FILE: &str = "viewed_notifications.json";
 const APP_AUTH_FILE: &str = "auth.json";
@@ -20,6 +21,7 @@ pub trait ConfPathExt {
 pub trait GuidesPathExt {
     fn app_guides_dir(&self) -> PathBuf;
     fn app_recent_guides_file(&self) -> PathBuf;
+    fn app_last_focused_guides_file(&self) -> PathBuf;
 }
 
 pub trait FirstTimePathExt {
@@ -82,6 +84,14 @@ impl<R: Runtime> GuidesPathExt for PathResolver<R> {
             .expect("[TauriApi] app_recent_guides_file");
 
         path.join(APP_RECENT_GUIDES_FILE)
+    }
+
+    fn app_last_focused_guides_file(&self) -> PathBuf {
+        let path = self
+            .app_config_dir()
+            .expect("[TauriApi] app_last_focused_guides_file");
+
+        path.join(APP_LAST_FOCUSED_GUIDES_FILE)
     }
 }
 
