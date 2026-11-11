@@ -1,5 +1,17 @@
 # ganymede-app
 
+## 1.22.0
+
+### Minor Changes
+
+- 9bb0436: Ajout de métadonnées au profil : niveau, nombre de personnages et note, modifiables depuis la fenêtre d'édition du profil.
+
+### Patch Changes
+
+- 53bcd73: Le dernier guide consulté est désormais rouvert au démarrage et lors du changement de profil, et l'ordre des onglets est conservé entre deux lancements.
+- 131eefe: Le menu « Guides » ramène désormais aux onglets de guides ouverts s'il y en a, sinon à la bibliothèque.
+- 2c62983: Correction de la saisie impossible dans les champs de texte sur les anciennes versions de macOS (Monterey).
+
 ## 1.21.0
 
 ### Minor Changes
