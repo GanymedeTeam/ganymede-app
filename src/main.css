@@ -315,6 +315,14 @@
     user-select: none;
   }
 
+  /* Old WebKit (macOS Monterey) blocks typing in editable elements with user-select: none */
+  input,
+  textarea,
+  [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
   body {
     font-feature-settings:
       'rlig' 1,
