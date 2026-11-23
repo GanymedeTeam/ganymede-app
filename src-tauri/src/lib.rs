@@ -29,6 +29,7 @@ mod almanax;
 #[cfg(not(dev))]
 mod analytics;
 mod api;
+mod atomic_file;
 mod base;
 mod conf;
 mod deep_link;

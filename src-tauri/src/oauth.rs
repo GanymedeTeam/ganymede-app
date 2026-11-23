@@ -291,7 +291,7 @@ fn save_auth_tokens<R: Runtime>(
 ) -> Result<(), Error> {
     let path = app_handle.path().app_auth_file();
     let json = json::serialize_pretty(tokens)?;
-    fs::write(&path, json).map_err(|e| Error::SaveAuth(e.to_string()))?;
+    crate::atomic_file::write_atomic(&path, json).map_err(|e| Error::SaveAuth(e.to_string()))?;
     Ok(())
 }
 

@@ -22,7 +22,7 @@ impl<R: Runtime> FirstStartExt for AppHandle<R> {
         let version = self.package_info().version.to_string();
 
         if !exists {
-            std::fs::write(
+            crate::atomic_file::write_atomic(
                 first_time_start,
                 format!(r###"{{"version": "{version}"}}"###, version = version),
             )
