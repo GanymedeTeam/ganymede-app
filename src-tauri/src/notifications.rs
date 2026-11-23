@@ -74,7 +74,7 @@ impl ViewedNotifications {
         let json =
             crate::json::serialize_pretty(self).map_err(Error::SerializeViewedNotifications)?;
 
-        fs::write(viewed_notifications_path, json)
+        crate::atomic_file::write_atomic(viewed_notifications_path, json)
             .map_err(|err| Error::SaveViewedNotifications(err.to_string()))
     }
 

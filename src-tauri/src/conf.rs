@@ -263,7 +263,8 @@ pub fn save_conf<R: Runtime>(conf: &mut Conf, app: &AppHandle<R>) -> Result<(), 
 
     let json = crate::json::serialize_pretty(conf).map_err(Error::SerializeConf)?;
 
-    fs::write(conf_path, json).map_err(|err| Error::SaveConf(err.to_string()))
+    crate::atomic_file::write_atomic(conf_path, json)
+        .map_err(|err| Error::SaveConf(err.to_string()))
 }
 
 pub fn backup_conf<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {

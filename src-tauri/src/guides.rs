@@ -646,7 +646,8 @@ fn write_guides<R: Runtime>(guides: &Guides, app: &AppHandle<R>) -> Result<(), E
 
         debug!("Writing guide to {:?}", file);
 
-        fs::write(file.as_path(), json).map_err(|err| Error::WriteGuideFile(err.to_string()))?;
+        crate::atomic_file::write_atomic(file.as_path(), json)
+            .map_err(|err| Error::WriteGuideFile(err.to_string()))?;
     }
 
     Ok(())
@@ -891,7 +892,7 @@ fn write_recent_guides_file(
         recent_guides_path
     );
 
-    fs::write(recent_guides_path.as_path(), json)
+    crate::atomic_file::write_atomic(recent_guides_path.as_path(), json)
         .map_err(|err| Error::WriteRecentGuidesFile(err.to_string()))?;
 
     Ok(())
@@ -921,7 +922,7 @@ fn write_last_focused_guides_file(
     let json = crate::json::serialize_pretty(last_focused_guides)
         .map_err(Error::SerializeRecentGuidesFile)?;
 
-    fs::write(path, json)
+    crate::atomic_file::write_atomic(path, json)
         .map_err(|err| Error::WriteRecentGuidesFile(format!("last focused guides file: {err}")))
 }
 

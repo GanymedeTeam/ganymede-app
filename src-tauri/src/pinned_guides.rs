@@ -87,7 +87,8 @@ pub fn save_pinned_guides<R: Runtime>(
 
     let json = crate::json::serialize_pretty(pinned).map_err(Error::SerializePinnedGuides)?;
 
-    fs::write(path, json).map_err(|err| Error::SavePinnedGuides(err.to_string()))
+    crate::atomic_file::write_atomic(path, json)
+        .map_err(|err| Error::SavePinnedGuides(err.to_string()))
 }
 
 pub fn ensure_pinned_guides_file(app_handle: &AppHandle) -> Result<(), Error> {

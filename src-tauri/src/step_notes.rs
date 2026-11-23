@@ -105,7 +105,8 @@ pub fn save_step_notes<R: Runtime>(notes: &StepNotes, app: &AppHandle<R>) -> Res
 
     let json = crate::json::serialize_pretty(notes).map_err(Error::SerializeStepNotes)?;
 
-    fs::write(path, json).map_err(|err| Error::SaveStepNotes(err.to_string()))
+    crate::atomic_file::write_atomic(path, json)
+        .map_err(|err| Error::SaveStepNotes(err.to_string()))
 }
 
 pub fn ensure_step_notes_file(app_handle: &AppHandle) -> Result<(), Error> {
