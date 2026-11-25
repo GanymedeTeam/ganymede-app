@@ -342,7 +342,20 @@ pub async fn get_guide_from_server(
         .get(format!("{}/v2/guides/{}", GANYMEDE_API, guide_id))
         .send()
         .await
-        .map_err(|err| Error::RequestGuide(err.to_string()))?;
+        .map_err(|err| {
+            if err.is_connect() || err.is_timeout() {
+                Error::NetworkUnavailable
+            } else {
+                Error::RequestGuide(err.to_string())
+            }
+        })?;
+
+    match res.status() {
+        status if status.is_success() => {}
+        reqwest::StatusCode::NOT_FOUND => return Err(Error::GuideNotFound(guide_id)),
+        status => return Err(Error::RequestGuide(format!("unexpected status {status}"))),
+    }
+
     let text = res
         .text()
         .await
