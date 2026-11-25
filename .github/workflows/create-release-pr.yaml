@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: setup pnpm
         uses: pnpm/action-setup@v6
 
       - name: setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: 'pnpm'
@@ -33,12 +33,11 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Create Release Pull Request
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         id: changesets
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          createGithubReleases: false
-          commit: "chore(release): update version for release"
-          title: "chore(release): update version for release"
-          version: "pnpm changeset:version"
+          create-github-releases: false
+          push-git-tags: false
+          commit-message: "chore(release): update version for release"
+          pr-title: "chore(release): update version for release"
+          version-script: "pnpm changeset:version"
