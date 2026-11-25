@@ -206,43 +206,43 @@ msgstr "Escolher um guia"
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
-#: src/components/editor_html_parsing.tsx:324
+#: src/components/editor_html_parsing.tsx:333
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:328
+#: src/components/editor_html_parsing.tsx:337
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:325
+#: src/components/editor_html_parsing.tsx:334
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:329
+#: src/components/editor_html_parsing.tsx:338
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:336
+#: src/components/editor_html_parsing.tsx:345
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. ⌘+clique para abrir no dofusdb. ⌥+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:337
+#: src/components/editor_html_parsing.tsx:346
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb. Alt+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:320
+#: src/components/editor_html_parsing.tsx:329
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:321
+#: src/components/editor_html_parsing.tsx:330
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:332
+#: src/components/editor_html_parsing.tsx:341
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:333
+#: src/components/editor_html_parsing.tsx:342
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
@@ -250,11 +250,11 @@ msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 msgid "Cliquez pour enregistrer"
 msgstr "Clique para gravar"
 
-#: src/components/editor_html_parsing.tsx:452
+#: src/components/editor_html_parsing.tsx:461
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
-#: src/components/editor_html_parsing.tsx:424
+#: src/components/editor_html_parsing.tsx:433
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Clique para abrir numa janela nova"
 
@@ -848,7 +848,7 @@ msgstr "Não foi possível instalar a atualização"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Não é possível obter o sistema de actualização"
 
-#: src/components/editor_html_parsing.tsx:416
+#: src/components/editor_html_parsing.tsx:425
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Não é possível abrir a janela, abrindo no navegador"
 
@@ -1038,6 +1038,10 @@ msgstr "Idioma"
 #: src/components/deep_link_guide_download_dialog.tsx:50
 msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
 msgstr "O guia #{pendingGuideId} não está transferido.<0/>Quer transferi-lo agora?"
+
+#: src/components/editor_html_parsing.tsx:237
+msgid "Le guide lié est introuvable ou indisponible pour le moment."
+msgstr "O guia ligado não foi encontrado ou não está disponível de momento."
 
 #. placeholder {0}: pendingStep + 1
 #. placeholder {1}: progressionStep + 1

@@ -206,43 +206,43 @@ msgstr "Choisir un guide"
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
-#: src/components/editor_html_parsing.tsx:324
+#: src/components/editor_html_parsing.tsx:333
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:328
+#: src/components/editor_html_parsing.tsx:337
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:325
+#: src/components/editor_html_parsing.tsx:334
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:329
+#: src/components/editor_html_parsing.tsx:338
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:336
+#: src/components/editor_html_parsing.tsx:345
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:337
+#: src/components/editor_html_parsing.tsx:346
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:320
+#: src/components/editor_html_parsing.tsx:329
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:321
+#: src/components/editor_html_parsing.tsx:330
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:332
+#: src/components/editor_html_parsing.tsx:341
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:333
+#: src/components/editor_html_parsing.tsx:342
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
@@ -250,11 +250,11 @@ msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb
 msgid "Cliquez pour enregistrer"
 msgstr "Cliquez pour enregistrer"
 
-#: src/components/editor_html_parsing.tsx:452
+#: src/components/editor_html_parsing.tsx:461
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
-#: src/components/editor_html_parsing.tsx:424
+#: src/components/editor_html_parsing.tsx:433
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Cliquez pour ouvrir dans une nouvelle fenêtre"
 
@@ -848,7 +848,7 @@ msgstr "Impossible d'installer la mise à jour"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Impossible d'obtenir le système de mise à jour"
 
-#: src/components/editor_html_parsing.tsx:416
+#: src/components/editor_html_parsing.tsx:425
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 
@@ -1038,6 +1038,10 @@ msgstr "Langue"
 #: src/components/deep_link_guide_download_dialog.tsx:50
 msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
 msgstr "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
+
+#: src/components/editor_html_parsing.tsx:237
+msgid "Le guide lié est introuvable ou indisponible pour le moment."
+msgstr "Le guide lié est introuvable ou indisponible pour le moment."
 
 #. placeholder {0}: pendingStep + 1
 #. placeholder {1}: progressionStep + 1
