@@ -27,6 +27,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v6
         with:
+          node-version-file: .nvmrc
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -63,6 +64,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v6
         with:
+          node-version-file: .nvmrc
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
