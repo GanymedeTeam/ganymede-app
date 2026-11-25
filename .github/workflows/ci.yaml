@@ -42,6 +42,9 @@ jobs:
       - name: typecheck (tsc)
         run: pnpm typecheck
 
+      - name: test (vitest)
+        run: pnpm test
+
   build:
     name: Build app (ubuntu)
     runs-on: ubuntu-24.04
