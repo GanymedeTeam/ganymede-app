@@ -11,7 +11,6 @@ use std::fs;
 use std::sync::{LazyLock, Mutex};
 use tauri::{AppHandle, Manager, Runtime};
 use tauri_plugin_http::reqwest;
-use tauri_plugin_opener::OpenerExt;
 use uuid::Uuid;
 
 pub const CLIENT_ID: &str = env!("GANYMEDE_CLIENT_ID");
@@ -99,10 +98,9 @@ impl OAuthApi for OAuthApiImpl {
         let auth_url = build_authorization_url(&code_challenge, &state_id);
         debug!("[OAuth] Opening authorization URL: {}", auth_url);
 
-        app_handle
-            .opener()
-            .open_url(&auth_url, None::<String>)
-            .map_err(|e| Error::OpenBrowser(e.to_string()))?;
+        crate::opener::open_url(&app_handle, &auth_url)
+            .await
+            .map_err(Error::OpenBrowser)?;
 
         debug!(
             "[OAuth] OAuth flow started successfully with state ID: {}",

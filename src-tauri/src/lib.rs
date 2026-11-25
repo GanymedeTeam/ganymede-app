@@ -43,6 +43,7 @@ mod item;
 mod json;
 mod notifications;
 mod oauth;
+mod opener;
 mod overlay;
 mod pinned_guides;
 mod quest;
