@@ -83,7 +83,7 @@ msgstr "Appuyez sur les touches..."
 msgid "Attention"
 msgstr "Attention"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:106
 msgid "Attention !"
 msgstr "Attention !"
 
@@ -1196,7 +1196,7 @@ msgstr "Notes du guide"
 msgid "Opacité"
 msgstr "Opacité"
 
-#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:95
 msgid "ou le bouton suivant"
 msgstr "ou le bouton suivant"
 
@@ -1236,7 +1236,7 @@ msgid "Plus d'options"
 msgstr "Plus d'options"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:87
+#: src/components/error_component.tsx:88
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 
@@ -1337,7 +1337,7 @@ msgstr "Réduire"
 msgid "Réessayer"
 msgstr "Réessayer"
 
-#: src/components/error_component.tsx:99
+#: src/components/error_component.tsx:100
 msgid "Réinitialiser"
 msgstr "Réinitialiser"
 
@@ -1515,7 +1515,7 @@ msgstr "Twitter de Ganymède"
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Un profil est déjà utilisé avec ce nom."
 
-#: src/components/error_component.tsx:79
+#: src/components/error_component.tsx:80
 msgid "Une erreur est survenue"
 msgstr "Une erreur est survenue"
 
@@ -1523,7 +1523,7 @@ msgstr "Une erreur est survenue"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Une erreur est survenue lors de la déconnexion"
 
-#: src/components/error_component.tsx:77
+#: src/components/error_component.tsx:78
 msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "Une erreur est survenue lors de la récupération de la configuration"
 
@@ -1557,7 +1557,7 @@ msgstr "Voir les notes du guide"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Votre message nous a été transmis. Bon jeu !"
 
-#: src/components/error_component.tsx:108
+#: src/components/error_component.tsx:109
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 

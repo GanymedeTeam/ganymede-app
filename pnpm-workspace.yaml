@@ -1,6 +1,8 @@
 overrides:
   '@types/react': ^19.0.8
   '@types/react-dom': ^19.0.3
+  '@tailwindcss/typography>postcss-selector-parser': ^6.1.5
+  tinypool: ^2.1.2
 
 allowBuilds:
   '@sentry/cli': true
