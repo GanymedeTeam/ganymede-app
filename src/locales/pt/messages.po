@@ -83,7 +83,7 @@ msgstr "Pressione as teclas..."
 msgid "Attention"
 msgstr "Atenção"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:106
 msgid "Attention !"
 msgstr "Atenção!"
 
@@ -1196,7 +1196,7 @@ msgstr "Notas do guia"
 msgid "Opacité"
 msgstr "Opacidade"
 
-#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:95
 msgid "ou le bouton suivant"
 msgstr "ou o botão seguinte"
 
@@ -1236,7 +1236,7 @@ msgid "Plus d'options"
 msgstr "Mais opções"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:87
+#: src/components/error_component.tsx:88
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>"
 
@@ -1337,7 +1337,7 @@ msgstr "Minimizar"
 msgid "Réessayer"
 msgstr "Tentar novamente"
 
-#: src/components/error_component.tsx:99
+#: src/components/error_component.tsx:100
 msgid "Réinitialiser"
 msgstr "Restabelecer"
 
@@ -1515,7 +1515,7 @@ msgstr "Twitter do Ganimedes"
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Já existe um perfil com este nome."
 
-#: src/components/error_component.tsx:79
+#: src/components/error_component.tsx:80
 msgid "Une erreur est survenue"
 msgstr "Ocorreu um erro"
 
@@ -1523,7 +1523,7 @@ msgstr "Ocorreu um erro"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Ocorreu um erro durante o término da sessão"
 
-#: src/components/error_component.tsx:77
+#: src/components/error_component.tsx:78
 msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "Ocorreu um erro ao recuperar a configuração"
 
@@ -1557,7 +1557,7 @@ msgstr "Ver as notas do guia"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 
-#: src/components/error_component.tsx:108
+#: src/components/error_component.tsx:109
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 

@@ -83,7 +83,7 @@ msgstr "Press keys..."
 msgid "Attention"
 msgstr "Warning"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:106
 msgid "Attention !"
 msgstr "Warning!"
 
@@ -1196,7 +1196,7 @@ msgstr "Guide notes"
 msgid "Opacité"
 msgstr "Opacity"
 
-#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:95
 msgid "ou le bouton suivant"
 msgstr "or the following button"
 
@@ -1236,7 +1236,7 @@ msgid "Plus d'options"
 msgstr "More options"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:87
+#: src/components/error_component.tsx:88
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "To reset the configuration, run the keyboard shortcut: <0>{0}</0>"
 
@@ -1337,7 +1337,7 @@ msgstr "Minimize"
 msgid "Réessayer"
 msgstr "Retry"
 
-#: src/components/error_component.tsx:99
+#: src/components/error_component.tsx:100
 msgid "Réinitialiser"
 msgstr "Reset"
 
@@ -1515,7 +1515,7 @@ msgstr "Ganymède's Twitter"
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "A profile is already using this name."
 
-#: src/components/error_component.tsx:79
+#: src/components/error_component.tsx:80
 msgid "Une erreur est survenue"
 msgstr "An error occurred"
 
@@ -1523,7 +1523,7 @@ msgstr "An error occurred"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "An error occurred during logout"
 
-#: src/components/error_component.tsx:77
+#: src/components/error_component.tsx:78
 msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "An error occurred while retrieving the configuration"
 
@@ -1557,7 +1557,7 @@ msgstr "View guide notes"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Your message has been sent to us. Have a great game!"
 
-#: src/components/error_component.tsx:108
+#: src/components/error_component.tsx:109
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Your progress in guides will be reset. The downloaded guides will still be available."
 

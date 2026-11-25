@@ -9,23 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ImageViewerRouteImport } from './routes/image-viewer'
-import { Route as AppOldVersionRouteImport } from './routes/app-old-version'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppOldVersionRouteImport } from './routes/app-old-version'
+import { Route as ImageViewerRouteImport } from './routes/image-viewer'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppAutoPilotRouteImport } from './routes/_app/auto-pilot'
-import { Route as AppNotesIndexRouteImport } from './routes/_app/notes.index'
-import { Route as AppGuidesIndexRouteImport } from './routes/_app/guides/index'
+import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppDownloadsIndexRouteImport } from './routes/_app/downloads/index'
-import { Route as AppOauthWaitingRouteImport } from './routes/_app/oauth/waiting'
-import { Route as AppNotesCreateRouteImport } from './routes/_app/notes.create'
-import { Route as AppGuidesIdRouteImport } from './routes/_app/guides/$id'
 import { Route as AppDownloadsStatusRouteImport } from './routes/_app/downloads/$status'
+import { Route as AppGuidesIndexRouteImport } from './routes/_app/guides/index'
+import { Route as AppGuidesIdRouteImport } from './routes/_app/guides/$id'
+import { Route as AppNotesIndexRouteImport } from './routes/_app/notes.index'
+import { Route as AppNotesCreateRouteImport } from './routes/_app/notes.create'
+import { Route as AppOauthWaitingRouteImport } from './routes/_app/oauth/waiting'
 
-const ImageViewerRoute = ImageViewerRouteImport.update({
-  id: '/image-viewer',
-  path: '/image-viewer',
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppOldVersionRoute = AppOldVersionRouteImport.update({
@@ -33,8 +32,9 @@ const AppOldVersionRoute = AppOldVersionRouteImport.update({
   path: '/app-old-version',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
+const ImageViewerRoute = ImageViewerRouteImport.update({
+  id: '/image-viewer',
+  path: '/image-viewer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -42,24 +42,14 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppAutoPilotRoute = AppAutoPilotRouteImport.update({
   id: '/auto-pilot',
   path: '/auto-pilot',
   getParentRoute: () => AppRoute,
 } as any)
-const AppNotesIndexRoute = AppNotesIndexRouteImport.update({
-  id: '/notes/',
-  path: '/notes/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppGuidesIndexRoute = AppGuidesIndexRouteImport.update({
-  id: '/guides/',
-  path: '/guides/',
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDownloadsIndexRoute = AppDownloadsIndexRouteImport.update({
@@ -67,14 +57,14 @@ const AppDownloadsIndexRoute = AppDownloadsIndexRouteImport.update({
   path: '/downloads/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppOauthWaitingRoute = AppOauthWaitingRouteImport.update({
-  id: '/oauth/waiting',
-  path: '/oauth/waiting',
+const AppDownloadsStatusRoute = AppDownloadsStatusRouteImport.update({
+  id: '/downloads/$status',
+  path: '/downloads/$status',
   getParentRoute: () => AppRoute,
 } as any)
-const AppNotesCreateRoute = AppNotesCreateRouteImport.update({
-  id: '/notes/create',
-  path: '/notes/create',
+const AppGuidesIndexRoute = AppGuidesIndexRouteImport.update({
+  id: '/guides/',
+  path: '/guides/',
   getParentRoute: () => AppRoute,
 } as any)
 const AppGuidesIdRoute = AppGuidesIdRouteImport.update({
@@ -82,9 +72,19 @@ const AppGuidesIdRoute = AppGuidesIdRouteImport.update({
   path: '/guides/$id',
   getParentRoute: () => AppRoute,
 } as any)
-const AppDownloadsStatusRoute = AppDownloadsStatusRouteImport.update({
-  id: '/downloads/$status',
-  path: '/downloads/$status',
+const AppNotesIndexRoute = AppNotesIndexRouteImport.update({
+  id: '/notes/',
+  path: '/notes/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotesCreateRoute = AppNotesCreateRouteImport.update({
+  id: '/notes/create',
+  path: '/notes/create',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOauthWaitingRoute = AppOauthWaitingRouteImport.update({
+  id: '/oauth/waiting',
+  path: '/oauth/waiting',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -186,11 +186,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/image-viewer': {
-      id: '/image-viewer'
-      path: '/image-viewer'
-      fullPath: '/image-viewer'
-      preLoaderRoute: typeof ImageViewerRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app-old-version': {
@@ -200,11 +200,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppOldVersionRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteImport
+    '/image-viewer': {
+      id: '/image-viewer'
+      path: '/image-viewer'
+      fullPath: '/image-viewer'
+      preLoaderRoute: typeof ImageViewerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/': {
@@ -214,13 +214,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/settings': {
-      id: '/_app/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/auto-pilot': {
       id: '/_app/auto-pilot'
       path: '/auto-pilot'
@@ -228,18 +221,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAutoPilotRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/notes/': {
-      id: '/_app/notes/'
-      path: '/notes'
-      fullPath: '/notes/'
-      preLoaderRoute: typeof AppNotesIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/guides/': {
-      id: '/_app/guides/'
-      path: '/guides'
-      fullPath: '/guides/'
-      preLoaderRoute: typeof AppGuidesIndexRouteImport
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/downloads/': {
@@ -249,18 +235,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDownloadsIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/oauth/waiting': {
-      id: '/_app/oauth/waiting'
-      path: '/oauth/waiting'
-      fullPath: '/oauth/waiting'
-      preLoaderRoute: typeof AppOauthWaitingRouteImport
+    '/_app/downloads/$status': {
+      id: '/_app/downloads/$status'
+      path: '/downloads/$status'
+      fullPath: '/downloads/$status'
+      preLoaderRoute: typeof AppDownloadsStatusRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/notes/create': {
-      id: '/_app/notes/create'
-      path: '/notes/create'
-      fullPath: '/notes/create'
-      preLoaderRoute: typeof AppNotesCreateRouteImport
+    '/_app/guides/': {
+      id: '/_app/guides/'
+      path: '/guides'
+      fullPath: '/guides/'
+      preLoaderRoute: typeof AppGuidesIndexRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/guides/$id': {
@@ -270,11 +256,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppGuidesIdRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/downloads/$status': {
-      id: '/_app/downloads/$status'
-      path: '/downloads/$status'
-      fullPath: '/downloads/$status'
-      preLoaderRoute: typeof AppDownloadsStatusRouteImport
+    '/_app/notes/': {
+      id: '/_app/notes/'
+      path: '/notes'
+      fullPath: '/notes/'
+      preLoaderRoute: typeof AppNotesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/notes/create': {
+      id: '/_app/notes/create'
+      path: '/notes/create'
+      fullPath: '/notes/create'
+      preLoaderRoute: typeof AppNotesCreateRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/oauth/waiting': {
+      id: '/_app/oauth/waiting'
+      path: '/oauth/waiting'
+      fullPath: '/oauth/waiting'
+      preLoaderRoute: typeof AppOauthWaitingRouteImport
       parentRoute: typeof AppRoute
     }
   }
