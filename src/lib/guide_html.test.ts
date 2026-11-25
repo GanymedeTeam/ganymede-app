@@ -1,7 +1,7 @@
 import { htmlToDOM } from 'html-react-parser'
 import { describe, expect, test } from 'vitest'
 
-import { getGuideNodeAction } from './guide_html.ts'
+import { getGuideNodeAction, sanitizeGuideAttributes, sanitizeGuideClass, sanitizeGuideStyle } from './guide_html.ts'
 
 function firstNode(html: string) {
   const [node] = htmlToDOM(html)
@@ -44,5 +44,57 @@ describe('getGuideNodeAction', () => {
     '<table><tr><td>cellule</td></tr></table>',
   ])('unwraps unknown tags %s', (html) => {
     expect(firstNode(html)).toBe('unwrap')
+  })
+})
+
+describe('sanitizeGuideStyle', () => {
+  test.each([
+    'color: #ff0000',
+    'background-color: rgb(255, 0, 0)',
+    'text-align: center',
+    'color: red; text-align: right',
+  ])('keeps editor style %s', (style) => {
+    expect(sanitizeGuideStyle(style)).toBe(style)
+  })
+
+  test('drops positioning and keeps editor declarations', () => {
+    expect(sanitizeGuideStyle('position: fixed; inset: 0; color: #abc; z-index: 9999')).toBe('color: #abc')
+  })
+
+  test.each([
+    'position: fixed',
+    'color: expression(alert(1))',
+    'background-color: url(https://evil.test)',
+    'width: 100vw',
+  ])('drops %s', (style) => {
+    expect(sanitizeGuideStyle(style)).toBeUndefined()
+  })
+})
+
+describe('sanitizeGuideClass', () => {
+  test.each(['tag-quest', 'img-medium', 'guide-step', 'quest-block'])('keeps editor class %s', (className) => {
+    expect(sanitizeGuideClass(className)).toBe(className)
+  })
+
+  test('drops layout utilities', () => {
+    expect(sanitizeGuideClass('img-large fixed inset-0 z-50')).toBe('img-large')
+    expect(sanitizeGuideClass('fixed inset-0')).toBeUndefined()
+  })
+})
+
+describe('sanitizeGuideAttributes', () => {
+  test('filters style and class and keeps other attributes', () => {
+    expect(
+      sanitizeGuideAttributes({
+        'data-type': 'custom-tag',
+        class: 'tag-item absolute',
+        style: 'position: absolute; color: #fff',
+        name: 'Objet',
+      }),
+    ).toEqual({ 'data-type': 'custom-tag', class: 'tag-item', style: 'color: #fff', name: 'Objet' })
+  })
+
+  test('removes attributes left empty', () => {
+    expect(sanitizeGuideAttributes({ class: 'fixed', style: 'position: fixed' })).toEqual({})
   })
 })

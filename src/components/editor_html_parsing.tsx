@@ -17,7 +17,7 @@ import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { copyPosition, copyZaap } from '@/lib/copy_position.ts'
 import { getGuideById } from '@/lib/guide.ts'
-import { getGuideNodeAction } from '@/lib/guide_html.ts'
+import { getGuideNodeAction, sanitizeGuideAttributes } from '@/lib/guide_html.ts'
 import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
 import { parsePositions } from '@/lib/positions.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
@@ -77,6 +77,10 @@ export function EditorHtmlParsing({
 
       if (action === 'unwrap' && domNode.type === 'tag') {
         return <>{domToReact(domNode.children as DOMNode[], options)}</>
+      }
+
+      if (domNode.type === 'tag') {
+        domNode.attribs = sanitizeGuideAttributes(domNode.attribs)
       }
 
       // #region positions

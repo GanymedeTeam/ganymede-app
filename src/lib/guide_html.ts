@@ -55,3 +55,59 @@ export function getGuideNodeAction(node: DOMNode): GuideNodeAction {
 
   return ALLOWED_TAGS.has(node.name) ? 'keep' : 'unwrap'
 }
+
+const ALLOWED_CLASS = /^(guide-step|quest-block|(tag|img|quest|guide)-[a-z0-9-]+)$/
+const COLOR = /^(#[0-9a-f]{3,8}|rgba?\(\s*[\d.%]+\s*(,\s*[\d.%]+\s*){2,3}\)|[a-z]{3,20})$/i
+const ALIGNMENT = /^(left|right|center|justify|start|end)$/i
+
+function isAllowedDeclaration(declaration: string): boolean {
+  const separator = declaration.indexOf(':')
+
+  if (separator === -1) {
+    return false
+  }
+
+  const property = declaration.slice(0, separator).trim().toLowerCase()
+  const value = declaration.slice(separator + 1).trim()
+
+  switch (property) {
+    case 'color':
+    case 'background-color':
+      return COLOR.test(value)
+    case 'text-align':
+      return ALIGNMENT.test(value)
+    default:
+      return false
+  }
+}
+
+export function sanitizeGuideStyle(style: string): string | undefined {
+  const kept = style
+    .split(';')
+    .map((declaration) => declaration.trim())
+    .filter((declaration) => declaration !== '' && isAllowedDeclaration(declaration))
+
+  return kept.length > 0 ? kept.join('; ') : undefined
+}
+
+export function sanitizeGuideClass(className: string): string | undefined {
+  const kept = className.split(/\s+/).filter((name) => ALLOWED_CLASS.test(name))
+
+  return kept.length > 0 ? kept.join(' ') : undefined
+}
+
+/**
+ * Keeps only the styles and classes set by the guide editor, so a guide cannot reuse layout
+ * utilities or inline positioning (e.g. a fixed overlay covering the window).
+ */
+export function sanitizeGuideAttributes(attribs: Record<string, string>): Record<string, string> {
+  const { style, class: className, ...rest } = attribs
+  const safeStyle = style === undefined ? undefined : sanitizeGuideStyle(style)
+  const safeClass = className === undefined ? undefined : sanitizeGuideClass(className)
+
+  return {
+    ...rest,
+    ...(safeStyle !== undefined && { style: safeStyle }),
+    ...(safeClass !== undefined && { class: safeClass }),
+  }
+}
