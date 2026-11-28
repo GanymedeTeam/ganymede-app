@@ -18,8 +18,8 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Étape} other {Étapes}}"
 
-#: src/components/editor_html_parsing.tsx:104
-#: src/components/editor_html_parsing.tsx:122
+#: src/components/editor_html_parsing.tsx:119
+#: src/components/editor_html_parsing.tsx:137
 #: src/components/position.tsx:15
 msgid "{content} copié"
 msgstr "{content} copié"
@@ -83,7 +83,7 @@ msgstr "Appuyez sur les touches..."
 msgid "Attention"
 msgstr "Attention"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:106
 msgid "Attention !"
 msgstr "Attention !"
 
@@ -206,43 +206,43 @@ msgstr "Choisir un guide"
 msgid "Choisissez un guide"
 msgstr "Choisissez un guide"
 
-#: src/components/editor_html_parsing.tsx:324
+#: src/components/editor_html_parsing.tsx:348
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:328
+#: src/components/editor_html_parsing.tsx:352
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:325
+#: src/components/editor_html_parsing.tsx:349
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:329
+#: src/components/editor_html_parsing.tsx:353
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:336
+#: src/components/editor_html_parsing.tsx:360
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:337
+#: src/components/editor_html_parsing.tsx:361
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 
-#: src/components/editor_html_parsing.tsx:320
+#: src/components/editor_html_parsing.tsx:344
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:321
+#: src/components/editor_html_parsing.tsx:345
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:332
+#: src/components/editor_html_parsing.tsx:356
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 
-#: src/components/editor_html_parsing.tsx:333
+#: src/components/editor_html_parsing.tsx:357
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 
@@ -250,11 +250,11 @@ msgstr "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb
 msgid "Cliquez pour enregistrer"
 msgstr "Cliquez pour enregistrer"
 
-#: src/components/editor_html_parsing.tsx:452
+#: src/components/editor_html_parsing.tsx:476
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Cliquez pour ouvrir dans le navigateur"
 
-#: src/components/editor_html_parsing.tsx:424
+#: src/components/editor_html_parsing.tsx:448
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Cliquez pour ouvrir dans une nouvelle fenêtre"
 
@@ -315,13 +315,13 @@ msgstr "Copier : {title}"
 msgid "Copier l'étape actuelle"
 msgstr "Copier l'étape actuelle"
 
-#: src/components/editor_html_parsing.tsx:106
+#: src/components/editor_html_parsing.tsx:121
 #: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la commande autopilote"
 msgstr "Copier la commande autopilote"
 
-#: src/components/editor_html_parsing.tsx:124
+#: src/components/editor_html_parsing.tsx:139
 msgid "Copier la commande zaap"
 msgstr "Copier la commande zaap"
 
@@ -329,13 +329,13 @@ msgstr "Copier la commande zaap"
 msgid "Copier la note"
 msgstr "Copier la note"
 
-#: src/components/editor_html_parsing.tsx:106
+#: src/components/editor_html_parsing.tsx:121
 #: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la position"
 msgstr "Copier la position"
 
-#: src/components/editor_html_parsing.tsx:124
+#: src/components/editor_html_parsing.tsx:139
 msgid "Copier les commandes zaap et autopilote"
 msgstr "Copier les commandes zaap et autopilote"
 
@@ -848,7 +848,7 @@ msgstr "Impossible d'installer la mise à jour"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Impossible d'obtenir le système de mise à jour"
 
-#: src/components/editor_html_parsing.tsx:416
+#: src/components/editor_html_parsing.tsx:440
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 
@@ -1039,6 +1039,10 @@ msgstr "Langue"
 msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
 msgstr "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
 
+#: src/components/editor_html_parsing.tsx:252
+msgid "Le guide lié est introuvable ou indisponible pour le moment."
+msgstr "Le guide lié est introuvable ou indisponible pour le moment."
+
 #. placeholder {0}: pendingStep + 1
 #. placeholder {1}: progressionStep + 1
 #. placeholder {2}: profile.name
@@ -1075,7 +1079,7 @@ msgstr "Les guides en cours d'écriture"
 msgid "Les guides partagés par la communauté"
 msgstr "Les guides partagés par la communauté"
 
-#: src/components/editor_html_parsing.tsx:77
+#: src/components/editor_html_parsing.tsx:92
 msgid "lien masqué"
 msgstr "lien masqué"
 
@@ -1196,7 +1200,7 @@ msgstr "Notes du guide"
 msgid "Opacité"
 msgstr "Opacité"
 
-#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:95
 msgid "ou le bouton suivant"
 msgstr "ou le bouton suivant"
 
@@ -1236,7 +1240,7 @@ msgid "Plus d'options"
 msgstr "Plus d'options"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:87
+#: src/components/error_component.tsx:88
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 
@@ -1337,7 +1341,7 @@ msgstr "Réduire"
 msgid "Réessayer"
 msgstr "Réessayer"
 
-#: src/components/error_component.tsx:99
+#: src/components/error_component.tsx:100
 msgid "Réinitialiser"
 msgstr "Réinitialiser"
 
@@ -1515,7 +1519,7 @@ msgstr "Twitter de Ganymède"
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Un profil est déjà utilisé avec ce nom."
 
-#: src/components/error_component.tsx:79
+#: src/components/error_component.tsx:80
 msgid "Une erreur est survenue"
 msgstr "Une erreur est survenue"
 
@@ -1523,7 +1527,7 @@ msgstr "Une erreur est survenue"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Une erreur est survenue lors de la déconnexion"
 
-#: src/components/error_component.tsx:77
+#: src/components/error_component.tsx:78
 msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "Une erreur est survenue lors de la récupération de la configuration"
 
@@ -1557,7 +1561,7 @@ msgstr "Voir les notes du guide"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "Votre message nous a été transmis. Bon jeu !"
 
-#: src/components/error_component.tsx:108
+#: src/components/error_component.tsx:109
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 

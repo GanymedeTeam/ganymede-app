@@ -18,8 +18,8 @@ msgstr ""
 msgid "{0, plural, one {Étape} other {Étapes}}"
 msgstr "{0, plural, one {Passo} other {Passos}}"
 
-#: src/components/editor_html_parsing.tsx:104
-#: src/components/editor_html_parsing.tsx:122
+#: src/components/editor_html_parsing.tsx:119
+#: src/components/editor_html_parsing.tsx:137
 #: src/components/position.tsx:15
 msgid "{content} copié"
 msgstr "{content} copiado"
@@ -83,7 +83,7 @@ msgstr "Pressione as teclas..."
 msgid "Attention"
 msgstr "Atenção"
 
-#: src/components/error_component.tsx:105
+#: src/components/error_component.tsx:106
 msgid "Attention !"
 msgstr "Atenção!"
 
@@ -206,43 +206,43 @@ msgstr "Escolher um guia"
 msgid "Choisissez un guide"
 msgstr "Escolha um guia"
 
-#: src/components/editor_html_parsing.tsx:324
+#: src/components/editor_html_parsing.tsx:348
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:328
+#: src/components/editor_html_parsing.tsx:352
 msgid "Cliquez pour copier le nom de l'objet. ⌘+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. ⌘+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:325
+#: src/components/editor_html_parsing.tsx:349
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:329
+#: src/components/editor_html_parsing.tsx:353
 msgid "Cliquez pour copier le nom de l'objet. Ctrl+clic pour ouvrir sur MethodWakfu"
 msgstr "Clique para copiar o nome do item. Ctrl+clique para abrir no MethodWakfu"
 
-#: src/components/editor_html_parsing.tsx:336
+#: src/components/editor_html_parsing.tsx:360
 msgid "Cliquez pour copier le nom de la quête. ⌘+clic pour ouvrir sur dofusdb. ⌥+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. ⌘+clique para abrir no dofusdb. ⌥+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:337
+#: src/components/editor_html_parsing.tsx:361
 msgid "Cliquez pour copier le nom de la quête. Ctrl+clic pour ouvrir sur dofusdb. Alt+clic pour ouvrir sur DPLN"
 msgstr "Clique para copiar o nome da missão. Ctrl+clique para abrir no dofusdb. Alt+clique para abrir no DPLN"
 
-#: src/components/editor_html_parsing.tsx:320
+#: src/components/editor_html_parsing.tsx:344
 msgid "Cliquez pour copier le nom du donjon. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:321
+#: src/components/editor_html_parsing.tsx:345
 msgid "Cliquez pour copier le nom du donjon. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do calabouço. Ctrl+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:332
+#: src/components/editor_html_parsing.tsx:356
 msgid "Cliquez pour copier le nom du monstre. ⌘+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. ⌘+clique para abrir no dofusdb"
 
-#: src/components/editor_html_parsing.tsx:333
+#: src/components/editor_html_parsing.tsx:357
 msgid "Cliquez pour copier le nom du monstre. Ctrl+clic pour ouvrir sur dofusdb"
 msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 
@@ -250,11 +250,11 @@ msgstr "Clique para copiar o nome do monstro. Ctrl+clique para abrir no dofusdb"
 msgid "Cliquez pour enregistrer"
 msgstr "Clique para gravar"
 
-#: src/components/editor_html_parsing.tsx:452
+#: src/components/editor_html_parsing.tsx:476
 msgid "Cliquez pour ouvrir dans le navigateur"
 msgstr "Clique para abrir no navegador"
 
-#: src/components/editor_html_parsing.tsx:424
+#: src/components/editor_html_parsing.tsx:448
 msgid "Cliquez pour ouvrir dans une nouvelle fenêtre"
 msgstr "Clique para abrir numa janela nova"
 
@@ -315,13 +315,13 @@ msgstr "Copiar: {title}"
 msgid "Copier l'étape actuelle"
 msgstr "Copiar passo atual"
 
-#: src/components/editor_html_parsing.tsx:106
+#: src/components/editor_html_parsing.tsx:121
 #: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la commande autopilote"
 msgstr "Copiar o comando do piloto automático"
 
-#: src/components/editor_html_parsing.tsx:124
+#: src/components/editor_html_parsing.tsx:139
 msgid "Copier la commande zaap"
 msgstr "Copiar o comando do zaap"
 
@@ -329,13 +329,13 @@ msgstr "Copiar o comando do zaap"
 msgid "Copier la note"
 msgstr "Copiar a nota"
 
-#: src/components/editor_html_parsing.tsx:106
+#: src/components/editor_html_parsing.tsx:121
 #: src/components/position.tsx:27
 #: src/routes/_app/auto-pilot.tsx:62
 msgid "Copier la position"
 msgstr "Copiar a posição"
 
-#: src/components/editor_html_parsing.tsx:124
+#: src/components/editor_html_parsing.tsx:139
 msgid "Copier les commandes zaap et autopilote"
 msgstr "Copiar os comandos do zaap e do piloto automático"
 
@@ -848,7 +848,7 @@ msgstr "Não foi possível instalar a atualização"
 msgid "Impossible d'obtenir le système de mise à jour"
 msgstr "Não é possível obter o sistema de actualização"
 
-#: src/components/editor_html_parsing.tsx:416
+#: src/components/editor_html_parsing.tsx:440
 msgid "Impossible d'ouvrir la fenêtre, ouverture dans le navigateur"
 msgstr "Não é possível abrir a janela, abrindo no navegador"
 
@@ -1039,6 +1039,10 @@ msgstr "Idioma"
 msgid "Le guide #{pendingGuideId} n'est pas téléchargé.<0/>Voulez-vous le télécharger maintenant ?"
 msgstr "O guia #{pendingGuideId} não está transferido.<0/>Quer transferi-lo agora?"
 
+#: src/components/editor_html_parsing.tsx:252
+msgid "Le guide lié est introuvable ou indisponible pour le moment."
+msgstr "O guia ligado não foi encontrado ou não está disponível de momento."
+
 #. placeholder {0}: pendingStep + 1
 #. placeholder {1}: progressionStep + 1
 #. placeholder {2}: profile.name
@@ -1075,7 +1079,7 @@ msgstr "Guias em processo de escrita"
 msgid "Les guides partagés par la communauté"
 msgstr "Guias partilhados pela comunidade"
 
-#: src/components/editor_html_parsing.tsx:77
+#: src/components/editor_html_parsing.tsx:92
 msgid "lien masqué"
 msgstr "link oculto"
 
@@ -1196,7 +1200,7 @@ msgstr "Notas do guia"
 msgid "Opacité"
 msgstr "Opacidade"
 
-#: src/components/error_component.tsx:94
+#: src/components/error_component.tsx:95
 msgid "ou le bouton suivant"
 msgstr "ou o botão seguinte"
 
@@ -1236,7 +1240,7 @@ msgid "Plus d'options"
 msgstr "Mais opções"
 
 #. placeholder {0}: isMacOs ? 'Option + Shift + P' : 'Alt + Shift + P'
-#: src/components/error_component.tsx:87
+#: src/components/error_component.tsx:88
 msgid "Pour réinitialiser la configuration, exécuter le raccourci clavier : <0>{0}</0>"
 msgstr "Para restabelecer a configuração, execute o atalho de teclado: <0>{0}</0>"
 
@@ -1337,7 +1341,7 @@ msgstr "Minimizar"
 msgid "Réessayer"
 msgstr "Tentar novamente"
 
-#: src/components/error_component.tsx:99
+#: src/components/error_component.tsx:100
 msgid "Réinitialiser"
 msgstr "Restabelecer"
 
@@ -1515,7 +1519,7 @@ msgstr "Twitter do Ganimedes"
 msgid "Un profil est déjà utilisé avec ce nom."
 msgstr "Já existe um perfil com este nome."
 
-#: src/components/error_component.tsx:79
+#: src/components/error_component.tsx:80
 msgid "Une erreur est survenue"
 msgstr "Ocorreu um erro"
 
@@ -1523,7 +1527,7 @@ msgstr "Ocorreu um erro"
 msgid "Une erreur est survenue lors de la déconnexion"
 msgstr "Ocorreu um erro durante o término da sessão"
 
-#: src/components/error_component.tsx:77
+#: src/components/error_component.tsx:78
 msgid "Une erreur est survenue lors de la récupération de la configuration"
 msgstr "Ocorreu um erro ao recuperar a configuração"
 
@@ -1557,7 +1561,7 @@ msgstr "Ver as notas do guia"
 msgid "Votre message nous a été transmis. Bon jeu !"
 msgstr "A sua mensagem foi enviada para nós. Bom jogo!"
 
-#: src/components/error_component.tsx:108
+#: src/components/error_component.tsx:109
 msgid "Votre progression dans les guides sera réinitialisée. Les guides téléchargés seront toujours présents."
 msgstr "Seu progresso nos guias será redefinido. Os guias baixados ainda estarão disponíveis."
 

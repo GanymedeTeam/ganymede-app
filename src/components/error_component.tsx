@@ -44,7 +44,8 @@ export function ErrorDisplay({ error, info }: ErrorDisplayProps) {
   )
 }
 
-export function ErrorComponent({ error, info }: ErrorComponentProps) {
+export function ErrorComponent({ error: rawError, info }: ErrorComponentProps) {
+  const error = rawError instanceof Error ? rawError : new Error(String(rawError))
   const location = useLocation()
   const isMacOs = navigator.userAgent.toLowerCase().includes('mac os x')
   const conf = useQuery(confQuery)

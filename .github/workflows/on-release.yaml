@@ -28,15 +28,15 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: lts/*
+          node-version-file: .nvmrc
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -70,7 +70,7 @@ jobs:
             gir1.2-webkit2-4.1;
 
       - name: setup cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           key: ${{ runner.os }}-tauri-${{ hashFiles('src-tauri/Cargo.lock', 'src-tauri/Cargo.toml', 'src-tauri/target/release') }}
           restore-keys: |
@@ -89,7 +89,7 @@ jobs:
       - name: install frontend dependencies
         run: pnpm i --frozen-lockfile
 
-      - uses: tauri-apps/tauri-action@v0
+      - uses: tauri-apps/tauri-action@v1
         id: tauri
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -122,7 +122,7 @@ jobs:
         run: |
             cd src-tauri/target/release/bundle/appimage
             cp "$(ls Ganymede_*_amd64.AppImage | sed -E 's/\*//')" "$(ls Ganymede_*_amd64.AppImage | sed -E 's/Ganymede_.*_amd64\.AppImage/Ganymede_amd64.AppImage/' | sed -E 's/\*//')"
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         name: upload artifacts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

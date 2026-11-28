@@ -208,6 +208,8 @@ pub fn run() {
     app.setup(|app| {
         let http_client = reqwest::Client::builder()
             .user_agent("GANYMEDE_TAURI_APP")
+            .connect_timeout(std::time::Duration::from_secs(10))
+            .read_timeout(std::time::Duration::from_secs(30))
             .build()
             .map_err(|err| api::Error::BuildClientBuilder(err.to_string()))
             .unwrap();

@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 import parse, { type DOMNode, domToReact, type HTMLReactParserOptions } from 'html-react-parser'
-import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, PackageSearchIcon } from 'lucide-react'
+import { AlertCircleIcon, BookCheckIcon, BookPlusIcon, LoaderIcon, PackageSearchIcon } from 'lucide-react'
 import { Fragment } from 'react'
 import { toast } from 'sonner'
 
@@ -17,6 +17,7 @@ import { GANYMEDE_HOST } from '@/lib/api.ts'
 import { clamp } from '@/lib/clamp.ts'
 import { copyPosition, copyZaap } from '@/lib/copy_position.ts'
 import { getGuideById } from '@/lib/guide.ts'
+import { getGuideNodeAction, sanitizeGuideAttributes } from '@/lib/guide_html.ts'
 import { getDofusPourLesNoobsUrl } from '@/lib/mapping.ts'
 import { parsePositions } from '@/lib/positions.ts'
 import { getProgress, getProgressConfStep } from '@/lib/progress.ts'
@@ -68,6 +69,20 @@ export function EditorHtmlParsing({
 
   const options: HTMLReactParserOptions = {
     replace: (domNode) => {
+      const action = getGuideNodeAction(domNode)
+
+      if (action === 'drop') {
+        return <></>
+      }
+
+      if (action === 'unwrap' && domNode.type === 'tag') {
+        return <>{domToReact(domNode.children as DOMNode[], options)}</>
+      }
+
+      if (domNode.type === 'tag') {
+        domNode.attribs = sanitizeGuideAttributes(domNode.attribs)
+      }
+
       // #region positions
       if (domNode.type === 'text') {
         const url = parseHttpUrl(domNode.data)
@@ -230,7 +245,13 @@ export function EditorHtmlParsing({
                       }
 
                       if (!nextGuide) {
-                        await downloadGuide.mutateAsync({ guide: { id: domGuideId }, folder: '' })
+                        try {
+                          await downloadGuide.mutateAsync({ guide: { id: domGuideId }, folder: '' })
+                        } catch (err) {
+                          console.error('Failed to download linked guide', err)
+                          toast.error(t`Le guide lié est introuvable ou indisponible pour le moment.`)
+                          return
+                        }
                       }
 
                       await navigate({
@@ -242,6 +263,9 @@ export function EditorHtmlParsing({
                       })
                     }}
                   >
+                    {downloadGuide.isPending && (
+                      <LoaderIcon className="inline-flex size-5 -translate-y-0.5 animate-[spin_2s_linear_infinite]" />
+                    )}
                     {downloadGuide.isError && (
                       <AlertCircleIcon className="inline-flex size-5 -translate-y-0.5 text-destructive" />
                     )}
