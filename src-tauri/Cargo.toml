@@ -50,6 +50,9 @@ md5 = "0.7"
 [dev-dependencies]
 tempfile = "3"
 
+[target.'cfg(target_os = "linux")'.dependencies]
+open = "5.4"
+
 [target.'cfg(target_os = "macos")'.dependencies]
 objc2-app-kit = "0.3"
 tauri-nspanel = { git = "https://github.com/ahkohd/tauri-nspanel", branch = "v2" }

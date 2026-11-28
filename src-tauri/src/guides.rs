@@ -9,7 +9,6 @@ use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, Runtime, Wry};
 use tauri_plugin_http::reqwest;
-use tauri_plugin_opener::OpenerExt;
 
 use crate::{api::GANYMEDE_API, tauri_api_ext::GuidesPathExt};
 
@@ -1230,13 +1229,12 @@ fn download_and_save_guide<R: Runtime>(
     }
 }
 
-fn open_system_guides_folder<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
-    let resolver = app.app_handle().path();
-    let guides_dir = resolver.app_guides_dir();
+async fn open_system_guides_folder<R: Runtime>(app: &AppHandle<R>) -> Result<(), Error> {
+    let guides_dir = app.path().app_guides_dir();
 
-    app.opener()
-        .open_path(guides_dir.to_str().unwrap().to_string(), None::<String>)
-        .map_err(|err| Error::Opener(err.to_string()))
+    crate::opener::open_path(app, &guides_dir)
+        .await
+        .map_err(Error::Opener)
 }
 
 fn generate_guide_summary<R: Runtime>(
@@ -1759,7 +1757,7 @@ impl GuidesApi for GuidesApiImpl {
     }
 
     async fn open_guides_folder<R: Runtime>(self, app: AppHandle<R>) -> Result<(), Error> {
-        open_system_guides_folder(&app)
+        open_system_guides_folder(&app).await
     }
 
     async fn get_guide_summary<R: Runtime>(

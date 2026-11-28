@@ -2,7 +2,6 @@ use log::{debug, error, info};
 use serde::Serialize;
 use tauri::{AppHandle, Runtime};
 use tauri_plugin_deep_link::DeepLinkExt;
-use tauri_plugin_opener::OpenerExt;
 
 // Only a release macOS build constructs the location variants; on other targets
 // (and in dev) the resolver only ever returns `NotConcerned`.
@@ -76,9 +75,7 @@ impl BaseApi for BaseApiImpl {
     }
 
     async fn open_url<R: Runtime>(self, app: AppHandle<R>, url: String) -> Result<(), String> {
-        app.opener()
-            .open_url(url, None::<String>)
-            .map_err(|err| err.to_string())
+        crate::opener::open_url(&app, &url).await
     }
 
     async fn is_production(self) -> bool {
