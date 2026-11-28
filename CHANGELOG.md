@@ -1,5 +1,22 @@
 # ganymede-app
 
+## 1.22.0
+
+### Minor Changes
+
+- 9bb0436: Ajout de métadonnées au profil : niveau, nombre de personnages et note, modifiables depuis la fenêtre d'édition du profil.
+
+### Patch Changes
+
+- 53bcd73: Le dernier guide consulté est désormais rouvert au démarrage et lors du changement de profil, et l'ordre des onglets est conservé entre deux lancements.
+- 131eefe: Le menu « Guides » ramène désormais aux onglets de guides ouverts s'il y en a, sinon à la bibliothèque.
+- c3d589d: Les fichiers sauvegardés (guides, configuration, guides récents, notes, épingles, notifications, authentification) sont désormais écrits de façon atomique pour éviter des fichiers vides ou corrompus en cas d'interruption.
+- 2c62983: Correction de la saisie impossible dans les champs de texte sur les anciennes versions de macOS (Monterey).
+- fa20ee6: Mise à jour des dépendances Rust et JavaScript pour corriger des vulnérabilités de sécurité connues.
+- 902dabb: Le contenu HTML des guides n'affiche plus que les balises, classes et styles produits par l'éditeur de guides : les balises potentiellement dangereuses (scripts, iframes, formulaires…) et les styles de positionnement sont ignorés.
+- 5c8df29: Un lien vers un guide introuvable ou indisponible affiche désormais un message d'erreur au lieu de charger indéfiniment, et le téléchargement est interrompu après 30 secondes. Les requêtes réseau ont désormais un délai maximal et un guide absent du serveur est correctement signalé.
+- c212052: Sous Linux, l'ouverture des liens (connexion, liens des guides, dossier des guides) essaie plusieurs lanceurs (xdg-open, gio…) et nettoie l'environnement de l'AppImage pour fonctionner sur davantage de distributions.
+
 ## 1.21.0
 
 ### Minor Changes
